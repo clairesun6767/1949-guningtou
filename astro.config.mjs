@@ -5,10 +5,9 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // GitHub Pages 部署 — 若使用自訂域名可改為 '/'
   site: 'https://clairesun6767.github.io',
   base: '/1949-guningtou',
-
+  trailingSlash: 'always',
   output: 'static',
 
   integrations: [react()],

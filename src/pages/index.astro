@@ -3,6 +3,7 @@
 // 首頁 — 3D 地球主視覺 + 和平宣言 + 四日速覽 + 導航
 // ============================================================
 import MainLayout from '../layouts/MainLayout.astro';
+import { sitePath } from '../data/paths';
 import HeroMap from '../components/hero/HeroMap';
 import { STATS, timeline, events } from '../data/loader';
 
@@ -41,7 +42,7 @@ const battleDays = [
 
 <MainLayout>
   <!-- ===== HERO: 3D 地球 ===== -->
-  <HeroMap client:only="react" base="/1949-guningtou" />
+  <HeroMap client:only="react" base={sitePath('')} />
 
   <!-- ===== 和平宣言 ===== -->
   <section class="max-w-3xl mx-auto px-4 py-20 text-center">
