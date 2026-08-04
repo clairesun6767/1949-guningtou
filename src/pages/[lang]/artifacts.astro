@@ -1,5 +1,5 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
 const base = import.meta.env.BASE_URL;
 
 const categories = [
@@ -34,7 +34,18 @@ const categories = [
     desc: '影像記錄了戰役最真實的瞬間，是歷史研究不可或缺的視覺證據。'
   },
 ];
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
+
+
+
 
 <MainLayout>
   <div class="max-w-4xl mx-auto px-4 py-16">

@@ -1,7 +1,18 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
-import { storyArcs } from '../../data/loader';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import { storyArcs } from '../../../data/loader';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
+
+
+
 <MainLayout>
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">戰役故事</h1>

@@ -1,7 +1,18 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
 const base = import.meta.env.BASE_URL;
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
+
+
+
 <MainLayout>
   <meta http-equiv="refresh" content={`0;url=${base}aftermath/`} />
   <div class="max-w-3xl mx-auto px-4 py-16 text-center">

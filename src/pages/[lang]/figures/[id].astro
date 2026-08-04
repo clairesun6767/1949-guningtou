@@ -1,11 +1,16 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
-import { persons } from '../../data/loader';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import { persons } from '../../../data/loader';
 
 export function getStaticPaths() {
-  return persons.map((p) => ({
-    params: { id: p.person_id },
-  }));
+  const langs = ['zh-tw', 'zh-cn', 'en'];
+  const paths = [];
+  for (const lang of langs) {
+    for (const item of persons) {
+      paths.push({ params: { lang, id: item.person_id } });
+    }
+  }
+  return paths;
 }
 
 const { id } = Astro.params;

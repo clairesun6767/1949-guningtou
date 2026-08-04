@@ -1,13 +1,18 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
-import MiniMap from '../../components/map/MiniMap';
-import { pois } from '../../data/loader';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import MiniMap from '../../../components/map/MiniMap';
+import { pois } from '../../../data/loader';
 const base = import.meta.env.BASE_URL;
 
 export function getStaticPaths() {
-  return pois.map((poi) => ({
-    params: { id: poi.poi_id },
-  }));
+  const langs = ['zh-tw', 'zh-cn', 'en'];
+  const paths = [];
+  for (const lang of langs) {
+    for (const poi of pois) {
+      paths.push({ params: { lang, id: poi.poi_id } });
+    }
+  }
+  return paths;
 }
 
 const { id } = Astro.params;

@@ -1,6 +1,6 @@
 ---
-import MainLayout from '../../layouts/MainLayout.astro';
-import { persons } from '../../data/loader';
+import MainLayout from '../../../layouts/MainLayout.astro';
+import { persons } from '../../../data/loader';
 
 const rocPersons = persons.filter((p) =>
   p.primary_category?.includes('Nationalist')
@@ -11,7 +11,18 @@ const plaPersons = persons.filter((p) =>
 const others = persons.filter((p) =>
   !p.primary_category?.includes('Nationalist') && !p.primary_category?.includes('PLA')
 );
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
+
+
+
 <MainLayout>
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">關鍵人物</h1>

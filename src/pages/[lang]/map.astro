@@ -1,0 +1,20 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import BattleMap from '../../components/map/BattleMap';
+const base = import.meta.env.BASE_URL;
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
+---
+
+
+
+
+<MainLayout>
+  <BattleMap client:only="react" />
+</MainLayout>

@@ -1,5 +1,5 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
 const base = import.meta.env.BASE_URL;
 
 const rocWeapons = [
@@ -23,7 +23,18 @@ const plaWeapons = [
   { name: '布製彈藥袋', cat: '裝備', desc: '解放軍士兵標準裝備，攜帶步槍彈藥與手榴彈。', note: '' },
   { name: '棉布軍服', cat: '制服', desc: '解放軍標準冬季軍服，無防彈功能，渡海後濕透影響行動。', note: '' },
 ];
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
+
+
+
 
 <MainLayout>
   <div class="max-w-4xl mx-auto px-4 py-16">

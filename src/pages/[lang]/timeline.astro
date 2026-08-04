@@ -1,9 +1,20 @@
 ---
 // /timeline — 互動時間軸頁面
-import MainLayout from '../layouts/MainLayout.astro';
-import BattleTimeline from '../components/timeline/BattleTimeline';
-import { timeline } from '../data/loader';
+import MainLayout from '../../layouts/MainLayout.astro';
+import BattleTimeline from '../../components/timeline/BattleTimeline';
+import { timeline } from '../../data/loader';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
+
+
+
 
 <MainLayout>
   <div class="max-w-3xl mx-auto px-4 py-16">
