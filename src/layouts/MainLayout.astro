@@ -1,6 +1,7 @@
 ---
-import '../styles/global.css';
-import { sitePath } from '../data/paths';
+import { sitePath, LANGS } from '../data/paths';
+interface Props { lang: string; title?: string; }
+const { lang, title } = Astro.props;
 
 const navGroups = [
   {
@@ -48,28 +49,41 @@ const navGroups = [
 ---
 
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang={lang === 'zh-cn' ? 'zh-Hans' : lang === 'en' ? 'en' : 'zh-Hant'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={sitePath('favicon.svg')} />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet" />
-    <title>古寧頭戰役 1949 · 以歷史見和平</title>
+    <title>{title ?? '古寧頭戰役 1949 · 以歷史見和平'}</title>
     <meta name="description" content="1949 年古寧頭戰役數位知識平台。以歷史見和平，多史觀並存。" />
+    <!-- hreflang -->
+    <link rel="alternate" hreflang="zh-Hant" href={sitePath('', 'zh-tw')} />
+    <link rel="alternate" hreflang="zh-Hans" href={sitePath('', 'zh-cn')} />
+    <link rel="alternate" hreflang="en" href={sitePath('', 'en')} />
+    <link rel="alternate" hreflang="x-default" href={sitePath('', 'zh-tw')} />
   </head>
   <body class="min-h-screen flex flex-col bg-stone-50">
     <header class="bg-white/95 backdrop-blur border-b border-stone-200 sticky top-0 z-50 overflow-visible">
       <div class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between">
-        <a href={sitePath('')} class="font-serif font-bold text-base text-stone-800 no-underline hover:text-amber-700 transition flex items-center gap-2">
+        <a href={sitePath('', lang)} class="font-serif font-bold text-base text-stone-800 no-underline hover:text-amber-700 transition flex items-center gap-2">
           古寧頭 1949
           <span class="hidden sm:inline text-xs text-stone-400 font-normal">以歷史見和平</span>
         </a>
-        <!-- 語言切換暫隱藏（功能未完成） -->
+        <!-- 語言切換 -->
+        <div class="flex items-center gap-1 text-xs">
+          {LANGS.map(l => (
+            <a href={sitePath(Astro.url.pathname.split('/').slice(3).join('/'), l.code)}
+               class={`px-2 py-1 rounded no-underline ${l.code === lang ? 'bg-amber-100 text-amber-700 font-medium' : 'text-stone-400 hover:text-stone-600'}`}>
+              {l.short}
+            </a>
+          ))}
+        </div>
       </div>
 
       <!-- 5-group nav -->
       <nav class="max-w-7xl mx-auto px-4 pb-2 flex gap-0.5 text-[13px] overflow-visible">
-        <a href={sitePath('')} class="px-3 py-1.5 rounded whitespace-nowrap text-stone-500 hover:bg-stone-100 hover:text-stone-700 no-underline transition font-medium">首頁</a>
+        <a href={sitePath('', lang)} class="px-3 py-1.5 rounded whitespace-nowrap text-stone-500 hover:bg-stone-100 hover:text-stone-700 no-underline transition font-medium">首頁</a>
         {navGroups.map(group => (
           <div class="relative group">
             <span class="px-3 py-1.5 rounded whitespace-nowrap text-stone-500 cursor-default group-hover:bg-stone-100 group-hover:text-stone-700 transition inline-block">
@@ -77,7 +91,7 @@ const navGroups = [
             </span>
             <div class="absolute top-full left-0 mt-1 bg-white border border-stone-200 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-[9999] min-w-[180px]">
               {group.items.map(item => (
-                <a href={sitePath(item.href)} class="block px-4 py-2.5 text-stone-600 hover:bg-amber-50 hover:text-amber-700 no-underline whitespace-nowrap first:rounded-t-lg last:rounded-b-lg text-sm">
+                <a href={sitePath(item.href, lang)} class="block px-4 py-2.5 text-stone-600 hover:bg-amber-50 hover:text-amber-700 no-underline whitespace-nowrap first:rounded-t-lg last:rounded-b-lg text-sm">
                   {item.label}
                 </a>
               ))}
@@ -94,6 +108,7 @@ const navGroups = [
     <footer class="bg-stone-900 text-stone-400 text-sm py-8 mt-16">
       <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
         <p>古寧頭戰役數位知識平台 · 1949</p>
+        {lang === 'en' && <p class="text-stone-500 text-xs">Battle of Guningtou Digital Knowledge Platform · Learning Peace Through History</p>}
         <p class="text-stone-500 text-xs">資料來源：Battlefield Research Database · 所有史料均附來源 · 多史觀並存 · 政治中立</p>
         <p class="text-stone-600 text-xs mt-4">歷史已然發生，無法改變。透過理解歷史，珍惜和平的可貴。</p>
       </div>

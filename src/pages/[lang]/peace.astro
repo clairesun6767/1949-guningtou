@@ -13,7 +13,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <meta http-equiv="refresh" content={`0;url=${base}aftermath/`} />
   <div class="max-w-3xl mx-auto px-4 py-16 text-center">
     <p class="text-stone-500">頁面已合併至「戰後影響」。正在重新導向...</p>

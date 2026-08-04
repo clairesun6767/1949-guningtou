@@ -16,7 +16,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <div class="max-w-3xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">戰役時間軸</h1>
     <p class="text-stone-500 mb-2">1949 年 10 月 24-27 日 · 四日戰役逐時記錄 · {timeline.length} 條時間點</p>

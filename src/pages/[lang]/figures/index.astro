@@ -23,7 +23,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">關鍵人物</h1>
     <p class="text-stone-500 mb-8">{persons.length} 位歷史人物 · 國軍 {rocPersons.length} 位 · 解放軍 {plaPersons.length} 位</p>

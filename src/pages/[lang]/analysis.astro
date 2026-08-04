@@ -40,7 +40,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">戰役解析</h1>
     <p class="text-stone-500 mb-10">{events.length} 個歷史事件 · 依類型拆解 · 點擊展開詳情</p>

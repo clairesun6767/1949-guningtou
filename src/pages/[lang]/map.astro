@@ -15,6 +15,6 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <BattleMap client:only="react" />
 </MainLayout>

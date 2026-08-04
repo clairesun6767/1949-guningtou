@@ -13,7 +13,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">戰役故事</h1>
     <p class="text-stone-500 mb-8">{storyArcs.length} 條故事弧線 · 33 個場景 · 115 個敘事節拍</p>

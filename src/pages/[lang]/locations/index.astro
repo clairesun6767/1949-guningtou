@@ -16,7 +16,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <div class="px-4 py-12">
     <h1 class="text-3xl font-serif font-bold mb-2 max-w-6xl mx-auto">地點探索</h1>
     <p class="text-stone-500 mb-8 max-w-6xl mx-auto">{pois.length} 個古寧頭戰役相關地點 · 點擊卡片在地圖上定位</p>

@@ -24,7 +24,7 @@ export function getStaticPaths() {
 
 
 
-<MainLayout>
+<MainLayout lang={Astro.params.lang}>
   <div class="max-w-4xl mx-auto px-4 py-16">
     <h1 class="text-3xl font-serif font-bold mb-2">史料與來源</h1>
     <p class="text-stone-500 mb-8">{sources.length} 筆文獻來源 · 所有史料可追溯 · 依來源等級分級</p>
