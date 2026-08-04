@@ -102,8 +102,8 @@ export default function HeroMap({ base = '' }: { base?: string }) {
           className={`mt-6 text-lg md:text-xl text-stone-200 max-w-2xl text-center leading-relaxed transition-all duration-1000 delay-500 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
           style={{ textShadow: '0 0 40px rgba(0,0,0,0.9)' }}
         >
-          一萬五千名士兵在此登陸<br />
-          <span className="text-stone-400">三天後，近萬人未能離開</span>
+          近九千名士兵在此登陸<br />
+          <span className="text-stone-400">三天後，數千人未能離開</span>
         </p>
       </div>
 
