@@ -1,0 +1,27 @@
+{
+  "id": "village-combat",
+  "title": { "zh-tw": "北山與南山村落戰", "zh-cn": "北山与南山村落战", "en": "Village Combat: Beishan & Nanshan" },
+  "summary": {
+    "zh-tw": "登陸後的解放軍與國軍在北山、南山、林厝等村落展開激烈巷戰。雙方對村落戰的戰況描述差異顯著。",
+    "en": "After landing, PLA and ROC forces engaged in intense house-to-house combat in Beishan, Nanshan, and Lincuo villages. Descriptions of the fighting differ markedly between sources."
+  },
+  "viewpoints": {
+    "roc": {
+      "zh-tw": "國軍第118師增援後對盤據村落的解放軍發動逐屋清剿。戰車協同步兵推進，以火力壓制後逐棟清除。南山與北山於25日下午至26日上午陸續收復。",
+      "en": "After reinforcement, the ROC 118th Division conducted house-by-house clearing operations. Tanks provided direct fire support as infantry advanced building by building. Nanshan and Beishan were recaptured between the afternoon of Oct 25 and morning of Oct 26."
+    },
+    "pla": {
+      "zh-tw": "解放軍在村落中構築臨時防禦工事。第253團在北山固守，第251團在南山抵抗。缺乏重武器與補給，但仍擊退國軍多次衝鋒。",
+      "en": "PLA troops built improvised defensive positions inside the villages. The 253rd Regiment held Beishan and the 251st defended Nanshan. Lacking heavy weapons and supplies, they nevertheless repelled multiple ROC assaults."
+    },
+    "civilian": {
+      "zh-tw": "村裡到處是槍聲。有人躲在地窖，有人逃到田裡。房子被打穿了牆，屋頂塌了。天亮後看到街上到處是倒下的士兵。",
+      "en": "Gunfire was everywhere in the village. Some hid in cellars, others fled to the fields. Walls were shot through, roofs collapsed. At dawn, soldiers lay fallen in the streets."
+    }
+  },
+  "disputes": [
+    { "topic": "平民傷亡", "zh-tw": "國軍：極少數平民誤傷。居民口述：目睹鄰居死於戰火", "en": "ROC records: minimal civilian casualties. Resident accounts: witnessed neighbors killed." },
+    { "topic": "建築損毀程度", "zh-tw": "國軍：局部損毀。實際修復記錄顯示大規模重建", "en": "ROC: localized damage. Reconstruction records show large-scale rebuilding was necessary." }
+  ],
+  "evidenceStatus": "oral_accounts"
+}

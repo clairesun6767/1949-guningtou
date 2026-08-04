@@ -1,0 +1,23 @@
+{
+  "id": "battle-significance",
+  "title": { "zh-tw": "戰役意義與政治詮釋", "zh-cn": "战役意义与政治诠释", "en": "Significance & Political Interpretation" },
+  "summary": {
+    "zh-tw": "古寧頭戰役在海峽兩岸有不同的歷史定位與政治詮釋。雙方對戰役意義的敘事差異反映了更深層的政治立場。",
+    "en": "The Battle of Guningtou holds different historical and political significance on each side of the Taiwan Strait, reflecting deeper political narratives."
+  },
+  "viewpoints": {
+    "roc": {
+      "zh-tw": "古寧頭戰役是「台海第一戰」，成功阻止解放軍渡海，確保了台澎金馬的安全。此役被定位為中華民國保衛戰的關鍵轉折點。",
+      "en": "The battle is framed as the 'First Battle of the Taiwan Strait' — a decisive victory that prevented PLA invasion and secured Taiwan, Penghu, Kinmen, and Matsu."
+    },
+    "pla": {
+      "zh-tw": "解放軍將此役視為一次「局部失利」。毛澤東曾批示「此次失利，主要是輕敵」。此役後解放軍暫緩渡海作戰，轉而加強海空軍建設。",
+      "en": "The PLA views the battle as a 'local setback.' Mao reportedly commented: 'This defeat was primarily due to underestimating the enemy.' The PLA subsequently paused cross-strait operations and focused on naval and air force development."
+    }
+  },
+  "disputes": [
+    { "topic": "歷史定位", "zh-tw": "台灣：保衛戰關鍵勝利。中國大陸：渡海戰役的一次失利", "en": "Taiwan: key defensive victory. Mainland China: a failed amphibious operation." },
+    { "topic": "對後續影響", "zh-tw": "國軍：古寧頭經驗成為台海防衛的典範。解放軍：促使解放軍改革兩棲作戰能力", "en": "ROC: Guningtou became the model for Taiwan Strait defense. PLA: spurred reform of amphibious warfare capabilities." }
+  ],
+  "evidenceStatus": "politically_contested"
+}

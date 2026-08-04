@@ -1,0 +1,23 @@
+{
+  "id": "longkou-first-shot",
+  "title": { "zh-tw": "嚨口第一砲", "zh-cn": "垄口第一炮", "en": "The First Shot at Longkou" },
+  "summary": {
+    "zh-tw": "1949年10月25日凌晨，國軍M5A1戰車在嚨口發射了古寧頭戰役的第一砲。關於發射時間、誰操作、擊中目標，各方說法不同。",
+    "en": "In the early hours of October 25, 1949, an ROC M5A1 tank fired the first shot of the battle at Longkou. Sources disagree on the exact time, operator, and target."
+  },
+  "viewpoints": {
+    "roc": {
+      "zh-tw": "10月24日下午演習結束後，戰車第3團第1連66號車在嚨口拋錨。25日凌晨00:30，18歲射手熊震球發現海上紅色信號彈，用穿甲彈擊中解放軍帆船桅杆，第二發擊中彈藥船引發大火。",
+      "en": "After exercises on Oct 24, Tank #66 (3rd Tank Regiment) broke down at Longkou. At 00:30 on Oct 25, 18-year-old gunner Xiong Zhenqiu spotted red signal flares at sea. His first AP round struck a PLA junk's mast; the second hit an ammunition vessel, causing a massive fire."
+    },
+    "pla": {
+      "zh-tw": "解放軍記載船團在接近金門海岸時遭遇國軍岸防砲火。第一梯隊的船隻在登陸過程中遭受猛烈射擊，部分船隻被擊中起火。",
+      "en": "PLA records describe the flotilla encountering intense shore battery fire as it approached Kinmen. Several landing craft were hit and set ablaze during the approach."
+    }
+  },
+  "disputes": [
+    { "topic": "發射時間", "zh-tw": "國軍：00:30。部分口述史記載時間更早或更晚", "en": "ROC: 00:30. Some oral accounts suggest earlier or later times." },
+    { "topic": "戰車是否真的拋錨", "zh-tw": "國軍戰史：演習後拋錨。部分研究者認為可能是故意留置灘頭作為伏擊", "en": "ROC history: breakdown after drill. Some researchers suggest it may have been deliberately positioned as an ambush." }
+  ],
+  "evidenceStatus": "partially_verified"
+}

@@ -1,25 +1,8 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-const base = import.meta.env.BASE_URL;
-
-const sampleEvent = {
-  id: 'EVT-0001',
-  tw: {
-    title: '解放軍渡海登陸作戰（第一梯隊）',
-    narrative: '1949年10月24日晚間，解放軍第一梯隊約9,000人自廈門蓮河出發，航向金門古寧頭海岸。因東北季風強勁，船團偏離預定航線。25日凌晨零時30分，國軍戰車射手熊震球於嚨口發現海上信號彈，發射古寧頭第一砲，擊中解放軍彈藥船，揭開戰役序幕。',
-    source: '國防部戰史、金門國家公園史料',
-  },
-  cn: {
-    title: '金门战役：第一梯队渡海登陆',
-    narrative: '1949年10月24日晚，解放军第十兵团第28军第一梯队三个团约9,000人，从福建莲河出发，执行渡海登陆金门作战任务。受东北季风影响，船队偏离预定航线。25日凌晨，先头部队在古宁头至垄口一线登陆，随即遭遇国民党军装甲部队和步兵的猛烈反击。',
-    source: '解放军战史、军事科学院编纂史料',
-  },
-  en: {
-    title: 'PLA Amphibious Landing — First Wave',
-    narrative: 'On the night of October 24, 1949, the first wave of approximately 9,000 PLA troops departed from Lianhe, Xiamen, bound for the beaches of Guningtou, Kinmen. Strong northeast monsoon winds pushed the flotilla off course. At 00:30 on October 25, ROC tank gunner Xiong Zhenqiu spotted signal flares at sea and fired the first shot of the battle, striking a PLA ammunition vessel and igniting the engagement.',
-    source: 'ROC Ministry of Defense archives, Kinmen National Park historical records, PLA military histories',
-  },
-};
+import { sitePath } from '../../data/paths';
+import { perspectiveEvents } from '../../data/perspectiveLoader';
+const { lang } = Astro.params;
 
 export function getStaticPaths() {
   return [
@@ -28,74 +11,98 @@ export function getStaticPaths() {
     { params: { lang: 'en' } },
   ];
 }
+
+function t(obj: Record<string, string> | undefined, fallback: string): string {
+  if (!obj) return fallback;
+  return (obj as any)[lang] || obj['zh-tw'] || fallback;
+}
+
+const STATUS_LABELS: Record<string, string> = {
+  verified: '已多方證實',
+  partially_verified: '部分證實',
+  disputed: '存在爭議',
+  oral_accounts: '口述資料為主',
+  politically_contested: '政治性爭議',
+};
+
+const VIEW_LABELS: Record<string, string> = {
+  roc: '國軍記載',
+  pla: '解放軍記載',
+  civilian: '居民記憶',
+};
 ---
 
+<MainLayout lang={lang}>
+  <div class="max-w-5xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">多元史觀</h1>
+    <p class="text-stone-500 mb-10">同一場戰役，不同位置的人留下不同的記憶。選擇事件，比較各方記載。</p>
 
-
-
-<MainLayout lang={Astro.params.lang}>
-  <div class="max-w-4xl mx-auto px-4 py-16">
-    <h1 class="text-3xl font-serif font-bold mb-2">多元觀點</h1>
-    <p class="text-stone-500 mb-4">同一場戰役，三種語言，三種敘事 — 所有觀點並列呈現，不自行判定正確性</p>
-
-    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-10 text-sm text-amber-700">
-      💡 本章節為本網站的核心特色。繁體中文以國軍及台灣史料為主、簡體中文以共軍及中國大陸史料為主、英文採取學術中立敘事，對不同觀點加以說明並標示來源。
+    <div class="flex flex-wrap gap-2 mb-10">
+      {perspectiveEvents.map(evt => (
+        <a href={`#${evt.id}`} class="px-4 py-2 bg-white border border-stone-200 rounded-lg text-sm text-stone-600 hover:border-amber-300 hover:text-amber-700 no-underline transition">
+          {t(evt.title, evt.id)}
+        </a>
+      ))}
     </div>
 
-    <!-- Demo: same event, 3 perspectives -->
-    <h2 class="text-xl font-serif font-bold mb-4">範例：{sampleEvent.tw.title}</h2>
-    <div class="grid lg:grid-cols-3 gap-4">
-      <!-- 繁體中文 -->
-      <div class="bg-white rounded-xl border border-blue-200 p-5">
-        <div class="flex items-center gap-2 mb-3">
-          <span class="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-bold">繁體中文</span>
-          <span class="text-xs text-stone-400">以國軍及臺灣史料為主</span>
-        </div>
-        <h3 class="font-bold text-stone-800 mb-2">{sampleEvent.tw.title}</h3>
-        <p class="text-sm text-stone-600 leading-relaxed mb-3">{sampleEvent.tw.narrative}</p>
-        <p class="text-xs text-stone-400">📚 {sampleEvent.tw.source}</p>
-      </div>
+    {perspectiveEvents.map(evt => (
+      <section id={evt.id} class="mb-12 scroll-mt-20">
+        <div class="bg-white rounded-xl border border-stone-200 overflow-hidden">
+          <div class="bg-stone-50 px-6 py-4 border-b border-stone-200">
+            <div class="flex items-center justify-between">
+              <h2 class="text-lg font-serif font-bold text-stone-800">{t(evt.title, evt.id)}</h2>
+              {evt.evidenceStatus && (
+                <span class={`text-xs px-2 py-1 rounded ${
+                  evt.evidenceStatus === 'disputed' ? 'bg-red-50 text-red-600' :
+                  evt.evidenceStatus === 'verified' ? 'bg-green-50 text-green-600' :
+                  evt.evidenceStatus === 'partially_verified' ? 'bg-amber-50 text-amber-600' :
+                  evt.evidenceStatus === 'politically_contested' ? 'bg-purple-50 text-purple-600' :
+                  'bg-stone-50 text-stone-600'
+                }`}>
+                  {STATUS_LABELS[evt.evidenceStatus] || evt.evidenceStatus}
+                </span>
+              )}
+            </div>
+            <p class="text-sm text-stone-500 mt-1">{t(evt.summary, '')}</p>
+          </div>
 
-      <!-- 简体中文 -->
-      <div class="bg-white rounded-xl border border-red-200 p-5">
-        <div class="flex items-center gap-2 mb-3">
-          <span class="text-xs bg-red-600 text-white px-2 py-0.5 rounded font-bold">简体中文</span>
-          <span class="text-xs text-stone-400">以共军及中国大陆史料为主</span>
-        </div>
-        <h3 class="font-bold text-stone-800 mb-2">{sampleEvent.cn.title}</h3>
-        <p class="text-sm text-stone-600 leading-relaxed mb-3">{sampleEvent.cn.narrative}</p>
-        <p class="text-xs text-stone-400">📚 {sampleEvent.cn.source}</p>
-      </div>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-200">
+            {Object.entries(evt.viewpoints).map(([key, vp]) => (
+              <div class="bg-white p-5">
+                <div class="flex items-center gap-2 mb-3">
+                  {key === 'roc' && <span class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">國</span>}
+                  {key === 'pla' && <span class="w-5 h-5 rounded-full bg-red-600 flex items-center justify-center text-white text-[10px] font-bold">共</span>}
+                  {key === 'civilian' && <span class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-[10px] font-bold">民</span>}
+                  <span class="text-xs font-medium text-stone-500">{VIEW_LABELS[key] || key}</span>
+                </div>
+                <p class="text-sm text-stone-700 leading-relaxed">{t(vp, '')}</p>
+              </div>
+            ))}
+          </div>
 
-      <!-- English -->
-      <div class="bg-white rounded-xl border border-stone-300 p-5">
-        <div class="flex items-center gap-2 mb-3">
-          <span class="text-xs bg-stone-600 text-white px-2 py-0.5 rounded font-bold">English</span>
-          <span class="text-xs text-stone-400">Academic · Neutral</span>
+          {evt.disputes && evt.disputes.length > 0 && (
+            <div class="border-t border-stone-200 px-6 py-4 bg-amber-50/50">
+              <h3 class="text-xs font-bold text-amber-700 uppercase tracking-wide mb-2">史料差異</h3>
+              <div class="space-y-2">
+                {evt.disputes.map(d => (
+                  <div class="flex gap-2 text-sm">
+                    <span class="text-amber-400 mt-0.5">•</span>
+                    <div>
+                      <span class="font-medium text-stone-700">{d.topic}：</span>
+                      <span class="text-stone-600">{t(d as any, d.topic)}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-        <h3 class="font-bold text-stone-800 mb-2">{sampleEvent.en.title}</h3>
-        <p class="text-sm text-stone-600 leading-relaxed mb-3">{sampleEvent.en.narrative}</p>
-        <p class="text-xs text-stone-400">📚 {sampleEvent.en.source}</p>
-      </div>
-    </div>
+      </section>
+    ))}
 
-    <!-- Principles -->
-    <div class="mt-12 grid sm:grid-cols-3 gap-4">
-      <div class="bg-white rounded-xl border border-stone-200 p-5 text-center">
-        <div class="text-2xl mb-2">📖</div>
-        <h3 class="font-bold text-stone-700 text-sm">多史觀並存</h3>
-        <p class="text-xs text-stone-500 mt-1">不自行判定哪一個版本「正確」。所有史料全部保留，讀者可自行對照。</p>
-      </div>
-      <div class="bg-white rounded-xl border border-stone-200 p-5 text-center">
-        <div class="text-2xl mb-2">🏷️</div>
-        <h3 class="font-bold text-stone-700 text-sm">來源透明</h3>
-        <p class="text-xs text-stone-500 mt-1">每段敘事明確標示資料來源，讀者可追溯原始文獻。</p>
-      </div>
-      <div class="bg-white rounded-xl border border-stone-200 p-5 text-center">
-        <div class="text-2xl mb-2">⚖️</div>
-        <h3 class="font-bold text-stone-700 text-sm">政治中立</h3>
-        <p class="text-xs text-stone-500 mt-1">不以任何政治立場為敘事核心。歷史理解優先於政治判斷。</p>
-      </div>
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-700">
+      <h3 class="font-bold mb-1">研究方法</h3>
+      <p>每個事件的「國軍記載」主要引用國防部戰史與金門國家公園史料。「解放軍記載」引用解放軍戰史與軍事科學院編纂史料。「居民記憶」來自金門地方口述歷史採集。爭議事項已明確標示，讀者可自行對照各方原始出處。</p>
     </div>
   </div>
 </MainLayout>

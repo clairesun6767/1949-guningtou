@@ -1,0 +1,42 @@
+{
+  "id": "first-wave-landing",
+  "title": { "zh-tw": "第一波登陸", "zh-cn": "第一波登陆", "en": "First Wave Landing" },
+  "summary": {
+    "zh-tw": "1949年10月24日晚至25日凌晨，解放軍第一梯隊渡海登陸金門古寧頭海岸。各方對登陸時間、規模、位置存在不同記載。",
+    "zh-cn": "1949年10月24日晚至25日凌晨，解放军第一梯队渡海登陆金门古宁头海岸。各方对登陆时间、规模、位置存在不同记载。",
+    "en": "On the night of October 24-25, 1949, the PLA first echelon crossed the strait and landed on Guningtou's beaches. Sources differ on timing, scale, and exact landing locations."
+  },
+  "viewpoints": {
+    "roc": {
+      "zh-tw": "解放軍約9,000人分乘200餘艘帆船，於凌晨零時至二時之間，分別在嚨口、古寧頭、湖尾三處登陸。國軍第201師前沿哨兵發現後，戰車排立即開火。",
+      "zh-cn": "解放军约9,000人分乘200余艘帆船，于凌晨零时至二时之间，分别在垄口、古宁头、湖尾三处登陆。国军第201师前沿哨兵发现后，坦克排立即开火。",
+      "en": "Approximately 9,000 PLA troops aboard 200+ wooden boats landed between 00:00-02:00 at Longkou, Guningtou, and Huwei. ROC Army 201st Division sentries detected them and the tank platoon immediately engaged."
+    },
+    "pla": {
+      "zh-tw": "第28軍第244、251、253團組成第一梯隊，於24日夜晚自蓮河出發。因東北季風影響，部分船隻偏離航線。登陸後各部迅速展開，但因缺乏統一指揮而各自為戰。",
+      "zh-cn": "第28军第244、251、253团组成第一梯队，于24日夜晚自莲河出发。因东北季风影响，部分船只偏离航线。登陆后各部迅速展开，但因缺乏统一指挥而各自为战。",
+      "en": "The 28th Army's 244th, 251st, and 253rd Regiments formed the first echelon, departing from Lianhe on the night of the 24th. Northeast monsoon winds scattered the flotilla. After landing, units advanced separately due to lack of unified command."
+    },
+    "civilian": {
+      "zh-tw": "那晚風很大，海上的船火忽明忽暗。村裡人聽到海邊傳來砲聲，起初以為是演習，後來才知道是真的打仗了。",
+      "zh-cn": "那晚风很大，海上的船火忽明忽暗。村里人听到海边传来炮声，起初以为是演习，后来才知道是真的打仗了。",
+      "en": "The wind was strong that night. Boat lights flickered on the sea. Villagers heard cannon fire from the beach — at first they thought it was a drill, then realized it was real combat."
+    }
+  },
+  "disputes": [
+    {
+      "topic": "登陸時間",
+      "zh-tw": "國軍記載約00:30發現敵軍；解放軍記載約01:00開始登陸",
+      "zh-cn": "国军记载约00:30发现敌军；解放军记载约01:00开始登陆",
+      "en": "ROC records: enemy detected ~00:30. PLA records: landing began ~01:00"
+    },
+    {
+      "topic": "登陸人數",
+      "zh-tw": "國軍估計8,000-10,000人；解放軍自述三個團約9,086人",
+      "zh-cn": "国军估计8,000-10,000人；解放军自述三个团约9,086人",
+      "en": "ROC estimates: 8,000-10,000. PLA self-report: three regiments, ~9,086"
+    }
+  ],
+  "sources": ["SRC-0001", "SRC-0007"],
+  "evidenceStatus": "partially_verified"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "casualties",
+  "title": { "zh-tw": "傷亡與俘虜", "zh-cn": "伤亡与俘虏", "en": "Casualties & Prisoners" },
+  "summary": {
+    "zh-tw": "古寧頭戰役的傷亡數字是雙方爭議最大的議題之一。國軍、解放軍與第三方學者的統計差異顯著。",
+    "en": "Casualty figures from the Battle of Guningtou remain among the most disputed aspects. Figures from ROC, PLA, and third-party scholars differ significantly."
+  },
+  "viewpoints": {
+    "roc": {
+      "zh-tw": "國軍統計：解放軍陣亡約3,000餘人、被俘約7,000人。國軍傷亡約2,000餘人。",
+      "en": "ROC figures: ~3,000 PLA killed, ~7,000 captured. ROC casualties: ~2,000."
+    },
+    "pla": {
+      "zh-tw": "解放軍承認第一梯隊9,086人中多數未能返回。具體傷亡數字長期未公開。",
+      "en": "PLA acknowledges the majority of the 9,086-strong first echelon did not return. Specific casualty figures remained classified for decades."
+    }
+  },
+  "disputes": [
+    { "topic": "解放軍陣亡數", "zh-tw": "國軍：3,000+。部分學者估計更高", "en": "ROC: 3,000+. Some scholars estimate higher." },
+    { "topic": "俘虜處置", "zh-tw": "國軍：依日內瓦公約對待俘虜。部分口述史稱俘虜待遇惡劣", "en": "ROC: treated per Geneva Convention. Some oral accounts report harsh treatment." }
+  ],
+  "evidenceStatus": "disputed"
+}
