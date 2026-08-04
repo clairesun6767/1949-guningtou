@@ -1,0 +1,84 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { STATS } from '../data/loader';
+---
+
+<MainLayout>
+  <div class="max-w-3xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-4">關於本站</h1>
+
+    <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+      <h2 class="font-bold text-lg mb-2">建站理念</h2>
+      <p class="text-stone-600 leading-relaxed font-serif text-lg italic">「以歷史見和平」</p>
+      <p class="text-stone-600 leading-relaxed mt-2">
+        1949 年古寧頭戰役數位知識平台，旨在以客觀、多元的史料為基礎，
+        呈現這場改變兩岸命運的關鍵戰役。我們不以勝負論英雄，
+        而是透過理解歷史，反思戰爭的代價，珍惜和平的可貴。
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+      <h2 class="font-bold text-lg mb-2">編輯原則</h2>
+      <ul class="list-disc list-inside text-stone-600 space-y-2 text-sm">
+        <li><strong>多元史料</strong>：同時收錄國軍、共軍與第三方來源，不自行判定正確性</li>
+        <li><strong>明確標示來源</strong>：所有陳述附原始出處，讀者可追溯查證</li>
+        <li><strong>觀點透明</strong>：同一事件如存在不同記載，全部並列呈現並標明來源</li>
+        <li><strong>政治中立</strong>：不以任何政治立場為敘事核心，聚焦歷史事實</li>
+        <li><strong>歷史與創作分離</strong>：史料與推測/創作內容明確區分，不混淆</li>
+      </ul>
+    </div>
+
+    <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+      <h2 class="font-bold text-lg mb-2">資料規模</h2>
+      <div class="grid grid-cols-3 gap-3 text-center text-sm">
+        <div class="bg-stone-50 rounded-lg p-3">
+          <div class="text-2xl font-bold text-amber-600">{STATS.totalTimeline}</div>
+          <div class="text-stone-500">時間點</div>
+        </div>
+        <div class="bg-stone-50 rounded-lg p-3">
+          <div class="text-2xl font-bold text-amber-600">{STATS.totalEvents}</div>
+          <div class="text-stone-500">歷史事件</div>
+        </div>
+        <div class="bg-stone-50 rounded-lg p-3">
+          <div class="text-2xl font-bold text-amber-600">{STATS.totalPOIs}</div>
+          <div class="text-stone-500">戰役地點</div>
+        </div>
+        <div class="bg-stone-50 rounded-lg p-3">
+          <div class="text-2xl font-bold text-amber-600">{STATS.totalPersons}</div>
+          <div class="text-stone-500">人物</div>
+        </div>
+        <div class="bg-stone-50 rounded-lg p-3">
+          <div class="text-2xl font-bold text-amber-600">{STATS.totalSources}</div>
+          <div class="text-stone-500">文獻來源</div>
+        </div>
+        <div class="bg-stone-50 rounded-lg p-3">
+          <div class="text-2xl font-bold text-amber-600">91</div>
+          <div class="text-stone-500">靜態頁面</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+      <h2 class="font-bold text-lg mb-2">技術</h2>
+      <p class="text-sm text-stone-600 leading-relaxed">
+        本站以 Astro + React + TypeScript + Tailwind CSS 建置，部署於 GitHub Pages。
+        資料來源為 Battlefield Research Database（結構化 JSON），支援多史觀並存與三語呈現。
+        1944 年航照由中央研究院 GIS 中心提供。
+      </p>
+    </div>
+
+    <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+      <h2 class="font-bold text-lg mb-2">著作權說明</h2>
+      <p class="text-sm text-stone-600 leading-relaxed">
+        本站文字內容基於公開史料編寫。照片與多媒體素材之著作權歸屬原权利人所有，
+        使用前請確認授權狀態。1944 年航照影像由中央研究院人文社會科學研究中心
+        地理資訊科學研究專題中心提供。
+      </p>
+    </div>
+
+    <div class="text-center text-sm text-stone-400 mt-8">
+      <p>古寧頭戰役數位知識平台 · v1.0</p>
+      <p>以歷史見和平 · Learning Peace Through History</p>
+    </div>
+  </div>
+</MainLayout>

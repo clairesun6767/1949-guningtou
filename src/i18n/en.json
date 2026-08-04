@@ -1,0 +1,43 @@
+{
+  "site_title": "Battle of Guningtou 1949",
+  "site_subtitle": "Learning Peace Through History",
+  "tagline": "以歷史見和平",
+  "nav": {
+    "home": "Home",
+    "history_context": "Context",
+    "world_situation": "World Situation",
+    "battle_background": "Battle Background",
+    "battle_impact": "Battle Impact",
+    "battle_core": "The Battle",
+    "timeline": "Timeline",
+    "battle_analysis": "Battle Analysis",
+    "multi_perspective": "Perspectives",
+    "people_places": "People & Places",
+    "people": "People",
+    "places": "Places",
+    "archive": "Archive",
+    "weapons": "Weapons",
+    "artifacts": "Artifacts",
+    "documents": "Documents",
+    "digital_archive": "Digital Archive",
+    "postwar_peace": "Post-War to Peace",
+    "battlefield_os": "Battlefield OS",
+    "about": "About"
+  },
+  "home": {
+    "hero_title": "Battle of Guningtou",
+    "hero_date": "October 1949",
+    "hero_subtitle": "Fifteen thousand soldiers landed here",
+    "hero_subtitle2": "Three days later, nearly ten thousand did not leave",
+    "peace_quote": "Where artillery shells once fell, the tides now wash the shore.",
+    "peace_text": "History has unfolded and cannot be changed. We do not judge right or wrong — we only present the moments that transpired on the shores of Kinmen.",
+    "peace_cta": "We study war so we may never experience it again.",
+    "why_study": "Why study Guningtou?",
+    "what_is_1949": "What was happening in 1949?",
+    "enter_history": "Enter History"
+  },
+  "footer": {
+    "data_source": "Source: Battlefield Research Database · All content cited · Multi-perspective · Politically neutral",
+    "peace_message": "History cannot be changed. Through understanding history, we cherish the value of peace."
+  }
+}

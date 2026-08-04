@@ -1,0 +1,107 @@
+{
+  "schema_ref": "_schemas/command_schema.json",
+  "nodes": [
+    {
+      "command_id": "PLA-0001",
+      "entity_type": "command_node",
+      "title": "第十兵团指挥部（厦门）",
+      "higher_command": "第三野战军",
+      "subordinate_commands": [
+        "PLA-0002"
+      ],
+      "commander_name": "叶飞",
+      "political_commissar": "韦国清",
+      "chain_of_command_notes": "第十兵团司令部设于厦门，负责攻金作战的总策划与指挥",
+      "related_units": [
+        "OOB-0001"
+      ],
+      "related_personnel": [
+        "PER-0002"
+      ],
+      "related_sources": [
+        "LIT-0011"
+      ]
+    },
+    {
+      "command_id": "PLA-0002",
+      "entity_type": "command_node",
+      "title": "第28军前线指挥所（莲河）",
+      "higher_command": "PLA-0001",
+      "subordinate_commands": [
+        "PLA-0003",
+        "PLA-0004",
+        "PLA-0005"
+      ],
+      "commander_name": "萧锋（代理）",
+      "chain_of_command_notes": "第28军前线指挥所设于莲河，负责攻金作战的前线指挥",
+      "related_units": [
+        "OOB-0002"
+      ],
+      "related_personnel": [
+        "PER-0001",
+        "PER-0003",
+        "PER-0004"
+      ],
+      "related_sources": [
+        "LIT-0009",
+        "LIT-0012"
+      ]
+    },
+    {
+      "command_id": "PLA-0003",
+      "entity_type": "command_node",
+      "title": "第82师指挥所",
+      "higher_command": "PLA-0002",
+      "commander_name": "—",
+      "related_units": [
+        "OOB-0003"
+      ],
+      "related_sources": [
+        "LIT-0012"
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "command_id": "PLA-0101",
+      "entity_type": "command_relation",
+      "title": "叶飞 → 萧锋（上下级指挥关系）",
+      "higher_command": "PLA-0001",
+      "subordinate_commands": [
+        "PLA-0002"
+      ],
+      "decision_description": "叶飞为第十兵团司令员，萧锋为第28军代理军长，萧锋直接向叶飞报告。",
+      "related_personnel": [
+        "PER-0001",
+        "PER-0002"
+      ],
+      "related_sources": [
+        "LIT-0009",
+        "LIT-0011"
+      ]
+    },
+    {
+      "command_id": "PLA-0102",
+      "entity_type": "command_relation",
+      "title": "萧锋 → 各团团长（前线指挥关系）",
+      "higher_command": "PLA-0002",
+      "decision_description": "萧锋通过第82师指挥所，指挥第244、245、246团登陆作战。",
+      "related_personnel": [
+        "PER-0001",
+        "PER-0005",
+        "PER-0006",
+        "PER-0007"
+      ],
+      "related_sources": [
+        "LIT-0009"
+      ]
+    }
+  ],
+  "metadata": {
+    "total_nodes": 3,
+    "total_relations": 2,
+    "last_updated": "2026-07-23",
+    "version": "1.0-draft",
+    "status": "draft_PRC-D"
+  }
+}

@@ -1,0 +1,3498 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-07-21",
+    "total_nodes": 25,
+    "total_connections": 36,
+    "total_distance_pairs": 300
+  },
+  "nodes": [
+    {
+      "spatial_id": "SP-POI-0001",
+      "poi_id": "POI-0001",
+      "name_chinese": "嚨口",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Landing Beach",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0002",
+          "connection_type": "Road Connection",
+          "route_name": "海灘步道",
+          "distance_meters": 800
+        },
+        {
+          "target_poi": "POI-0005",
+          "connection_type": "Beach Landing Route",
+          "route_name": "嚨口—蘭厝灘岸線",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0004",
+          "connection_type": "Beach Landing Route",
+          "route_name": "嚨口—后沙灘岸線",
+          "distance_meters": 600
+        },
+        {
+          "target_poi": "POI-0023",
+          "connection_type": "Defense Line",
+          "route_name": "嚨口防禦碉堡線",
+          "distance_meters": 200
+        },
+        {
+          "target_poi": "POI-0012",
+          "connection_type": "Fire Support Route",
+          "route_name": "瓊林戰車預備隊→嚨口火力支援",
+          "distance_meters": 3000
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Attack Direction",
+          "route_name": "解放軍第244團攻擊方向：嚨口→古寧頭",
+          "distance_meters": 1000
+        }
+      ],
+      "terrain_type": "Landing Beach",
+      "elevation": 10,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 200
+    },
+    {
+      "spatial_id": "SP-POI-0002",
+      "poi_id": "POI-0002",
+      "name_chinese": "古寧頭海灘（北山段）",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Landing Beach",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0001",
+          "connection_type": "Road Connection",
+          "route_name": "海灘步道",
+          "distance_meters": 800
+        },
+        {
+          "target_poi": "POI-0003",
+          "connection_type": "Beach Landing Route",
+          "route_name": "古寧頭—湖尾灘岸線",
+          "distance_meters": 1500
+        },
+        {
+          "target_poi": "POI-0021",
+          "connection_type": "Beach Landing Route",
+          "route_name": "古寧頭—北山斷崖海岸線",
+          "distance_meters": 500
+        }
+      ],
+      "terrain_type": "Landing Beach",
+      "elevation": 10,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 500
+    },
+    {
+      "spatial_id": "SP-POI-0003",
+      "poi_id": "POI-0003",
+      "name_chinese": "湖尾",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Landing Beach",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0002",
+          "connection_type": "Beach Landing Route",
+          "route_name": "古寧頭—湖尾灘岸線",
+          "distance_meters": 1500
+        },
+        {
+          "target_poi": "POI-0014",
+          "connection_type": "Trail Connection",
+          "route_name": "湖尾—湖尾高地小徑",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0014",
+          "connection_type": "Observation Line",
+          "route_name": "湖尾高地→湖尾觀測線",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Attack Direction",
+          "route_name": "解放軍第251團攻擊方向：湖尾→古寧頭",
+          "distance_meters": 1200
+        }
+      ],
+      "terrain_type": "Landing Beach",
+      "elevation": 10,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 300
+    },
+    {
+      "spatial_id": "SP-POI-0004",
+      "poi_id": "POI-0004",
+      "name_chinese": "后沙",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Landing Beach",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0001",
+          "connection_type": "Beach Landing Route",
+          "route_name": "嚨口—后沙灘岸線",
+          "distance_meters": 600
+        },
+        {
+          "target_poi": "POI-0005",
+          "connection_type": "Beach Landing Route",
+          "route_name": "后沙—蘭厝灘岸線",
+          "distance_meters": 400
+        }
+      ],
+      "terrain_type": "Landing Beach",
+      "elevation": 10,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 400
+    },
+    {
+      "spatial_id": "SP-POI-0005",
+      "poi_id": "POI-0005",
+      "name_chinese": "蘭厝",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Landing Beach",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0001",
+          "connection_type": "Beach Landing Route",
+          "route_name": "嚨口—蘭厝灘岸線",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0004",
+          "connection_type": "Beach Landing Route",
+          "route_name": "后沙—蘭厝灘岸線",
+          "distance_meters": 400
+        }
+      ],
+      "terrain_type": "Landing Beach",
+      "elevation": 10,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 400
+    },
+    {
+      "spatial_id": "SP-POI-0006",
+      "poi_id": "POI-0006",
+      "name_chinese": "古寧頭（北山）",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Village",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0007",
+          "connection_type": "Road Connection",
+          "route_name": "北山—林厝村道",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0008",
+          "connection_type": "Road Connection",
+          "route_name": "北山—南山村道",
+          "distance_meters": 200
+        },
+        {
+          "target_poi": "POI-0021",
+          "connection_type": "Retreat Route",
+          "route_name": "古寧頭→北端海岸撤退路線",
+          "distance_meters": 400
+        },
+        {
+          "target_poi": "POI-0010",
+          "connection_type": "Road Connection",
+          "route_name": "湖南高地—古寧頭道路",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0009",
+          "connection_type": "Road Connection",
+          "route_name": "埔頭—古寧頭道路",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0013",
+          "connection_type": "Observation Line",
+          "route_name": "觀音亭山→古寧頭觀測線",
+          "distance_meters": 800
+        },
+        {
+          "target_poi": "POI-0015",
+          "connection_type": "Observation Line",
+          "route_name": "雙乳山→古寧頭觀測線",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0016",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—北山村道",
+          "distance_meters": 100
+        },
+        {
+          "target_poi": "POI-0025",
+          "connection_type": "Retreat Route",
+          "route_name": "徐博古寧頭→太武山撤退路線",
+          "distance_meters": 5000
+        },
+        {
+          "target_poi": "POI-0011",
+          "connection_type": "Supply Route",
+          "route_name": "水頭→古寧頭補給路線",
+          "distance_meters": 3000
+        },
+        {
+          "target_poi": "POI-0012",
+          "connection_type": "Supply Route",
+          "route_name": "瓊林→古寧頭補給路線",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0009",
+          "connection_type": "Attack Direction",
+          "route_name": "國軍第118師攻擊方向：埔頭→古寧頭",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0021",
+          "connection_type": "Attack Direction",
+          "route_name": "國軍攻擊方向：古寧頭→北端殲滅戰",
+          "distance_meters": 400
+        },
+        {
+          "target_poi": "POI-0001",
+          "connection_type": "Attack Direction",
+          "route_name": "解放軍第244團攻擊方向：嚨口→古寧頭",
+          "distance_meters": 1000
+        },
+        {
+          "target_poi": "POI-0003",
+          "connection_type": "Attack Direction",
+          "route_name": "解放軍第251團攻擊方向：湖尾→古寧頭",
+          "distance_meters": 1200
+        }
+      ],
+      "terrain_type": "Village",
+      "elevation": 30,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 100
+    },
+    {
+      "spatial_id": "SP-POI-0007",
+      "poi_id": "POI-0007",
+      "name_chinese": "林厝",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Village",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Road Connection",
+          "route_name": "北山—林厝村道",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0008",
+          "connection_type": "Road Connection",
+          "route_name": "林厝—南山村道",
+          "distance_meters": 250
+        }
+      ],
+      "terrain_type": "Village",
+      "elevation": 30,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 250
+    },
+    {
+      "spatial_id": "SP-POI-0008",
+      "poi_id": "POI-0008",
+      "name_chinese": "南山",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Village",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Road Connection",
+          "route_name": "北山—南山村道",
+          "distance_meters": 200
+        },
+        {
+          "target_poi": "POI-0007",
+          "connection_type": "Road Connection",
+          "route_name": "林厝—南山村道",
+          "distance_meters": 250
+        }
+      ],
+      "terrain_type": "Village",
+      "elevation": 30,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 200
+    },
+    {
+      "spatial_id": "SP-POI-0009",
+      "poi_id": "POI-0009",
+      "name_chinese": "埔頭",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Village",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Road Connection",
+          "route_name": "埔頭—古寧頭道路",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Attack Direction",
+          "route_name": "國軍第118師攻擊方向：埔頭→古寧頭",
+          "distance_meters": 500
+        }
+      ],
+      "terrain_type": "Village",
+      "elevation": 30,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 500
+    },
+    {
+      "spatial_id": "SP-POI-0010",
+      "poi_id": "POI-0010",
+      "name_chinese": "湖南高地",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Command Post",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Road Connection",
+          "route_name": "湖南高地—古寧頭道路",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0012",
+          "connection_type": "Road Connection",
+          "route_name": "湖南高地—瓊林道路",
+          "distance_meters": 1500
+        },
+        {
+          "target_poi": "POI-0011",
+          "connection_type": "Supply Route",
+          "route_name": "水頭—湖南高地補給路線",
+          "distance_meters": 3000
+        },
+        {
+          "target_poi": "POI-0014",
+          "connection_type": "Fire Support Route",
+          "route_name": "湖南高地→湖尾高地火力支援",
+          "distance_meters": 2500
+        }
+      ],
+      "terrain_type": "Command Post",
+      "elevation": 20,
+      "visibility": "High",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 1500
+    },
+    {
+      "spatial_id": "SP-POI-0011",
+      "poi_id": "POI-0011",
+      "name_chinese": "水頭碼頭",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Command Post",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0010",
+          "connection_type": "Supply Route",
+          "route_name": "水頭—湖南高地補給路線",
+          "distance_meters": 3000
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Supply Route",
+          "route_name": "水頭→古寧頭補給路線",
+          "distance_meters": 3000
+        }
+      ],
+      "terrain_type": "Command Post",
+      "elevation": 20,
+      "visibility": "High",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 3000
+    },
+    {
+      "spatial_id": "SP-POI-0012",
+      "poi_id": "POI-0012",
+      "name_chinese": "瓊林",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Command Post",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0010",
+          "connection_type": "Road Connection",
+          "route_name": "湖南高地—瓊林道路",
+          "distance_meters": 1500
+        },
+        {
+          "target_poi": "POI-0014",
+          "connection_type": "Road Connection",
+          "route_name": "瓊林—湖尾高地道路",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Supply Route",
+          "route_name": "瓊林→古寧頭補給路線",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0001",
+          "connection_type": "Fire Support Route",
+          "route_name": "瓊林戰車預備隊→嚨口火力支援",
+          "distance_meters": 3000
+        }
+      ],
+      "terrain_type": "Command Post",
+      "elevation": 20,
+      "visibility": "High",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 1500
+    },
+    {
+      "spatial_id": "SP-POI-0013",
+      "poi_id": "POI-0013",
+      "name_chinese": "觀音亭山",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "High Ground",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Observation Line",
+          "route_name": "觀音亭山→古寧頭觀測線",
+          "distance_meters": 800
+        }
+      ],
+      "terrain_type": "High Ground",
+      "elevation": 50,
+      "visibility": "High",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 800
+    },
+    {
+      "spatial_id": "SP-POI-0014",
+      "poi_id": "POI-0014",
+      "name_chinese": "雙乳山",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "High Ground",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0003",
+          "connection_type": "Trail Connection",
+          "route_name": "湖尾—湖尾高地小徑",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0012",
+          "connection_type": "Road Connection",
+          "route_name": "瓊林—湖尾高地道路",
+          "distance_meters": 2000
+        },
+        {
+          "target_poi": "POI-0003",
+          "connection_type": "Observation Line",
+          "route_name": "湖尾高地→湖尾觀測線",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0010",
+          "connection_type": "Fire Support Route",
+          "route_name": "湖南高地→湖尾高地火力支援",
+          "distance_meters": 2500
+        }
+      ],
+      "terrain_type": "High Ground",
+      "elevation": 50,
+      "visibility": "High",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 300
+    },
+    {
+      "spatial_id": "SP-POI-0015",
+      "poi_id": "POI-0015",
+      "name_chinese": "湖尾高地",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "High Ground",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Observation Line",
+          "route_name": "雙乳山→古寧頭觀測線",
+          "distance_meters": 2000
+        }
+      ],
+      "terrain_type": "High Ground",
+      "elevation": 50,
+      "visibility": "High",
+      "accessibility": "Medium",
+      "military_importance": "Critical",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 2000
+    },
+    {
+      "spatial_id": "SP-POI-0016",
+      "poi_id": "POI-0016",
+      "name_chinese": "古寧頭戰史館",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Memorial",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—北山村道",
+          "distance_meters": 100
+        },
+        {
+          "target_poi": "POI-0017",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—李光前廟道路",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0018",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—和平紀念園區",
+          "distance_meters": 90
+        },
+        {
+          "target_poi": "POI-0019",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—安東一營區",
+          "distance_meters": 75
+        },
+        {
+          "target_poi": "POI-0022",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—古寧頭牌樓",
+          "distance_meters": 92
+        }
+      ],
+      "terrain_type": "Memorial",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "High",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 75
+    },
+    {
+      "spatial_id": "SP-POI-0017",
+      "poi_id": "POI-0017",
+      "name_chinese": "李光前將軍廟",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Memorial",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0016",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—李光前廟道路",
+          "distance_meters": 500
+        }
+      ],
+      "terrain_type": "Memorial",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "High",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 500
+    },
+    {
+      "spatial_id": "SP-POI-0018",
+      "poi_id": "POI-0018",
+      "name_chinese": "金門和平紀念園區（林厝砲陣地）",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Memorial",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0016",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—和平紀念園區",
+          "distance_meters": 90
+        }
+      ],
+      "terrain_type": "Memorial",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "High",
+      "civilian_importance": "High",
+      "distance_to_nearest_poi": 90
+    },
+    {
+      "spatial_id": "SP-POI-0019",
+      "poi_id": "POI-0019",
+      "name_chinese": "安東一營區",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Military Facility",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0016",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—安東一營區",
+          "distance_meters": 75
+        },
+        {
+          "target_poi": "POI-0022",
+          "connection_type": "Road Connection",
+          "route_name": "安東一營區—古寧頭牌樓",
+          "distance_meters": 100
+        }
+      ],
+      "terrain_type": "Military Facility",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 75
+    },
+    {
+      "spatial_id": "SP-POI-0020",
+      "poi_id": "POI-0020",
+      "name_chinese": "古寧頭播音站",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Military Facility",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0021",
+          "connection_type": "Road Connection",
+          "route_name": "播音站—北山斷崖道路",
+          "distance_meters": 300
+        }
+      ],
+      "terrain_type": "Military Facility",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 300
+    },
+    {
+      "spatial_id": "SP-POI-0021",
+      "poi_id": "POI-0021",
+      "name_chinese": "北山斷崖",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Coastal Defense",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0002",
+          "connection_type": "Beach Landing Route",
+          "route_name": "古寧頭—北山斷崖海岸線",
+          "distance_meters": 500
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Retreat Route",
+          "route_name": "古寧頭→北端海岸撤退路線",
+          "distance_meters": 400
+        },
+        {
+          "target_poi": "POI-0020",
+          "connection_type": "Road Connection",
+          "route_name": "播音站—北山斷崖道路",
+          "distance_meters": 300
+        },
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Attack Direction",
+          "route_name": "國軍攻擊方向：古寧頭→北端殲滅戰",
+          "distance_meters": 400
+        }
+      ],
+      "terrain_type": "Coastal Defense",
+      "elevation": 10,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 300
+    },
+    {
+      "spatial_id": "SP-POI-0022",
+      "poi_id": "POI-0022",
+      "name_chinese": "古寧頭牌樓",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Road",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0016",
+          "connection_type": "Road Connection",
+          "route_name": "戰史館—古寧頭牌樓",
+          "distance_meters": 92
+        },
+        {
+          "target_poi": "POI-0019",
+          "connection_type": "Road Connection",
+          "route_name": "安東一營區—古寧頭牌樓",
+          "distance_meters": 100
+        }
+      ],
+      "terrain_type": "Road",
+      "elevation": 30,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 92
+    },
+    {
+      "spatial_id": "SP-POI-0023",
+      "poi_id": "POI-0023",
+      "name_chinese": "安東二營區道路",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Road",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0001",
+          "connection_type": "Defense Line",
+          "route_name": "嚨口防禦碉堡線",
+          "distance_meters": 200
+        }
+      ],
+      "terrain_type": "Road",
+      "elevation": 30,
+      "visibility": "Medium",
+      "accessibility": "Easy",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 200
+    },
+    {
+      "spatial_id": "SP-POI-0024",
+      "poi_id": "POI-0024",
+      "name_chinese": "古寧頭地區防禦碉堡遺跡",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Bunker",
+      "connected_pois": [],
+      "terrain_type": "Bunker",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 0
+    },
+    {
+      "spatial_id": "SP-POI-0025",
+      "poi_id": "POI-0025",
+      "name_chinese": "太武山（戰役後徐博躲藏處）",
+      "parent_area": "古寧頭戰區",
+      "sub_area": "Tunnel",
+      "connected_pois": [
+        {
+          "target_poi": "POI-0006",
+          "connection_type": "Retreat Route",
+          "route_name": "徐博古寧頭→太武山撤退路線",
+          "distance_meters": 5000
+        }
+      ],
+      "terrain_type": "Tunnel",
+      "elevation": 20,
+      "visibility": "Medium",
+      "accessibility": "Medium",
+      "military_importance": "High",
+      "civilian_importance": "Low",
+      "distance_to_nearest_poi": 5000
+    }
+  ],
+  "connections": [
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0002",
+      "type": "Road Connection",
+      "name": "海灘步道",
+      "distance_meters": 800
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0005",
+      "type": "Beach Landing Route",
+      "name": "嚨口—蘭厝灘岸線",
+      "distance_meters": 500
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0004",
+      "type": "Beach Landing Route",
+      "name": "嚨口—后沙灘岸線",
+      "distance_meters": 600
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0003",
+      "type": "Beach Landing Route",
+      "name": "古寧頭—湖尾灘岸線",
+      "distance_meters": 1500
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0021",
+      "type": "Beach Landing Route",
+      "name": "古寧頭—北山斷崖海岸線",
+      "distance_meters": 500
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0014",
+      "type": "Trail Connection",
+      "name": "湖尾—湖尾高地小徑",
+      "distance_meters": 300
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0005",
+      "type": "Beach Landing Route",
+      "name": "后沙—蘭厝灘岸線",
+      "distance_meters": 400
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0007",
+      "type": "Road Connection",
+      "name": "北山—林厝村道",
+      "distance_meters": 300
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0008",
+      "type": "Road Connection",
+      "name": "北山—南山村道",
+      "distance_meters": 200
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0008",
+      "type": "Road Connection",
+      "name": "林厝—南山村道",
+      "distance_meters": 250
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0021",
+      "type": "Retreat Route",
+      "name": "古寧頭→北端海岸撤退路線",
+      "distance_meters": 400
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0006",
+      "type": "Road Connection",
+      "name": "湖南高地—古寧頭道路",
+      "distance_meters": 2000
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0012",
+      "type": "Road Connection",
+      "name": "湖南高地—瓊林道路",
+      "distance_meters": 1500
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0006",
+      "type": "Road Connection",
+      "name": "埔頭—古寧頭道路",
+      "distance_meters": 500
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0010",
+      "type": "Supply Route",
+      "name": "水頭—湖南高地補給路線",
+      "distance_meters": 3000
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0014",
+      "type": "Road Connection",
+      "name": "瓊林—湖尾高地道路",
+      "distance_meters": 2000
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0006",
+      "type": "Observation Line",
+      "name": "觀音亭山→古寧頭觀測線",
+      "distance_meters": 800
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0003",
+      "type": "Observation Line",
+      "name": "湖尾高地→湖尾觀測線",
+      "distance_meters": 300
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0006",
+      "type": "Observation Line",
+      "name": "雙乳山→古寧頭觀測線",
+      "distance_meters": 2000
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0006",
+      "type": "Road Connection",
+      "name": "戰史館—北山村道",
+      "distance_meters": 100
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0017",
+      "type": "Road Connection",
+      "name": "戰史館—李光前廟道路",
+      "distance_meters": 500
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0018",
+      "type": "Road Connection",
+      "name": "戰史館—和平紀念園區",
+      "distance_meters": 90
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0019",
+      "type": "Road Connection",
+      "name": "戰史館—安東一營區",
+      "distance_meters": 75
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0022",
+      "type": "Road Connection",
+      "name": "戰史館—古寧頭牌樓",
+      "distance_meters": 92
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0022",
+      "type": "Road Connection",
+      "name": "安東一營區—古寧頭牌樓",
+      "distance_meters": 100
+    },
+    {
+      "from_poi": "POI-0023",
+      "to_poi": "POI-0001",
+      "type": "Defense Line",
+      "name": "嚨口防禦碉堡線",
+      "distance_meters": 200
+    },
+    {
+      "from_poi": "POI-0020",
+      "to_poi": "POI-0021",
+      "type": "Road Connection",
+      "name": "播音站—北山斷崖道路",
+      "distance_meters": 300
+    },
+    {
+      "from_poi": "POI-0025",
+      "to_poi": "POI-0006",
+      "type": "Retreat Route",
+      "name": "徐博古寧頭→太武山撤退路線",
+      "distance_meters": 5000
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0006",
+      "type": "Supply Route",
+      "name": "水頭→古寧頭補給路線",
+      "distance_meters": 3000
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0006",
+      "type": "Supply Route",
+      "name": "瓊林→古寧頭補給路線",
+      "distance_meters": 2000
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0001",
+      "type": "Fire Support Route",
+      "name": "瓊林戰車預備隊→嚨口火力支援",
+      "distance_meters": 3000
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0014",
+      "type": "Fire Support Route",
+      "name": "湖南高地→湖尾高地火力支援",
+      "distance_meters": 2500
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0006",
+      "type": "Attack Direction",
+      "name": "國軍第118師攻擊方向：埔頭→古寧頭",
+      "distance_meters": 500
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0021",
+      "type": "Attack Direction",
+      "name": "國軍攻擊方向：古寧頭→北端殲滅戰",
+      "distance_meters": 400
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0006",
+      "type": "Attack Direction",
+      "name": "解放軍第244團攻擊方向：嚨口→古寧頭",
+      "distance_meters": 1000
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0006",
+      "type": "Attack Direction",
+      "name": "解放軍第251團攻擊方向：湖尾→古寧頭",
+      "distance_meters": 1200
+    }
+  ],
+  "distance_matrix": [
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0002",
+      "distance_meters": 1413,
+      "walking_time_min": 17.0,
+      "driving_time_min": 2.8,
+      "wartime_movement_min": 28.3
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0003",
+      "distance_meters": 1974,
+      "walking_time_min": 23.7,
+      "driving_time_min": 3.9,
+      "wartime_movement_min": 39.5
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0004",
+      "distance_meters": 1066,
+      "walking_time_min": 12.8,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 21.3
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0005",
+      "distance_meters": 456,
+      "walking_time_min": 5.5,
+      "driving_time_min": 0.9,
+      "wartime_movement_min": 9.1
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0006",
+      "distance_meters": 1413,
+      "walking_time_min": 17.0,
+      "driving_time_min": 2.8,
+      "wartime_movement_min": 28.3
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0007",
+      "distance_meters": 977,
+      "walking_time_min": 11.7,
+      "driving_time_min": 2.0,
+      "wartime_movement_min": 19.5
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0008",
+      "distance_meters": 1353,
+      "walking_time_min": 16.2,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.1
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0009",
+      "distance_meters": 1560,
+      "walking_time_min": 18.7,
+      "driving_time_min": 3.1,
+      "wartime_movement_min": 31.2
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0010",
+      "distance_meters": 2264,
+      "walking_time_min": 27.2,
+      "driving_time_min": 4.5,
+      "wartime_movement_min": 45.3
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0011",
+      "distance_meters": 2337,
+      "walking_time_min": 28.0,
+      "driving_time_min": 4.7,
+      "wartime_movement_min": 46.7
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0012",
+      "distance_meters": 3553,
+      "walking_time_min": 42.6,
+      "driving_time_min": 7.1,
+      "wartime_movement_min": 71.1
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0013",
+      "distance_meters": 1113,
+      "walking_time_min": 13.4,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.3
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0014",
+      "distance_meters": 1946,
+      "walking_time_min": 23.4,
+      "driving_time_min": 3.9,
+      "wartime_movement_min": 38.9
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0015",
+      "distance_meters": 1808,
+      "walking_time_min": 21.7,
+      "driving_time_min": 3.6,
+      "wartime_movement_min": 36.2
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0016",
+      "distance_meters": 1573,
+      "walking_time_min": 18.9,
+      "driving_time_min": 3.1,
+      "wartime_movement_min": 31.5
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0017",
+      "distance_meters": 902,
+      "walking_time_min": 10.8,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.0
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0018",
+      "distance_meters": 1647,
+      "walking_time_min": 19.8,
+      "driving_time_min": 3.3,
+      "wartime_movement_min": 32.9
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0019",
+      "distance_meters": 1573,
+      "walking_time_min": 18.9,
+      "driving_time_min": 3.1,
+      "wartime_movement_min": 31.5
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0020",
+      "distance_meters": 1561,
+      "walking_time_min": 18.7,
+      "driving_time_min": 3.1,
+      "wartime_movement_min": 31.2
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0021",
+      "distance_meters": 1880,
+      "walking_time_min": 22.6,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 37.6
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0022",
+      "distance_meters": 1273,
+      "walking_time_min": 15.3,
+      "driving_time_min": 2.5,
+      "wartime_movement_min": 25.5
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0023",
+      "distance_meters": 349,
+      "walking_time_min": 4.2,
+      "driving_time_min": 0.7,
+      "wartime_movement_min": 7.0
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0024",
+      "distance_meters": 1287,
+      "walking_time_min": 15.4,
+      "driving_time_min": 2.6,
+      "wartime_movement_min": 25.7
+    },
+    {
+      "from_poi": "POI-0001",
+      "to_poi": "POI-0025",
+      "distance_meters": 5844,
+      "walking_time_min": 70.1,
+      "driving_time_min": 11.7,
+      "wartime_movement_min": 116.9
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0003",
+      "distance_meters": 1442,
+      "walking_time_min": 17.3,
+      "driving_time_min": 2.9,
+      "wartime_movement_min": 28.8
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0004",
+      "distance_meters": 1586,
+      "walking_time_min": 19.0,
+      "driving_time_min": 3.2,
+      "wartime_movement_min": 31.7
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0005",
+      "distance_meters": 1775,
+      "walking_time_min": 21.3,
+      "driving_time_min": 3.6,
+      "wartime_movement_min": 35.5
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0006",
+      "distance_meters": 0,
+      "walking_time_min": 0.0,
+      "driving_time_min": 0.0,
+      "wartime_movement_min": 0.0
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0007",
+      "distance_meters": 451,
+      "walking_time_min": 5.4,
+      "driving_time_min": 0.9,
+      "wartime_movement_min": 9.0
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0008",
+      "distance_meters": 301,
+      "walking_time_min": 3.6,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.0
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0009",
+      "distance_meters": 693,
+      "walking_time_min": 8.3,
+      "driving_time_min": 1.4,
+      "wartime_movement_min": 13.9
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0010",
+      "distance_meters": 2452,
+      "walking_time_min": 29.4,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 49.0
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0011",
+      "distance_meters": 3649,
+      "walking_time_min": 43.8,
+      "driving_time_min": 7.3,
+      "wartime_movement_min": 73.0
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0012",
+      "distance_meters": 3776,
+      "walking_time_min": 45.3,
+      "driving_time_min": 7.6,
+      "wartime_movement_min": 75.5
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0013",
+      "distance_meters": 1288,
+      "walking_time_min": 15.5,
+      "driving_time_min": 2.6,
+      "wartime_movement_min": 25.8
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0014",
+      "distance_meters": 2654,
+      "walking_time_min": 31.8,
+      "driving_time_min": 5.3,
+      "wartime_movement_min": 53.1
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0015",
+      "distance_meters": 1212,
+      "walking_time_min": 14.5,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.2
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0016",
+      "distance_meters": 420,
+      "walking_time_min": 5.0,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 8.4
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0017",
+      "distance_meters": 565,
+      "walking_time_min": 6.8,
+      "driving_time_min": 1.1,
+      "wartime_movement_min": 11.3
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0018",
+      "distance_meters": 518,
+      "walking_time_min": 6.2,
+      "driving_time_min": 1.0,
+      "wartime_movement_min": 10.4
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0019",
+      "distance_meters": 420,
+      "walking_time_min": 5.0,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 8.4
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0020",
+      "distance_meters": 150,
+      "walking_time_min": 1.8,
+      "driving_time_min": 0.3,
+      "wartime_movement_min": 3.0
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0021",
+      "distance_meters": 565,
+      "walking_time_min": 6.8,
+      "driving_time_min": 1.1,
+      "wartime_movement_min": 11.3
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0022",
+      "distance_meters": 390,
+      "walking_time_min": 4.7,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.8
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0023",
+      "distance_meters": 1077,
+      "walking_time_min": 12.9,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 21.5
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0024",
+      "distance_meters": 244,
+      "walking_time_min": 2.9,
+      "driving_time_min": 0.5,
+      "wartime_movement_min": 4.9
+    },
+    {
+      "from_poi": "POI-0002",
+      "to_poi": "POI-0025",
+      "distance_meters": 6351,
+      "walking_time_min": 76.2,
+      "driving_time_min": 12.7,
+      "wartime_movement_min": 127.0
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0004",
+      "distance_meters": 1198,
+      "walking_time_min": 14.4,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.0
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0005",
+      "distance_meters": 2027,
+      "walking_time_min": 24.3,
+      "driving_time_min": 4.1,
+      "wartime_movement_min": 40.5
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0006",
+      "distance_meters": 1442,
+      "walking_time_min": 17.3,
+      "driving_time_min": 2.9,
+      "wartime_movement_min": 28.8
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0007",
+      "distance_meters": 1582,
+      "walking_time_min": 19.0,
+      "driving_time_min": 3.2,
+      "wartime_movement_min": 31.6
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0008",
+      "distance_meters": 1155,
+      "walking_time_min": 13.9,
+      "driving_time_min": 2.3,
+      "wartime_movement_min": 23.1
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0009",
+      "distance_meters": 2134,
+      "walking_time_min": 25.6,
+      "driving_time_min": 4.3,
+      "wartime_movement_min": 42.7
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0010",
+      "distance_meters": 1240,
+      "walking_time_min": 14.9,
+      "driving_time_min": 2.5,
+      "wartime_movement_min": 24.8
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0011",
+      "distance_meters": 3439,
+      "walking_time_min": 41.3,
+      "driving_time_min": 6.9,
+      "wartime_movement_min": 68.8
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0012",
+      "distance_meters": 2437,
+      "walking_time_min": 29.2,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 48.7
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0013",
+      "distance_meters": 924,
+      "walking_time_min": 11.1,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.5
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0014",
+      "distance_meters": 1850,
+      "walking_time_min": 22.2,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 37.0
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0015",
+      "distance_meters": 231,
+      "walking_time_min": 2.8,
+      "driving_time_min": 0.5,
+      "wartime_movement_min": 4.6
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0016",
+      "distance_meters": 1049,
+      "walking_time_min": 12.6,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 21.0
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0017",
+      "distance_meters": 1334,
+      "walking_time_min": 16.0,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 26.7
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0018",
+      "distance_meters": 973,
+      "walking_time_min": 11.7,
+      "driving_time_min": 1.9,
+      "wartime_movement_min": 19.5
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0019",
+      "distance_meters": 1049,
+      "walking_time_min": 12.6,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 21.0
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0020",
+      "distance_meters": 1425,
+      "walking_time_min": 17.1,
+      "driving_time_min": 2.8,
+      "wartime_movement_min": 28.5
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0021",
+      "distance_meters": 1874,
+      "walking_time_min": 22.5,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 37.5
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0022",
+      "distance_meters": 1105,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.1
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0023",
+      "distance_meters": 1825,
+      "walking_time_min": 21.9,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 36.5
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0024",
+      "distance_meters": 1244,
+      "walking_time_min": 14.9,
+      "driving_time_min": 2.5,
+      "wartime_movement_min": 24.9
+    },
+    {
+      "from_poi": "POI-0003",
+      "to_poi": "POI-0025",
+      "distance_meters": 5074,
+      "walking_time_min": 60.9,
+      "driving_time_min": 10.1,
+      "wartime_movement_min": 101.5
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0005",
+      "distance_meters": 918,
+      "walking_time_min": 11.0,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.4
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0006",
+      "distance_meters": 1586,
+      "walking_time_min": 19.0,
+      "driving_time_min": 3.2,
+      "wartime_movement_min": 31.7
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0007",
+      "distance_meters": 1366,
+      "walking_time_min": 16.4,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.3
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0008",
+      "distance_meters": 1338,
+      "walking_time_min": 16.1,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 26.8
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0009",
+      "distance_meters": 2098,
+      "walking_time_min": 25.2,
+      "driving_time_min": 4.2,
+      "wartime_movement_min": 42.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0010",
+      "distance_meters": 1199,
+      "walking_time_min": 14.4,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0011",
+      "distance_meters": 2290,
+      "walking_time_min": 27.5,
+      "driving_time_min": 4.6,
+      "wartime_movement_min": 45.8
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0012",
+      "distance_meters": 2510,
+      "walking_time_min": 30.1,
+      "driving_time_min": 5.0,
+      "wartime_movement_min": 50.2
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0013",
+      "distance_meters": 349,
+      "walking_time_min": 4.2,
+      "driving_time_min": 0.7,
+      "wartime_movement_min": 7.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0014",
+      "distance_meters": 1080,
+      "walking_time_min": 13.0,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 21.6
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0015",
+      "distance_meters": 1137,
+      "walking_time_min": 13.6,
+      "driving_time_min": 2.3,
+      "wartime_movement_min": 22.7
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0016",
+      "distance_meters": 1449,
+      "walking_time_min": 17.4,
+      "driving_time_min": 2.9,
+      "wartime_movement_min": 29.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0017",
+      "distance_meters": 1080,
+      "walking_time_min": 13.0,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 21.6
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0018",
+      "distance_meters": 1460,
+      "walking_time_min": 17.5,
+      "driving_time_min": 2.9,
+      "wartime_movement_min": 29.2
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0019",
+      "distance_meters": 1449,
+      "walking_time_min": 17.4,
+      "driving_time_min": 2.9,
+      "wartime_movement_min": 29.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0020",
+      "distance_meters": 1680,
+      "walking_time_min": 20.2,
+      "driving_time_min": 3.4,
+      "wartime_movement_min": 33.6
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0021",
+      "distance_meters": 2151,
+      "walking_time_min": 25.8,
+      "driving_time_min": 4.3,
+      "wartime_movement_min": 43.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0022",
+      "distance_meters": 1227,
+      "walking_time_min": 14.7,
+      "driving_time_min": 2.5,
+      "wartime_movement_min": 24.5
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0023",
+      "distance_meters": 1129,
+      "walking_time_min": 13.5,
+      "driving_time_min": 2.3,
+      "wartime_movement_min": 22.6
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0024",
+      "distance_meters": 1350,
+      "walking_time_min": 16.2,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.0
+    },
+    {
+      "from_poi": "POI-0004",
+      "to_poi": "POI-0025",
+      "distance_meters": 4913,
+      "walking_time_min": 59.0,
+      "driving_time_min": 9.8,
+      "wartime_movement_min": 98.3
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0006",
+      "distance_meters": 1775,
+      "walking_time_min": 21.3,
+      "driving_time_min": 3.6,
+      "wartime_movement_min": 35.5
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0007",
+      "distance_meters": 1368,
+      "walking_time_min": 16.4,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.4
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0008",
+      "distance_meters": 1657,
+      "walking_time_min": 19.9,
+      "driving_time_min": 3.3,
+      "wartime_movement_min": 33.1
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0009",
+      "distance_meters": 2002,
+      "walking_time_min": 24.0,
+      "driving_time_min": 4.0,
+      "wartime_movement_min": 40.0
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0010",
+      "distance_meters": 2052,
+      "walking_time_min": 24.6,
+      "driving_time_min": 4.1,
+      "wartime_movement_min": 41.0
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0011",
+      "distance_meters": 1901,
+      "walking_time_min": 22.8,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 38.0
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0012",
+      "distance_meters": 3274,
+      "walking_time_min": 39.3,
+      "driving_time_min": 6.5,
+      "wartime_movement_min": 65.5
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0013",
+      "distance_meters": 1106,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.1
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0014",
+      "distance_meters": 1588,
+      "walking_time_min": 19.1,
+      "driving_time_min": 3.2,
+      "wartime_movement_min": 31.8
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0015",
+      "distance_meters": 1904,
+      "walking_time_min": 22.8,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 38.1
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0016",
+      "distance_meters": 1857,
+      "walking_time_min": 22.3,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 37.1
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0017",
+      "distance_meters": 1222,
+      "walking_time_min": 14.7,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.4
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0018",
+      "distance_meters": 1914,
+      "walking_time_min": 23.0,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 38.3
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0019",
+      "distance_meters": 1857,
+      "walking_time_min": 22.3,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 37.1
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0020",
+      "distance_meters": 1915,
+      "walking_time_min": 23.0,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 38.3
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0021",
+      "distance_meters": 2281,
+      "walking_time_min": 27.4,
+      "driving_time_min": 4.6,
+      "wartime_movement_min": 45.6
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0022",
+      "distance_meters": 1561,
+      "walking_time_min": 18.7,
+      "driving_time_min": 3.1,
+      "wartime_movement_min": 31.2
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0023",
+      "distance_meters": 778,
+      "walking_time_min": 9.3,
+      "driving_time_min": 1.6,
+      "wartime_movement_min": 15.6
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0024",
+      "distance_meters": 1610,
+      "walking_time_min": 19.3,
+      "driving_time_min": 3.2,
+      "wartime_movement_min": 32.2
+    },
+    {
+      "from_poi": "POI-0005",
+      "to_poi": "POI-0025",
+      "distance_meters": 5464,
+      "walking_time_min": 65.6,
+      "driving_time_min": 10.9,
+      "wartime_movement_min": 109.3
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0007",
+      "distance_meters": 451,
+      "walking_time_min": 5.4,
+      "driving_time_min": 0.9,
+      "wartime_movement_min": 9.0
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0008",
+      "distance_meters": 301,
+      "walking_time_min": 3.6,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.0
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0009",
+      "distance_meters": 693,
+      "walking_time_min": 8.3,
+      "driving_time_min": 1.4,
+      "wartime_movement_min": 13.9
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0010",
+      "distance_meters": 2452,
+      "walking_time_min": 29.4,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 49.0
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0011",
+      "distance_meters": 3649,
+      "walking_time_min": 43.8,
+      "driving_time_min": 7.3,
+      "wartime_movement_min": 73.0
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0012",
+      "distance_meters": 3776,
+      "walking_time_min": 45.3,
+      "driving_time_min": 7.6,
+      "wartime_movement_min": 75.5
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0013",
+      "distance_meters": 1288,
+      "walking_time_min": 15.5,
+      "driving_time_min": 2.6,
+      "wartime_movement_min": 25.8
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0014",
+      "distance_meters": 2654,
+      "walking_time_min": 31.8,
+      "driving_time_min": 5.3,
+      "wartime_movement_min": 53.1
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0015",
+      "distance_meters": 1212,
+      "walking_time_min": 14.5,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.2
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0016",
+      "distance_meters": 420,
+      "walking_time_min": 5.0,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 8.4
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0017",
+      "distance_meters": 565,
+      "walking_time_min": 6.8,
+      "driving_time_min": 1.1,
+      "wartime_movement_min": 11.3
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0018",
+      "distance_meters": 518,
+      "walking_time_min": 6.2,
+      "driving_time_min": 1.0,
+      "wartime_movement_min": 10.4
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0019",
+      "distance_meters": 420,
+      "walking_time_min": 5.0,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 8.4
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0020",
+      "distance_meters": 150,
+      "walking_time_min": 1.8,
+      "driving_time_min": 0.3,
+      "wartime_movement_min": 3.0
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0021",
+      "distance_meters": 565,
+      "walking_time_min": 6.8,
+      "driving_time_min": 1.1,
+      "wartime_movement_min": 11.3
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0022",
+      "distance_meters": 390,
+      "walking_time_min": 4.7,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.8
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0023",
+      "distance_meters": 1077,
+      "walking_time_min": 12.9,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 21.5
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0024",
+      "distance_meters": 244,
+      "walking_time_min": 2.9,
+      "driving_time_min": 0.5,
+      "wartime_movement_min": 4.9
+    },
+    {
+      "from_poi": "POI-0006",
+      "to_poi": "POI-0025",
+      "distance_meters": 6351,
+      "walking_time_min": 76.2,
+      "driving_time_min": 12.7,
+      "wartime_movement_min": 127.0
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0008",
+      "distance_meters": 518,
+      "walking_time_min": 6.2,
+      "driving_time_min": 1.0,
+      "wartime_movement_min": 10.4
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0009",
+      "distance_meters": 733,
+      "walking_time_min": 8.8,
+      "driving_time_min": 1.5,
+      "wartime_movement_min": 14.7
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0010",
+      "distance_meters": 2396,
+      "walking_time_min": 28.8,
+      "driving_time_min": 4.8,
+      "wartime_movement_min": 47.9
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0011",
+      "distance_meters": 3264,
+      "walking_time_min": 39.2,
+      "driving_time_min": 6.5,
+      "wartime_movement_min": 65.3
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0012",
+      "distance_meters": 3743,
+      "walking_time_min": 44.9,
+      "driving_time_min": 7.5,
+      "wartime_movement_min": 74.9
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0013",
+      "distance_meters": 1137,
+      "walking_time_min": 13.6,
+      "driving_time_min": 2.3,
+      "wartime_movement_min": 22.7
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0014",
+      "distance_meters": 2443,
+      "walking_time_min": 29.3,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 48.9
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0015",
+      "distance_meters": 1357,
+      "walking_time_min": 16.3,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.1
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0016",
+      "distance_meters": 743,
+      "walking_time_min": 8.9,
+      "driving_time_min": 1.5,
+      "wartime_movement_min": 14.9
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0017",
+      "distance_meters": 301,
+      "walking_time_min": 3.6,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.0
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0018",
+      "distance_meters": 840,
+      "walking_time_min": 10.1,
+      "driving_time_min": 1.7,
+      "wartime_movement_min": 16.8
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0019",
+      "distance_meters": 743,
+      "walking_time_min": 8.9,
+      "driving_time_min": 1.5,
+      "wartime_movement_min": 14.9
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0020",
+      "distance_meters": 601,
+      "walking_time_min": 7.2,
+      "driving_time_min": 1.2,
+      "wartime_movement_min": 12.0
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0021",
+      "distance_meters": 912,
+      "walking_time_min": 10.9,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.2
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0022",
+      "distance_meters": 506,
+      "walking_time_min": 6.1,
+      "driving_time_min": 1.0,
+      "wartime_movement_min": 10.1
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0023",
+      "distance_meters": 633,
+      "walking_time_min": 7.6,
+      "driving_time_min": 1.3,
+      "wartime_movement_min": 12.7
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0024",
+      "distance_meters": 420,
+      "walking_time_min": 5.0,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 8.4
+    },
+    {
+      "from_poi": "POI-0007",
+      "to_poi": "POI-0025",
+      "distance_meters": 6250,
+      "walking_time_min": 75.0,
+      "driving_time_min": 12.5,
+      "wartime_movement_min": 125.0
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0009",
+      "distance_meters": 982,
+      "walking_time_min": 11.8,
+      "driving_time_min": 2.0,
+      "wartime_movement_min": 19.6
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0010",
+      "distance_meters": 2154,
+      "walking_time_min": 25.8,
+      "driving_time_min": 4.3,
+      "wartime_movement_min": 43.1
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0011",
+      "distance_meters": 3486,
+      "walking_time_min": 41.8,
+      "driving_time_min": 7.0,
+      "wartime_movement_min": 69.7
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0012",
+      "distance_meters": 3476,
+      "walking_time_min": 41.7,
+      "driving_time_min": 7.0,
+      "wartime_movement_min": 69.5
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0013",
+      "distance_meters": 1021,
+      "walking_time_min": 12.3,
+      "driving_time_min": 2.0,
+      "wartime_movement_min": 20.4
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0014",
+      "distance_meters": 2389,
+      "walking_time_min": 28.7,
+      "driving_time_min": 4.8,
+      "wartime_movement_min": 47.8
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0015",
+      "distance_meters": 924,
+      "walking_time_min": 11.1,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.5
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0016",
+      "distance_meters": 231,
+      "walking_time_min": 2.8,
+      "driving_time_min": 0.5,
+      "wartime_movement_min": 4.6
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0017",
+      "distance_meters": 451,
+      "walking_time_min": 5.4,
+      "driving_time_min": 0.9,
+      "wartime_movement_min": 9.0
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0018",
+      "distance_meters": 323,
+      "walking_time_min": 3.9,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.5
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0019",
+      "distance_meters": 231,
+      "walking_time_min": 2.8,
+      "driving_time_min": 0.5,
+      "wartime_movement_min": 4.6
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0020",
+      "distance_meters": 349,
+      "walking_time_min": 4.2,
+      "driving_time_min": 0.7,
+      "wartime_movement_min": 7.0
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0021",
+      "distance_meters": 835,
+      "walking_time_min": 10.0,
+      "driving_time_min": 1.7,
+      "wartime_movement_min": 16.7
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0022",
+      "distance_meters": 111,
+      "walking_time_min": 1.3,
+      "driving_time_min": 0.2,
+      "wartime_movement_min": 2.2
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0023",
+      "distance_meters": 1049,
+      "walking_time_min": 12.6,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 21.0
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0024",
+      "distance_meters": 101,
+      "walking_time_min": 1.2,
+      "driving_time_min": 0.2,
+      "wartime_movement_min": 2.0
+    },
+    {
+      "from_poi": "POI-0008",
+      "to_poi": "POI-0025",
+      "distance_meters": 6054,
+      "walking_time_min": 72.7,
+      "driving_time_min": 12.1,
+      "wartime_movement_min": 121.1
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0010",
+      "distance_meters": 3090,
+      "walking_time_min": 37.1,
+      "driving_time_min": 6.2,
+      "wartime_movement_min": 61.8
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0011",
+      "distance_meters": 3897,
+      "walking_time_min": 46.8,
+      "driving_time_min": 7.8,
+      "wartime_movement_min": 77.9
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0012",
+      "distance_meters": 4429,
+      "walking_time_min": 53.1,
+      "driving_time_min": 8.9,
+      "wartime_movement_min": 88.6
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0013",
+      "distance_meters": 1857,
+      "walking_time_min": 22.3,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 37.1
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0014",
+      "distance_meters": 3176,
+      "walking_time_min": 38.1,
+      "driving_time_min": 6.4,
+      "wartime_movement_min": 63.5
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0015",
+      "distance_meters": 1904,
+      "walking_time_min": 22.8,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 38.1
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0016",
+      "distance_meters": 1105,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.1
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0017",
+      "distance_meters": 1023,
+      "walking_time_min": 12.3,
+      "driving_time_min": 2.0,
+      "wartime_movement_min": 20.5
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0018",
+      "distance_meters": 1199,
+      "walking_time_min": 14.4,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.0
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0019",
+      "distance_meters": 1105,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.1
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0020",
+      "distance_meters": 742,
+      "walking_time_min": 8.9,
+      "driving_time_min": 1.5,
+      "wartime_movement_min": 14.8
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0021",
+      "distance_meters": 553,
+      "walking_time_min": 6.6,
+      "driving_time_min": 1.1,
+      "wartime_movement_min": 11.1
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0022",
+      "distance_meters": 1049,
+      "walking_time_min": 12.6,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 21.0
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0023",
+      "distance_meters": 1223,
+      "walking_time_min": 14.7,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.5
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0024",
+      "distance_meters": 901,
+      "walking_time_min": 10.8,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.0
+    },
+    {
+      "from_poi": "POI-0009",
+      "to_poi": "POI-0025",
+      "distance_meters": 6968,
+      "walking_time_min": 83.6,
+      "driving_time_min": 13.9,
+      "wartime_movement_min": 139.4
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0011",
+      "distance_meters": 2717,
+      "walking_time_min": 32.6,
+      "driving_time_min": 5.4,
+      "wartime_movement_min": 54.3
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0012",
+      "distance_meters": 1348,
+      "walking_time_min": 16.2,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.0
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0013",
+      "distance_meters": 1277,
+      "walking_time_min": 15.3,
+      "driving_time_min": 2.6,
+      "wartime_movement_min": 25.5
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0014",
+      "distance_meters": 901,
+      "walking_time_min": 10.8,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.0
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0015",
+      "distance_meters": 1394,
+      "walking_time_min": 16.7,
+      "driving_time_min": 2.8,
+      "wartime_movement_min": 27.9
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0016",
+      "distance_meters": 2144,
+      "walking_time_min": 25.7,
+      "driving_time_min": 4.3,
+      "wartime_movement_min": 42.9
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0017",
+      "distance_meters": 2096,
+      "walking_time_min": 25.2,
+      "driving_time_min": 4.2,
+      "wartime_movement_min": 41.9
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0018",
+      "distance_meters": 2098,
+      "walking_time_min": 25.2,
+      "driving_time_min": 4.2,
+      "wartime_movement_min": 42.0
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0019",
+      "distance_meters": 2144,
+      "walking_time_min": 25.7,
+      "driving_time_min": 4.3,
+      "wartime_movement_min": 42.9
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0020",
+      "distance_meters": 2489,
+      "walking_time_min": 29.9,
+      "driving_time_min": 5.0,
+      "wartime_movement_min": 49.8
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0021",
+      "distance_meters": 2974,
+      "walking_time_min": 35.7,
+      "driving_time_min": 5.9,
+      "wartime_movement_min": 59.5
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0022",
+      "distance_meters": 2063,
+      "walking_time_min": 24.8,
+      "driving_time_min": 4.1,
+      "wartime_movement_min": 41.3
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0023",
+      "distance_meters": 2310,
+      "walking_time_min": 27.7,
+      "driving_time_min": 4.6,
+      "wartime_movement_min": 46.2
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0024",
+      "distance_meters": 2213,
+      "walking_time_min": 26.6,
+      "driving_time_min": 4.4,
+      "wartime_movement_min": 44.3
+    },
+    {
+      "from_poi": "POI-0010",
+      "to_poi": "POI-0025",
+      "distance_meters": 3902,
+      "walking_time_min": 46.8,
+      "driving_time_min": 7.8,
+      "wartime_movement_min": 78.0
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0012",
+      "distance_meters": 3307,
+      "walking_time_min": 39.7,
+      "driving_time_min": 6.6,
+      "wartime_movement_min": 66.1
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0013",
+      "distance_meters": 2632,
+      "walking_time_min": 31.6,
+      "driving_time_min": 5.3,
+      "wartime_movement_min": 52.6
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0014",
+      "distance_meters": 1818,
+      "walking_time_min": 21.8,
+      "driving_time_min": 3.6,
+      "wartime_movement_min": 36.4
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0015",
+      "distance_meters": 3417,
+      "walking_time_min": 41.0,
+      "driving_time_min": 6.8,
+      "wartime_movement_min": 68.3
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0016",
+      "distance_meters": 3655,
+      "walking_time_min": 43.9,
+      "driving_time_min": 7.3,
+      "wartime_movement_min": 73.1
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0017",
+      "distance_meters": 3085,
+      "walking_time_min": 37.0,
+      "driving_time_min": 6.2,
+      "wartime_movement_min": 61.7
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0018",
+      "distance_meters": 3690,
+      "walking_time_min": 44.3,
+      "driving_time_min": 7.4,
+      "wartime_movement_min": 73.8
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0019",
+      "distance_meters": 3655,
+      "walking_time_min": 43.9,
+      "driving_time_min": 7.3,
+      "wartime_movement_min": 73.1
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0020",
+      "distance_meters": 3781,
+      "walking_time_min": 45.4,
+      "driving_time_min": 7.6,
+      "wartime_movement_min": 75.6
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0021",
+      "distance_meters": 4175,
+      "walking_time_min": 50.1,
+      "driving_time_min": 8.3,
+      "wartime_movement_min": 83.5
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0022",
+      "distance_meters": 3380,
+      "walking_time_min": 40.6,
+      "driving_time_min": 6.8,
+      "wartime_movement_min": 67.6
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0023",
+      "distance_meters": 2676,
+      "walking_time_min": 32.1,
+      "driving_time_min": 5.4,
+      "wartime_movement_min": 53.5
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0024",
+      "distance_meters": 3458,
+      "walking_time_min": 41.5,
+      "driving_time_min": 6.9,
+      "wartime_movement_min": 69.2
+    },
+    {
+      "from_poi": "POI-0011",
+      "to_poi": "POI-0025",
+      "distance_meters": 4609,
+      "walking_time_min": 55.3,
+      "driving_time_min": 9.2,
+      "wartime_movement_min": 92.2
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0013",
+      "distance_meters": 2623,
+      "walking_time_min": 31.5,
+      "driving_time_min": 5.2,
+      "wartime_movement_min": 52.5
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0014",
+      "distance_meters": 1753,
+      "walking_time_min": 21.0,
+      "driving_time_min": 3.5,
+      "wartime_movement_min": 35.1
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0015",
+      "distance_meters": 2637,
+      "walking_time_min": 31.6,
+      "driving_time_min": 5.3,
+      "wartime_movement_min": 52.7
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0016",
+      "distance_meters": 3439,
+      "walking_time_min": 41.3,
+      "driving_time_min": 6.9,
+      "wartime_movement_min": 68.8
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0017",
+      "distance_meters": 3443,
+      "walking_time_min": 41.3,
+      "driving_time_min": 6.9,
+      "wartime_movement_min": 68.9
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0018",
+      "distance_meters": 3380,
+      "walking_time_min": 40.6,
+      "driving_time_min": 6.8,
+      "wartime_movement_min": 67.6
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0019",
+      "distance_meters": 3439,
+      "walking_time_min": 41.3,
+      "driving_time_min": 6.9,
+      "wartime_movement_min": 68.8
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0020",
+      "distance_meters": 3799,
+      "walking_time_min": 45.6,
+      "driving_time_min": 7.6,
+      "wartime_movement_min": 76.0
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0021",
+      "distance_meters": 4276,
+      "walking_time_min": 51.3,
+      "driving_time_min": 8.6,
+      "wartime_movement_min": 85.5
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0022",
+      "distance_meters": 3391,
+      "walking_time_min": 40.7,
+      "driving_time_min": 6.8,
+      "wartime_movement_min": 67.8
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0023",
+      "distance_meters": 3637,
+      "walking_time_min": 43.6,
+      "driving_time_min": 7.3,
+      "wartime_movement_min": 72.7
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0024",
+      "distance_meters": 3541,
+      "walking_time_min": 42.5,
+      "driving_time_min": 7.1,
+      "wartime_movement_min": 70.8
+    },
+    {
+      "from_poi": "POI-0012",
+      "to_poi": "POI-0025",
+      "distance_meters": 2647,
+      "walking_time_min": 31.8,
+      "driving_time_min": 5.3,
+      "wartime_movement_min": 52.9
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0014",
+      "distance_meters": 1368,
+      "walking_time_min": 16.4,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.4
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0015",
+      "distance_meters": 823,
+      "walking_time_min": 9.9,
+      "driving_time_min": 1.6,
+      "wartime_movement_min": 16.5
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0016",
+      "distance_meters": 1112,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.2
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0017",
+      "distance_meters": 837,
+      "walking_time_min": 10.0,
+      "driving_time_min": 1.7,
+      "wartime_movement_min": 16.7
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0018",
+      "distance_meters": 1117,
+      "walking_time_min": 13.4,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.3
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0019",
+      "distance_meters": 1112,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.2
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0020",
+      "distance_meters": 1368,
+      "walking_time_min": 16.4,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.4
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0021",
+      "distance_meters": 1850,
+      "walking_time_min": 22.2,
+      "driving_time_min": 3.7,
+      "wartime_movement_min": 37.0
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0022",
+      "distance_meters": 912,
+      "walking_time_min": 10.9,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.2
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0023",
+      "distance_meters": 1066,
+      "walking_time_min": 12.8,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 21.3
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0024",
+      "distance_meters": 1046,
+      "walking_time_min": 12.5,
+      "driving_time_min": 2.1,
+      "wartime_movement_min": 20.9
+    },
+    {
+      "from_poi": "POI-0013",
+      "to_poi": "POI-0025",
+      "distance_meters": 5114,
+      "walking_time_min": 61.4,
+      "driving_time_min": 10.2,
+      "wartime_movement_min": 102.3
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0015",
+      "distance_meters": 1915,
+      "walking_time_min": 23.0,
+      "driving_time_min": 3.8,
+      "wartime_movement_min": 38.3
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0016",
+      "distance_meters": 2465,
+      "walking_time_min": 29.6,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 49.3
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0017",
+      "distance_meters": 2159,
+      "walking_time_min": 25.9,
+      "driving_time_min": 4.3,
+      "wartime_movement_min": 43.2
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0018",
+      "distance_meters": 2455,
+      "walking_time_min": 29.5,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 49.1
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0019",
+      "distance_meters": 2465,
+      "walking_time_min": 29.6,
+      "driving_time_min": 4.9,
+      "wartime_movement_min": 49.3
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0020",
+      "distance_meters": 2737,
+      "walking_time_min": 32.8,
+      "driving_time_min": 5.5,
+      "wartime_movement_min": 54.7
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0021",
+      "distance_meters": 3217,
+      "walking_time_min": 38.6,
+      "driving_time_min": 6.4,
+      "wartime_movement_min": 64.3
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0022",
+      "distance_meters": 2281,
+      "walking_time_min": 27.4,
+      "driving_time_min": 4.6,
+      "wartime_movement_min": 45.6
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0023",
+      "distance_meters": 2124,
+      "walking_time_min": 25.5,
+      "driving_time_min": 4.2,
+      "wartime_movement_min": 42.5
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0024",
+      "distance_meters": 2413,
+      "walking_time_min": 29.0,
+      "driving_time_min": 4.8,
+      "wartime_movement_min": 48.3
+    },
+    {
+      "from_poi": "POI-0014",
+      "to_poi": "POI-0025",
+      "distance_meters": 3898,
+      "walking_time_min": 46.8,
+      "driving_time_min": 7.8,
+      "wartime_movement_min": 78.0
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0016",
+      "distance_meters": 823,
+      "walking_time_min": 9.9,
+      "driving_time_min": 1.6,
+      "wartime_movement_min": 16.5
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0017",
+      "distance_meters": 1119,
+      "walking_time_min": 13.4,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.4
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0018",
+      "distance_meters": 752,
+      "walking_time_min": 9.0,
+      "driving_time_min": 1.5,
+      "wartime_movement_min": 15.0
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0019",
+      "distance_meters": 823,
+      "walking_time_min": 9.9,
+      "driving_time_min": 1.6,
+      "wartime_movement_min": 16.5
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0020",
+      "distance_meters": 1198,
+      "walking_time_min": 14.4,
+      "driving_time_min": 2.4,
+      "wartime_movement_min": 24.0
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0021",
+      "distance_meters": 1654,
+      "walking_time_min": 19.8,
+      "driving_time_min": 3.3,
+      "wartime_movement_min": 33.1
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0022",
+      "distance_meters": 876,
+      "walking_time_min": 10.5,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 17.5
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0023",
+      "distance_meters": 1635,
+      "walking_time_min": 19.6,
+      "driving_time_min": 3.3,
+      "wartime_movement_min": 32.7
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0024",
+      "distance_meters": 1014,
+      "walking_time_min": 12.2,
+      "driving_time_min": 2.0,
+      "wartime_movement_min": 20.3
+    },
+    {
+      "from_poi": "POI-0015",
+      "to_poi": "POI-0025",
+      "distance_meters": 5264,
+      "walking_time_min": 63.2,
+      "driving_time_min": 10.5,
+      "wartime_movement_min": 105.3
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0017",
+      "distance_meters": 674,
+      "walking_time_min": 8.1,
+      "driving_time_min": 1.3,
+      "wartime_movement_min": 13.5
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0018",
+      "distance_meters": 101,
+      "walking_time_min": 1.2,
+      "driving_time_min": 0.2,
+      "wartime_movement_min": 2.0
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0019",
+      "distance_meters": 0,
+      "walking_time_min": 0.0,
+      "driving_time_min": 0.0,
+      "wartime_movement_min": 0.0
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0020",
+      "distance_meters": 376,
+      "walking_time_min": 4.5,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.5
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0021",
+      "distance_meters": 837,
+      "walking_time_min": 10.0,
+      "driving_time_min": 1.7,
+      "wartime_movement_min": 16.7
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0022",
+      "distance_meters": 301,
+      "walking_time_min": 3.6,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.0
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0023",
+      "distance_meters": 1277,
+      "walking_time_min": 15.3,
+      "driving_time_min": 2.6,
+      "wartime_movement_min": 25.5
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0024",
+      "distance_meters": 323,
+      "walking_time_min": 3.9,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.5
+    },
+    {
+      "from_poi": "POI-0016",
+      "to_poi": "POI-0025",
+      "distance_meters": 6044,
+      "walking_time_min": 72.5,
+      "driving_time_min": 12.1,
+      "wartime_movement_min": 120.9
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0018",
+      "distance_meters": 753,
+      "walking_time_min": 9.0,
+      "driving_time_min": 1.5,
+      "wartime_movement_min": 15.1
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0019",
+      "distance_meters": 674,
+      "walking_time_min": 8.1,
+      "driving_time_min": 1.3,
+      "wartime_movement_min": 13.5
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0020",
+      "distance_meters": 697,
+      "walking_time_min": 8.4,
+      "driving_time_min": 1.4,
+      "wartime_movement_min": 13.9
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0021",
+      "distance_meters": 1112,
+      "walking_time_min": 13.3,
+      "driving_time_min": 2.2,
+      "wartime_movement_min": 22.2
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0022",
+      "distance_meters": 376,
+      "walking_time_min": 4.5,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.5
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0023",
+      "distance_meters": 606,
+      "walking_time_min": 7.3,
+      "driving_time_min": 1.2,
+      "wartime_movement_min": 12.1
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0024",
+      "distance_meters": 390,
+      "walking_time_min": 4.7,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.8
+    },
+    {
+      "from_poi": "POI-0017",
+      "to_poi": "POI-0025",
+      "distance_meters": 5951,
+      "walking_time_min": 71.4,
+      "driving_time_min": 11.9,
+      "wartime_movement_min": 119.0
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0019",
+      "distance_meters": 101,
+      "walking_time_min": 1.2,
+      "driving_time_min": 0.2,
+      "wartime_movement_min": 2.0
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0020",
+      "distance_meters": 462,
+      "walking_time_min": 5.5,
+      "driving_time_min": 0.9,
+      "wartime_movement_min": 9.2
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0021",
+      "distance_meters": 902,
+      "walking_time_min": 10.8,
+      "driving_time_min": 1.8,
+      "wartime_movement_min": 18.0
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0022",
+      "distance_meters": 376,
+      "walking_time_min": 4.5,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.5
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0023",
+      "distance_meters": 1358,
+      "walking_time_min": 16.3,
+      "driving_time_min": 2.7,
+      "wartime_movement_min": 27.2
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0024",
+      "distance_meters": 420,
+      "walking_time_min": 5.0,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 8.4
+    },
+    {
+      "from_poi": "POI-0018",
+      "to_poi": "POI-0025",
+      "distance_meters": 5994,
+      "walking_time_min": 71.9,
+      "driving_time_min": 12.0,
+      "wartime_movement_min": 119.9
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0020",
+      "distance_meters": 376,
+      "walking_time_min": 4.5,
+      "driving_time_min": 0.8,
+      "wartime_movement_min": 7.5
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0021",
+      "distance_meters": 837,
+      "walking_time_min": 10.0,
+      "driving_time_min": 1.7,
+      "wartime_movement_min": 16.7
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0022",
+      "distance_meters": 301,
+      "walking_time_min": 3.6,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.0
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0023",
+      "distance_meters": 1277,
+      "walking_time_min": 15.3,
+      "driving_time_min": 2.6,
+      "wartime_movement_min": 25.5
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0024",
+      "distance_meters": 323,
+      "walking_time_min": 3.9,
+      "driving_time_min": 0.6,
+      "wartime_movement_min": 6.5
+    },
+    {
+      "from_poi": "POI-0019",
+      "to_poi": "POI-0025",
+      "distance_meters": 6044,
+      "walking_time_min": 72.5,
+      "driving_time_min": 12.1,
+      "wartime_movement_min": 120.9
+    },
+    {
+      "from_poi": "POI-0020",
+      "to_poi": "POI-0021",
+      "distance_meters": 489,
+      "walking_time_min": 5.9,
+      "driving_time_min": 1.0,
+      "wartime_movement_min": 9.8
+    },
+    {
+      "from_poi": "POI-0020",
+      "to_poi": "POI-0022",
+      "distance_meters": 456,
+      "walking_time_min": 5.5,
+      "driving_time_min": 0.9,
+      "wartime_movement_min": 9.1
+    },
+    {
+      "from_poi": "POI-0020",
+      "to_poi": "POI-0023",
+      "distance_meters": 1226,
+      "walking_time_min": 14.7,
+      "driving_time_min": 2.5,
+      "wartime_movement_min": 24.5
+    },
+    {
+      "from_poi": "POI-0020",
+      "to_poi": "POI-0024",
+      "distance_meters": 334,
+      "walking_time_min": 4.0,
+      "driving_time_min": 0.7,
+      "wartime_movement_min": 6.7
+    },
+    {
+      "from_poi": "POI-0020",
+      "to_poi": "POI-0025",
+      "distance_meters": 6391,
+      "walking_time_min": 76.7,
+      "driving_time_min": 12.8,
+      "wartime_movement_min": 127.8
+    },
+    {
+      "from_poi": "POI-0021",
+      "to_poi": "POI-0022",
+      "distance_meters": 940,
+      "walking_time_min": 11.3,
+      "driving_time_min": 1.9,
+      "wartime_movement_min": 18.8
+    },
+    {
+      "from_poi": "POI-0021",
+      "to_poi": "POI-0023",
+      "distance_meters": 1532,
+      "walking_time_min": 18.4,
+      "driving_time_min": 3.1,
+      "wartime_movement_min": 30.6
+    },
+    {
+      "from_poi": "POI-0021",
+      "to_poi": "POI-0024",
+      "distance_meters": 804,
+      "walking_time_min": 9.7,
+      "driving_time_min": 1.6,
+      "wartime_movement_min": 16.1
+    },
+    {
+      "from_poi": "POI-0021",
+      "to_poi": "POI-0025",
+      "distance_meters": 6876,
+      "walking_time_min": 82.5,
+      "driving_time_min": 13.8,
+      "wartime_movement_min": 137.5
+    },
+    {
+      "from_poi": "POI-0022",
+      "to_poi": "POI-0023",
+      "distance_meters": 982,
+      "walking_time_min": 11.8,
+      "driving_time_min": 2.0,
+      "wartime_movement_min": 19.6
+    },
+    {
+      "from_poi": "POI-0022",
+      "to_poi": "POI-0024",
+      "distance_meters": 150,
+      "walking_time_min": 1.8,
+      "driving_time_min": 0.3,
+      "wartime_movement_min": 3.0
+    },
+    {
+      "from_poi": "POI-0022",
+      "to_poi": "POI-0025",
+      "distance_meters": 5961,
+      "walking_time_min": 71.5,
+      "driving_time_min": 11.9,
+      "wartime_movement_min": 119.2
+    },
+    {
+      "from_poi": "POI-0023",
+      "to_poi": "POI-0024",
+      "distance_meters": 973,
+      "walking_time_min": 11.7,
+      "driving_time_min": 1.9,
+      "wartime_movement_min": 19.5
+    },
+    {
+      "from_poi": "POI-0023",
+      "to_poi": "POI-0025",
+      "distance_meters": 6015,
+      "walking_time_min": 72.2,
+      "driving_time_min": 12.0,
+      "wartime_movement_min": 120.3
+    },
+    {
+      "from_poi": "POI-0024",
+      "to_poi": "POI-0025",
+      "distance_meters": 6109,
+      "walking_time_min": 73.3,
+      "driving_time_min": 12.2,
+      "wartime_movement_min": 122.2
+    }
+  ]
+}

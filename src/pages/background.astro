@@ -1,0 +1,132 @@
+---
+// /background — 戰役背景：國軍/共軍/居民三方視角
+import MainLayout from '../layouts/MainLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">戰役背景</h1>
+    <p class="text-stone-500 mb-10">為什麼會打？三方視角 — 國軍防禦、共軍進攻、居民日常</p>
+
+    <!-- Tabs: 3 perspectives -->
+    <div class="space-y-10">
+
+      <!-- === 國軍視角 === -->
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold">國</span>
+          <h2 class="text-xl font-serif font-bold">國軍 — 防禦部署</h2>
+        </div>
+        <div class="bg-white rounded-xl border border-stone-200 p-6 space-y-4">
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">戰略部署</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              1949 年 6 月金門要塞總台成立。國軍在金門部署第 201 師（第 601 團、第 602 團）防守古寧頭海岸，
+              戰車第 3 團第 1 連駐紮嚨口梯田區。湯恩伯奉命固守金門，以「確保台澎外圍防線」為最高戰略目標。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">防禦計畫</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              國軍在古寧頭海岸構築簡易野戰工事與碉堡，佈設地雷與鐵絲網。灘頭配置交叉火網，
+              戰車排作為機動打擊力量。但人力與物資短缺，工事多未完成。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">部隊配置</h3>
+            <div class="grid grid-cols-2 gap-2 mt-1 text-xs text-stone-600">
+              <div class="bg-stone-50 p-2 rounded">第 201 師第 601 團 → 嚨口—后沙</div>
+              <div class="bg-stone-50 p-2 rounded">第 201 師第 602 團 → 古寧頭—湖尾</div>
+              <div class="bg-stone-50 p-2 rounded">戰車第 3 團第 1 連 → 嚨口機動</div>
+              <div class="bg-stone-50 p-2 rounded">岸防砲兵 → 金門北部海岸</div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">指揮體系</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              湯恩伯（金門防衛司令）→ 李樹蘭（戰車指揮官）→ 勞聲寰（步兵指揮官）。
+              10 月 22 日胡璉抵達金門，接掌部分指揮權。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- === 共軍視角 === -->
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-sm font-bold">共</span>
+          <h2 class="text-xl font-serif font-bold">共軍 — 渡海作戰計畫</h2>
+        </div>
+        <div class="bg-white rounded-xl border border-stone-200 p-6 space-y-4">
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">解放福建</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              1949 年 7 月，解放軍第十兵團挺進福建。8 月福州失守。10 月 17 日廈門淪陷。
+              第十兵團司令葉飛將目光轉向金門 — 距離廈門僅約 10 公里。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">登陸計畫</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              第 28 軍副軍長蕭鋒制定渡海計畫：第一梯隊三個團（第 244、251、253 團）
+              約 9,000 人，從蓮河、大嶝島出發，分別登陸嚨口、古寧頭、湖尾三個灘頭。
+              計畫以夜間偷襲、拂曉佔領灘頭、逐步向內陸推進為主軸。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">情報判斷</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              解放軍情報顯示金門守軍約兩萬人，但低估了國軍戰車部隊的戰鬥力。
+              對潮汐、風向、海流的掌握不足，未充分考慮東北季風對渡海的影響。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">船隻來源</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              船隻多為徵用的漁船與帆船，缺乏機械動力。船隻數量不足，
+              導致第二梯隊無法及時增援——這成為戰役的關鍵失利因素。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- === 居民視角 === -->
+      <section>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white text-sm font-bold">民</span>
+          <h2 class="text-xl font-serif font-bold">金門居民 — 戰前日常</h2>
+        </div>
+        <div class="bg-white rounded-xl border border-stone-200 p-6 space-y-4">
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">當時生活</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              1949 年的金門仍以農漁業為主。古寧頭（北山、南山、林厝）為典型閩南聚落，
+              居民以務農、捕魚、養蚵為生。宗族組織緊密，生活簡樸。
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold text-stone-700 text-sm">戰前氛圍</h3>
+            <p class="text-stone-600 text-sm leading-relaxed mt-1">
+              隨著國共內戰逼近福建沿海，金門居民感受到戰爭的陰影。
+              國軍進駐各村莊，部分民居被徵用為營舍。村民對即將到來的風暴既恐懼又無奈。
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-xs text-stone-600 mt-2">
+            <div class="bg-stone-50 p-2 rounded">🏘️ 村落：北山、南山、林厝、埔頭</div>
+            <div class="bg-stone-50 p-2 rounded">🌾 產業：農業、漁業、養蚵</div>
+            <div class="bg-stone-50 p-2 rounded">👥 人口：數千居民</div>
+            <div class="bg-stone-50 p-2 rounded">🏠 建築：閩南傳統合院</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="mt-10 text-center">
+      <a href={`${base}timeline`} class="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition no-underline">
+        進入戰役時間軸 →
+      </a>
+    </div>
+  </div>
+</MainLayout>

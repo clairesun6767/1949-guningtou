@@ -1,0 +1,100 @@
+---
+import '../styles/global.css';
+import LanguageSwitcher from '../components/shared/LanguageSwitcher';
+const base = import.meta.env.BASE_URL;
+
+const navGroups = [
+  {
+    label: '歷史脈絡',
+    items: [
+      { href: 'context', label: '世界局勢' },
+      { href: 'background', label: '戰役背景' },
+      { href: 'aftermath', label: '戰役影響' },
+    ],
+  },
+  {
+    label: '戰役核心',
+    items: [
+      { href: 'timeline', label: '時間軸' },
+      { href: 'analysis', label: '戰役解析' },
+      { href: 'perspectives', label: '多元觀點' },
+    ],
+  },
+  {
+    label: '人物與地點',
+    items: [
+      { href: 'figures', label: '人物' },
+      { href: 'locations', label: '地點' },
+    ],
+  },
+  {
+    label: '典藏',
+    items: [
+      { href: 'weapons', label: '武器' },
+      { href: 'artifacts', label: '文物' },
+      { href: 'sources', label: '文獻' },
+      { href: 'archive', label: '數位典藏' },
+    ],
+  },
+  { label: '其他', items: [
+      { href: 'peace', label: '戰後至和平' },
+      { href: 'battlefield-os', label: 'Battlefield OS' },
+      { href: 'about', label: '關於本站' },
+    ] },
+];
+---
+
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet" />
+    <title>古寧頭戰役 1949 · 以歷史見和平</title>
+    <meta name="description" content="1949 年古寧頭戰役數位知識平台。以歷史見和平，多史觀並存。" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-stone-50">
+    <!-- Top bar -->
+    <header class="bg-white/95 backdrop-blur border-b border-stone-200 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between">
+        <a href={base} class="font-serif font-bold text-base text-stone-800 no-underline hover:text-amber-700 transition flex items-center gap-2">
+          古寧頭 1949
+          <span class="hidden sm:inline text-xs text-stone-400 font-normal">以歷史見和平</span>
+        </a>
+        <div class="flex items-center gap-3">
+          <LanguageSwitcher client:load />
+        </div>
+      </div>
+
+      <!-- Main nav -->
+      <nav class="max-w-7xl mx-auto px-4 pb-2 flex gap-1 overflow-x-auto text-xs">
+        <a href={base} class="px-2.5 py-1.5 rounded whitespace-nowrap text-stone-500 hover:bg-stone-100 hover:text-stone-700 no-underline transition font-medium">
+          首頁
+        </a>
+        {navGroups.map(g => (
+          <div class="flex items-center gap-1">
+            <span class="text-stone-300 mx-0.5">|</span>
+            {g.items.map(item => (
+              <a href={`${base}${item.href}`} class="px-2 py-1.5 rounded whitespace-nowrap text-stone-500 hover:bg-stone-100 hover:text-stone-700 no-underline transition">
+                {item.label}
+              </a>
+            ))}
+          </div>
+        ))}
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 text-sm py-8 mt-16">
+      <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
+        <p>古寧頭戰役數位知識平台 · 1949</p>
+        <p class="text-stone-500 text-xs">資料來源：Battlefield Research Database · 所有史料均附來源 · 多史觀並存 · 政治中立</p>
+        <p class="text-stone-600 text-xs mt-4">歷史已然發生，無法改變。透過理解歷史，珍惜和平的可貴。</p>
+      </div>
+    </footer>
+  </body>
+</html>

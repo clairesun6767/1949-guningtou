@@ -1,0 +1,103 @@
+---
+// /analysis — 戰役解析：依事件類型拆解
+import MainLayout from '../layouts/MainLayout.astro';
+import { events } from '../data/loader';
+const base = import.meta.env.BASE_URL;
+
+// Group events by type
+const eventGroups: Record<string, typeof events> = {};
+events.forEach(e => {
+  const t = e.event_type ?? 'other';
+  if (!eventGroups[t]) eventGroups[t] = [];
+  eventGroups[t].push(e);
+});
+
+const TYPE_LABELS: Record<string, { icon: string; label: string }> = {
+  amphibious_assault: { icon: '🚢', label: '登陸作戰' },
+  counterattack: { icon: '⚔️', label: '反擊作戰' },
+  battle_engagement: { icon: '💥', label: '交戰' },
+  village_combat: { icon: '🏘️', label: '村落戰' },
+  urban_warfare: { icon: '🏚️', label: '城鎮戰' },
+  encirclement: { icon: '🔵', label: '包圍戰' },
+  final_battle: { icon: '🏁', label: '最終戰役' },
+  battle_end: { icon: '🏳️', label: '戰役結束' },
+  aftermath: { icon: '📋', label: '戰後處理' },
+  command_change: { icon: '👤', label: '指揮變更' },
+  killed_in_action: { icon: '🕯️', label: '陣亡' },
+  naval_operation: { icon: '🚤', label: '海上作戰' },
+  air_operation: { icon: '✈️', label: '空中作戰' },
+};
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">戰役解析</h1>
+    <p class="text-stone-500 mb-10">{events.length} 個歷史事件 · 依類型拆解 · 點擊展開詳情</p>
+
+    <div class="space-y-6">
+      {Object.entries(eventGroups).map(([type, evts]) => {
+        const meta = TYPE_LABELS[type] ?? { icon: '📌', label: type };
+        return (
+          <section class="bg-white rounded-xl border border-stone-200 overflow-hidden">
+            <div class="bg-stone-50 px-5 py-3 border-b border-stone-200 flex items-center gap-2">
+              <span class="text-lg">{meta.icon}</span>
+              <h2 class="font-bold text-stone-700">{meta.label}</h2>
+              <span class="text-xs text-stone-400 ml-auto">{evts.length} 事件</span>
+            </div>
+            <div class="divide-y divide-stone-100">
+              {evts.map(e => (
+                <details class="group">
+                  <summary class="px-5 py-3 cursor-pointer hover:bg-amber-50 transition list-none flex items-start gap-3">
+                    <span class="text-amber-400 mt-0.5 group-open:rotate-90 transition-transform">▶</span>
+                    <div>
+                      <h3 class="text-sm font-medium text-stone-800">{e.title}</h3>
+                      <p class="text-xs text-stone-400 mt-0.5">
+                        {e.date} · {e.location ?? '位置未詳'} · {e.time_precision ?? ''}
+                      </p>
+                    </div>
+                  </summary>
+                  <div class="px-5 pb-4 pl-10">
+                    {e.description && (
+                      <p class="text-sm text-stone-600 leading-relaxed mb-3">{e.description}</p>
+                    )}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                      {e.roc_units && (
+                        <div class="bg-blue-50 p-2 rounded">
+                          <span class="font-medium text-blue-700">國軍：</span>
+                          <span class="text-stone-600">{e.roc_units}</span>
+                        </div>
+                      )}
+                      {e.pla_units && (
+                        <div class="bg-red-50 p-2 rounded">
+                          <span class="font-medium text-red-700">共軍：</span>
+                          <span class="text-stone-600">{e.pla_units}</span>
+                        </div>
+                      )}
+                      {e.commanders && (
+                        <div class="bg-stone-50 p-2 rounded col-span-full">
+                          <span class="font-medium text-stone-600">指揮官：</span>
+                          <span class="text-stone-500">{e.commanders}</span>
+                        </div>
+                      )}
+                      {e.participants && (
+                        <div class="bg-stone-50 p-2 rounded col-span-full">
+                          <span class="font-medium text-stone-600">參與者：</span>
+                          <span class="text-stone-500">{e.participants}</span>
+                        </div>
+                      )}
+                    </div>
+                    {e.evidence_level && (
+                      <div class="mt-2 flex items-center gap-2">
+                        <span class={`evidence-badge evidence-${e.evidence_level}`}>證據 {e.evidence_level}</span>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  </div>
+</MainLayout>

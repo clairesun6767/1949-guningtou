@@ -1,0 +1,344 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "route_types": 7
+  },
+  "route_types": {
+    "Landing Route": {
+      "id": "R-LAND",
+      "description": "解放軍登陸路線，由大陸沿海至金門北岸"
+    },
+    "Supply Route": {
+      "id": "R-SUP",
+      "description": "國軍補給路線，由後方至前線"
+    },
+    "Retreat Route": {
+      "id": "R-RET",
+      "description": "部隊撤退路線"
+    },
+    "Attack Direction": {
+      "id": "R-ATT",
+      "description": "部隊攻擊方向"
+    },
+    "Defense Line": {
+      "id": "R-DEF",
+      "description": "國軍防線"
+    },
+    "Fire Support Route": {
+      "id": "R-FIRE",
+      "description": "火力支援與機動路線"
+    },
+    "Observation Line": {
+      "id": "R-OBS",
+      "description": "觀測與視線路線"
+    }
+  },
+  "routes": {
+    "Road Connection": [
+      {
+        "from_poi": "POI-0001",
+        "to_poi": "POI-0002",
+        "route_name": "海灘步道",
+        "distance_meters": 800,
+        "walking_time_min": 9.6,
+        "wartime_time_min": 16.0
+      },
+      {
+        "from_poi": "POI-0006",
+        "to_poi": "POI-0007",
+        "route_name": "北山—林厝村道",
+        "distance_meters": 300,
+        "walking_time_min": 3.6,
+        "wartime_time_min": 6.0
+      },
+      {
+        "from_poi": "POI-0006",
+        "to_poi": "POI-0008",
+        "route_name": "北山—南山村道",
+        "distance_meters": 200,
+        "walking_time_min": 2.4,
+        "wartime_time_min": 4.0
+      },
+      {
+        "from_poi": "POI-0007",
+        "to_poi": "POI-0008",
+        "route_name": "林厝—南山村道",
+        "distance_meters": 250,
+        "walking_time_min": 3.0,
+        "wartime_time_min": 5.0
+      },
+      {
+        "from_poi": "POI-0010",
+        "to_poi": "POI-0006",
+        "route_name": "湖南高地—古寧頭道路",
+        "distance_meters": 2000,
+        "walking_time_min": 24.0,
+        "wartime_time_min": 40.0
+      },
+      {
+        "from_poi": "POI-0010",
+        "to_poi": "POI-0012",
+        "route_name": "湖南高地—瓊林道路",
+        "distance_meters": 1500,
+        "walking_time_min": 18.0,
+        "wartime_time_min": 30.0
+      },
+      {
+        "from_poi": "POI-0009",
+        "to_poi": "POI-0006",
+        "route_name": "埔頭—古寧頭道路",
+        "distance_meters": 500,
+        "walking_time_min": 6.0,
+        "wartime_time_min": 10.0
+      },
+      {
+        "from_poi": "POI-0012",
+        "to_poi": "POI-0014",
+        "route_name": "瓊林—湖尾高地道路",
+        "distance_meters": 2000,
+        "walking_time_min": 24.0,
+        "wartime_time_min": 40.0
+      },
+      {
+        "from_poi": "POI-0016",
+        "to_poi": "POI-0006",
+        "route_name": "戰史館—北山村道",
+        "distance_meters": 100,
+        "walking_time_min": 1.2,
+        "wartime_time_min": 2.0
+      },
+      {
+        "from_poi": "POI-0016",
+        "to_poi": "POI-0017",
+        "route_name": "戰史館—李光前廟道路",
+        "distance_meters": 500,
+        "walking_time_min": 6.0,
+        "wartime_time_min": 10.0
+      },
+      {
+        "from_poi": "POI-0016",
+        "to_poi": "POI-0018",
+        "route_name": "戰史館—和平紀念園區",
+        "distance_meters": 90,
+        "walking_time_min": 1.1,
+        "wartime_time_min": 1.8
+      },
+      {
+        "from_poi": "POI-0016",
+        "to_poi": "POI-0019",
+        "route_name": "戰史館—安東一營區",
+        "distance_meters": 75,
+        "walking_time_min": 0.9,
+        "wartime_time_min": 1.5
+      },
+      {
+        "from_poi": "POI-0016",
+        "to_poi": "POI-0022",
+        "route_name": "戰史館—古寧頭牌樓",
+        "distance_meters": 92,
+        "walking_time_min": 1.1,
+        "wartime_time_min": 1.8
+      },
+      {
+        "from_poi": "POI-0019",
+        "to_poi": "POI-0022",
+        "route_name": "安東一營區—古寧頭牌樓",
+        "distance_meters": 100,
+        "walking_time_min": 1.2,
+        "wartime_time_min": 2.0
+      },
+      {
+        "from_poi": "POI-0020",
+        "to_poi": "POI-0021",
+        "route_name": "播音站—北山斷崖道路",
+        "distance_meters": 300,
+        "walking_time_min": 3.6,
+        "wartime_time_min": 6.0
+      }
+    ],
+    "Beach Landing Route": [
+      {
+        "from_poi": "POI-0001",
+        "to_poi": "POI-0005",
+        "route_name": "嚨口—蘭厝灘岸線",
+        "distance_meters": 500,
+        "walking_time_min": 6.0,
+        "wartime_time_min": 10.0
+      },
+      {
+        "from_poi": "POI-0001",
+        "to_poi": "POI-0004",
+        "route_name": "嚨口—后沙灘岸線",
+        "distance_meters": 600,
+        "walking_time_min": 7.2,
+        "wartime_time_min": 12.0
+      },
+      {
+        "from_poi": "POI-0002",
+        "to_poi": "POI-0003",
+        "route_name": "古寧頭—湖尾灘岸線",
+        "distance_meters": 1500,
+        "walking_time_min": 18.0,
+        "wartime_time_min": 30.0
+      },
+      {
+        "from_poi": "POI-0002",
+        "to_poi": "POI-0021",
+        "route_name": "古寧頭—北山斷崖海岸線",
+        "distance_meters": 500,
+        "walking_time_min": 6.0,
+        "wartime_time_min": 10.0
+      },
+      {
+        "from_poi": "POI-0004",
+        "to_poi": "POI-0005",
+        "route_name": "后沙—蘭厝灘岸線",
+        "distance_meters": 400,
+        "walking_time_min": 4.8,
+        "wartime_time_min": 8.0
+      }
+    ],
+    "Trail Connection": [
+      {
+        "from_poi": "POI-0003",
+        "to_poi": "POI-0014",
+        "route_name": "湖尾—湖尾高地小徑",
+        "distance_meters": 300,
+        "walking_time_min": 3.6,
+        "wartime_time_min": 6.0
+      }
+    ],
+    "Retreat Route": [
+      {
+        "from_poi": "POI-0006",
+        "to_poi": "POI-0021",
+        "route_name": "古寧頭→北端海岸撤退路線",
+        "distance_meters": 400,
+        "walking_time_min": 4.8,
+        "wartime_time_min": 8.0
+      },
+      {
+        "from_poi": "POI-0025",
+        "to_poi": "POI-0006",
+        "route_name": "徐博古寧頭→太武山撤退路線",
+        "distance_meters": 5000,
+        "walking_time_min": 60.0,
+        "wartime_time_min": 100.0
+      }
+    ],
+    "Supply Route": [
+      {
+        "from_poi": "POI-0011",
+        "to_poi": "POI-0010",
+        "route_name": "水頭—湖南高地補給路線",
+        "distance_meters": 3000,
+        "walking_time_min": 36.0,
+        "wartime_time_min": 60.0
+      },
+      {
+        "from_poi": "POI-0011",
+        "to_poi": "POI-0006",
+        "route_name": "水頭→古寧頭補給路線",
+        "distance_meters": 3000,
+        "walking_time_min": 36.0,
+        "wartime_time_min": 60.0
+      },
+      {
+        "from_poi": "POI-0012",
+        "to_poi": "POI-0006",
+        "route_name": "瓊林→古寧頭補給路線",
+        "distance_meters": 2000,
+        "walking_time_min": 24.0,
+        "wartime_time_min": 40.0
+      }
+    ],
+    "Observation Line": [
+      {
+        "from_poi": "POI-0013",
+        "to_poi": "POI-0006",
+        "route_name": "觀音亭山→古寧頭觀測線",
+        "distance_meters": 800,
+        "walking_time_min": 9.6,
+        "wartime_time_min": 16.0
+      },
+      {
+        "from_poi": "POI-0014",
+        "to_poi": "POI-0003",
+        "route_name": "湖尾高地→湖尾觀測線",
+        "distance_meters": 300,
+        "walking_time_min": 3.6,
+        "wartime_time_min": 6.0
+      },
+      {
+        "from_poi": "POI-0015",
+        "to_poi": "POI-0006",
+        "route_name": "雙乳山→古寧頭觀測線",
+        "distance_meters": 2000,
+        "walking_time_min": 24.0,
+        "wartime_time_min": 40.0
+      }
+    ],
+    "Defense Line": [
+      {
+        "from_poi": "POI-0023",
+        "to_poi": "POI-0001",
+        "route_name": "嚨口防禦碉堡線",
+        "distance_meters": 200,
+        "walking_time_min": 2.4,
+        "wartime_time_min": 4.0
+      }
+    ],
+    "Fire Support Route": [
+      {
+        "from_poi": "POI-0012",
+        "to_poi": "POI-0001",
+        "route_name": "瓊林戰車預備隊→嚨口火力支援",
+        "distance_meters": 3000,
+        "walking_time_min": 36.0,
+        "wartime_time_min": 60.0
+      },
+      {
+        "from_poi": "POI-0010",
+        "to_poi": "POI-0014",
+        "route_name": "湖南高地→湖尾高地火力支援",
+        "distance_meters": 2500,
+        "walking_time_min": 30.0,
+        "wartime_time_min": 50.0
+      }
+    ],
+    "Attack Direction": [
+      {
+        "from_poi": "POI-0009",
+        "to_poi": "POI-0006",
+        "route_name": "國軍第118師攻擊方向：埔頭→古寧頭",
+        "distance_meters": 500,
+        "walking_time_min": 6.0,
+        "wartime_time_min": 10.0
+      },
+      {
+        "from_poi": "POI-0006",
+        "to_poi": "POI-0021",
+        "route_name": "國軍攻擊方向：古寧頭→北端殲滅戰",
+        "distance_meters": 400,
+        "walking_time_min": 4.8,
+        "wartime_time_min": 8.0
+      },
+      {
+        "from_poi": "POI-0001",
+        "to_poi": "POI-0006",
+        "route_name": "解放軍第244團攻擊方向：嚨口→古寧頭",
+        "distance_meters": 1000,
+        "walking_time_min": 12.0,
+        "wartime_time_min": 20.0
+      },
+      {
+        "from_poi": "POI-0003",
+        "to_poi": "POI-0006",
+        "route_name": "解放軍第251團攻擊方向：湖尾→古寧頭",
+        "distance_meters": 1200,
+        "walking_time_min": 14.4,
+        "wartime_time_min": 24.0
+      }
+    ]
+  }
+}

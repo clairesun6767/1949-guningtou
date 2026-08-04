@@ -1,0 +1,2532 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-07-21",
+    "total": 36,
+    "phase": "4",
+    "status": "drafted"
+  },
+  "persons": [
+    {
+      "person_id": "PER-0001",
+      "name_zh": "陳誠",
+      "name_en": "Chen Cheng",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1898",
+      "death_date": "1965",
+      "birth_place": "浙江青田",
+      "death_place": "臺北",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "東南軍政長官公署",
+      "military_branch": "政戰",
+      "unit": "",
+      "rank_at_event": "陸軍一級上將",
+      "highest_known_rank": "陸軍一級上將",
+      "primary_category": "Political Leader",
+      "secondary_categories": [],
+      "role_in_battle": "戰役最高層決策者。判斷金門危急後急調胡璉兵團轉航金門。",
+      "biographical_summary": "陳誠（1898-1965），字辭修，浙江青田人。國防部參謀總長兼東南軍政長官，古寧頭戰役最高決策者。",
+      "battle_actions": "判斷金門危急調整兵力部署; 命令胡璉兵團轉航金門; 調第19軍增援; 10/27飛抵金門視察",
+      "command_relationships": "",
+      "related_persons": "蔣中正、湯恩伯、胡璉",
+      "related_events": "EVT-0030; EVT-0006; EVT-0005",
+      "related_timeline": "TIM-0011; TIM-0023; TIM-0025; TIM-0111",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "陳誠（1898-1965），字辭修，浙江青田人。國防部參謀總長兼東南軍政長官，古寧頭戰役最高決策者。",
+      "standard_bio": "陳誠（1898-1965），字辭修，浙江青田人。國防部參謀總長兼東南軍政長官，古寧頭戰役最高決策者。",
+      "battle_role_summary": "戰役最高層決策者。判斷金門危急後急調胡璉兵團轉航金門。",
+      "key_actions_list": [
+        "判斷金門危急調整兵力部署",
+        "命令胡璉兵團轉航金門",
+        "調第19軍增援",
+        "10/27飛抵金門視察"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1898",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1965",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "陸軍一級上將",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0002",
+      "name_zh": "湯恩伯",
+      "name_en": "Tang Enbo",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1898",
+      "death_date": "1954",
+      "birth_place": "浙江武義",
+      "death_place": "臺北",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "福州綏靖公署",
+      "military_branch": "陸軍",
+      "unit": "",
+      "rank_at_event": "陸軍二級上將",
+      "highest_known_rank": "陸軍二級上將",
+      "primary_category": "Nationalist Senior Commander",
+      "secondary_categories": [],
+      "role_in_battle": "廈門失守後坐鎮金門，頒布指揮權歸屬令。",
+      "biographical_summary": "湯恩伯（1898-1954），浙江武義人。福州綏靖公署主任兼福建省主席。廈門失守後遷指揮部至金門。",
+      "battle_actions": "廈門失守後遷指揮部至金門; 頒布金門指揮權臨時歸屬令",
+      "command_relationships": "",
+      "related_persons": "蔣中正、陳誠、胡璉、李良榮",
+      "related_events": "EVT-0018; EVT-0008",
+      "related_timeline": "TIM-0023; TIM-0086; TIM-0021; TIM-0005; TIM-0029; TIM-0022",
+      "related_pois": "POI-0011",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "湯恩伯（1898-1954），浙江武義人。福州綏靖公署主任兼福建省主席。廈門失守後遷指揮部至金門。",
+      "standard_bio": "湯恩伯（1898-1954），浙江武義人。福州綏靖公署主任兼福建省主席。廈門失守後遷指揮部至金門。",
+      "battle_role_summary": "廈門失守後坐鎮金門，頒布指揮權歸屬令。",
+      "key_actions_list": [
+        "廈門失守後遷指揮部至金門",
+        "頒布金門指揮權臨時歸屬令"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1898",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1954",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "陸軍二級上將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0003",
+      "name_zh": "胡璉",
+      "name_en": "Hu Lien",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1907",
+      "death_date": "1977",
+      "birth_place": "陝西華縣",
+      "death_place": "金門",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第12兵團",
+      "military_branch": "陸軍",
+      "unit": "第12兵團",
+      "rank_at_event": "陸軍中將",
+      "highest_known_rank": "陸軍一級上將",
+      "primary_category": "Nationalist Field Commander",
+      "secondary_categories": [],
+      "role_in_battle": "10/26 10:00抵達金門接掌指揮權。重整攻勢完成包圍。",
+      "biographical_summary": "胡璉（1907-1977），字伯玉，陝西華縣人。黃埔四期。古寧頭戰役國軍實際作戰指揮官。",
+      "battle_actions": "率第12兵團從汕頭海運抵金門; 10/26抵水頭接掌指揮權; 赴湖南高地了解戰況; 協調團長提振士氣; 完成古寧頭包圍; 接任金門防衛司令",
+      "command_relationships": "",
+      "related_persons": "陳誠、高魁元、李樹蘭",
+      "related_events": "EVT-0023; EVT-0015; EVT-0018; EVT-0008; EVT-0004; EVT-0006; EVT-0005; EVT-0020",
+      "related_timeline": "TIM-0023; TIM-0027; TIM-0074; TIM-0092; TIM-0086; TIM-0120; TIM-0107; TIM-0112; TIM-0122; TIM-0011; TIM-0098; TIM-0073",
+      "related_pois": "POI-0010; POI-0011",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "胡璉（1907-1977），字伯玉，陝西華縣人。黃埔四期。古寧頭戰役國軍實際作戰指揮官。",
+      "standard_bio": "胡璉（1907-1977），字伯玉，陝西華縣人。黃埔四期。古寧頭戰役國軍實際作戰指揮官。",
+      "battle_role_summary": "10/26 10:00抵達金門接掌指揮權。重整攻勢完成包圍。",
+      "key_actions_list": [
+        "率第12兵團從汕頭海運抵金門",
+        "10/26抵水頭接掌指揮權",
+        "赴湖南高地了解戰況",
+        "協調團長提振士氣",
+        "完成古寧頭包圍",
+        "接任金門防衛司令"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1907",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1977",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "陸軍中將",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第12兵團",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0004",
+      "name_zh": "高魁元",
+      "name_en": "Kao Kuei-yuan",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1908",
+      "death_date": "2001",
+      "birth_place": "山東嶧縣",
+      "death_place": "臺北",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第18軍",
+      "military_branch": "陸軍",
+      "unit": "第18軍",
+      "rank_at_event": "陸軍中將",
+      "highest_known_rank": "陸軍一級上將",
+      "primary_category": "Nationalist Field Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第18軍軍長。率部從汕頭海運抵金門。向胡璉報告前線形勢。",
+      "biographical_summary": "高魁元（1908-2001），山東嶧縣人。黃埔四期。第18軍軍長。",
+      "battle_actions": "率第18軍從汕頭海運抵金門; 向胡璉報告前線形勢",
+      "command_relationships": "",
+      "related_persons": "胡璉、李樹蘭",
+      "related_events": "EVT-0004; EVT-0018; EVT-0008",
+      "related_timeline": "TIM-0016; TIM-0086",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "高魁元（1908-2001），山東嶧縣人。黃埔四期。第18軍軍長。",
+      "standard_bio": "高魁元（1908-2001），山東嶧縣人。黃埔四期。第18軍軍長。",
+      "battle_role_summary": "第18軍軍長。率部從汕頭海運抵金門。向胡璉報告前線形勢。",
+      "key_actions_list": [
+        "率第18軍從汕頭海運抵金門",
+        "向胡璉報告前線形勢"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1908",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "2001",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "陸軍中將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第18軍",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0005",
+      "name_zh": "李樹蘭",
+      "name_en": "Lee Shu-Lan",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第118師",
+      "military_branch": "陸軍",
+      "unit": "第118師",
+      "rank_at_event": "陸軍少將",
+      "highest_known_rank": "陸軍少將",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第118師師長。指揮三路反擊、古寧頭巷戰。10/27 09:30向胡璉報告戰鬥結束。",
+      "biographical_summary": "李樹蘭，第118師師長。率部在古寧頭戰役中擔任主攻部隊。",
+      "battle_actions": "04:30發動三路反擊; 指揮古寧頭巷戰; 調整第353團接管主攻; 10/27 09:30報告戰鬥結束",
+      "command_relationships": "",
+      "related_persons": "胡璉、高魁元、楊書田",
+      "related_events": "EVT-0023; EVT-0015; EVT-0019; EVT-0002; EVT-0004; EVT-0001; EVT-0017; EVT-0005",
+      "related_timeline": "TIM-0092; TIM-0081; TIM-0080; TIM-0053; TIM-0016; TIM-0079; TIM-0089; TIM-0088; TIM-0107",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "李樹蘭，第118師師長。率部在古寧頭戰役中擔任主攻部隊。",
+      "standard_bio": "李樹蘭，第118師師長。率部在古寧頭戰役中擔任主攻部隊。",
+      "battle_role_summary": "第118師師長。指揮三路反擊、古寧頭巷戰。10/27 09:30向胡璉報告戰鬥結束。",
+      "key_actions_list": [
+        "04:30發動三路反擊",
+        "指揮古寧頭巷戰",
+        "調整第353團接管主攻",
+        "10/27 09:30報告戰鬥結束"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "陸軍少將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第118師",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0006",
+      "name_zh": "勞聲寰",
+      "name_en": "Lao Sheng-Huan",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第45師",
+      "military_branch": "陸軍",
+      "unit": "第45師",
+      "rank_at_event": "陸軍少將",
+      "highest_known_rank": "陸軍少將",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "以FAC引導P-51戰鬥機擊毀逾100艘解放軍船隻。為國共內戰罕見三軍聯合作戰。",
+      "biographical_summary": "勞聲寰，第45師師長。抗戰期間曾任空軍警衛部隊指揮官，具美軍FAC訓練經驗。",
+      "battle_actions": "啟動FAC作業; 引導18架次P-51攻擊登陸船團; 擊毀逾100艘船隻",
+      "command_relationships": "",
+      "related_persons": "胡璉、周至柔",
+      "related_events": "EVT-0002; EVT-0001; EVT-0007; EVT-0012",
+      "related_timeline": "TIM-0058; TIM-0054; TIM-0057",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "勞聲寰，第45師師長。抗戰期間曾任空軍警衛部隊指揮官，具美軍FAC訓練經驗。",
+      "standard_bio": "勞聲寰，第45師師長。抗戰期間曾任空軍警衛部隊指揮官，具美軍FAC訓練經驗。",
+      "battle_role_summary": "以FAC引導P-51戰鬥機擊毀逾100艘解放軍船隻。為國共內戰罕見三軍聯合作戰。",
+      "key_actions_list": [
+        "啟動FAC作業",
+        "引導18架次P-51攻擊登陸船團",
+        "擊毀逾100艘船隻"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "陸軍少將",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第45師",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0007",
+      "name_zh": "周至柔",
+      "name_en": "Chou Chih-Jou",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1899",
+      "death_date": "1986",
+      "birth_place": "浙江臨海",
+      "death_place": "臺北",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "空軍",
+      "military_branch": "空軍",
+      "unit": "",
+      "rank_at_event": "空軍一級上將",
+      "highest_known_rank": "空軍一級上將",
+      "primary_category": "Nationalist Air Support",
+      "secondary_categories": [],
+      "role_in_battle": "指揮空軍第1轟炸大隊、第3戰鬥大隊支援金門作戰。",
+      "biographical_summary": "周至柔（1899-1986），空軍總司令。",
+      "battle_actions": "指揮B-25/P-51轟炸灘頭; C-47徹夜投擲照明彈",
+      "command_relationships": "",
+      "related_persons": "勞聲寰",
+      "related_events": "EVT-0002; EVT-0007; EVT-0012",
+      "related_timeline": "TIM-0024; TIM-0057",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "周至柔（1899-1986），空軍總司令。",
+      "standard_bio": "周至柔（1899-1986），空軍總司令。",
+      "battle_role_summary": "指揮空軍第1轟炸大隊、第3戰鬥大隊支援金門作戰。",
+      "key_actions_list": [
+        "指揮B-25/P-51轟炸灘頭",
+        "C-47徹夜投擲照明彈"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1899",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1986",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "空軍一級上將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0008",
+      "name_zh": "黎玉璽",
+      "name_en": "Lee Yü-Hsi",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1914",
+      "death_date": "2003",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "海軍第2艦隊",
+      "military_branch": "海軍",
+      "unit": "海軍第2艦隊",
+      "rank_at_event": "海軍上將",
+      "highest_known_rank": "海軍一級上將",
+      "primary_category": "Nationalist Naval Support",
+      "secondary_categories": [],
+      "role_in_battle": "指揮中榮號等軍艦封鎖金門海域，以艦砲攻擊解放軍船團。",
+      "biographical_summary": "黎玉璽（1914-2003），海軍第2艦隊司令。",
+      "battle_actions": "指揮中榮號等艦封鎖金門海域; 以艦砲攻擊解放軍船團",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "EVT-0002; EVT-0007; EVT-0013",
+      "related_timeline": "TIM-0056",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "黎玉璽（1914-2003），海軍第2艦隊司令。",
+      "standard_bio": "黎玉璽（1914-2003），海軍第2艦隊司令。",
+      "battle_role_summary": "指揮中榮號等軍艦封鎖金門海域，以艦砲攻擊解放軍船團。",
+      "key_actions_list": [
+        "指揮中榮號等艦封鎖金門海域",
+        "以艦砲攻擊解放軍船團"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1914",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "2003",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "海軍上將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "海軍第2艦隊",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0009",
+      "name_zh": "李光前",
+      "name_en": "Li Kuang-Chien",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1917",
+      "death_date": "1949-10-25",
+      "birth_place": "湖南",
+      "death_place": "金門林厝",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第14師第42團",
+      "military_branch": "陸軍",
+      "unit": "第14師第42團",
+      "rank_at_event": "上校",
+      "highest_known_rank": "上校",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "10/25 15:00率部衝鋒林厝時陣亡。戰後金門民眾建李光前將軍廟紀念。",
+      "biographical_summary": "李光前（1917-1949），湖南人。第14師第42團團長。古寧頭戰役國軍陣亡最高階軍官。",
+      "battle_actions": "率第42團攻擊林厝; 衝鋒林厝時陣亡; 追晉",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "EVT-0026; EVT-0003; EVT-0014",
+      "related_timeline": "TIM-0119; TIM-0070; TIM-0069",
+      "related_pois": "POI-0007; POI-0017",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "李光前（1917-1949），湖南人。第14師第42團團長。古寧頭戰役國軍陣亡最高階軍官。",
+      "standard_bio": "李光前（1917-1949），湖南人。第14師第42團團長。古寧頭戰役國軍陣亡最高階軍官。",
+      "battle_role_summary": "10/25 15:00率部衝鋒林厝時陣亡。戰後金門民眾建李光前將軍廟紀念。",
+      "key_actions_list": [
+        "率第42團攻擊林厝",
+        "衝鋒林厝時陣亡",
+        "追晉"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1917",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1949-10-25",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "上校",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第14師第42團",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": "死亡地點：林厝（POI-0007）"
+    },
+    {
+      "person_id": "PER-0010",
+      "name_zh": "熊震球",
+      "name_en": "Hsiung Chen-Chiu",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1931",
+      "death_date": "",
+      "birth_place": "湖南",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "戰車第3團第1連",
+      "military_branch": "陸軍裝甲",
+      "unit": "戰車第3團第1連",
+      "rank_at_event": "二兵",
+      "highest_known_rank": "二兵",
+      "primary_category": "Nationalist Armored Force",
+      "secondary_categories": [],
+      "role_in_battle": "10/25 00:30誤裝穿甲彈擊中桅杆，第二發擊中彈藥船引發大火照亮海面。副駕駛曾紹林陣亡。",
+      "biographical_summary": "熊震球（1931-？），湖南人。18歲擔任M5A1戰車66號射手。古寧頭第一砲發射者。",
+      "battle_actions": "24日下午戰車拋錨古寧頭海灘; 25日00:30發射第一砲; 誤裝穿甲彈擊中彈藥船",
+      "command_relationships": "",
+      "related_persons": "楊展、曾紹林",
+      "related_events": "EVT-0001; EVT-0010",
+      "related_timeline": "TIM-0041; TIM-0039",
+      "related_pois": "POI-0001",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "熊震球（1931-？），湖南人。18歲擔任M5A1戰車66號射手。古寧頭第一砲發射者。",
+      "standard_bio": "熊震球（1931-？），湖南人。18歲擔任M5A1戰車66號射手。古寧頭第一砲發射者。",
+      "battle_role_summary": "10/25 00:30誤裝穿甲彈擊中桅杆，第二發擊中彈藥船引發大火照亮海面。副駕駛曾紹林陣亡。",
+      "key_actions_list": [
+        "24日下午戰車拋錨古寧頭海灘",
+        "25日00:30發射第一砲",
+        "誤裝穿甲彈擊中彈藥船"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1931",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "二兵",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "戰車第3團第1連",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": "SRC-0004（Level1官方新聞稿）確認其故事"
+    },
+    {
+      "person_id": "PER-0011",
+      "name_zh": "楊展",
+      "name_en": "Yang Chan",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "戰車第3團第1連第1排",
+      "military_branch": "陸軍裝甲",
+      "unit": "戰車第3團第1連第1排",
+      "rank_at_event": "排長",
+      "highest_known_rank": "排長",
+      "primary_category": "Nationalist Armored Force",
+      "secondary_categories": [],
+      "role_in_battle": "25日00:30下令全排戰鬥。",
+      "biographical_summary": "楊展，戰車第3團第1連第1排排長。下令在古寧頭海灘徹夜搶修拋錨戰車。",
+      "battle_actions": "24日下午戰車拋錨後下令徹夜搶修; 00:30下令戰鬥",
+      "command_relationships": "",
+      "related_persons": "熊震球、曾紹林",
+      "related_events": "EVT-0001",
+      "related_timeline": "TIM-0041; TIM-0039",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "楊展，戰車第3團第1連第1排排長。下令在古寧頭海灘徹夜搶修拋錨戰車。",
+      "standard_bio": "楊展，戰車第3團第1連第1排排長。下令在古寧頭海灘徹夜搶修拋錨戰車。",
+      "battle_role_summary": "25日00:30下令全排戰鬥。",
+      "key_actions_list": [
+        "24日下午戰車拋錨後下令徹夜搶修",
+        "00:30下令戰鬥"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "排長",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "戰車第3團第1連第1排",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0012",
+      "name_zh": "曾紹林",
+      "name_en": "Tseng Shao-Lin",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "戰車第3團第1連第1排",
+      "military_branch": "陸軍裝甲",
+      "unit": "",
+      "rank_at_event": "副駕駛",
+      "highest_known_rank": "副駕駛",
+      "primary_category": "Nationalist Armored Force",
+      "secondary_categories": [],
+      "role_in_battle": "操作M1919機槍時陣亡。",
+      "biographical_summary": "曾紹林，戰車66號副駕駛。操作M1919 .30機槍時陣亡。戰車排第一位陣亡人員。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "熊震球、楊展",
+      "related_events": "",
+      "related_timeline": "TIM-0041",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "曾紹林，戰車66號副駕駛。操作M1919 .30機槍時陣亡。戰車排第一位陣亡人員。",
+      "standard_bio": "曾紹林，戰車66號副駕駛。操作M1919 .30機槍時陣亡。戰車排第一位陣亡人員。",
+      "battle_role_summary": "操作M1919機槍時陣亡。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "副駕駛",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0013",
+      "name_zh": "陳振威",
+      "name_en": "Chen Chen-Wei",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "戰車第3團第1營",
+      "military_branch": "陸軍裝甲",
+      "unit": "戰車第3團第1營",
+      "rank_at_event": "營長",
+      "highest_known_rank": "營長",
+      "primary_category": "Nationalist Armored Force",
+      "secondary_categories": [],
+      "role_in_battle": "指揮配備21輛M5A1戰車之裝甲營。曾在緬甸戰役作戰。",
+      "biographical_summary": "陳振威，獨立戰車第3團第1營營長。",
+      "battle_actions": "指揮戰車營進駐金門; 曾在緬甸戰役作戰",
+      "command_relationships": "",
+      "related_persons": "胡克華、周明琴",
+      "related_events": "",
+      "related_timeline": "TIM-0010",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "陳振威，獨立戰車第3團第1營營長。",
+      "standard_bio": "陳振威，獨立戰車第3團第1營營長。",
+      "battle_role_summary": "指揮配備21輛M5A1戰車之裝甲營。曾在緬甸戰役作戰。",
+      "key_actions_list": [
+        "指揮戰車營進駐金門",
+        "曾在緬甸戰役作戰"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "營長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "戰車第3團第1營",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0014",
+      "name_zh": "李良榮",
+      "name_en": "Lee Liang-Jung",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第22兵團",
+      "military_branch": "陸軍",
+      "unit": "第22兵團",
+      "rank_at_event": "陸軍中將",
+      "highest_known_rank": "陸軍中將",
+      "primary_category": "Nationalist Senior Commander",
+      "secondary_categories": [],
+      "role_in_battle": "胡璉抵達前代理金門最高指揮。",
+      "biographical_summary": "李良榮，第22兵團司令。胡璉抵達前台金門各部暫歸其指揮。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "湯恩伯",
+      "related_events": "",
+      "related_timeline": "TIM-0029; TIM-0006; TIM-0007",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "李良榮，第22兵團司令。胡璉抵達前台金門各部暫歸其指揮。",
+      "standard_bio": "李良榮，第22兵團司令。胡璉抵達前台金門各部暫歸其指揮。",
+      "battle_role_summary": "胡璉抵達前代理金門最高指揮。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "陸軍中將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第22兵團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0015",
+      "name_zh": "沈向奎",
+      "name_en": "Shen Hsiang-Kuei",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第25軍",
+      "military_branch": "陸軍",
+      "unit": "第25軍",
+      "rank_at_event": "陸軍中將",
+      "highest_known_rank": "陸軍中將",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "率第25軍由廈門轉進金門。",
+      "biographical_summary": "沈向奎，第25軍軍長。由廈門轉進金門。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "李良榮",
+      "related_events": "EVT-0002",
+      "related_timeline": "TIM-0053; TIM-0006",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "沈向奎，第25軍軍長。由廈門轉進金門。",
+      "standard_bio": "沈向奎，第25軍軍長。由廈門轉進金門。",
+      "battle_role_summary": "率第25軍由廈門轉進金門。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "陸軍中將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第25軍",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0016",
+      "name_zh": "劉雲瀚",
+      "name_en": "Liu Yün-Han",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第19軍",
+      "military_branch": "陸軍",
+      "unit": "第19軍",
+      "rank_at_event": "陸軍少將",
+      "highest_known_rank": "陸軍中將",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "率第19軍轉向金門增援。",
+      "biographical_summary": "劉雲瀚，第19軍軍長。率部由原定浙江前線轉向金門增援。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "陳誠",
+      "related_events": "EVT-0002; EVT-0009",
+      "related_timeline": "TIM-0053; TIM-0028; TIM-0025; TIM-0020",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "劉雲瀚，第19軍軍長。率部由原定浙江前線轉向金門增援。",
+      "standard_bio": "劉雲瀚，第19軍軍長。率部由原定浙江前線轉向金門增援。",
+      "battle_role_summary": "率第19軍轉向金門增援。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "陸軍少將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第19軍",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0017",
+      "name_zh": "傅伊仁",
+      "name_en": "Foo Yih-Jen",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第201師第602團",
+      "military_branch": "陸軍",
+      "unit": "第201師第602團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "指揮第602團防守古寧頭陣地。首次反衝鋒擊退登陸解放軍。",
+      "biographical_summary": "傅伊仁，第201師第602團團長。在古寧頭防禦堅強。",
+      "battle_actions": "指揮第602團堅守古寧頭; 實施首次反衝鋒",
+      "command_relationships": "",
+      "related_persons": "鄭果",
+      "related_events": "EVT-0011",
+      "related_timeline": "TIM-0009; TIM-0050",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "傅伊仁，第201師第602團團長。在古寧頭防禦堅強。",
+      "standard_bio": "傅伊仁，第201師第602團團長。在古寧頭防禦堅強。",
+      "battle_role_summary": "指揮第602團防守古寧頭陣地。首次反衝鋒擊退登陸解放軍。",
+      "key_actions_list": [
+        "指揮第602團堅守古寧頭",
+        "實施首次反衝鋒"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第201師第602團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0018",
+      "name_zh": "鄭果",
+      "name_en": "Cheng Kuo",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第201師",
+      "military_branch": "陸軍",
+      "unit": "第201師",
+      "rank_at_event": "師長",
+      "highest_known_rank": "師長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "率第201師由臺灣移防金門。",
+      "biographical_summary": "鄭果，青年軍第201師師長。孫立人訓練之部隊。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "孫立人、傅伊仁、雷開瑄",
+      "related_events": "",
+      "related_timeline": "TIM-0009",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "鄭果，青年軍第201師師長。孫立人訓練之部隊。",
+      "standard_bio": "鄭果，青年軍第201師師長。孫立人訓練之部隊。",
+      "battle_role_summary": "率第201師由臺灣移防金門。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "師長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第201師",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0019",
+      "name_zh": "孫立人",
+      "name_en": "Sun Li-Jen",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1900",
+      "death_date": "1990",
+      "birth_place": "安徽",
+      "death_place": "臺中",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "陸軍訓練司令部",
+      "military_branch": "陸軍",
+      "unit": "",
+      "rank_at_event": "陸軍二級上將",
+      "highest_known_rank": "陸軍四星上將",
+      "primary_category": "Nationalist Senior Commander",
+      "secondary_categories": [],
+      "role_in_battle": "訓練第201師。該師後成為古寧頭戰役關鍵防禦部隊。",
+      "biographical_summary": "孫立人（1900-1990），安徽人。清華學校、維吉尼亞軍校畢業。在鳳山訓練青年軍第201師。",
+      "battle_actions": "訓練青年軍第201師",
+      "command_relationships": "",
+      "related_persons": "鄭果",
+      "related_events": "",
+      "related_timeline": "TIM-0009",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "孫立人（1900-1990），安徽人。清華學校、維吉尼亞軍校畢業。在鳳山訓練青年軍第201師。",
+      "standard_bio": "孫立人（1900-1990），安徽人。清華學校、維吉尼亞軍校畢業。在鳳山訓練青年軍第201師。",
+      "battle_role_summary": "訓練第201師。該師後成為古寧頭戰役關鍵防禦部隊。",
+      "key_actions_list": [
+        "訓練青年軍第201師"
+      ],
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1900",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1990",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "陸軍二級上將",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0020",
+      "name_zh": "楊書田",
+      "name_en": "Yang Shu-Tien",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第118師第353團",
+      "military_branch": "陸軍",
+      "unit": "第118師第353團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "接替第352團主攻林厝—古寧頭。",
+      "biographical_summary": "楊書田，第118師第353團團長。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "李樹蘭",
+      "related_events": "",
+      "related_timeline": "TIM-0088; TIM-0087",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "楊書田，第118師第353團團長。",
+      "standard_bio": "楊書田，第118師第353團團長。",
+      "battle_role_summary": "接替第352團主攻林厝—古寧頭。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第118師第353團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0021",
+      "name_zh": "唐俊賢",
+      "name_en": "Tang Chun-Hsien",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第118師第352團",
+      "military_branch": "陸軍",
+      "unit": "第118師第352團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "攻入古寧頭村莊外圍。",
+      "biographical_summary": "唐俊賢，第118師第352團團長。攻入古寧頭外圍。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "李樹蘭",
+      "related_events": "",
+      "related_timeline": "TIM-0085",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "唐俊賢，第118師第352團團長。攻入古寧頭外圍。",
+      "standard_bio": "唐俊賢，第118師第352團團長。攻入古寧頭外圍。",
+      "battle_role_summary": "攻入古寧頭村莊外圍。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第118師第352團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0022",
+      "name_zh": "林書嶠",
+      "name_en": "Lin Shu-Chiao",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第118師第354團",
+      "military_branch": "陸軍",
+      "unit": "第118師第354團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "投入夜間清剿古寧頭殘餘解放軍。",
+      "biographical_summary": "林書嶠，第118師第354團團長。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "李樹蘭",
+      "related_events": "",
+      "related_timeline": "TIM-0096",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "林書嶠，第118師第354團團長。",
+      "standard_bio": "林書嶠，第118師第354團團長。",
+      "battle_role_summary": "投入夜間清剿古寧頭殘餘解放軍。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第118師第354團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0023",
+      "name_zh": "雷開瑄",
+      "name_en": "Lei Kai-Hsüan",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第201師第601團",
+      "military_branch": "陸軍",
+      "unit": "第201師第601團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "指揮第601團防守嚨口陣地。",
+      "biographical_summary": "雷開瑄，第201師第601團團長。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "鄭果",
+      "related_events": "",
+      "related_timeline": "TIM-0009",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "雷開瑄，第201師第601團團長。",
+      "standard_bio": "雷開瑄，第201師第601團團長。",
+      "battle_role_summary": "指揮第601團防守嚨口陣地。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第201師第601團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0024",
+      "name_zh": "葉飛",
+      "name_en": "Ye Fei",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1914",
+      "death_date": "1999",
+      "birth_place": "福建南安",
+      "death_place": "北京",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第十兵團",
+      "military_branch": "陸軍",
+      "unit": "解放軍第十兵團",
+      "rank_at_event": "司令員",
+      "highest_known_rank": "司令員",
+      "primary_category": "PLA Senior Commander",
+      "secondary_categories": [],
+      "role_in_battle": "解放軍攻金作戰最高指揮官。批准10/24攻擊。戰後向毛澤東提交檢討。",
+      "biographical_summary": "葉飛（1914-1999），福建南安人。解放軍第十兵團司令員。古寧頭戰役解放軍最高指揮官。",
+      "battle_actions": "指揮第十兵團入閩; 批准10/24攻金作戰; 向毛澤東提交檢討",
+      "command_relationships": "",
+      "related_persons": "蕭鋒、毛澤東",
+      "related_events": "EVT-0006; EVT-0025",
+      "related_timeline": "TIM-0027; TIM-0013; TIM-0014; TIM-0002; TIM-0005; TIM-0003; TIM-0021; TIM-0012; TIM-0061; TIM-0075; TIM-0030; TIM-0117; TIM-0008",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "葉飛（1914-1999），福建南安人。解放軍第十兵團司令員。古寧頭戰役解放軍最高指揮官。",
+      "standard_bio": "葉飛（1914-1999），福建南安人。解放軍第十兵團司令員。古寧頭戰役解放軍最高指揮官。",
+      "battle_role_summary": "解放軍攻金作戰最高指揮官。批准10/24攻擊。戰後向毛澤東提交檢討。",
+      "key_actions_list": [
+        "指揮第十兵團入閩",
+        "批准10/24攻金作戰",
+        "向毛澤東提交檢討"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1914",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1999",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "司令員",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第十兵團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0025",
+      "name_zh": "蕭鋒",
+      "name_en": "Xiao Feng",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第28軍",
+      "military_branch": "陸軍",
+      "unit": "解放軍第28軍",
+      "rank_at_event": "副軍長",
+      "highest_known_rank": "副軍長",
+      "primary_category": "PLA Field Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第28軍攻金作戰實際指揮者。發布作戰令。10/24下令攻擊。戰役中在蓮河指揮所無法掌握前線。",
+      "biographical_summary": "蕭鋒，解放軍第28軍副軍長。攻金作戰主要計畫者。",
+      "battle_actions": "發布攻金作戰令; 下令10/24攻擊; 審訊俘虜; 戰役後提交檢討",
+      "command_relationships": "",
+      "related_persons": "葉飛、朱紹清",
+      "related_events": "EVT-0006; EVT-0001; EVT-0028",
+      "related_timeline": "TIM-0027; TIM-0026; TIM-0038; TIM-0033; TIM-0030; TIM-0024; TIM-0015; TIM-0064; TIM-0031",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "蕭鋒，解放軍第28軍副軍長。攻金作戰主要計畫者。",
+      "standard_bio": "蕭鋒，解放軍第28軍副軍長。攻金作戰主要計畫者。",
+      "battle_role_summary": "第28軍攻金作戰實際指揮者。發布作戰令。10/24下令攻擊。戰役中在蓮河指揮所無法掌握前線。",
+      "key_actions_list": [
+        "發布攻金作戰令",
+        "下令10/24攻擊",
+        "審訊俘虜",
+        "戰役後提交檢討"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "副軍長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第28軍",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0026",
+      "name_zh": "朱紹清",
+      "name_en": "Zhu Shaoqing",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第28軍",
+      "military_branch": "陸軍",
+      "unit": "解放軍第28軍",
+      "rank_at_event": "軍長",
+      "highest_known_rank": "軍長",
+      "primary_category": "PLA Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第28軍軍長。",
+      "biographical_summary": "朱紹清，解放軍第28軍軍長。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "蕭鋒",
+      "related_events": "",
+      "related_timeline": "TIM-0015",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "朱紹清，解放軍第28軍軍長。",
+      "standard_bio": "朱紹清，解放軍第28軍軍長。",
+      "battle_role_summary": "第28軍軍長。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "軍長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第28軍",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0027",
+      "name_zh": "邢永生",
+      "name_en": "Hsing Yung-Sheng",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第244團",
+      "military_branch": "陸軍",
+      "unit": "解放軍第244團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "PLA Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第244團團長。登陸後重傷仍堅持指揮至中午該團幾近全滅。",
+      "biographical_summary": "邢永生，解放軍第244團團長。率部在嚨口登陸，重傷仍堅持指揮。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "EVT-0029; EVT-0002; EVT-0001; EVT-0010",
+      "related_timeline": "TIM-0043; TIM-0062; TIM-0046",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "邢永生，解放軍第244團團長。率部在嚨口登陸，重傷仍堅持指揮。",
+      "standard_bio": "邢永生，解放軍第244團團長。率部在嚨口登陸，重傷仍堅持指揮。",
+      "battle_role_summary": "第244團團長。登陸後重傷仍堅持指揮至中午該團幾近全滅。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第244團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0028",
+      "name_zh": "劉天祥",
+      "name_en": "Liu Tien-Hsiang",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第251團",
+      "military_branch": "陸軍",
+      "unit": "解放軍第251團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "PLA Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第251團團長。戰至15:00傷亡約1,000人。與第253團會合後持續作戰。",
+      "biographical_summary": "劉天祥，解放軍第251團團長。在湖尾登陸，率部奮戰至15:00傷亡約千人。",
+      "battle_actions": "在湖尾登陸; 率部奮戰至15:00; 後與第253團會合",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "EVT-0029; EVT-0002; EVT-0001; EVT-0009",
+      "related_timeline": "TIM-0047; TIM-0071; TIM-0065; TIM-0066; TIM-0068",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "劉天祥，解放軍第251團團長。在湖尾登陸，率部奮戰至15:00傷亡約千人。",
+      "standard_bio": "劉天祥，解放軍第251團團長。在湖尾登陸，率部奮戰至15:00傷亡約千人。",
+      "battle_role_summary": "第251團團長。戰至15:00傷亡約1,000人。與第253團會合後持續作戰。",
+      "key_actions_list": [
+        "在湖尾登陸",
+        "率部奮戰至15:00",
+        "後與第253團會合"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第251團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0029",
+      "name_zh": "徐博",
+      "name_en": "Hsu Po",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第253團",
+      "military_branch": "陸軍",
+      "unit": "解放軍第253團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "PLA Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第253團團長。登陸後率部突進。戰役結束後逃入太武山逾100天。",
+      "biographical_summary": "徐博，解放軍第253團團長。在古寧頭登陸。戰役結束後逃入太武山逾100天，1950年2月被俘。",
+      "battle_actions": "在古寧頭登陸; 逃入太武山; 逾100天後被俘",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "EVT-0029; EVT-0027; EVT-0011; EVT-0001; EVT-0006",
+      "related_timeline": "TIM-0123; TIM-0048; TIM-0068",
+      "related_pois": "POI-0025",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "evidence_summary": "SRC-0027(L4); SRC-0004(L1)",
+      "verification_status": "partially_verified",
+      "conflicting_sources": "結局各來源不一：被處決/絕食死亡/俘虜送內湖",
+      "uncertain_fields": "",
+      "short_bio": "徐博，解放軍第253團團長。在古寧頭登陸。戰役結束後逃入太武山逾100天，1950年2月被俘。",
+      "standard_bio": "徐博，解放軍第253團團長。在古寧頭登陸。戰役結束後逃入太武山逾100天，1950年2月被俘。",
+      "battle_role_summary": "第253團團長。登陸後率部突進。戰役結束後逃入太武山逾100天。",
+      "key_actions_list": [
+        "在古寧頭登陸",
+        "逃入太武山",
+        "逾100天後被俘"
+      ],
+      "person_type": "core",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第253團",
+          "source": [
+            "SRC-0027",
+            "SRC-0004"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0030",
+      "name_zh": "孫玉秀",
+      "name_en": "Sun Yü-Hsiu",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "PLA",
+      "organization": "解放軍第246團",
+      "military_branch": "陸軍",
+      "unit": "解放軍第246團",
+      "rank_at_event": "團長",
+      "highest_known_rank": "團長",
+      "primary_category": "PLA Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "第246團團長。率第二梯隊增援登陸。重傷後自殺。",
+      "biographical_summary": "孫玉秀，解放軍第246團團長。率第二梯隊增援登陸。重傷後自殺。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "EVT-0004; EVT-0016; EVT-0006",
+      "related_timeline": "TIM-0117",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "孫玉秀，解放軍第246團團長。率第二梯隊增援登陸。重傷後自殺。",
+      "standard_bio": "孫玉秀，解放軍第246團團長。率第二梯隊增援登陸。重傷後自殺。",
+      "battle_role_summary": "第246團團長。率第二梯隊增援登陸。重傷後自殺。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "團長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "解放軍第246團",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0031",
+      "name_zh": "毛澤東",
+      "name_en": "Mao Zedong",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1893",
+      "death_date": "1976",
+      "birth_place": "湖南湘潭",
+      "death_place": "北京",
+      "nationality_or_affiliation": "PLA",
+      "organization": "中國共產黨",
+      "military_branch": "政治",
+      "unit": "",
+      "rank_at_event": "中共中央主席",
+      "highest_known_rank": "中共中央主席",
+      "primary_category": "Political Leader",
+      "secondary_categories": [],
+      "role_in_battle": "葉飛提交檢討後未對其處分。",
+      "biographical_summary": "毛澤東（1893-1976），湖南湘潭人。中共領導人。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "葉飛",
+      "related_events": "EVT-0025",
+      "related_timeline": "TIM-0117",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "毛澤東（1893-1976），湖南湘潭人。中共領導人。",
+      "standard_bio": "毛澤東（1893-1976），湖南湘潭人。中共領導人。",
+      "battle_role_summary": "葉飛提交檢討後未對其處分。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1893",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1976",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "中共中央主席",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0032",
+      "name_zh": "陳毅",
+      "name_en": "Chen Yi",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1901",
+      "death_date": "1972",
+      "birth_place": "四川樂至",
+      "death_place": "北京",
+      "nationality_or_affiliation": "PLA",
+      "organization": "華東軍區",
+      "military_branch": "陸軍",
+      "unit": "",
+      "rank_at_event": "司令員",
+      "highest_known_rank": "元帥",
+      "primary_category": "PLA Senior Commander",
+      "secondary_categories": [],
+      "role_in_battle": "與粟裕回電同意金廈作戰方案，關切船隻問題。",
+      "biographical_summary": "陳毅（1901-1972），華東軍區司令員。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "粟裕、葉飛",
+      "related_events": "",
+      "related_timeline": "TIM-0008; TIM-0019",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "陳毅（1901-1972），華東軍區司令員。",
+      "standard_bio": "陳毅（1901-1972），華東軍區司令員。",
+      "battle_role_summary": "與粟裕回電同意金廈作戰方案，關切船隻問題。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1901",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1972",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "司令員",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0033",
+      "name_zh": "粟裕",
+      "name_en": "Su Yu",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "1907",
+      "death_date": "1984",
+      "birth_place": "湖南會同",
+      "death_place": "北京",
+      "nationality_or_affiliation": "PLA",
+      "organization": "華東軍區",
+      "military_branch": "陸軍",
+      "unit": "",
+      "rank_at_event": "副司令員",
+      "highest_known_rank": "大將",
+      "primary_category": "PLA Senior Commander",
+      "secondary_categories": [],
+      "role_in_battle": "與陳毅共同回覆第十兵團作戰方案。",
+      "biographical_summary": "粟裕（1907-1984），湖南會同人。華東軍區副司令員。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "陳毅",
+      "related_events": "",
+      "related_timeline": "TIM-0008; TIM-0019",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "粟裕（1907-1984），湖南會同人。華東軍區副司令員。",
+      "standard_bio": "粟裕（1907-1984），湖南會同人。華東軍區副司令員。",
+      "battle_role_summary": "與陳毅共同回覆第十兵團作戰方案。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "birth_date": {
+          "value": "1907",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "death_date": {
+          "value": "1984",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "rank_at_event": {
+          "value": "副司令員",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0034",
+      "name_zh": "李運成",
+      "name_en": "Lee Yün-Cheng",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "第五軍",
+      "military_branch": "陸軍",
+      "unit": "第五軍",
+      "rank_at_event": "軍長",
+      "highest_known_rank": "軍長",
+      "primary_category": "Nationalist Unit Commander",
+      "secondary_categories": [],
+      "role_in_battle": "率第五軍進駐小金門。",
+      "biographical_summary": "李運成，第五軍軍長。進駐小金門（烈嶼）未直接參與古寧頭戰鬥。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "",
+      "related_events": "",
+      "related_timeline": "TIM-0020",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "李運成，第五軍軍長。進駐小金門（烈嶼）未直接參與古寧頭戰鬥。",
+      "standard_bio": "李運成，第五軍軍長。進駐小金門（烈嶼）未直接參與古寧頭戰鬥。",
+      "battle_role_summary": "率第五軍進駐小金門。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "軍長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "第五軍",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0035",
+      "name_zh": "胡克華",
+      "name_en": "Hu Ke-Hwa",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "戰車第3團第1營第1連",
+      "military_branch": "陸軍裝甲",
+      "unit": "戰車第3團第1連",
+      "rank_at_event": "連長",
+      "highest_known_rank": "連長",
+      "primary_category": "Nationalist Armored Force",
+      "secondary_categories": [],
+      "role_in_battle": "指揮M5A1戰車連。",
+      "biographical_summary": "胡克華，戰車第3團第1連連長。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "陳振威",
+      "related_events": "",
+      "related_timeline": "",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "胡克華，戰車第3團第1連連長。",
+      "standard_bio": "胡克華，戰車第3團第1連連長。",
+      "battle_role_summary": "指揮M5A1戰車連。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "連長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "戰車第3團第1連",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    },
+    {
+      "person_id": "PER-0036",
+      "name_zh": "周明琴",
+      "name_en": "Chou Ming-Chin",
+      "name_variants": [],
+      "aliases": [],
+      "gender": "M",
+      "birth_date": "",
+      "death_date": "",
+      "birth_place": "",
+      "death_place": "",
+      "nationality_or_affiliation": "Nationalist",
+      "organization": "戰車第3團第1營第3連",
+      "military_branch": "陸軍裝甲",
+      "unit": "戰車第3團第1連",
+      "rank_at_event": "連長",
+      "highest_known_rank": "連長",
+      "primary_category": "Nationalist Armored Force",
+      "secondary_categories": [],
+      "role_in_battle": "指揮戰車第3連機動打擊。",
+      "biographical_summary": "周明琴，戰車第3團第1營第3連連長。機動打擊部隊。",
+      "battle_actions": "",
+      "command_relationships": "",
+      "related_persons": "陳振威",
+      "related_events": "",
+      "related_timeline": "",
+      "related_pois": "",
+      "related_routes": "",
+      "related_sources": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "evidence_summary": "SRC-0027(L4)",
+      "verification_status": "needs_human_review",
+      "conflicting_sources": "",
+      "uncertain_fields": "",
+      "short_bio": "周明琴，戰車第3團第1營第3連連長。機動打擊部隊。",
+      "standard_bio": "周明琴，戰車第3團第1營第3連連長。機動打擊部隊。",
+      "battle_role_summary": "指揮戰車第3連機動打擊。",
+      "key_actions_list": "",
+      "person_type": "standard",
+      "portrait_assets": [],
+      "document_assets": [],
+      "oral_history_assets": [],
+      "created_date": "2026-07-21",
+      "updated_date": "2026-07-21",
+      "field_evidence": {
+        "rank_at_event": {
+          "value": "連長",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        },
+        "unit": {
+          "value": "戰車第3團第1連",
+          "source": [
+            "SRC-0027"
+          ],
+          "assessment": "unverified"
+        }
+      },
+      "notes": ""
+    }
+  ]
+}

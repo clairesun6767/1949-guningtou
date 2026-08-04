@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-07-21"
+  },
+  "labels": {
+    "none": "此內容有多項正式史料支持，可信度高。",
+    "approximate_time": "此事件的確切時間在不同史料中有細微差異，此處為多數史料接受的時間。",
+    "approximate_location": "此事件的地點在史料中未精確記錄，此處為參考戰後調查推估的大致範圍。",
+    "disputed_time": "不同史料對本事件的時間有不同記載。",
+    "disputed_location": "不同史料對本事件的地點有不同記載。",
+    "disputed_identity": "此人物或部隊的身分在不同史料中有不同說法。",
+    "disputed_unit": "此部隊的番號或編制在不同史料中有不同記載。",
+    "disputed_casualty": "雙方對傷亡數字的統計有明顯差異。",
+    "conflicting_accounts": "不同史料對此事有互相矛盾的記載。",
+    "single_source": "此內容僅有單一史料支持。",
+    "later_recollection": "此內容為事後多年的回憶記錄，可能包含記憶誤差。",
+    "translation_uncertainty": "此內容的中英文對應關係未完全確認。",
+    "incomplete_record": "相關檔案紀錄不全。",
+    "dramatized_transition": "此處為敘事流暢目的加入的過渡內容。"
+  }
+}

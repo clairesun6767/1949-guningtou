@@ -1,0 +1,284 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-07-21",
+    "total": 25
+  },
+  "units": [
+    {
+      "unit_id": "U-0001",
+      "unit_name_original": "第12兵團",
+      "unit_name_normalized": "第12兵團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0002",
+      "unit_name_original": "第18軍",
+      "unit_name_normalized": "第18軍",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0003",
+      "unit_name_original": "第118師",
+      "unit_name_normalized": "第118師",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0004",
+      "unit_name_original": "第45師",
+      "unit_name_normalized": "第45師",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0005",
+      "unit_name_original": "海軍第2艦隊",
+      "unit_name_normalized": "海軍第2艦隊",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0006",
+      "unit_name_original": "第14師第42團",
+      "unit_name_normalized": "第14師第42團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0007",
+      "unit_name_original": "戰車第3團第1連",
+      "unit_name_normalized": "戰車第3團第1連",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0008",
+      "unit_name_original": "戰車第3團第1連第1排",
+      "unit_name_normalized": "戰車第3團第1連第1排",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0009",
+      "unit_name_original": "戰車第3團第1營",
+      "unit_name_normalized": "戰車第3團第1營",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0010",
+      "unit_name_original": "第22兵團",
+      "unit_name_normalized": "第22兵團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0011",
+      "unit_name_original": "第25軍",
+      "unit_name_normalized": "第25軍",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0012",
+      "unit_name_original": "第19軍",
+      "unit_name_normalized": "第19軍",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0013",
+      "unit_name_original": "第201師第602團",
+      "unit_name_normalized": "第201師第602團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0014",
+      "unit_name_original": "第201師",
+      "unit_name_normalized": "第201師",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0015",
+      "unit_name_original": "第118師第353團",
+      "unit_name_normalized": "第118師第353團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0016",
+      "unit_name_original": "第118師第352團",
+      "unit_name_normalized": "第118師第352團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0017",
+      "unit_name_original": "第118師第354團",
+      "unit_name_normalized": "第118師第354團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0018",
+      "unit_name_original": "第201師第601團",
+      "unit_name_normalized": "第201師第601團",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0019",
+      "unit_name_original": "解放軍第十兵團",
+      "unit_name_normalized": "解放軍第十兵團",
+      "side": "PLA",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0020",
+      "unit_name_original": "解放軍第28軍",
+      "unit_name_normalized": "解放軍第28軍",
+      "side": "PLA",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0021",
+      "unit_name_original": "解放軍第244團",
+      "unit_name_normalized": "解放軍第244團",
+      "side": "PLA",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0022",
+      "unit_name_original": "解放軍第251團",
+      "unit_name_normalized": "解放軍第251團",
+      "side": "PLA",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0023",
+      "unit_name_original": "解放軍第253團",
+      "unit_name_normalized": "解放軍第253團",
+      "side": "PLA",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0024",
+      "unit_name_original": "解放軍第246團",
+      "unit_name_normalized": "解放軍第246團",
+      "side": "PLA",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    },
+    {
+      "unit_id": "U-0025",
+      "unit_name_original": "第五軍",
+      "unit_name_normalized": "第五軍",
+      "side": "Nationalist",
+      "parent_unit": "",
+      "unit_type": "",
+      "related_persons": [],
+      "related_events": [],
+      "related_sources": []
+    }
+  ]
+}

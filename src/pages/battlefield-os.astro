@@ -1,0 +1,78 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">Battlefield OS</h1>
+    <p class="text-stone-500 mb-4">AI × 穿越 × 沉浸式歷史體驗平台</p>
+
+    <div class="bg-gradient-to-br from-stone-800 to-stone-900 rounded-2xl p-8 mb-10 text-white">
+      <h2 class="text-2xl font-serif font-bold mb-4">即將推出的互動體驗</h2>
+      <p class="text-stone-300 leading-relaxed mb-6">
+        Battlefield OS 是本站的 3D 互動延伸，將靜態的歷史資料轉化為可探索、可互動的沉浸式體驗。
+        結合真實 GPS 座標、1944 年航照與 3D 地形，讓使用者穿越時空，親歷 1949 年的古寧頭戰場。
+      </p>
+      <div class="grid sm:grid-cols-2 gap-3 text-sm">
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">🗺️ 3D 古寧頭地圖</span>
+          <p class="text-stone-400 text-xs mt-1">真實 GPS 座標定位，1944 航照紋理貼圖</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">⏱️ 戰役時間滑桿</span>
+          <p class="text-stone-400 text-xs mt-1">拖曳時間軸，即時查看部隊位置變化</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">➡️ 部隊推進動畫</span>
+          <p class="text-stone-400 text-xs mt-1">國軍／共軍雙視角動畫展示戰線推移</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">👁️ 三視角切換</span>
+          <p class="text-stone-400 text-xs mt-1">國軍／共軍／居民視角自由切換</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">🤖 AI 導覽員</span>
+          <p class="text-stone-400 text-xs mt-1">自然語言問答，即時解說戰役細節</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">💬 NPC 對話</span>
+          <p class="text-stone-400 text-xs mt-1">與歷史人物對話，聽他們的第一人稱敘述</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">🔄 歷史照片疊圖</span>
+          <p class="text-stone-400 text-xs mt-1">1949 ↔ 現代照片滑動對比</p>
+        </div>
+        <div class="bg-white/10 rounded-lg p-3 backdrop-blur">
+          <span class="text-amber-400 font-bold">🛰️ 多圖層切換</span>
+          <p class="text-stone-400 text-xs mt-1">衛星、地形、歷史地圖自由疊加</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+      <h2 class="font-bold text-lg mb-3">技術基礎</h2>
+      <div class="grid sm:grid-cols-3 gap-3 text-sm">
+        <div class="bg-stone-50 p-3 rounded-lg">
+          <div class="font-bold text-stone-700">Three.js / CesiumJS</div>
+          <div class="text-stone-500 text-xs mt-1">WebGL 3D 渲染引擎</div>
+        </div>
+        <div class="bg-stone-50 p-3 rounded-lg">
+          <div class="font-bold text-stone-700">GPS + GIS</div>
+          <div class="text-stone-500 text-xs mt-1">真實地理座標 + 空間網路</div>
+        </div>
+        <div class="bg-stone-50 p-3 rounded-lg">
+          <div class="font-bold text-stone-700">AI 模型</div>
+          <div class="text-stone-500 text-xs mt-1">本地 LLM + 語音合成</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-amber-50 rounded-xl border border-amber-200 p-6 text-center">
+      <h3 class="font-bold text-amber-800 mb-2">🚧 開發狀態</h3>
+      <p class="text-amber-700 text-sm">
+        Battlefield OS 為獨立專案（Battlefield_OS Repository），
+        目前處於原型開發階段。本站為其資料基礎與公開展示平台。
+      </p>
+    </div>
+  </div>
+</MainLayout>

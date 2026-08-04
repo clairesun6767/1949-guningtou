@@ -1,0 +1,43 @@
+{
+  "site_title": "古寧頭戰役 1949",
+  "site_subtitle": "以歷史見和平",
+  "tagline": "Learning Peace Through History",
+  "nav": {
+    "home": "首頁",
+    "history_context": "歷史脈絡",
+    "world_situation": "世界局勢",
+    "battle_background": "戰役背景",
+    "battle_impact": "戰役影響",
+    "battle_core": "戰役核心",
+    "timeline": "時間軸",
+    "battle_analysis": "戰役解析",
+    "multi_perspective": "多元觀點",
+    "people_places": "人物與地點",
+    "people": "人物",
+    "places": "地點",
+    "archive": "典藏",
+    "weapons": "武器裝備",
+    "artifacts": "文物",
+    "documents": "文獻資料庫",
+    "digital_archive": "數位典藏",
+    "postwar_peace": "戰後至和平",
+    "battlefield_os": "Battlefield OS",
+    "about": "關於本站"
+  },
+  "home": {
+    "hero_title": "古寧頭戰役",
+    "hero_date": "1949 年 10 月",
+    "hero_subtitle": "一萬五千名士兵在此登陸",
+    "hero_subtitle2": "三天後，近萬人未能離開",
+    "peace_quote": "每一發砲彈落下之處，現在是潮汐來回的沙灘。",
+    "peace_text": "歷史已然發生，無法改變。我們無意評判對錯，只願呈現那些發生在金門海岸上的真實片刻。",
+    "peace_cta": "理解戰爭，是為了不必再經歷戰爭。",
+    "why_study": "為何研究古寧頭？",
+    "what_is_1949": "1949 是什麼年代？",
+    "enter_history": "進入歷史"
+  },
+  "footer": {
+    "data_source": "資料來源：Battlefield Research Database · 所有史料均附來源 · 多史觀並存 · 政治中立",
+    "peace_message": "歷史已然發生，無法改變。透過理解歷史，珍惜和平的可貴。"
+  }
+}

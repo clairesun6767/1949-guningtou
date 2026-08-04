@@ -1,0 +1,366 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "terrain_types": 10,
+    "poi_mappings": 25
+  },
+  "terrain_types": {
+    "Beach": {
+      "id": "TER-BEACH",
+      "description": "沙灘海岸地形，適合登陸但不適合重型車輛",
+      "avg_elevation": 5,
+      "cover": false,
+      "trafficability": "Low",
+      "visibility": "High"
+    },
+    "Village": {
+      "id": "TER-VILLAGE",
+      "description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low"
+    },
+    "Hill": {
+      "id": "TER-HILL",
+      "description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "cover": true,
+      "trafficability": "Medium",
+      "visibility": "High"
+    },
+    "Forest": {
+      "id": "TER-FOREST",
+      "description": "樹林地區，適合隱蔽",
+      "avg_elevation": 20,
+      "cover": true,
+      "trafficability": "Low",
+      "visibility": "Very Low"
+    },
+    "Farmland": {
+      "id": "TER-FARM",
+      "description": "農田與梯田，視野開闊但地形崎嶇",
+      "avg_elevation": 10,
+      "cover": false,
+      "trafficability": "Medium",
+      "visibility": "High"
+    },
+    "Road": {
+      "id": "TER-ROAD",
+      "description": "道路與聯絡道，部隊移動主要通道",
+      "avg_elevation": 10,
+      "cover": false,
+      "trafficability": "High",
+      "visibility": "Medium"
+    },
+    "Tunnel": {
+      "id": "TER-TUNNEL",
+      "description": "地下坑道與洞穴，適合隱蔽與儲存",
+      "avg_elevation": 0,
+      "cover": true,
+      "trafficability": "Low",
+      "visibility": "None"
+    },
+    "Fortification": {
+      "id": "TER-FORT",
+      "description": "軍事防禦工事（碉堡、陣地等）",
+      "avg_elevation": 10,
+      "cover": true,
+      "trafficability": "Medium",
+      "visibility": "Medium"
+    },
+    "Rock": {
+      "id": "TER-ROCK",
+      "description": "岩石地形（斷崖、礁岩等）",
+      "avg_elevation": 30,
+      "cover": false,
+      "trafficability": "Very Low",
+      "visibility": "Medium"
+    },
+    "Coast": {
+      "id": "TER-COAST",
+      "description": "海岸地形（非沙灘部分）",
+      "avg_elevation": 10,
+      "cover": false,
+      "trafficability": "Low",
+      "visibility": "High"
+    }
+  },
+  "poi_terrain": [
+    {
+      "poi_id": "POI-0001",
+      "terrain_id": "TER-BEACH",
+      "terrain_name": "Beach",
+      "terrain_description": "沙灘海岸地形，適合登陸但不適合重型車輛",
+      "avg_elevation": 5,
+      "has_cover": false,
+      "trafficability": "Low",
+      "visibility": "High",
+      "estimated_elevation_m": 10
+    },
+    {
+      "poi_id": "POI-0002",
+      "terrain_id": "TER-BEACH",
+      "terrain_name": "Beach",
+      "terrain_description": "沙灘海岸地形，適合登陸但不適合重型車輛",
+      "avg_elevation": 5,
+      "has_cover": false,
+      "trafficability": "Low",
+      "visibility": "High",
+      "estimated_elevation_m": 10
+    },
+    {
+      "poi_id": "POI-0003",
+      "terrain_id": "TER-BEACH",
+      "terrain_name": "Beach",
+      "terrain_description": "沙灘海岸地形，適合登陸但不適合重型車輛",
+      "avg_elevation": 5,
+      "has_cover": false,
+      "trafficability": "Low",
+      "visibility": "High",
+      "estimated_elevation_m": 10
+    },
+    {
+      "poi_id": "POI-0004",
+      "terrain_id": "TER-BEACH",
+      "terrain_name": "Beach",
+      "terrain_description": "沙灘海岸地形，適合登陸但不適合重型車輛",
+      "avg_elevation": 5,
+      "has_cover": false,
+      "trafficability": "Low",
+      "visibility": "High",
+      "estimated_elevation_m": 10
+    },
+    {
+      "poi_id": "POI-0005",
+      "terrain_id": "TER-BEACH",
+      "terrain_name": "Beach",
+      "terrain_description": "沙灘海岸地形，適合登陸但不適合重型車輛",
+      "avg_elevation": 5,
+      "has_cover": false,
+      "trafficability": "Low",
+      "visibility": "High",
+      "estimated_elevation_m": 10
+    },
+    {
+      "poi_id": "POI-0006",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 30
+    },
+    {
+      "poi_id": "POI-0007",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 30
+    },
+    {
+      "poi_id": "POI-0008",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 30
+    },
+    {
+      "poi_id": "POI-0009",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 30
+    },
+    {
+      "poi_id": "POI-0010",
+      "terrain_id": "TER-HILL",
+      "terrain_name": "Hill",
+      "terrain_description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "High",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0011",
+      "terrain_id": "TER-HILL",
+      "terrain_name": "Hill",
+      "terrain_description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "High",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0012",
+      "terrain_id": "TER-HILL",
+      "terrain_name": "Hill",
+      "terrain_description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "High",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0013",
+      "terrain_id": "TER-HILL",
+      "terrain_name": "Hill",
+      "terrain_description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "High",
+      "estimated_elevation_m": 50
+    },
+    {
+      "poi_id": "POI-0014",
+      "terrain_id": "TER-HILL",
+      "terrain_name": "Hill",
+      "terrain_description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "High",
+      "estimated_elevation_m": 50
+    },
+    {
+      "poi_id": "POI-0015",
+      "terrain_id": "TER-HILL",
+      "terrain_name": "Hill",
+      "terrain_description": "丘陵高地，可俯瞰周邊地區",
+      "avg_elevation": 50,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "High",
+      "estimated_elevation_m": 50
+    },
+    {
+      "poi_id": "POI-0016",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0017",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0018",
+      "terrain_id": "TER-VILLAGE",
+      "terrain_name": "Village",
+      "terrain_description": "聚落建築區，適合防禦但巷戰激烈",
+      "avg_elevation": 15,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Low",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0019",
+      "terrain_id": "TER-FORT",
+      "terrain_name": "Fortification",
+      "terrain_description": "軍事防禦工事（碉堡、陣地等）",
+      "avg_elevation": 10,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Medium",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0020",
+      "terrain_id": "TER-FORT",
+      "terrain_name": "Fortification",
+      "terrain_description": "軍事防禦工事（碉堡、陣地等）",
+      "avg_elevation": 10,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Medium",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0021",
+      "terrain_id": "TER-COAST",
+      "terrain_name": "Coast",
+      "terrain_description": "海岸地形（非沙灘部分）",
+      "avg_elevation": 10,
+      "has_cover": false,
+      "trafficability": "Low",
+      "visibility": "High",
+      "estimated_elevation_m": 10
+    },
+    {
+      "poi_id": "POI-0022",
+      "terrain_id": "TER-ROAD",
+      "terrain_name": "Road",
+      "terrain_description": "道路與聯絡道，部隊移動主要通道",
+      "avg_elevation": 10,
+      "has_cover": false,
+      "trafficability": "High",
+      "visibility": "Medium",
+      "estimated_elevation_m": 30
+    },
+    {
+      "poi_id": "POI-0023",
+      "terrain_id": "TER-ROAD",
+      "terrain_name": "Road",
+      "terrain_description": "道路與聯絡道，部隊移動主要通道",
+      "avg_elevation": 10,
+      "has_cover": false,
+      "trafficability": "High",
+      "visibility": "Medium",
+      "estimated_elevation_m": 30
+    },
+    {
+      "poi_id": "POI-0024",
+      "terrain_id": "TER-FORT",
+      "terrain_name": "Fortification",
+      "terrain_description": "軍事防禦工事（碉堡、陣地等）",
+      "avg_elevation": 10,
+      "has_cover": true,
+      "trafficability": "Medium",
+      "visibility": "Medium",
+      "estimated_elevation_m": 20
+    },
+    {
+      "poi_id": "POI-0025",
+      "terrain_id": "TER-TUNNEL",
+      "terrain_name": "Tunnel",
+      "terrain_description": "地下坑道與洞穴，適合隱蔽與儲存",
+      "avg_elevation": 0,
+      "has_cover": true,
+      "trafficability": "Low",
+      "visibility": "None",
+      "estimated_elevation_m": 20
+    }
+  ]
+}

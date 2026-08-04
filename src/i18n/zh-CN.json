@@ -1,0 +1,43 @@
+{
+  "site_title": "古宁头战役 1949",
+  "site_subtitle": "以历史见和平",
+  "tagline": "Learning Peace Through History",
+  "nav": {
+    "home": "首页",
+    "history_context": "历史脉络",
+    "world_situation": "世界局势",
+    "battle_background": "战役背景",
+    "battle_impact": "战役影响",
+    "battle_core": "战役核心",
+    "timeline": "时间轴",
+    "battle_analysis": "战役解析",
+    "multi_perspective": "多元观点",
+    "people_places": "人物与地点",
+    "people": "人物",
+    "places": "地点",
+    "archive": "典藏",
+    "weapons": "武器装备",
+    "artifacts": "文物",
+    "documents": "文献数据库",
+    "digital_archive": "数字典藏",
+    "postwar_peace": "战后至和平",
+    "battlefield_os": "Battlefield OS",
+    "about": "关于本站"
+  },
+  "home": {
+    "hero_title": "古宁头战役",
+    "hero_date": "1949 年 10 月",
+    "hero_subtitle": "一万五千名士兵在此登陆",
+    "hero_subtitle2": "三天后，近万人未能离开",
+    "peace_quote": "每一发炮弹落下之处，现在是潮汐来回的沙滩。",
+    "peace_text": "历史已然发生，无法改变。我们无意评判对错，只愿呈现那些发生在金门海岸上的真实片刻。",
+    "peace_cta": "理解战争，是为了不必再经历战争。",
+    "why_study": "为何研究古宁头？",
+    "what_is_1949": "1949 是什么年代？",
+    "enter_history": "进入历史"
+  },
+  "footer": {
+    "data_source": "资料来源：Battlefield Research Database · 所有史料均附来源 · 多史观并存 · 政治中立",
+    "peace_message": "历史已然发生，无法改变。透过理解历史，珍惜和平的可贵。"
+  }
+}

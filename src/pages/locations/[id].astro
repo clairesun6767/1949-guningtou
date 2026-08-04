@@ -1,0 +1,87 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import MiniMap from '../../components/map/MiniMap';
+import { pois } from '../../data/loader';
+const base = import.meta.env.BASE_URL;
+
+export function getStaticPaths() {
+  return pois.map((poi) => ({
+    params: { id: poi.poi_id },
+  }));
+}
+
+const { id } = Astro.params;
+const poi = pois.find((p) => p.poi_id === id);
+---
+
+<MainLayout>
+  {poi ? (
+    <div class="max-w-5xl mx-auto px-4 py-12">
+      <a href={`${base}/locations`} class="text-sm text-stone-500 hover:text-stone-700 no-underline">&larr; 回到地點列表</a>
+
+      <!-- Two-column layout -->
+      <div class="flex flex-col lg:flex-row gap-8 mt-4">
+        <!-- Left: content -->
+        <div class="flex-1 min-w-0">
+          <h1 class="text-3xl font-serif font-bold mb-1">{poi.name_chinese}</h1>
+          {poi.name_english && <p class="text-stone-400 mb-6">{poi.name_english}</p>}
+
+          <div class="bg-white rounded-xl border border-stone-200 p-6 mb-4">
+            <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">歷史背景</h2>
+            <p class="text-stone-700 leading-relaxed">{poi.historical_background ?? poi.description}</p>
+          </div>
+
+          {poi.battle_role && (
+            <div class="bg-white rounded-xl border border-stone-200 p-6 mb-4">
+              <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">戰役角色</h2>
+              <p class="text-stone-700 leading-relaxed">{poi.battle_role}</p>
+            </div>
+          )}
+
+          {poi.historical_context && (
+            <div class="bg-white rounded-xl border border-stone-200 p-6 mb-4">
+              <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">歷史脈絡</h2>
+              <p class="text-stone-700 leading-relaxed">{poi.historical_context}</p>
+            </div>
+          )}
+
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div class="bg-white rounded-lg border border-stone-200 p-3">
+              <span class="text-stone-400 text-xs">GPS 座標</span>
+              <div class="font-mono text-sm mt-0.5">{poi.latitude}, {poi.longitude}</div>
+            </div>
+            <div class="bg-white rounded-lg border border-stone-200 p-3">
+              <span class="text-stone-400 text-xs">座標精度</span>
+              <div class="text-sm mt-0.5">{poi.coordinate_accuracy ?? '未知'}</div>
+            </div>
+            <div class="bg-white rounded-lg border border-stone-200 p-3">
+              <span class="text-stone-400 text-xs">類別</span>
+              <div class="text-sm mt-0.5">{poi.category ?? '未分類'}</div>
+            </div>
+            <div class="bg-white rounded-lg border border-stone-200 p-3">
+              <span class="text-stone-400 text-xs">開放狀態</span>
+              <div class="text-sm mt-0.5">{poi.open_status ?? '未知'}</div>
+            </div>
+          </div>
+
+          {poi.evidence_level && (
+            <div class="mt-4 flex items-center gap-2 text-xs text-stone-500">
+              <span class={`evidence-badge evidence-${poi.evidence_level}`}>證據等級 {poi.evidence_level}</span>
+              {poi.verification_status && <span>{poi.verification_status}</span>}
+            </div>
+          )}
+        </div>
+
+        <!-- Right: mini map -->
+        <div class="w-full lg:w-80 shrink-0">
+          <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poi.name_chinese} />
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="max-w-3xl mx-auto px-4 py-16 text-center">
+      <h1 class="text-2xl font-bold text-stone-700">地點不存在</h1>
+      <a href={`${base}/locations`} class="text-amber-600">回到地點列表</a>
+    </div>
+  )}
+</MainLayout>

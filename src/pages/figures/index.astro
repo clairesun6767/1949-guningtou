@@ -1,0 +1,60 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { persons } from '../../data/loader';
+
+const rocPersons = persons.filter((p) =>
+  p.primary_category?.includes('Nationalist')
+);
+const plaPersons = persons.filter((p) =>
+  p.primary_category?.includes('PLA')
+);
+const others = persons.filter((p) =>
+  !p.primary_category?.includes('Nationalist') && !p.primary_category?.includes('PLA')
+);
+---
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">關鍵人物</h1>
+    <p class="text-stone-500 mb-8">{persons.length} 位歷史人物 · 國軍 {rocPersons.length} 位 · 解放軍 {plaPersons.length} 位</p>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-bold mb-4 text-stone-700">國軍人物</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {rocPersons.map((p) => (
+          <a href={`/figures/${p.person_id}`} class="block bg-white p-4 rounded-lg border border-stone-200 hover:border-amber-300 transition no-underline">
+            <h3 class="font-medium text-stone-800">{p.name_zh}</h3>
+            <p class="text-xs text-stone-400">{p.rank_at_event} · {p.unit}</p>
+            <p class="text-sm text-stone-500 mt-1 line-clamp-2">{p.short_bio ?? p.role_in_battle}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="text-xl font-bold mb-4 text-stone-700">解放軍人物</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {plaPersons.map((p) => (
+          <a href={`/figures/${p.person_id}`} class="block bg-white p-4 rounded-lg border border-stone-200 hover:border-amber-300 transition no-underline">
+            <h3 class="font-medium text-stone-800">{p.name_zh}</h3>
+            <p class="text-xs text-stone-400">{p.rank_at_event} · {p.unit}</p>
+            <p class="text-sm text-stone-500 mt-1 line-clamp-2">{p.short_bio ?? p.role_in_battle}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    {others.length > 0 && (
+      <section>
+        <h2 class="text-xl font-bold mb-4 text-stone-700">其他人物</h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          {others.map((p) => (
+            <a href={`/figures/${p.person_id}`} class="block bg-white p-4 rounded-lg border border-stone-200 hover:border-amber-300 transition no-underline">
+              <h3 class="font-medium text-stone-800">{p.name_zh}</h3>
+              <p class="text-sm text-stone-500 mt-1 line-clamp-2">{p.short_bio ?? p.role_in_battle}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</MainLayout>

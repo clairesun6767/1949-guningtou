@@ -1,0 +1,22 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { storyArcs } from '../../data/loader';
+---
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">戰役故事</h1>
+    <p class="text-stone-500 mb-8">{storyArcs.length} 條故事弧線 · 33 個場景 · 115 個敘事節拍</p>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      {storyArcs.map((arc) => (
+        <a href={`/stories/${arc.story_arc_id}`} class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 transition no-underline">
+          <h3 class="font-medium text-stone-800">{arc.title}</h3>
+          {arc.theme && <p class="text-xs text-stone-400 mt-1">{arc.theme}</p>}
+          {arc.historical_scope && (
+            <p class="text-sm text-stone-500 mt-2 line-clamp-2">{arc.historical_scope}</p>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+</MainLayout>

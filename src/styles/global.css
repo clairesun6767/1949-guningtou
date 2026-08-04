@@ -1,0 +1,88 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+/* ============================================================
+   古寧頭戰役網站 — 全域樣式
+   ============================================================ */
+
+/* --- CSS 變數：視角主題色 --- */
+:root {
+  --color-roc-primary: #1a3a5c;
+  --color-roc-accent: #c9a44b;
+  --color-roc-bg: #f0ede5;
+  --color-prc-primary: #8b1a1a;
+  --color-prc-accent: #d4a574;
+  --color-prc-bg: #faf5f0;
+  --color-neutral-primary: #2c3e50;
+  --color-neutral-accent: #7f8c8d;
+  --color-neutral-bg: #f5f0e8;
+
+  --font-heading: 'Noto Serif TC', 'Noto Sans TC', serif;
+  --font-body: 'Noto Sans TC', system-ui, sans-serif;
+}
+
+/* --- 基礎重置 --- */
+body {
+  font-family: var(--font-body);
+  background: var(--color-neutral-bg);
+  color: #1a1a1a;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- 字體 --- */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* --- 連結 --- */
+a {
+  color: #2c5282;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+a:hover {
+  color: #1a365d;
+}
+
+/* --- 證據標章 --- */
+.evidence-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.evidence-A { background: #c6f6d5; color: #22543d; }
+.evidence-B { background: #bee3f8; color: #2a4365; }
+.evidence-C { background: #fefcbf; color: #744210; }
+.evidence-D { background: #fed7d7; color: #742a2a; }
+.evidence-E { background: #e2e8f0; color: #4a5568; }
+
+/* --- Leaflet 覆蓋 --- */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+
+/* Hero marker labels */
+.hero-marker-label {
+  background: rgba(0,0,0,0.7) !important;
+  border: none !important;
+  color: white !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 2px 6px !important;
+  border-radius: 3px !important;
+  font-family: 'Noto Sans TC', sans-serif !important;
+}
+.hero-marker-label::before {
+  border-top-color: rgba(0,0,0,0.7) !important;
+}

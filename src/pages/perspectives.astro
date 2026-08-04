@@ -1,0 +1,90 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+const base = import.meta.env.BASE_URL;
+
+const sampleEvent = {
+  id: 'EVT-0001',
+  tw: {
+    title: '解放軍渡海登陸作戰（第一梯隊）',
+    narrative: '1949年10月24日晚間，解放軍第一梯隊約9,000人自廈門蓮河出發，航向金門古寧頭海岸。因東北季風強勁，船團偏離預定航線。25日凌晨零時30分，國軍戰車射手熊震球於嚨口發現海上信號彈，發射古寧頭第一砲，擊中解放軍彈藥船，揭開戰役序幕。',
+    source: '國防部戰史、金門國家公園史料',
+  },
+  cn: {
+    title: '金门战役：第一梯队渡海登陆',
+    narrative: '1949年10月24日晚，解放军第十兵团第28军第一梯队三个团约9,000人，从福建莲河出发，执行渡海登陆金门作战任务。受东北季风影响，船队偏离预定航线。25日凌晨，先头部队在古宁头至垄口一线登陆，随即遭遇国民党军装甲部队和步兵的猛烈反击。',
+    source: '解放军战史、军事科学院编纂史料',
+  },
+  en: {
+    title: 'PLA Amphibious Landing — First Wave',
+    narrative: 'On the night of October 24, 1949, the first wave of approximately 9,000 PLA troops departed from Lianhe, Xiamen, bound for the beaches of Guningtou, Kinmen. Strong northeast monsoon winds pushed the flotilla off course. At 00:30 on October 25, ROC tank gunner Xiong Zhenqiu spotted signal flares at sea and fired the first shot of the battle, striking a PLA ammunition vessel and igniting the engagement.',
+    source: 'ROC Ministry of Defense archives, Kinmen National Park historical records, PLA military histories',
+  },
+};
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">多元觀點</h1>
+    <p class="text-stone-500 mb-4">同一場戰役，三種語言，三種敘事 — 所有觀點並列呈現，不自行判定正確性</p>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-10 text-sm text-amber-700">
+      💡 本章節為本網站的核心特色。繁體中文以國軍及台灣史料為主、簡體中文以共軍及中國大陸史料為主、英文採取學術中立敘事，對不同觀點加以說明並標示來源。
+    </div>
+
+    <!-- Demo: same event, 3 perspectives -->
+    <h2 class="text-xl font-serif font-bold mb-4">範例：{sampleEvent.tw.title}</h2>
+    <div class="grid lg:grid-cols-3 gap-4">
+      <!-- 繁體中文 -->
+      <div class="bg-white rounded-xl border border-blue-200 p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-bold">繁體中文</span>
+          <span class="text-xs text-stone-400">以國軍及臺灣史料為主</span>
+        </div>
+        <h3 class="font-bold text-stone-800 mb-2">{sampleEvent.tw.title}</h3>
+        <p class="text-sm text-stone-600 leading-relaxed mb-3">{sampleEvent.tw.narrative}</p>
+        <p class="text-xs text-stone-400">📚 {sampleEvent.tw.source}</p>
+      </div>
+
+      <!-- 简体中文 -->
+      <div class="bg-white rounded-xl border border-red-200 p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xs bg-red-600 text-white px-2 py-0.5 rounded font-bold">简体中文</span>
+          <span class="text-xs text-stone-400">以共军及中国大陆史料为主</span>
+        </div>
+        <h3 class="font-bold text-stone-800 mb-2">{sampleEvent.cn.title}</h3>
+        <p class="text-sm text-stone-600 leading-relaxed mb-3">{sampleEvent.cn.narrative}</p>
+        <p class="text-xs text-stone-400">📚 {sampleEvent.cn.source}</p>
+      </div>
+
+      <!-- English -->
+      <div class="bg-white rounded-xl border border-stone-300 p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-xs bg-stone-600 text-white px-2 py-0.5 rounded font-bold">English</span>
+          <span class="text-xs text-stone-400">Academic · Neutral</span>
+        </div>
+        <h3 class="font-bold text-stone-800 mb-2">{sampleEvent.en.title}</h3>
+        <p class="text-sm text-stone-600 leading-relaxed mb-3">{sampleEvent.en.narrative}</p>
+        <p class="text-xs text-stone-400">📚 {sampleEvent.en.source}</p>
+      </div>
+    </div>
+
+    <!-- Principles -->
+    <div class="mt-12 grid sm:grid-cols-3 gap-4">
+      <div class="bg-white rounded-xl border border-stone-200 p-5 text-center">
+        <div class="text-2xl mb-2">📖</div>
+        <h3 class="font-bold text-stone-700 text-sm">多史觀並存</h3>
+        <p class="text-xs text-stone-500 mt-1">不自行判定哪一個版本「正確」。所有史料全部保留，讀者可自行對照。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-stone-200 p-5 text-center">
+        <div class="text-2xl mb-2">🏷️</div>
+        <h3 class="font-bold text-stone-700 text-sm">來源透明</h3>
+        <p class="text-xs text-stone-500 mt-1">每段敘事明確標示資料來源，讀者可追溯原始文獻。</p>
+      </div>
+      <div class="bg-white rounded-xl border border-stone-200 p-5 text-center">
+        <div class="text-2xl mb-2">⚖️</div>
+        <h3 class="font-bold text-stone-700 text-sm">政治中立</h3>
+        <p class="text-xs text-stone-500 mt-1">不以任何政治立場為敘事核心。歷史理解優先於政治判斷。</p>
+      </div>
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,294 @@
+{
+  "schema": {
+    "schema_name": "PLA Timeline Schema v1.0",
+    "module": "pla_timeline",
+    "id_prefix": "TIM-",
+    "description": "解放軍視角之逐時時間軸（1949-10-24 至 1949-10-27），與現有 ROC 時間軸區分",
+    "fields": {
+      "timeline_id": {
+        "type": "string",
+        "required": true,
+        "pattern": "TIM-XXXX"
+      },
+      "date": {
+        "type": "string",
+        "required": true,
+        "format": "YYYY-MM-DD"
+      },
+      "time": {
+        "type": "string",
+        "required": false,
+        "description": "HH:MM 或文字描述"
+      },
+      "time_approximate": {
+        "type": "boolean",
+        "required": false,
+        "default": true
+      },
+      "event_summary_zh_cn": {
+        "type": "string",
+        "required": true
+      },
+      "event_summary_zh_tw": {
+        "type": "string",
+        "required": false
+      },
+      "location": {
+        "type": "string",
+        "required": true
+      },
+      "location_from_pla": {
+        "type": "string",
+        "required": false,
+        "description": "解放軍稱呼之地名"
+      },
+      "involved_pla_forces": {
+        "type": "array",
+        "required": false,
+        "items": {
+          "type": "string",
+          "description": "OOB-XXXX"
+        }
+      },
+      "involved_roc_forces": {
+        "type": "array",
+        "required": false,
+        "items": {
+          "type": "string"
+        }
+      },
+      "key_pla_figures": {
+        "type": "array",
+        "required": false,
+        "items": {
+          "type": "string",
+          "description": "PER-XXXX"
+        }
+      },
+      "event_type": {
+        "type": "string",
+        "required": true,
+        "enum": [
+          "集結",
+          "出航",
+          "登陸",
+          "推進",
+          "戰鬥",
+          "反擊",
+          "防禦",
+          "撤退",
+          "潰散",
+          "指揮決策",
+          "補給",
+          "通訊",
+          "戰後"
+        ]
+      },
+      "pla_description": {
+        "type": "string",
+        "required": true,
+        "description": "解放軍視角之事件描述"
+      },
+      "roc_comparison_note": {
+        "type": "string",
+        "required": false,
+        "description": "與 ROC 版本之差異備註"
+      },
+      "source_ids": {
+        "type": "array",
+        "required": true,
+        "items": {
+          "type": "string",
+          "description": "LIT-XXXX"
+        }
+      },
+      "citation_excerpts": {
+        "type": "array",
+        "required": false,
+        "items": {
+          "type": "string"
+        }
+      },
+      "verification_status": {
+        "type": "string",
+        "required": true,
+        "enum": [
+          "verified",
+          "partially_verified",
+          "conflicting_sources",
+          "needs_human_review",
+          "prc_only"
+        ]
+      },
+      "has_comparison": {
+        "type": "boolean",
+        "required": true,
+        "default": false,
+        "description": "是否有對應之 CMP 比較紀錄"
+      }
+    }
+  },
+  "entries": [
+    {
+      "timeline_id": "TIM-0024-01",
+      "date": "1949-10-24",
+      "time": "傍晚",
+      "time_approximate": true,
+      "event_summary_zh_cn": "第28军各第一梯队团在莲河、大嶝岛、小嶝岛等地登船完毕",
+      "location": "莲河、大嶝岛、小嶝岛",
+      "location_from_pla": "莲河、大嶝岛、小嶝岛",
+      "involved_pla_forces": [
+        "OOB-0004",
+        "OOB-0005",
+        "OOB-0006"
+      ],
+      "event_type": "集結",
+      "pla_description": "解放军第28军第82师第244、245、246团在莲河至大嶝岛一线完成登船，准备渡海进攻金门。"
+    },
+    {
+      "timeline_id": "TIM-0024-02",
+      "date": "1949-10-24",
+      "time": "21:00后",
+      "time_approximate": true,
+      "event_summary_zh_cn": "船队出发，向金门古宁头方向航行",
+      "location": "莲河至古宁头海域",
+      "involved_pla_forces": [
+        "OOB-0004",
+        "OOB-0005",
+        "OOB-0006"
+      ],
+      "event_type": "出航",
+      "pla_description": "第一梯队船队出发。因船只不足，原定3个团约9,000人的兵力，实际登船约7,000-8,000人。"
+    },
+    {
+      "timeline_id": "TIM-0024-03",
+      "date": "1949-10-24",
+      "time": "深夜",
+      "time_approximate": true,
+      "event_summary_zh_cn": "航行途中船队因潮流偏航",
+      "location": "金门北部海域",
+      "event_type": "出航",
+      "pla_description": "因海流和风向影响，部分船队偏离预定登陆点，部队分散在古宁头至垄口之间的多个海滩登陆。"
+    },
+    {
+      "timeline_id": "TIM-0025-01",
+      "date": "1949-10-25",
+      "time": "约01:00-02:00",
+      "time_approximate": true,
+      "event_summary_zh_cn": "第一梯队开始在古宁头海滩登陆",
+      "location": "古宁头海滩、垄口、湖尾一带",
+      "location_from_pla": "古宁头海滩",
+      "involved_pla_forces": [
+        "OOB-0004",
+        "OOB-0005",
+        "OOB-0006"
+      ],
+      "event_type": "登陸",
+      "pla_description": "解放军第244、245、246团在古宁头海滩、垄口、湖尾等多个地点登陆，随即遭到国军守备部队火力阻击。"
+    },
+    {
+      "timeline_id": "TIM-0025-02",
+      "date": "1949-10-25",
+      "time": "凌晨",
+      "time_approximate": true,
+      "event_summary_zh_cn": "登陆部队向纵深推进，攻占部分村落",
+      "location": "古宁头、北山、南山、林厝",
+      "location_from_pla": "古宁头",
+      "involved_pla_forces": [
+        "OOB-0004",
+        "OOB-0005",
+        "OOB-0006"
+      ],
+      "event_type": "推進",
+      "pla_description": "登陆部队突破国军海岸防线，向古宁头村落纵深推进。第244团刘天祥团长在推进过程中阵亡。"
+    },
+    {
+      "timeline_id": "TIM-0025-03",
+      "date": "1949-10-25",
+      "time": "清晨至上午",
+      "time_approximate": true,
+      "event_summary_zh_cn": "国军开始组织反攻，登陆部队陷入苦战",
+      "location": "古宁头各战场",
+      "event_type": "戰鬥",
+      "pla_description": "国军第18军（高魁元部）等增援部队赶到，对登陆的解放军部队发起反冲击。解放军部队被分割包围，在缺乏重武器的情况下陷入苦战。"
+    },
+    {
+      "timeline_id": "TIM-0025-04",
+      "date": "1949-10-25",
+      "time": "日间",
+      "time_approximate": true,
+      "event_summary_zh_cn": "后续船只运输中断，登陆部队补给断绝",
+      "location": "莲河、厦门",
+      "event_type": "補給",
+      "pla_description": "因潮汐退落，后续船只无法返回大陆接运第二梯队。已登陆的解放军部队面临弹药耗尽、补给断绝的绝境。"
+    },
+    {
+      "timeline_id": "TIM-0026-01",
+      "date": "1949-10-26",
+      "time": "凌晨",
+      "time_approximate": true,
+      "event_summary_zh_cn": "少量增援部队渡海成功，但无力改变战局",
+      "location": "古宁头",
+      "event_type": "增援",
+      "pla_description": "少数后续部队（约一个连）趁夜色渡海增援成功，但兵力远不足以扭转战局。"
+    },
+    {
+      "timeline_id": "TIM-0026-02",
+      "date": "1949-10-26",
+      "time": "日间",
+      "time_approximate": true,
+      "event_summary_zh_cn": "国军三路反攻，解放军退守古宁头村落",
+      "location": "古宁头、北山、南山",
+      "event_type": "反擊",
+      "pla_description": "国军完成对登陆部队的包围。解放军残部退守古宁头村落和北山一带，利用村落建筑进行最后抵抗。"
+    },
+    {
+      "timeline_id": "TIM-0027-01",
+      "date": "1949-10-27",
+      "time": "上午",
+      "time_approximate": true,
+      "event_summary_zh_cn": "国军攻占北山断崖，解放军最后抵抗点失守",
+      "location": "北山断崖",
+      "event_type": "潰散",
+      "pla_description": "国军攻占北山断崖（北山古洋楼附近），解放军最后的集中抵抗点失守。"
+    },
+    {
+      "timeline_id": "TIM-0027-02",
+      "date": "1949-10-27",
+      "time": "上午至午后",
+      "time_approximate": true,
+      "event_summary_zh_cn": "解放军残部分散被俘，战斗基本结束",
+      "location": "古宁头全境",
+      "event_type": "潰散",
+      "pla_description": "解放军登岛部队大部阵亡或被俘，零散抵抗持续至下午。金门战役以国民党军胜利告终。"
+    },
+    {
+      "timeline_id": "TIM-0027-03",
+      "date": "1949-10-27",
+      "event_summary_zh_cn": "解放军登岛部队全军覆没",
+      "location": "金门",
+      "event_type": "戰後",
+      "pla_description": "解放军登岛部队约7,000-8,000人中，大部阵亡，约2,000-3,000人被俘。解放军方面称此役为\"金门战斗\"或\"金门登陆作战失利\"。"
+    },
+    {
+      "timeline_id": "TIM-0027-04",
+      "date": "1949-10",
+      "time_approximate": true,
+      "event_summary_zh_cn": "解放军高层总结金门战役失利教训",
+      "location": "福建",
+      "event_type": "戰後",
+      "pla_description": "第十兵团司令员叶飞、第28军副军长萧锋等被追究战役失利责任。解放军全军展开渡海登陆作战的经验教训总结。"
+    }
+  ],
+  "metadata": {
+    "total_entries": 13,
+    "date_range": {
+      "start": "1949-10-24",
+      "end": "1949-10-27"
+    },
+    "last_updated": "2026-07-23",
+    "version": "1.0-draft",
+    "status": "draft_PRC-D",
+    "note": "初稿，解放軍視角時間軸骨架。需後續以官方戰史與學術論文驗證及補充細節"
+  }
+}

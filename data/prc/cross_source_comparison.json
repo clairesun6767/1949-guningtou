@@ -1,0 +1,166 @@
+{
+  "schema_ref": "_schemas/comparison_schema.json",
+  "comparisons": [
+    {
+      "comparison_id": "CMP-0001",
+      "topic": "解放军登岛兵力总人数",
+      "topic_category": "兵力",
+      "conflict_type": "numerical_discrepancy",
+      "roc_version": {
+        "statement": "解放军登岛部队约10,000人（含第一梯队三个团及后续零散增援）",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "第一梯队约7,000-8,000人（原计划9,000人，因船只不足实装约7,000-8,000人）",
+        "source_ids": ["LIT-0012"],
+        "source_level": "PRC-L1",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方在兵力数字有差距。ROC的10,000人可能包含了所有零散增援的总和，PRC的7,000-8,000人仅指第一梯队。",
+      "confidence_assessment": "各说各话",
+      "resolution_status": "unresolved",
+      "notes": "【需要人工确认】需查阅双方原始战报"
+    },
+    {
+      "comparison_id": "CMP-0002",
+      "topic": "解放军伤亡数字",
+      "topic_category": "傷亡",
+      "conflict_type": "numerical_discrepancy",
+      "roc_version": {
+        "statement": "解放军阵亡约4,000人，被俘约5,000-7,000人",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "解放军承认伤亡约3,000-4,000人，被俘约2,000-3,000人",
+        "source_ids": ["LIT-0012"],
+        "source_level": "PRC-L1",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方伤亡数字差距极大。ROC的数字是PRC的约2倍。被俘人数的差异尤其显著。",
+      "confidence_assessment": "各说各话",
+      "resolution_status": "permanently_disputed",
+      "notes": "【需要人工确认】伤亡数字是战史中最难确认的数据，需查阅双方原始战报与战俘记录"
+    },
+    {
+      "comparison_id": "CMP-0003",
+      "topic": "金门国军总兵力",
+      "topic_category": "兵力",
+      "conflict_type": "numerical_discrepancy",
+      "roc_version": {
+        "statement": "金门守军含增援部队约3-4万人",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "解放军情报认为金门守军约1-2万人，实际约3万人",
+        "source_ids": ["LIT-0005", "LIT-0013"],
+        "source_level": "PRC-L3",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方对金门国军总兵力的描述大体一致（3-4万人），差异在于解放军战前对该数字的掌握程度。",
+      "confidence_assessment": "各说各话",
+      "resolution_status": "partially_resolved",
+      "notes": "【需要人工确认】需查阅胡琏兵团增援的具体时间和兵力数据"
+    },
+    {
+      "comparison_id": "CMP-0004",
+      "topic": "解放军首波登陆时间",
+      "topic_category": "時間",
+      "conflict_type": "time_discrepancy",
+      "roc_version": {
+        "statement": "解放军首批登陆部队约于1949年10月25日凌晨1时30分至2时左右在金门西北部古宁头至垄口间海滩登陆",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "第一梯队（第244团、第245团、第246团）于1949年10月24日晚间约23时自莲河、大嶝岛起渡，因潮汐与风向影响，实际登陆时间约于25日凌晨1时30分至3时间",
+        "source_ids": ["LIT-0009", "LIT-0012"],
+        "source_level": "PRC-L1",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方的起渡时间认知一致（24日晚23时左右），登陆时间也大致相近（25日凌晨1:30-3:00）。差异在于ROC方面通常将登陆时间定在较早的1:30，而PRC方面记载的登陆时间范围较宽（1:30-3:00），其中246团的登陆时间稍晚。这种差异很可能源于多梯队登陆造成的自然时间差，而非矛盾。",
+      "confidence_assessment": "大致一致",
+      "resolution_status": "partially_resolved",
+      "notes": "【已比對】時間差異在可接受範圍內，因三個團的登陸時間本就不同。詳細時間需查閱各團原始作戰日誌。"
+    },
+    {
+      "comparison_id": "CMP-0005",
+      "topic": "解放军前线最高指挥官",
+      "topic_category": "人物",
+      "conflict_type": "role_description_discrepancy",
+      "roc_version": {
+        "statement": "解放军金门战役前线指挥官为第28军副军长萧锋（ROC方面常稱其為「代軍長」或「前線總指揮」），戰後因金門大敗被追究責任連降三級",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "第28军军长朱绍清因病休养，由副军长萧锋代理指挥攻金作战。萧锋在金门战役中为实际上的前线最高指挥。战役失利后萧锋被撤职调查，1955年授予少将军衔。值得注意的是PRC官方战史对萧锋的指挥地位描述较为低调，不称其为「前线总指挥」。",
+        "source_ids": ["PER-0001", "PER-0003", "LIT-0012"],
+        "source_level": "PRC-L1",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方的核心事实一致：萧锋是实际指挥官。差异主要在于ROC方常用「代军长」「前线总指挥」等头衔（来源于战后媒体报道），而PRC官方记载仅称「副军长代理指挥」，措辞较为谨慎。百度百科记朱绍清因病未参与金门战役，与双方说法一致。另，萧锋百度百科开国少将条目死亡年为1991年（非PRC数据库原记1998年），已在人物验证中修正。",
+      "confidence_assessment": "大致一致",
+      "resolution_status": "partially_resolved",
+      "notes": "【已比對】人物描述與百度百科開國少將條目一致。蕭鋒原記錄death_year=1998已修正為1991。"
+    },
+    {
+      "comparison_id": "CMP-0006",
+      "topic": "胡琏第12兵团增援金门时间",
+      "topic_category": "兵力",
+      "conflict_type": "time_discrepancy",
+      "roc_version": {
+        "statement": "胡琏第12兵团于1949年10月22日即已抵达金门海域，部分部队于24日前登陆完毕，25日战役爆发时12兵团主力已在金门",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "解放军战前情报对胡琏兵团是否已抵达金门存在严重误判。叶飞及第十兵团认为胡琏兵团尚在增援途中，不可能在10月24日前抵达。实际胡琏兵团已于22-24日间陆续到达金门。此情报失误为金门战役失利的重要原因之一。",
+        "source_ids": ["LIT-0005", "LIT-0011", "LIT-0013"],
+        "source_level": "PRC-L3",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方对胡琏兵团抵达时间有重大差异。ROC方面记载22日即已抵达，24日登陆完毕，25日战役爆发时已投入战斗。PRC方面承认情报失准，但对胡琏兵团「何时抵达」具体时间的官方记载较少。部分PRC学术论文（如邹兴军1994）对增援时间有专题考证，提出新的见解。此为金门战役的核心争议之一。",
+      "confidence_assessment": "各说各话",
+      "resolution_status": "unresolved",
+      "notes": "【需要人工确认】胡琏兵团的增援时间与解放军情报失误之间存在直接因果关系，是双方叙事的关键分歧点。需查阅双方原始档案。"
+    },
+    {
+      "comparison_id": "CMP-0007",
+      "topic": "解放军渡海船只数量",
+      "topic_category": "兵力",
+      "conflict_type": "numerical_discrepancy",
+      "roc_version": {
+        "statement": "解放军集结约300-400艘船只用于金门作战，多数为木帆船及少量机帆船",
+        "source_ids": ["（現有ROC資料庫）"],
+        "source_level": "Level 1",
+        "viewpoint": "ROC"
+      },
+      "prc_version": {
+        "statement": "解放军第十兵团在福建沿海征集约300艘木帆船用于攻金作战。实际用于第一梯队运送的约200艘，因船只不足导致第二梯队无法按时增援。船只于25日晨退潮后多数搁浅于古宁头海滩，遭国军炮火及坦克摧毁。",
+        "source_ids": ["LIT-0008", "LIT-0009", "LIT-0012"],
+        "source_level": "PRC-L1",
+        "viewpoint": "PRC"
+      },
+      "researcher_note": "双方船只总数（300艘左右）大致一致。关键差异在于ROC方可能将各类大小船只均计入而得较大数字。PRC方的区分更有层次：征集约300艘，但第一梯队实际使用约200艘。船只损失（搁浅后被摧毁）也是双方公认的关键因素。",
+      "confidence_assessment": "大致一致",
+      "resolution_status": "partially_resolved",
+      "notes": "【已比對】船隻總量記載接近。需進一步查證第一梯隊實際使用船隻數的來源。"
+    }
+  ],
+  "metadata": {
+    "total_comparisons": 7,
+    "last_updated": "2026-07-23",
+    "version": "1.1",
+    "status": "draft_PRC-C",
+    "note": "v1.1：新增4筆跨來源比較（CMP-0004~0007）。\n- CMP-0004 登陸時間：雙方大致一致（24日23時起渡，25日1:30-3:00登陸）\n- CMP-0005 指揮官描述：雙方核心事實一致，但措辭不同\n- CMP-0006 胡琏兵團增援時間：核心分歧（ROC：22日抵達；PRC：情報誤判認為尚未到達）\n- CMP-0007 船隻數量：雙方大致一致（約300艘）\nresolution_status：2筆 partially_resolved、1筆 unresolved（CMP-0006）、1筆大致一致。"
+  }
+}

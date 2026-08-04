@@ -1,0 +1,53 @@
+{
+  "schema_ref": "_schemas/analysis_schema.json",
+  "analyses": [
+    {
+      "analysis_id": "BAN-0001",
+      "analysis_type": "command_error",
+      "title_zh_cn": "轻敌与指挥失误",
+      "pla_viewpoint": "解放军高层普遍存在轻敌思想，认为国民党军已是「残兵败将」，金门守军不堪一击。叶飞在回忆录中承认对金门守军兵力和战斗力判断失误。同时，第28军军长朱绍清病休期间，由副军长萧锋代理指挥，指挥层级存在衔接问题。",
+      "roc_viewpoint": "国军认为解放军犯了「骄兵必败」的错误，低估了金门守军和胡琏兵团的增援速度。",
+      "source_papers": ["LIT-0002", "LIT-0005", "LIT-0008"],
+      "comparison_summary": "双方均承认解放军存在轻敌问题。分歧在于轻敌的严重程度——解放军学者倾向于归因于情报不足和渡海作战经验缺乏，国军则强调是战略判断的根本失误。",
+      "related_sources": ["LIT-0002", "LIT-0005", "LIT-0008"]
+    },
+    {
+      "analysis_id": "BAN-0002",
+      "analysis_type": "vessel_shortage",
+      "title_zh_cn": "船只严重不足",
+      "pla_viewpoint": "解放军在攻占厦门后，船只损失严重。原计划征集600艘船只，实际仅征集约300艘，导致第一梯队只能运送约7,000-8,000人，不足原计划9,000人。更严重的是，因潮汐和船工逃散，后续船只无法返回大陆接运第二梯队。",
+      "roc_viewpoint": "国军战史强调解放军船只不足是战役失败的直接原因之一——没有船只就意味着无法增援、无法撤退、无法补给。",
+      "source_papers": ["LIT-0002", "LIT-0008"],
+      "comparison_summary": "双方在船只不足的事实上无争议。分歧在于根本原因——解放军学者强调是客观条件限制（船只在攻厦战役中大量损毁），国军则认为是战前准备不充分。",
+      "related_sources": ["LIT-0002", "LIT-0008"]
+    },
+    {
+      "analysis_id": "BAN-0003",
+      "analysis_type": "intelligence_error",
+      "title_zh_cn": "情报严重失误",
+      "pla_viewpoint": "解放军情报部门严重低估了金门守军兵力（估计1-2万人，实际含增援部队达3-4万人），且未能掌握胡琏兵团第19军已增援金门的关键情报。",
+      "roc_viewpoint": "国军认为解放军情报失误是战役转折的关键——若解放军知道金门守军真实兵力，可能不会发动渡海攻击。",
+      "international_viewpoint": "国际研究将金门战役的情报失败视为解放军渡海作战能力不足的典型例证。",
+      "source_papers": ["LIT-0005", "LIT-0013"],
+      "comparison_summary": "情报失误为双方共识。但ROC方面特别强调胡琏兵团增援的时机与隐蔽性，PRC方面则侧重于情报收集手段的限制。",
+      "related_sources": ["LIT-0005", "LIT-0013"]
+    },
+    {
+      "analysis_id": "BAN-0004",
+      "analysis_type": "tide_factor",
+      "title_zh_cn": "潮汐因素对登陆作战的影响",
+      "pla_viewpoint": "潮汐计算失误是战役失利的直接技术原因。解放军登陆时正值退潮，船只搁浅无法返航，导致后续运输中断。同时，海滩上的障碍物和国军布设的地雷、铁丝网在退潮后暴露，增加了登陆部队的伤亡。",
+      "roc_viewpoint": "国军战史强调潮汐因素对国军有利——退潮后船只搁浅，解放军的增援和撤退路径都被切断。",
+      "source_papers": ["LIT-0002", "LIT-0005"],
+      "comparison_summary": "双方在潮汐影响上无重大分歧。潮汐因素是客观自然条件，双方对事实的描述基本一致。",
+      "related_sources": ["LIT-0002", "LIT-0005"]
+    }
+  ],
+  "metadata": {
+    "total_analyses": 4,
+    "last_updated": "2026-07-21",
+    "version": "1.0-draft",
+    "status": "draft_PRC-D",
+    "note": "初稿。后续需补充更多论文观点与原文引用"
+  }
+}

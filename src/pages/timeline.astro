@@ -1,0 +1,16 @@
+---
+// /timeline — 互動時間軸頁面
+import MainLayout from '../layouts/MainLayout.astro';
+import BattleTimeline from '../components/timeline/BattleTimeline';
+import { timeline } from '../data/loader';
+---
+
+<MainLayout>
+  <div class="max-w-3xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">戰役時間軸</h1>
+    <p class="text-stone-500 mb-2">1949 年 10 月 24-27 日 · 四日戰役逐時記錄 · {timeline.length} 條時間點</p>
+    <p class="text-stone-400 text-sm mb-8">點擊節點展開詳細資訊，包含參戰部隊、關鍵人物與證據等級</p>
+
+    <BattleTimeline client:load entries={timeline} />
+  </div>
+</MainLayout>

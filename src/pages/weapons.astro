@@ -1,0 +1,77 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+const base = import.meta.env.BASE_URL;
+
+const rocWeapons = [
+  { name: 'M5A1  Stuart 輕戰車', cat: '戰車', desc: '古寧頭戰役關鍵裝備。國軍戰車第3團第1連配備，66號車在嚨口發射第一砲。重15噸，37mm主砲，裝甲厚度12-67mm。', note: '66號車由熊震球操作' },
+  { name: 'M1 格蘭德步槍', cat: '步槍', desc: '國軍標準步兵武器。.30-06口徑，8發彈倉，半自動，有效射程約450m。', note: '美援裝備' },
+  { name: 'M1917 白朗寧重機槍', cat: '機槍', desc: '水冷式重機槍，.30-06口徑，用於灘頭防禦陣地，提供持續火力壓制。', note: '' },
+  { name: 'BAR M1918 自動步槍', cat: '機槍', desc: '班用自動武器，.30-06口徑，20發彈匣，可作為輕機槍使用。', note: '' },
+  { name: 'M2 60mm 迫擊炮', cat: '火炮', desc: '步兵連級支援火力，輕便可攜，用於近距離火力支援。', note: '' },
+  { name: '75mm 山炮', cat: '火炮', desc: '國軍岸防砲兵使用，部署於金門北部海岸，對登陸船團進行壓制射擊。', note: '' },
+  { name: 'SCR-300 無線電', cat: '通信', desc: '背負式無線電，用於步兵連與營指揮所之間的通訊。', note: '二戰美軍裝備' },
+  { name: 'M1 鋼盔', cat: '制服', desc: '國軍標準頭盔，美援裝備。', note: '' },
+];
+
+const plaWeapons = [
+  { name: '中正式步槍', cat: '步槍', desc: '解放軍標準步槍，7.92×57mm毛瑟口徑，手動槍機，5發內置彈倉。', note: '仿德國Kar98k' },
+  { name: '三八式步槍', cat: '步槍', desc: '日製步槍，6.5mm口徑，解放軍大量使用繳獲的日軍裝備。', note: '二戰日軍裝備' },
+  { name: 'ZB-26 輕機槍', cat: '機槍', desc: '捷克式輕機槍，7.92mm口徑，20發彈匣，解放軍班用主力。', note: '' },
+  { name: '60mm 迫擊炮', cat: '火炮', desc: '輕型迫擊炮，解放軍步兵連級支援火力。', note: '' },
+  { name: '木製帆船/漁船', cat: '船隻', desc: '解放軍渡海主要工具。多為徵用的民船，木製帆船，無機械動力，受風浪影響極大。', note: '渡海最大瓶頸' },
+  { name: '手榴彈', cat: '裝備', desc: '解放軍步兵主要近戰武器，登陸後近距離交戰的重要火力。', note: '' },
+  { name: '布製彈藥袋', cat: '裝備', desc: '解放軍士兵標準裝備，攜帶步槍彈藥與手榴彈。', note: '' },
+  { name: '棉布軍服', cat: '制服', desc: '解放軍標準冬季軍服，無防彈功能，渡海後濕透影響行動。', note: '' },
+];
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">武器裝備</h1>
+    <p class="text-stone-500 mb-10">國軍與共軍於古寧頭戰役使用的主要武器裝備</p>
+
+    <!-- ROC Weapons -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold">國</span>
+        <h2 class="text-xl font-serif font-bold">國軍裝備</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        {rocWeapons.map(w => (
+          <div class="bg-white rounded-xl border border-stone-200 p-4 hover:shadow-md transition">
+            <div class="flex items-start justify-between">
+              <h3 class="font-bold text-stone-800 text-sm">{w.name}</h3>
+              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded">{w.cat}</span>
+            </div>
+            <p class="text-xs text-stone-500 mt-2 leading-relaxed">{w.desc}</p>
+            {w.note && <p class="text-xs text-amber-600 mt-1 italic">{w.note}</p>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- PLA Weapons -->
+    <section class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-sm font-bold">共</span>
+        <h2 class="text-xl font-serif font-bold">共軍裝備</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        {plaWeapons.map(w => (
+          <div class="bg-white rounded-xl border border-stone-200 p-4 hover:shadow-md transition">
+            <div class="flex items-start justify-between">
+              <h3 class="font-bold text-stone-800 text-sm">{w.name}</h3>
+              <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded">{w.cat}</span>
+            </div>
+            <p class="text-xs text-stone-500 mt-2 leading-relaxed">{w.desc}</p>
+            {w.note && <p class="text-xs text-amber-600 mt-1 italic">{w.note}</p>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <div class="bg-amber-50 rounded-xl border border-amber-200 p-4 text-center text-sm text-amber-700">
+      🏗️ 本章節持續擴充中 — 未來將加入武器規格表、歷史照片與 3D 模型
+    </div>
+  </div>
+</MainLayout>

@@ -1,0 +1,727 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-07-21",
+    "total": 47
+  },
+  "relationships": [
+    {
+      "relationship_id": "REL-0001",
+      "source_person_id": "PER-0001",
+      "target_person_id": "PER-0002",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0030; EVT-0006; EVT-0005",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0002",
+      "source_person_id": "PER-0001",
+      "target_person_id": "PER-0003",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0030; EVT-0006; EVT-0005",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0003",
+      "source_person_id": "PER-0002",
+      "target_person_id": "PER-0001",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0018; EVT-0008",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0004",
+      "source_person_id": "PER-0002",
+      "target_person_id": "PER-0003",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0018; EVT-0008",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0005",
+      "source_person_id": "PER-0002",
+      "target_person_id": "PER-0014",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0018; EVT-0008",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0006",
+      "source_person_id": "PER-0003",
+      "target_person_id": "PER-0001",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0023; EVT-0015; EVT-0018; EVT-0008; EVT-0004; EVT-0006; EVT-0005; EVT-0020",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0007",
+      "source_person_id": "PER-0003",
+      "target_person_id": "PER-0004",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0023; EVT-0015; EVT-0018; EVT-0008; EVT-0004; EVT-0006; EVT-0005; EVT-0020",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0008",
+      "source_person_id": "PER-0003",
+      "target_person_id": "PER-0005",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0023; EVT-0015; EVT-0018; EVT-0008; EVT-0004; EVT-0006; EVT-0005; EVT-0020",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0009",
+      "source_person_id": "PER-0004",
+      "target_person_id": "PER-0003",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0004; EVT-0018; EVT-0008",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0010",
+      "source_person_id": "PER-0004",
+      "target_person_id": "PER-0005",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0004; EVT-0018; EVT-0008",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0011",
+      "source_person_id": "PER-0005",
+      "target_person_id": "PER-0003",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0023; EVT-0015; EVT-0019; EVT-0002; EVT-0004; EVT-0001; EVT-0017; EVT-0005",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0012",
+      "source_person_id": "PER-0005",
+      "target_person_id": "PER-0004",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0023; EVT-0015; EVT-0019; EVT-0002; EVT-0004; EVT-0001; EVT-0017; EVT-0005",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0013",
+      "source_person_id": "PER-0005",
+      "target_person_id": "PER-0020",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0023; EVT-0015; EVT-0019; EVT-0002; EVT-0004; EVT-0001; EVT-0017; EVT-0005",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0014",
+      "source_person_id": "PER-0006",
+      "target_person_id": "PER-0003",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0002; EVT-0001; EVT-0007; EVT-0012",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0015",
+      "source_person_id": "PER-0006",
+      "target_person_id": "PER-0007",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0002; EVT-0001; EVT-0007; EVT-0012",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0016",
+      "source_person_id": "PER-0007",
+      "target_person_id": "PER-0006",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0002; EVT-0007; EVT-0012",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0017",
+      "source_person_id": "PER-0010",
+      "target_person_id": "PER-0011",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0001; EVT-0010",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0018",
+      "source_person_id": "PER-0010",
+      "target_person_id": "PER-0012",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0001; EVT-0010",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0019",
+      "source_person_id": "PER-0011",
+      "target_person_id": "PER-0010",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0001",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0020",
+      "source_person_id": "PER-0011",
+      "target_person_id": "PER-0012",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0001",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0021",
+      "source_person_id": "PER-0012",
+      "target_person_id": "PER-0010",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0022",
+      "source_person_id": "PER-0012",
+      "target_person_id": "PER-0011",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027",
+        "SRC-0004"
+      ],
+      "evidence_level": "C",
+      "verification_status": "partially_verified",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0023",
+      "source_person_id": "PER-0013",
+      "target_person_id": "PER-0035",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0024",
+      "source_person_id": "PER-0013",
+      "target_person_id": "PER-0036",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0025",
+      "source_person_id": "PER-0014",
+      "target_person_id": "PER-0002",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0026",
+      "source_person_id": "PER-0015",
+      "target_person_id": "PER-0014",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0002",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0027",
+      "source_person_id": "PER-0016",
+      "target_person_id": "PER-0001",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0002; EVT-0009",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0028",
+      "source_person_id": "PER-0017",
+      "target_person_id": "PER-0018",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0011",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0029",
+      "source_person_id": "PER-0018",
+      "target_person_id": "PER-0019",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0030",
+      "source_person_id": "PER-0018",
+      "target_person_id": "PER-0017",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0031",
+      "source_person_id": "PER-0018",
+      "target_person_id": "PER-0023",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0032",
+      "source_person_id": "PER-0019",
+      "target_person_id": "PER-0018",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0033",
+      "source_person_id": "PER-0020",
+      "target_person_id": "PER-0005",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0034",
+      "source_person_id": "PER-0021",
+      "target_person_id": "PER-0005",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0035",
+      "source_person_id": "PER-0022",
+      "target_person_id": "PER-0005",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0036",
+      "source_person_id": "PER-0023",
+      "target_person_id": "PER-0018",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0037",
+      "source_person_id": "PER-0024",
+      "target_person_id": "PER-0025",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0006; EVT-0025",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0038",
+      "source_person_id": "PER-0024",
+      "target_person_id": "PER-0031",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0006; EVT-0025",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0039",
+      "source_person_id": "PER-0025",
+      "target_person_id": "PER-0024",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0006; EVT-0001; EVT-0028",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0040",
+      "source_person_id": "PER-0025",
+      "target_person_id": "PER-0026",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0006; EVT-0001; EVT-0028",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0041",
+      "source_person_id": "PER-0026",
+      "target_person_id": "PER-0025",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0042",
+      "source_person_id": "PER-0031",
+      "target_person_id": "PER-0024",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "EVT-0025",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0043",
+      "source_person_id": "PER-0032",
+      "target_person_id": "PER-0033",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0044",
+      "source_person_id": "PER-0032",
+      "target_person_id": "PER-0024",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0045",
+      "source_person_id": "PER-0033",
+      "target_person_id": "PER-0032",
+      "relationship_type": "commanded_by",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0046",
+      "source_person_id": "PER-0035",
+      "target_person_id": "PER-0013",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    },
+    {
+      "relationship_id": "REL-0047",
+      "source_person_id": "PER-0036",
+      "target_person_id": "PER-0013",
+      "relationship_type": "superior_of",
+      "start_date": "1949-10-24",
+      "end_date": "1949-10-27",
+      "related_event_id": "",
+      "related_source_ids": [
+        "SRC-0027"
+      ],
+      "evidence_level": "E",
+      "verification_status": "needs_human_review",
+      "notes": ""
+    }
+  ]
+}

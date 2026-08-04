@@ -1,0 +1,69 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+const base = import.meta.env.BASE_URL;
+
+const categories = [
+  {
+    icon: '🪖', title: '軍用品',
+    items: ['國軍 M1 鋼盔', '解放軍布製彈藥袋', '軍用水壺', '野戰餐具', '指北針', '望遠鏡'],
+    desc: '戰場上士兵隨身攜帶的個人裝備，反映當時的物資條件與作戰環境。'
+  },
+  {
+    icon: '🎖️', title: '徽章與證件',
+    items: ['國軍部隊臂章', '軍官識別證', '功勳獎章', '退伍令', '兵籍牌'],
+    desc: '用以辨識身分、單位與榮譽的標誌，承載個人軍旅記憶。'
+  },
+  {
+    icon: '💵', title: '軍票與貨幣',
+    items: ['金門地區軍票', '銀圓券', '舊台幣', '物資配給券'],
+    desc: '戰時經濟的縮影，反映金門在戰時的特殊貨幣流通體系。'
+  },
+  {
+    icon: '✉️', title: '家書與文件',
+    items: ['士兵家書', '戰地日記', '命令書', '戰報', '陣亡通知書'],
+    desc: '最珍貴的第一手史料，記錄戰爭中個人的恐懼、思念與勇氣。'
+  },
+  {
+    icon: '🗺️', title: '地圖與作戰圖',
+    items: ['金門防禦部署圖', '登陸作戰計畫圖', '戰況推進圖', '地形偵察圖'],
+    desc: '軍事行動的核心文件，記錄指揮官的戰略思維與戰場判斷。'
+  },
+  {
+    icon: '📷', title: '歷史照片',
+    items: ['戰後灘頭照片', '部隊集合照', '戰車與士兵合影', '村落戰後景象', '俘虜照片'],
+    desc: '影像記錄了戰役最真實的瞬間，是歷史研究不可或缺的視覺證據。'
+  },
+];
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">文物</h1>
+    <p class="text-stone-500 mb-10">古寧頭戰役相關文物分類 — 從軍用品到家書，每件文物都是歷史的見證</p>
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      {categories.map(cat => (
+        <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-2xl">{cat.icon}</span>
+            <h2 class="font-bold text-stone-800">{cat.title}</h2>
+          </div>
+          <p class="text-xs text-stone-500 mb-3 leading-relaxed">{cat.desc}</p>
+          <div class="flex flex-wrap gap-1.5">
+            {cat.items.map(item => (
+              <span class="text-xs bg-stone-50 text-stone-600 px-2 py-1 rounded">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 bg-amber-50 rounded-xl border border-amber-200 p-5 text-center">
+      <h3 class="font-bold text-amber-800 mb-1">徵集文物素材</h3>
+      <p class="text-sm text-amber-700">
+        如果你持有古寧頭戰役相關文物（軍用品、家書、照片、地圖等），<br />
+        歡迎提供數位化素材，協助充實本平台的典藏內容。
+      </p>
+    </div>
+  </div>
+</MainLayout>

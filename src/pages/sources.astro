@@ -1,0 +1,69 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { sources } from '../data/loader';
+const base = import.meta.env.BASE_URL;
+
+// 來源級別分佈 (source_level: 1-4)
+const levelDist: Record<string, number> = {};
+sources.forEach(s => {
+  const lv = String(s.source_level ?? '?');
+  levelDist[lv] = (levelDist[lv] ?? 0) + 1;
+});
+
+const LEVELS = ['1', '2', '3', '4'];
+---
+
+<MainLayout>
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <h1 class="text-3xl font-serif font-bold mb-2">史料與來源</h1>
+    <p class="text-stone-500 mb-8">{sources.length} 筆文獻來源 · 所有史料可追溯 · 依來源等級分級</p>
+
+    <!-- 來源等級分佈 -->
+    <div class="grid grid-cols-4 gap-3 mb-10">
+      {LEVELS.map((lv) => (
+        <div class={`bg-white rounded-lg border p-4 text-center ${lv === '1' ? 'border-green-200' : lv === '4' ? 'border-red-200' : 'border-stone-200'}`}>
+          <div class="text-2xl font-bold text-stone-700">{levelDist[lv] ?? 0}</div>
+          <div class="text-xs text-stone-500">Level {lv}</div>
+          <div class="text-[10px] text-stone-400 mt-0.5">
+            {lv === '1' ? '官方來源' : lv === '2' ? '學術來源' : lv === '3' ? '輔助來源' : '參考來源'}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- 來源列表 -->
+    <div class="space-y-3">
+      {sources.map((src) => (
+        <div class="bg-white rounded-lg border border-stone-200 p-4">
+          <div class="flex items-start gap-3">
+            <span class={`shrink-0 mt-0.5 inline-flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold text-white ${
+              src.source_level === 1 ? 'bg-green-600' :
+              src.source_level === 2 ? 'bg-blue-600' :
+              src.source_level === 3 ? 'bg-amber-600' : 'bg-stone-400'
+            }`}>
+              L{src.source_level ?? '?'}
+            </span>
+            <div class="min-w-0">
+              <h3 class="font-medium text-stone-800 text-sm leading-snug">{src.title}</h3>
+              <p class="text-xs text-stone-400 mt-0.5">
+                {src.author_or_institution}
+                {src.publication_date ? ` · ${src.publication_date}` : ''}
+                {src.source_type ? ` · ${src.source_type}` : ''}
+              </p>
+              {src.url_or_identifier && (
+                <a href={src.url_or_identifier.startsWith('http') ? src.url_or_identifier : `#`}
+                   target="_blank" rel="noopener"
+                   class="text-xs text-amber-600 no-underline break-all hover:underline">
+                  {src.url_or_identifier.length > 90 ? src.url_or_identifier.slice(0, 90) + '...' : src.url_or_identifier}
+                </a>
+              )}
+              {src.relevance_summary && (
+                <p class="text-xs text-stone-500 mt-1 leading-relaxed line-clamp-2">{src.relevance_summary}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</MainLayout>

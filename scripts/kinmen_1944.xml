@@ -1,0 +1,15 @@
+<GDAL_WMTS>
+  <GetCapabilitiesUrl>https://gis.sinica.edu.tw/kinmen/wmts?SERVICE=WMTS&amp;REQUEST=GetCapabilities</GetCapabilitiesUrl>
+  <Layer>Kinmen_1944</Layer>
+  <Style>default</Style>
+  <TileMatrixSet>GoogleMapsCompatible</TileMatrixSet>
+  <ZoomLevel>15</ZoomLevel>
+  <DataWindow>
+    <UpperLeftX>118.1987</UpperLeftX>
+    <UpperLeftY>24.5209</UpperLeftY>
+    <LowerRightX>118.4751</LowerRightX>
+    <LowerRightY>24.3933</LowerRightY>
+  </DataWindow>
+  <BandsCount>3</BandsCount>
+  <Format>image/png</Format>
+</GDAL_WMTS>
