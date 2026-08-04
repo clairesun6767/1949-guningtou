@@ -2,7 +2,10 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import { sitePath } from '../../data/paths';
 import { perspectiveEvents } from '../../data/perspectiveLoader';
+import { UI } from '../../i18n/ui';
+import type { Lang } from '../../i18n/ui';
 const { lang } = Astro.params;
+const t = (key: string) => UI[lang as Lang]?.[key] || UI['zh-tw']?.[key] || key;
 
 export function getStaticPaths() {
   return [
@@ -12,23 +15,23 @@ export function getStaticPaths() {
   ];
 }
 
-function t(obj: Record<string, string> | undefined, fallback: string): string {
+function tx(obj: Record<string, string> | undefined, fallback: string): string {
   if (!obj) return fallback;
   return (obj as any)[lang] || obj['zh-tw'] || fallback;
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  verified: '已多方證實',
-  partially_verified: '部分證實',
-  disputed: '存在爭議',
-  oral_accounts: '口述資料為主',
-  politically_contested: '政治性爭議',
+const VIEW_KEYS: Record<string, string> = {
+  roc: 'rocAccounts',
+  pla: 'plaAccounts',
+  civilian: 'civilianMemory',
 };
 
-const VIEW_LABELS: Record<string, string> = {
-  roc: '國軍記載',
-  pla: '解放軍記載',
-  civilian: '居民記憶',
+const STATUS_KEYS: Record<string, string> = {
+  verified: 'verified',
+  partially_verified: 'partiallyVerified',
+  disputed: 'disputed',
+  oral_accounts: 'oralAccounts',
+  politically_contested: 'politicallyContested',
 };
 ---
 
@@ -40,7 +43,7 @@ const VIEW_LABELS: Record<string, string> = {
     <div class="flex flex-wrap gap-2 mb-10">
       {perspectiveEvents.map(evt => (
         <a href={`#${evt.id}`} class="px-4 py-2 bg-white border border-stone-200 rounded-lg text-sm text-stone-600 hover:border-amber-300 hover:text-amber-700 no-underline transition">
-          {t(evt.title, evt.id)}
+          {tx(evt.title, evt.id)}
         </a>
       ))}
     </div>
@@ -50,7 +53,7 @@ const VIEW_LABELS: Record<string, string> = {
         <div class="bg-white rounded-xl border border-stone-200 overflow-hidden">
           <div class="bg-stone-50 px-6 py-4 border-b border-stone-200">
             <div class="flex items-center justify-between">
-              <h2 class="text-lg font-serif font-bold text-stone-800">{t(evt.title, evt.id)}</h2>
+              <h2 class="text-lg font-serif font-bold text-stone-800">{tx(evt.title, evt.id)}</h2>
               {evt.evidenceStatus && (
                 <span class={`text-xs px-2 py-1 rounded ${
                   evt.evidenceStatus === 'disputed' ? 'bg-red-50 text-red-600' :
@@ -59,23 +62,23 @@ const VIEW_LABELS: Record<string, string> = {
                   evt.evidenceStatus === 'politically_contested' ? 'bg-purple-50 text-purple-600' :
                   'bg-stone-50 text-stone-600'
                 }`}>
-                  {STATUS_LABELS[evt.evidenceStatus] || evt.evidenceStatus}
+                  {t(STATUS_KEYS[evt.evidenceStatus] || evt.evidenceStatus)}
                 </span>
               )}
             </div>
-            <p class="text-sm text-stone-500 mt-1">{t(evt.summary, '')}</p>
+            <p class="text-sm text-stone-500 mt-1">{tx(evt.summary, '')}</p>
           </div>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-200">
             {Object.entries(evt.viewpoints).map(([key, vp]) => (
               <div class="bg-white p-5">
                 <div class="flex items-center gap-2 mb-3">
-                  {key === 'roc' && <span class="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">國</span>}
-                  {key === 'pla' && <span class="w-5 h-5 rounded-full bg-red-600 flex items-center justify-center text-white text-[10px] font-bold">共</span>}
-                  {key === 'civilian' && <span class="w-5 h-5 rounded-full bg-green-600 flex items-center justify-center text-white text-[10px] font-bold">民</span>}
-                  <span class="text-xs font-medium text-stone-500">{VIEW_LABELS[key] || key}</span>
+                  {key === 'roc' && <span class="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0" />}
+                  {key === 'pla' && <span class="w-2.5 h-2.5 rounded-full bg-red-600 shrink-0" />}
+                  {key === 'civilian' && <span class="w-2.5 h-2.5 rounded-full bg-green-600 shrink-0" />}
+                  <span class="text-xs font-bold text-stone-600">{t(VIEW_KEYS[key] || key)}</span>
                 </div>
-                <p class="text-sm text-stone-700 leading-relaxed">{t(vp, '')}</p>
+                <p class="text-sm text-stone-700 leading-relaxed">{tx(vp, '')}</p>
               </div>
             ))}
           </div>
@@ -89,7 +92,7 @@ const VIEW_LABELS: Record<string, string> = {
                     <span class="text-amber-400 mt-0.5">•</span>
                     <div>
                       <span class="font-medium text-stone-700">{d.topic}：</span>
-                      <span class="text-stone-600">{t(d as any, d.topic)}</span>
+                      <span class="text-stone-600">{tx(d as any, d.topic)}</span>
                     </div>
                   </div>
                 ))}

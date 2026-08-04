@@ -1,50 +1,53 @@
 ---
 import '../styles/global.css';
 import { sitePath, LANGS } from '../data/paths';
+import { UI } from '../i18n/ui';
+import type { Lang } from '../i18n/ui';
 import SearchBar from '../components/shared/SearchBar';
 interface Props { lang: string; title?: string; lastUpdated?: string; }
 const { lang, title, lastUpdated } = Astro.props;
+const t = (key: string) => UI[lang as Lang]?.[key] || UI['zh-tw']?.[key] || key;
 
 const navGroups = [
   {
-    label: '認識戰役',
+    labelKey: 'navUnderstanding' as const,
     items: [
-      { href: 'context', label: '世界局勢與戰役背景' },
-      { href: 'analysis', label: '戰役解析' },
-      { href: 'aftermath', label: '戰後影響' },
+      { href: 'context', labelKey: 'navContext' as const },
+      { href: 'analysis', labelKey: 'navAnalysis' as const },
+      { href: 'aftermath', labelKey: 'navAftermath' as const },
     ],
   },
   {
-    label: '走進戰場',
+    labelKey: 'navBattlefield' as const,
     items: [
-      { href: 'timeline', label: '四日時間軸' },
-      { href: 'map', label: '戰役地圖' },
-      { href: 'stories', label: '戰役故事' },
+      { href: 'timeline', labelKey: 'navTimeline' as const },
+      { href: 'map', labelKey: 'navMap' as const },
+      { href: 'stories', labelKey: 'navStories' as const },
     ],
   },
   {
-    label: '人物與現場',
+    labelKey: 'navPeople' as const,
     items: [
-      { href: 'figures', label: '人物' },
-      { href: 'locations', label: '地點' },
-      { href: 'weapons', label: '武器' },
-      { href: 'artifacts', label: '文物' },
+      { href: 'figures', labelKey: 'navFigures' as const },
+      { href: 'locations', labelKey: 'navLocations' as const },
+      { href: 'weapons', labelKey: 'navWeapons' as const },
+      { href: 'artifacts', labelKey: 'navArtifacts' as const },
     ],
   },
   {
-    label: '史料研究',
+    labelKey: 'navResearch' as const,
     items: [
-      { href: 'perspectives', label: '多元觀點' },
-      { href: 'sources', label: '文獻資料庫' },
-      { href: 'archive', label: '數位典藏' },
+      { href: 'perspectives', labelKey: 'navPerspectives' as const },
+      { href: 'sources', labelKey: 'navSources' as const },
+      { href: 'archive', labelKey: 'navArchive' as const },
     ],
   },
   {
-    label: '和平與計畫',
+    labelKey: 'navPeace' as const,
     items: [
-      { href: 'peace', label: '戰後至今' },
-      { href: 'battlefield-os', label: 'Battlefield OS' },
-      { href: 'about', label: '關於本站' },
+      { href: 'peace', labelKey: 'navAfterwar' as const },
+      { href: 'battlefield-os', labelKey: 'navBattlefieldOS' as const },
+      { href: 'about', labelKey: 'navAbout' as const },
     ],
   },
 ];
@@ -57,22 +60,23 @@ const navGroups = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href={sitePath('favicon.svg')} />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet" />
-    <title>{title ?? '古寧頭戰役 1949 · 以歷史見和平'}</title>
-    <meta name="description" content="1949 年古寧頭戰役數位知識平台。以歷史見和平，多史觀並存。" />
-    <!-- hreflang -->
+    <title>{title ?? t('siteTitle') + ' · ' + t('siteTagline')}</title>
+    <meta name="description" content={t('siteDesc')} />
     <link rel="alternate" hreflang="zh-Hant" href={sitePath('', 'zh-tw')} />
     <link rel="alternate" hreflang="zh-Hans" href={sitePath('', 'zh-cn')} />
     <link rel="alternate" hreflang="en" href={sitePath('', 'en')} />
     <link rel="alternate" hreflang="x-default" href={sitePath('', 'zh-tw')} />
+    {lang === 'zh-tw' && <link rel="alternate" hreflang="zh-Hant" href={sitePath('', 'zh-tw')} />}
+    {lang === 'zh-cn' && <link rel="alternate" hreflang="zh-Hans" href={sitePath('', 'zh-cn')} />}
+    {lang === 'en' && <link rel="alternate" hreflang="en" href={sitePath('', 'en')} />}
   </head>
   <body class="min-h-screen flex flex-col bg-stone-50">
     <header class="bg-white/95 backdrop-blur border-b border-stone-200 sticky top-0 z-50 overflow-visible">
       <div class="max-w-7xl mx-auto px-4 h-12 flex items-center justify-between">
         <a href={sitePath('', lang)} class="font-serif font-bold text-base text-stone-800 no-underline hover:text-amber-700 transition flex items-center gap-2">
-          古寧頭 1949
-          <span class="hidden sm:inline text-xs text-stone-400 font-normal">以歷史見和平</span>
+          {t('siteTitle')}
+          <span class="hidden sm:inline text-xs text-stone-400 font-normal">{t('siteTagline')}</span>
         </a>
-        <!-- 語言切換 -->
         <div class="flex items-center gap-2 text-xs">
           <SearchBar client:load />
           {LANGS.map(l => (
@@ -84,18 +88,17 @@ const navGroups = [
         </div>
       </div>
 
-      <!-- 5-group nav -->
       <nav class="max-w-7xl mx-auto px-4 pb-2 flex gap-0.5 text-[13px] overflow-visible">
-        <a href={sitePath('', lang)} class="px-3 py-1.5 rounded whitespace-nowrap text-stone-500 hover:bg-stone-100 hover:text-stone-700 no-underline transition font-medium">首頁</a>
+        <a href={sitePath('', lang)} class="px-3 py-1.5 rounded whitespace-nowrap text-stone-500 hover:bg-stone-100 hover:text-stone-700 no-underline transition font-medium">{t('home')}</a>
         {navGroups.map(group => (
           <div class="relative group">
             <span class="px-3 py-1.5 rounded whitespace-nowrap text-stone-500 cursor-default group-hover:bg-stone-100 group-hover:text-stone-700 transition inline-block">
-              {group.label} ▾
+              {t(group.labelKey)} ▾
             </span>
             <div class="absolute top-full left-0 mt-1 bg-white border border-stone-200 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-[9999] min-w-[180px]">
               {group.items.map(item => (
                 <a href={sitePath(item.href, lang)} class="block px-4 py-2.5 text-stone-600 hover:bg-amber-50 hover:text-amber-700 no-underline whitespace-nowrap first:rounded-t-lg last:rounded-b-lg text-sm">
-                  {item.label}
+                  {t(item.labelKey)}
                 </a>
               ))}
             </div>
@@ -110,13 +113,13 @@ const navGroups = [
 
     <footer class="bg-stone-900 text-stone-400 text-sm py-8 mt-16">
       <div class="max-w-6xl mx-auto px-4 text-center space-y-2">
-        <p>古寧頭戰役數位知識平台 · 1949</p>
-        {lang === 'en' && <p class="text-stone-500 text-xs">Battle of Guningtou Digital Knowledge Platform · Learning Peace Through History</p>}
-        <p class="text-stone-500 text-xs">資料來源：Battlefield Research Database · 所有史料均附來源 · 多史觀並存 · 政治中立</p>
-        <p class="text-stone-600 text-xs mt-4">歷史已然發生，無法改變。透過理解歷史，珍惜和平的可貴。</p>
-        {lastUpdated && <p class="text-stone-500 text-xs mt-2">最後更新：{lastUpdated} · 資料版本 v1.0</p>}
+        <p>{t('footerPlatform')}</p>
+        <p class="text-stone-500 text-xs">{t('footerSource')}</p>
+        <p class="text-stone-600 text-xs mt-4">{t('footerPeace')}</p>
+        {lang !== 'zh-tw' && <p class="text-amber-500 text-xs mt-2">{t('translationInProgress')}</p>}
+        {lastUpdated && <p class="text-stone-500 text-xs mt-2">{t('footerUpdated')}：{lastUpdated} · {t('footerVersion')}</p>}
         <p class="text-stone-500 text-xs mt-2">
-          發現錯誤或想補充史料？<a href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml" class="text-amber-400 hover:underline">回報問題</a>
+          {t('footerReport')} <a href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml" class="text-amber-400 hover:underline">{t('footerReportLink')}</a>
         </p>
       </div>
     </footer>
