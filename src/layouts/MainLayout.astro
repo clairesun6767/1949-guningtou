@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { sitePath, LANGS } from '../data/paths';
+import SearchBar from '../components/shared/SearchBar';
 interface Props { lang: string; title?: string; lastUpdated?: string; }
 const { lang, title, lastUpdated } = Astro.props;
 
@@ -72,7 +73,8 @@ const navGroups = [
           <span class="hidden sm:inline text-xs text-stone-400 font-normal">以歷史見和平</span>
         </a>
         <!-- 語言切換 -->
-        <div class="flex items-center gap-1 text-xs">
+        <div class="flex items-center gap-2 text-xs">
+          <SearchBar client:load />
           {LANGS.map(l => (
             <a href={sitePath(Astro.url.pathname.split('/').slice(3).join('/'), l.code)}
                class={`px-2 py-1 rounded no-underline ${l.code === lang ? 'bg-amber-100 text-amber-700 font-medium' : 'text-stone-400 hover:text-stone-600'}`}>
