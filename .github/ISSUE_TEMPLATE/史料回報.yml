@@ -1,0 +1,53 @@
+name: 補充史料
+description: 提供古寧頭戰役相關的史料、文獻或口述紀錄
+title: "[史料] "
+labels: ["史料回報"]
+body:
+  - type: input
+    attributes:
+      label: 史料名稱
+      description: 史料或文獻的名稱
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: 史料類型
+      options:
+        - 書籍
+        - 論文
+        - 檔案/公文
+        - 回憶錄
+        - 報紙/雜誌
+        - 照片
+        - 地圖
+        - 口述歷史錄音
+        - 其他
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 年代
+      description: 史料的時間範圍，例如「1949年」或「1949-1950」
+  - type: textarea
+    attributes:
+      label: 內容摘要
+      description: 簡要說明此史料與古寧頭戰役的關聯
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: 來源或網址
+      description: 如為公開資料，請提供連結
+  - type: textarea
+    attributes:
+      label: 相關事件/人物/地點
+      description: 此史料與本站哪些事件、人物或地點相關？
+  - type: dropdown
+    attributes:
+      label: 授權狀態
+      options:
+        - 公開領域
+        - 可合理使用
+        - 需授權
+        - 不確定
+---

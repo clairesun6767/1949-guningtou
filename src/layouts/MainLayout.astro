@@ -1,7 +1,7 @@
 ---
 import { sitePath, LANGS } from '../data/paths';
-interface Props { lang: string; title?: string; }
-const { lang, title } = Astro.props;
+interface Props { lang: string; title?: string; lastUpdated?: string; }
+const { lang, title, lastUpdated } = Astro.props;
 
 const navGroups = [
   {
@@ -111,6 +111,10 @@ const navGroups = [
         {lang === 'en' && <p class="text-stone-500 text-xs">Battle of Guningtou Digital Knowledge Platform · Learning Peace Through History</p>}
         <p class="text-stone-500 text-xs">資料來源：Battlefield Research Database · 所有史料均附來源 · 多史觀並存 · 政治中立</p>
         <p class="text-stone-600 text-xs mt-4">歷史已然發生，無法改變。透過理解歷史，珍惜和平的可貴。</p>
+        {lastUpdated && <p class="text-stone-500 text-xs mt-2">最後更新：{lastUpdated} · 資料版本 v1.0</p>}
+        <p class="text-stone-500 text-xs mt-2">
+          發現錯誤或想補充史料？<a href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml" class="text-amber-400 hover:underline">回報問題</a>
+        </p>
       </div>
     </footer>
   </body>
