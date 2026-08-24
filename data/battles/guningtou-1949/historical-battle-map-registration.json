@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "0.8.0",
+  "battleId": "BAT-GUN-1949",
+  "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+  "sourceImage": "/map-data/historical-battle-map.jpg",
+  "sourceImageSize": {
+    "width": 1000,
+    "height": 641
+  },
+  "registrationStatus": "schematic_pending",
+  "registrationMethod": "schematic_only",
+  "registrationLabel": {
+    "zh-Hant": "歷史戰役圖套準研究（示意性）",
+    "en": "Historical battle map registration study (schematic)"
+  },
+  "anchorPolicy": "Only anchors that can be independently identified in both the source drawing and the canonical/reliable geographic reference may be enabled. The system must not auto-match or force all six canonical locations.",
+  "anchors": [],
+  "candidateAnchors": [
+    {
+      "id": "ANCHOR-CANDIDATE-01",
+      "sourcePixel": [128, 475],
+      "geographicReference": null,
+      "enabled": false,
+      "status": "needs_human_confirmation",
+      "confidence": "unknown",
+      "notes": "Source-side position is visible, but no named geographic identity is sufficiently certain from the uploaded image."
+    },
+    {
+      "id": "ANCHOR-CANDIDATE-02",
+      "sourcePixel": [468, 356],
+      "geographicReference": null,
+      "enabled": false,
+      "status": "needs_human_confirmation",
+      "confidence": "unknown",
+      "notes": "A circled position is visible; the small adjacent annotation is not transcribed without human review."
+    },
+    {
+      "id": "ANCHOR-CANDIDATE-03",
+      "sourcePixel": [779, 342],
+      "geographicReference": null,
+      "enabled": false,
+      "status": "needs_human_confirmation",
+      "confidence": "unknown",
+      "notes": "A coastline/position relationship may be useful for a future study, but the source drawing is schematic and not independently identified."
+    }
+  ],
+  "transformCandidates": {
+    "affine": {
+      "minimumEnabledAnchors": 3,
+      "status": "not_run",
+      "residualsPixels": null
+    },
+    "projective": {
+      "minimumEnabledAnchors": 4,
+      "status": "not_run",
+      "residualsPixels": null
+    },
+    "thinPlateSpline": {
+      "minimumEnabledAnchors": 6,
+      "status": "not_run",
+      "residualsPixels": null
+    }
+  },
+  "selectedMethod": null,
+  "residualsPixels": null,
+  "sourceLimitations": [
+    "The uploaded map is a historical military schematic, not survey-grade GIS.",
+    "The source has no independently verified pixel-to-WGS84 transform in this package.",
+    "Trace geometry is retained as source-derived interpretation and must not be presented as GPS or precision measurement."
+  ],
+  "reviewStatus": "needs_human_confirmation",
+  "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+}

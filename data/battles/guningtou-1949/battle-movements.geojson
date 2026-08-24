@@ -1,0 +1,144 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "schemaVersion": "0.6.0",
+    "battleId": "BAT-GUN-1949",
+    "title": "Guningtou battle movement interpretation",
+    "coordinateSystem": "EPSG:4326",
+    "reviewStatus": "Reviewed",
+    "note": "These geometries encode historically supported relationships at their stated precision. Corridors and axes are not GPS tracks or road-following routes."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "MOV-GUN-1025-PLA-LANDING-AXIS",
+      "properties": {
+        "id": "MOV-GUN-1025-PLA-LANDING-AXIS",
+        "movementType": "ATTACK_AXIS",
+        "side": "pla",
+        "date": "1949-10-25",
+        "timeRange": { "start": "1949-10-25T00:00:00+08:00", "end": "1949-10-25T06:00:00+08:00" },
+        "confidence": "approximate",
+        "visibility": "production",
+        "researchOnly": false,
+        "label": { "zh-Hant": "嚨口海岸登陸軸線", "en": "Longkou coastal landing axis" },
+        "description": { "zh-Hant": "表示第一梯隊由北側海面接近嚨口登陸區的概略方向，不是船隻航跡。", "en": "Approximate direction of the first echelon approaching the Longkou landing area; not a vessel track." },
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "evidenceIds": ["EVT-0001", "EVT-0010", "EVT-0029"],
+        "relatedLocations": ["LOC-GUN-0001", "LOC-GUN-0002"],
+        "geometryProvenance": "approximate_axis",
+        "provenanceNote": "Reviewed synthesis of event-place relationships; endpoints deliberately generalized.",
+        "reviewStatus": "approved"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.3562, 24.4774], [118.3541, 24.4715], [118.3504, 24.4653]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MOV-GUN-1025-PLA-INLAND-CORRIDOR",
+      "properties": {
+        "id": "MOV-GUN-1025-PLA-INLAND-CORRIDOR",
+        "movementType": "MOVEMENT_CORRIDOR",
+        "side": "pla",
+        "date": "1949-10-25",
+        "timeRange": { "start": "1949-10-25T02:20:00+08:00", "end": "1949-10-25T18:00:00+08:00" },
+        "confidence": "approximate",
+        "visibility": "production",
+        "researchOnly": false,
+        "label": { "zh-Hant": "登陸後向內陸展開範圍", "en": "Post-landing inland expansion corridor" },
+        "description": { "zh-Hant": "寬帶僅表示嚨口登陸後朝古寧頭聚落群展開的可能範圍；不代表道路或單一部隊路徑。", "en": "A broad envelope for probable inland expansion from Longkou toward the Guningtou settlements; not a road or single-unit path." },
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "evidenceIds": ["EVT-0001", "EVT-0011", "EVT-0029"],
+        "relatedLocations": ["LOC-GUN-0001", "LOC-GUN-0005", "LOC-GUN-0006"],
+        "geometryProvenance": "human_interpreted",
+        "provenanceNote": "Area generalized from reviewed landing and inland-expansion event records.",
+        "reviewStatus": "approved"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[118.3518, 24.4632], [118.3539, 24.4674], [118.3317, 24.4758], [118.3115, 24.4811], [118.3066, 24.4780], [118.3270, 24.4696], [118.3471, 24.4620], [118.3518, 24.4632]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MOV-GUN-1026-ROC-COUNTERATTACK-AXIS",
+      "properties": {
+        "id": "MOV-GUN-1026-ROC-COUNTERATTACK-AXIS",
+        "movementType": "ATTACK_AXIS",
+        "side": "roc",
+        "date": "1949-10-26",
+        "timeRange": { "start": "1949-10-26T06:00:00+08:00", "end": "1949-10-26T15:00:00+08:00" },
+        "confidence": "probable",
+        "visibility": "production",
+        "researchOnly": false,
+        "label": { "zh-Hant": "第118師反擊軸線", "en": "118th Division counterattack axis" },
+        "description": { "zh-Hant": "表示埔頭方向朝林厝、古寧頭推進的戰術關係；起點為概略地區，箭線不等同實際道路。", "en": "Tactical relationship from the Putou area toward Lincuo and Guningtou; the generalized origin and arrow are not an actual road." },
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "evidenceIds": ["EVT-0004", "EVT-0017", "TIM-0080", "TIM-0081"],
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "geometryProvenance": "approximate_axis",
+        "provenanceNote": "Reviewed synthesis; Putou start uses a legacy approximate place reference and is not a canonical Location.",
+        "reviewStatus": "approved"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.3017, 24.4724], [118.3058, 24.4755], [118.3105, 24.4782], [118.3148, 24.4785]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MOV-GUN-1026-PLA-NORTH-RETREAT-CORRIDOR",
+      "properties": {
+        "id": "MOV-GUN-1026-PLA-NORTH-RETREAT-CORRIDOR",
+        "movementType": "MOVEMENT_CORRIDOR",
+        "side": "pla",
+        "date": "1949-10-26",
+        "timeRange": { "start": "1949-10-26T12:00:00+08:00", "end": "1949-10-26T22:00:00+08:00" },
+        "confidence": "probable",
+        "visibility": "production",
+        "researchOnly": false,
+        "label": { "zh-Hant": "向北端海岸收縮範圍", "en": "Contraction toward the northern coast" },
+        "description": { "zh-Hant": "表示林厝、南山與古寧頭一帶殘部向北端海岸收縮的寬廣範圍，不是單一路徑。", "en": "Broad envelope for remnants contracting from the Lincuo–Nanshan–Guningtou area toward the northern coast; not a single route." },
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "evidenceIds": ["EVT-0019", "TIM-0089", "TIM-0090", "TIM-0093"],
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "geometryProvenance": "human_interpreted",
+        "provenanceNote": "Reviewed synthesis of timed retreat statements; corridor edges are interpretive.",
+        "reviewStatus": "approved"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[118.3048, 24.4762], [118.3160, 24.4760], [118.3179, 24.4804], [118.3159, 24.4852], [118.3096, 24.4860], [118.3062, 24.4824], [118.3048, 24.4762]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "MOV-R01-ANQI-BEISHAN-RESEARCH",
+      "properties": {
+        "id": "MOV-R01-ANQI-BEISHAN-RESEARCH",
+        "movementType": "RESEARCH_ONLY",
+        "side": "unknown",
+        "date": "1949-10-25",
+        "timeRange": { "start": "1949-10-25T00:00:00+08:00", "end": "1949-10-25T23:59:59+08:00" },
+        "confidence": "interpretive",
+        "visibility": "research",
+        "researchOnly": true,
+        "historicalRouteStatus": "insufficient_evidence",
+        "label": { "zh-Hant": "R01 安岐至北山候選線", "en": "R01 Anqi–Beishan candidate line" },
+        "description": { "zh-Hant": "KML 提供概略幾何，但未附可驗證的時間、部隊與來源關聯；只供研究檢視。", "en": "The KML supplies approximate geometry but no verifiable time, unit, or source linkage; research inspection only." },
+        "sourceIds": ["KML-GUNINGTOU-BATTLE-ROUTES-1949"],
+        "evidenceIds": [],
+        "relatedLocations": ["LOC-GUN-0003", "LOC-GUN-0006"],
+        "geometryProvenance": "source_traced",
+        "provenanceNote": "Imported without coordinate recomputation from the supplied KML candidate R01.",
+        "reviewStatus": "reviewed"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.3254951123289, 24.46262414755398], [118.3233366392893, 24.46752281075254], [118.3163138484832, 24.47686918725482], [118.3121639097031, 24.4793053941051]]
+      }
+    }
+  ]
+}

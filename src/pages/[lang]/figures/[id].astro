@@ -1,57 +1,81 @@
 ---
 import MainLayout from '../../../layouts/MainLayout.astro';
+import MetadataRow from '../../../components/museum/MetadataRow.astro';
+import SourceCitation from '../../../components/museum/SourceCitation.astro';
+import { sitePath } from '../../../data/paths';
 import { persons } from '../../../data/loader';
 
 export function getStaticPaths() {
   const langs = ['zh-tw', 'zh-cn', 'en'];
   const paths = [];
   for (const lang of langs) {
-    for (const item of persons) {
-      paths.push({ params: { lang, id: item.person_id } });
-    }
+    for (const item of persons) paths.push({ params: { lang, id: item.person_id } });
   }
   return paths;
 }
 
-const { id } = Astro.params;
-const person = persons.find((p) => p.person_id === id);
+const { id, lang } = Astro.params;
+const person = persons.find((item) => item.person_id === id);
 ---
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   {person ? (
-    <div class="max-w-3xl mx-auto px-4 py-16">
-      <a href="./figures" class="text-sm text-stone-500 hover:text-stone-700 no-underline">&larr; 回到人物列表</a>
-      <h1 class="text-3xl font-serif font-bold mt-4 mb-1">{person.name_zh}</h1>
-      {person.name_en && <p class="text-stone-400 mb-4">{person.name_en}</p>}
+    <div class="museum-page">
+      <div class="museum-reading">
+        <a href={sitePath('figures', lang)} class="museum-link">← 回到人物檔案</a>
+        <div class="museum-kicker museum-space-before">PERSON RECORD · {person.person_id}</div>
+        <h1 class="museum-title">{person.name_zh}</h1>
+        {person.name_en && <p class="museum-deck">{person.name_en}</p>}
 
-      <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
-        <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">簡介</h2>
-        <p class="text-stone-700 leading-relaxed">{person.biographical_summary ?? person.standard_bio ?? '尚無詳細資料'}</p>
-      </div>
+        <div class="museum-person-detail__status">
+          {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>證據 {person.evidence_level}</span>}
+          {person.verification_status && <SourceCitation text={person.verification_status} />}
+        </div>
 
-      <div class="grid grid-cols-2 gap-4 text-sm">
-        <div class="bg-white rounded-lg border border-stone-200 p-4">
-          <span class="text-stone-400">陣營</span>
-          <div>{person.primary_category ?? '未知'}</div>
+        <section class="museum-paper museum-reading__section">
+          <div class="museum-kicker">BIOGRAPHICAL NOTE</div>
+          <p class="museum-prose">{person.biographical_summary ?? person.standard_bio ?? '尚無詳細資料'}</p>
+        </section>
+
+        <div class="museum-meta-grid museum-person-detail__meta">
+          <MetadataRow label="陣營 / 類別" value={person.primary_category} />
+          <MetadataRow label="軍階" value={person.rank_at_event} />
+          <MetadataRow label="單位" value={person.unit} />
+          <MetadataRow label="生卒" value={`${person.birth_date ?? '?'} – ${person.death_date ?? '?'}`} />
         </div>
-        <div class="bg-white rounded-lg border border-stone-200 p-4">
-          <span class="text-stone-400">軍階</span>
-          <div>{person.rank_at_event ?? '未知'}</div>
-        </div>
-        <div class="bg-white rounded-lg border border-stone-200 p-4">
-          <span class="text-stone-400">單位</span>
-          <div>{person.unit ?? '未知'}</div>
-        </div>
-        <div class="bg-white rounded-lg border border-stone-200 p-4">
-          <span class="text-stone-400">生卒</span>
-          <div>{person.birth_date ?? '?'} – {person.death_date ?? '?'}</div>
-        </div>
+
+        {person.role_in_battle && (
+          <section class="museum-reading__section">
+            <div class="museum-kicker">ROLE IN BATTLE</div>
+            <h2>戰役角色</h2>
+            <p class="museum-prose">{person.role_in_battle}</p>
+          </section>
+        )}
+
+        {person.battle_actions && (
+          <section class="museum-reading__section">
+            <div class="museum-kicker">ACTIONS & ACCOUNTS</div>
+            <h2>相關行動</h2>
+            <p class="museum-prose">{person.battle_actions}</p>
+          </section>
+        )}
+
+        {person.related_sources && person.related_sources.length > 0 && (
+          <section class="museum-reading__section">
+            <div class="museum-kicker">SOURCES</div>
+            <h2>來源</h2>
+            <p class="museum-citation">{person.related_sources.join(' · ')}</p>
+          </section>
+        )}
       </div>
     </div>
   ) : (
-    <div class="max-w-3xl mx-auto px-4 py-16 text-center">
-      <h1 class="text-2xl font-bold text-stone-700">人物不存在</h1>
-      <a href="./figures" class="text-amber-600">回到人物列表</a>
+    <div class="museum-page">
+      <div class="museum-reading museum-centered">
+        <div class="museum-kicker">RECORD NOT FOUND</div>
+        <h1 class="museum-title">人物不存在</h1>
+        <a class="museum-button" href={sitePath('figures', lang)}>回到人物檔案</a>
+      </div>
     </div>
   )}
 </MainLayout>

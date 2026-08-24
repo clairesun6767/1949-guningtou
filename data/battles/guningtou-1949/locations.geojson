@@ -1,0 +1,356 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "LOC-GUN-0001",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.34905621282323,
+          24.46534210541434
+        ]
+      },
+      "properties": {
+        "id": "LOC-GUN-0001",
+        "schemaVersion": "1.0.0",
+        "historicalName": {
+          "zh-Hant": "嚨口登陸區"
+        },
+        "modernName": null,
+        "aliases": [],
+        "sourceNames": [],
+        "searchTerms": [
+          "嚨口登陸區",
+          "嚨口"
+        ],
+        "locationType": "landing-zone",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateProvenance": {
+          "coordinateSystem": "EPSG:4326",
+          "coordinateMethod": "manual-correction",
+          "coordinatePrecision": "area-only",
+          "verificationStatus": "manually-verified",
+          "sourceRefs": [
+            "SRC-0001"
+          ],
+          "confidence": "probable",
+          "notes": "No coordinate asserted in BR-1. Requires historical identity review and manual calibration.",
+          "coordinate": [
+            118.34905621282323,
+            24.46534210541434
+          ],
+          "finalCoordinate": [
+            118.34905621282323,
+            24.46534210541434
+          ],
+          "verificationMethod": "google-map-manual-reference",
+          "verifiedBy": "George Ho",
+          "verifiedAt": "2026-08-12T03:29:13.540Z",
+          "candidateSource": "battlefield-coordinate-editor:human-input"
+        },
+        "verificationStatus": "manually-verified",
+        "sourceRefs": [
+          "SRC-0001"
+        ],
+        "confidence": "probable",
+        "notes": {
+          "zh-Hant": "不可直接等同 legacy POI-0001 的單一點位。"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LOC-GUN-0002",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.35212804669108,
+          24.464314013012007
+        ]
+      },
+      "properties": {
+        "id": "LOC-GUN-0002",
+        "schemaVersion": "1.0.0",
+        "historicalName": {
+          "zh-Hant": "嚨口海岸"
+        },
+        "modernName": null,
+        "aliases": [
+          {
+            "zh-Hant": "嚨口沙灘"
+          }
+        ],
+        "sourceNames": [],
+        "searchTerms": [
+          "嚨口海岸",
+          "嚨口沙灘",
+          "嚨口",
+          "龍口"
+        ],
+        "locationType": "coast",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateProvenance": {
+          "coordinateSystem": "EPSG:4326",
+          "coordinateMethod": "manual-correction",
+          "coordinatePrecision": "area-only",
+          "verificationStatus": "manually-verified",
+          "sourceRefs": [
+            "SRC-0001"
+          ],
+          "confidence": "probable",
+          "notes": "依現代 OSM 地圖、衛星影像及嚨口聚落位置進行人工比對，本座標僅作為嚨口海岸現代參考點，不代表 1949 年實際登陸線或完整歷史海岸範圍。1949 海岸線及登陸區待歷史航照與史料 georeference 後另行校正。",
+          "coordinate": [
+            118.35212804669108,
+            24.464314013012007
+          ],
+          "finalCoordinate": [
+            118.35212804669108,
+            24.464314013012007
+          ],
+          "verificationMethod": "google-map-manual-reference",
+          "verifiedBy": "George Ho",
+          "verifiedAt": "2026-08-12T03:23:02.516Z",
+          "candidateSource": "battlefield-coordinate-editor:human-input",
+          "originalCandidate": {
+            "coordinate": [
+              118.35212804669108,
+              24.464314013012007
+            ],
+            "source": "battlefield-coordinate-editor:human-input",
+            "method": "manual-correction"
+          }
+        },
+        "verificationStatus": "manually-verified",
+        "sourceRefs": [
+          "SRC-0001"
+        ],
+        "confidence": "probable"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LOC-GUN-0003",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.32563349089101,
+          24.462804175249975
+        ]
+      },
+      "properties": {
+        "id": "LOC-GUN-0003",
+        "schemaVersion": "1.0.0",
+        "historicalName": {
+          "zh-Hant": "安岐"
+        },
+        "modernName": null,
+        "aliases": [],
+        "sourceNames": [],
+        "searchTerms": [
+          "安岐"
+        ],
+        "locationType": "settlement",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateProvenance": {
+          "coordinateSystem": "EPSG:4326",
+          "coordinateMethod": "manual-correction",
+          "coordinatePrecision": "area-only",
+          "verificationStatus": "manually-verified",
+          "sourceRefs": [
+            "SRC-0001"
+          ],
+          "confidence": "probable",
+          "notes": "No exact legacy POI mapping approved.",
+          "coordinate": [
+            118.32563349089101,
+            24.462804175249975
+          ],
+          "finalCoordinate": [
+            118.32563349089101,
+            24.462804175249975
+          ],
+          "verificationMethod": "google-map-manual-reference",
+          "verifiedBy": "George Ho",
+          "verifiedAt": "2026-08-12T03:27:34.698Z",
+          "candidateSource": "battlefield-coordinate-editor:human-input"
+        },
+        "verificationStatus": "manually-verified",
+        "sourceRefs": [
+          "SRC-0001"
+        ],
+        "confidence": "probable"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LOC-GUN-0004",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.332311827884,
+          24.473985205895303
+        ]
+      },
+      "properties": {
+        "id": "LOC-GUN-0004",
+        "schemaVersion": "1.0.0",
+        "historicalName": {
+          "zh-Hant": "安東二營區"
+        },
+        "modernName": null,
+        "aliases": [],
+        "sourceNames": [],
+        "searchTerms": [
+          "安東二營區"
+        ],
+        "locationType": "military-site",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateProvenance": {
+          "coordinateSystem": "EPSG:4326",
+          "coordinateMethod": "manual-correction",
+          "coordinatePrecision": "exact",
+          "verificationStatus": "manually-verified",
+          "sourceRefs": [
+            "SRC-0001"
+          ],
+          "confidence": "confirmed",
+          "notes": "Legacy road name is not sufficient evidence for the camp geometry.",
+          "coordinate": [
+            118.332311827884,
+            24.473985205895303
+          ],
+          "finalCoordinate": [
+            118.332311827884,
+            24.473985205895303
+          ],
+          "verificationMethod": "google-map-manual-reference",
+          "verifiedBy": "George Ho",
+          "verifiedAt": "2026-08-12T03:28:03.805Z",
+          "candidateSource": "battlefield-coordinate-editor:human-input"
+        },
+        "verificationStatus": "manually-verified",
+        "sourceRefs": [
+          "SRC-0001"
+        ],
+        "confidence": "confirmed"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LOC-GUN-0005",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.30743595990603,
+          24.47855303214236
+        ]
+      },
+      "properties": {
+        "id": "LOC-GUN-0005",
+        "schemaVersion": "1.0.0",
+        "historicalName": {
+          "zh-Hant": "南山"
+        },
+        "modernName": null,
+        "aliases": [],
+        "sourceNames": [],
+        "searchTerms": [
+          "南山",
+          "古寧頭南山"
+        ],
+        "locationType": "settlement",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateProvenance": {
+          "coordinateSystem": "EPSG:4326",
+          "coordinateMethod": "manual-correction",
+          "coordinatePrecision": "area-only",
+          "verificationStatus": "manually-verified",
+          "sourceRefs": [
+            "SRC-0001"
+          ],
+          "confidence": "probable",
+          "notes": "Legacy POI candidate exists but remains pending manual review.",
+          "coordinate": [
+            118.30743595990603,
+            24.47855303214236
+          ],
+          "finalCoordinate": [
+            118.30743595990603,
+            24.47855303214236
+          ],
+          "verificationMethod": "google-map-manual-reference",
+          "verifiedBy": "George Ho",
+          "verifiedAt": "2026-08-12T03:28:28.715Z",
+          "candidateSource": "battlefield-coordinate-editor:human-input"
+        },
+        "verificationStatus": "manually-verified",
+        "sourceRefs": [
+          "SRC-0001"
+        ],
+        "confidence": "probable",
+        "legacyRefs": [
+          "POI-0008"
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "LOC-GUN-0006",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          118.31120658183592,
+          24.47935230569504
+        ]
+      },
+      "properties": {
+        "id": "LOC-GUN-0006",
+        "schemaVersion": "1.0.0",
+        "historicalName": {
+          "zh-Hant": "北山"
+        },
+        "modernName": null,
+        "aliases": [],
+        "sourceNames": [],
+        "searchTerms": [
+          "北山",
+          "古寧頭北山"
+        ],
+        "locationType": "settlement",
+        "coordinateSystem": "EPSG:4326",
+        "coordinateProvenance": {
+          "coordinateSystem": "EPSG:4326",
+          "coordinateMethod": "manual-correction",
+          "coordinatePrecision": "area-only",
+          "verificationStatus": "manually-verified",
+          "sourceRefs": [
+            "SRC-0001"
+          ],
+          "confidence": "probable",
+          "notes": "Legacy POI candidate exists but remains pending manual review.",
+          "coordinate": [
+            118.31120658183592,
+            24.47935230569504
+          ],
+          "finalCoordinate": [
+            118.31120658183592,
+            24.47935230569504
+          ],
+          "verificationMethod": "google-map-manual-reference",
+          "verifiedBy": "George Ho",
+          "verifiedAt": "2026-08-12T03:28:50.020Z",
+          "candidateSource": "battlefield-coordinate-editor:human-input"
+        },
+        "verificationStatus": "manually-verified",
+        "sourceRefs": [
+          "SRC-0001"
+        ],
+        "confidence": "probable",
+        "legacyRefs": [
+          "POI-0006"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "rootDir": "src/battle-replay",
+    "outDir": "node_modules/.cache/battle-replay",
+    "skipLibCheck": true,
+    "noEmit": false
+  },
+  "include": ["src/battle-replay/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

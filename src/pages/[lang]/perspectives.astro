@@ -1,6 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import { sitePath } from '../../data/paths';
+import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { perspectiveEvents } from '../../data/perspectiveLoader';
 import { UI } from '../../i18n/ui';
 import type { Lang } from '../../i18n/ui';
@@ -36,26 +36,26 @@ const STATUS_KEYS: Record<string, string> = {
 ---
 
 <MainLayout lang={lang}>
-  <div class="max-w-5xl mx-auto px-4 py-16">
-    <h1 class="text-3xl font-serif font-bold mb-2">多元史觀</h1>
-    <p class="text-stone-500 mb-10">同一場戰役，不同位置的人留下不同的記憶。選擇事件，比較各方記載。</p>
+  <div class="museum-page">
+    <div class="museum-container">
+      <SectionHeading level={1} index="01" eyebrow="MULTIPLE PERSPECTIVES" title="多元史觀" description="同一場戰役，不同位置的人留下不同的記憶。選擇事件，比較各方記載，並把史料差異保留在閱讀現場。" />
 
-    <div class="flex flex-wrap gap-2 mb-10">
+    <nav class="museum-anchor-list" aria-label="事件索引">
       {perspectiveEvents.map(evt => (
-        <a href={`#${evt.id}`} class="px-4 py-2 bg-white border border-stone-200 rounded-lg text-sm text-stone-600 hover:border-amber-300 hover:text-amber-700 no-underline transition">
+        <a href={`#${evt.id}`} class="museum-anchor-link">
           {tx(evt.title, evt.id)}
         </a>
       ))}
-    </div>
+    </nav>
 
     {perspectiveEvents.map(evt => (
-      <section id={evt.id} class="mb-12 scroll-mt-20">
-        <div class="bg-white rounded-xl border border-stone-200 overflow-hidden">
-          <div class="bg-stone-50 px-6 py-4 border-b border-stone-200">
+      <section id={evt.id} class="museum-perspective-section">
+        <div class="museum-perspective-card">
+          <div class="museum-perspective-card__header">
             <div class="flex items-center justify-between">
-              <h2 class="text-lg font-serif font-bold text-stone-800">{tx(evt.title, evt.id)}</h2>
+              <h2 class="museum-perspective-card__title">{tx(evt.title, evt.id)}</h2>
               {evt.evidenceStatus && (
-                <span class={`text-xs px-2 py-1 rounded ${
+                <span class={`museum-status-badge ${
                   evt.evidenceStatus === 'disputed' ? 'bg-red-50 text-red-600' :
                   evt.evidenceStatus === 'verified' ? 'bg-green-50 text-green-600' :
                   evt.evidenceStatus === 'partially_verified' ? 'bg-amber-50 text-amber-600' :
@@ -66,30 +66,28 @@ const STATUS_KEYS: Record<string, string> = {
                 </span>
               )}
             </div>
-            <p class="text-sm text-stone-500 mt-1">{tx(evt.summary, '')}</p>
+            <p class="museum-perspective-card__summary">{tx(evt.summary, '')}</p>
           </div>
 
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-stone-200">
+          <div class="museum-perspective-grid">
             {Object.entries(evt.viewpoints).map(([key, vp]) => (
-              <div class="bg-white p-5">
-                <div class="flex items-center gap-2 mb-3">
-                  {key === 'roc' && <span class="w-2.5 h-2.5 rounded-full bg-blue-600 shrink-0" />}
-                  {key === 'pla' && <span class="w-2.5 h-2.5 rounded-full bg-red-600 shrink-0" />}
-                  {key === 'civilian' && <span class="w-2.5 h-2.5 rounded-full bg-green-600 shrink-0" />}
-                  <span class="text-xs font-bold text-stone-600">{t(VIEW_KEYS[key] || key)}</span>
+              <div class={`museum-perspective-view museum-perspective-view--${key}`}>
+                <div class="museum-perspective-view__label">
+                  <span class="museum-perspective-dot" />
+                  <span>{t(VIEW_KEYS[key] || key)}</span>
                 </div>
-                <p class="text-sm text-stone-700 leading-relaxed">{tx(vp, '')}</p>
+                <p class="museum-perspective-view__body">{tx(vp, '')}</p>
               </div>
             ))}
           </div>
 
           {evt.disputes && evt.disputes.length > 0 && (
-            <div class="border-t border-stone-200 px-6 py-4 bg-amber-50/50">
-              <h3 class="text-xs font-bold text-amber-700 uppercase tracking-wide mb-2">史料差異</h3>
-              <div class="space-y-2">
+            <div class="museum-perspective-card__disputes">
+              <h3>史料差異</h3>
+              <div class="museum-perspective-card__dispute-list">
                 {evt.disputes.map(d => (
-                  <div class="flex gap-2 text-sm">
-                    <span class="text-amber-400 mt-0.5">•</span>
+                  <div class="museum-perspective-card__dispute">
+                    <span>•</span>
                     <div>
                       <span class="font-medium text-stone-700">{d.topic}：</span>
                       <span class="text-stone-600">{tx(d as any, d.topic)}</span>
@@ -103,9 +101,10 @@ const STATUS_KEYS: Record<string, string> = {
       </section>
     ))}
 
-    <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-700">
-      <h3 class="font-bold mb-1">研究方法</h3>
+    <div class="museum-callout museum-callout--archive museum-callout--small">
+      <h3 class="museum-callout__title">研究方法</h3>
       <p>每個事件的「國軍記載」主要引用國防部戰史與金門國家公園史料。「解放軍記載」引用解放軍戰史與軍事科學院編纂史料。「居民記憶」來自金門地方口述歷史採集。爭議事項已明確標示，讀者可自行對照各方原始出處。</p>
+    </div>
     </div>
   </div>
 </MainLayout>

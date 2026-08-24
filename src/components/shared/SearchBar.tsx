@@ -14,21 +14,7 @@ interface SearchResult {
 // Inline data for instant client-side search
 const SEARCH_DATA: SearchResult[] = [];
 
-async function loadData() {
-  if (SEARCH_DATA.length > 0) return;
-  
-  const prefix = '/1949-guningtou';
-  
-  // Load locale data
-  try {
-    const [respTL, respEN, respCN] = await Promise.all([
-      fetch(`${prefix}/zh-tw/`).then(r => r.text()),
-      fetch(`${prefix}/en/`).then(r => r.text()),
-      fetch(`${prefix}/zh-cn/`).then(r => r.text()),
-    ]);
-    
-    // Extract nav links from any page as search targets
-    const links = [
+const links = [
       { type: '頁面', title: '首頁', href: '/1949-guningtou/zh-tw/' },
       { type: '頁面', title: '世界局勢與戰役背景', href: '/1949-guningtou/zh-tw/context/' },
       { type: '頁面', title: '戰役解析', href: '/1949-guningtou/zh-tw/analysis/' },
@@ -46,10 +32,10 @@ async function loadData() {
       { type: '頁面', title: '戰後至今', href: '/1949-guningtou/zh-tw/peace/' },
       { type: '頁面', title: 'Battlefield OS', href: '/1949-guningtou/zh-tw/battlefield-os/' },
       { type: '頁面', title: '關於本站', href: '/1949-guningtou/zh-tw/about/' },
-    ];
-    
-    // Add some key search terms
-    const terms = [
+];
+
+// Add some key search terms
+const terms = [
       { type: '地點', title: '嚨口', href: '/1949-guningtou/zh-tw/locations/POI-0001/', subtitle: '登陸灘頭' },
       { type: '地點', title: '古寧頭', href: '/1949-guningtou/zh-tw/locations/', subtitle: '戰役核心區域' },
       { type: '地點', title: '北山', href: '/1949-guningtou/zh-tw/locations/', subtitle: '村落戰場' },
@@ -61,13 +47,11 @@ async function loadData() {
       { type: '事件', title: '登陸作戰', href: '/1949-guningtou/zh-tw/analysis/', subtitle: '第一梯隊' },
       { type: '事件', title: '古寧頭戰役', href: '/1949-guningtou/zh-tw/', subtitle: '1949年10月' },
       { type: '頁面', title: '多元史觀', href: '/1949-guningtou/zh-tw/perspectives/', subtitle: '比較各方記載' },
-    ];
-    
-    SEARCH_DATA.push(...links, ...terms);
-  } catch (e) {
-    // Fallback to static links
-    SEARCH_DATA.push(...links);
-  }
+];
+
+async function loadData() {
+  if (SEARCH_DATA.length > 0) return;
+  SEARCH_DATA.push(...links, ...terms);
 }
 
 export default function SearchBar() {
@@ -99,28 +83,32 @@ export default function SearchBar() {
   };
   
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="museum-search" aria-busy={!loaded}>
       <input
         type="text"
         value={query}
         onChange={e => handleSearch(e.target.value)}
         onFocus={e => handleSearch(e.target.value)}
+        aria-label="搜尋網站內容"
+        aria-expanded={open}
+        aria-controls="museum-search-results"
         placeholder="搜尋..."
-        className="w-32 md:w-40 px-3 py-1.5 text-xs rounded-lg border border-stone-200 bg-stone-50 focus:outline-none focus:border-amber-300 focus:bg-white transition placeholder-stone-400"
+        className="museum-search__input"
       />
       {open && results.length > 0 && (
-        <div className="absolute right-0 top-full mt-1 w-72 bg-white border border-stone-200 rounded-lg shadow-xl z-[9999] overflow-hidden">
+        <div id="museum-search-results" className="museum-search__results" role="listbox">
           {results.map((r, i) => (
             <a
               key={i}
               href={r.href}
               onClick={() => { setOpen(false); setQuery(''); }}
-              className="flex items-start gap-2 px-4 py-2.5 hover:bg-amber-50 no-underline border-b border-stone-50 last:border-0"
+              className="museum-search__result"
+              role="option"
             >
-              <span className="text-xs bg-stone-100 text-stone-500 px-1.5 py-0.5 rounded shrink-0 mt-0.5">{r.type}</span>
+              <span className="museum-search__type">{r.type}</span>
               <div className="min-w-0">
-                <div className="text-sm text-stone-700 truncate">{r.title}</div>
-                {r.subtitle && <div className="text-xs text-stone-400 truncate">{r.subtitle}</div>}
+                <div className="museum-search__title">{r.title}</div>
+                {r.subtitle && <div className="museum-search__subtitle">{r.subtitle}</div>}
               </div>
             </a>
           ))}

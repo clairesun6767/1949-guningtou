@@ -1,56 +1,53 @@
 ---
 import MainLayout from '../../../layouts/MainLayout.astro';
-import { storyArcs, scenes, narrativeBeats } from '../../../data/loader';
+import { sitePath } from '../../../data/paths';
+import { storyArcs, scenes } from '../../../data/loader';
 
 export function getStaticPaths() {
-  const langs = ['zh-tw', 'zh-cn', 'en'];
   const paths = [];
-  for (const lang of langs) {
-    for (const arc of storyArcs) {
-      paths.push({ params: { lang, id: arc.story_arc_id } });
-    }
+  for (const lang of ['zh-tw', 'zh-cn', 'en']) {
+    for (const arc of storyArcs) paths.push({ params: { lang, id: arc.story_arc_id } });
   }
   return paths;
 }
 
-const { id } = Astro.params;
-const arc = storyArcs.find((a) => a.story_arc_id === id);
-const arcScenes = scenes
-  .filter((s) => s.story_arc_id === id)
-  .sort((a, b) => (a.sequence_number ?? 0) - (b.sequence_number ?? 0));
+const { id, lang } = Astro.params;
+const arc = storyArcs.find((item) => item.story_arc_id === id);
+const arcScenes = scenes.filter((scene) => scene.story_arc_id === id).sort((a, b) => (a.sequence_number ?? 0) - (b.sequence_number ?? 0));
 ---
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   {arc ? (
-    <div class="max-w-3xl mx-auto px-4 py-16">
-      <a href="./stories" class="text-sm text-stone-500 hover:text-stone-700 no-underline">&larr; 回到故事列表</a>
-      <h1 class="text-3xl font-serif font-bold mt-4 mb-2">{arc.title}</h1>
-      {arc.theme && <p class="text-stone-500 mb-8">{arc.theme}</p>}
+    <div class="museum-page">
+      <div class="museum-reading">
+        <a href={sitePath('stories', lang)} class="museum-link">← 回到戰役故事</a>
+        <div class="museum-kicker museum-space-before">NARRATIVE ARC · {arc.story_arc_id}</div>
+        <h1 class="museum-title">{arc.title}</h1>
+        {arc.theme && <p class="museum-deck">{arc.theme}</p>}
 
-      {arc.start_state && (
-        <div class="bg-white rounded-xl border border-stone-200 p-6 mb-6">
-          <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">背景</h2>
-          <p class="text-stone-700">{arc.start_state}</p>
-        </div>
-      )}
+        {arc.start_state && (
+          <section class="museum-paper museum-reading__section">
+            <div class="museum-kicker">STARTING STATE</div>
+            <p class="museum-prose">{arc.start_state}</p>
+          </section>
+        )}
 
-      <div class="space-y-4">
-        <h2 class="font-semibold text-lg text-stone-700">場景（{arcScenes.length}）</h2>
-        {arcScenes.map((scene) => (
-          <div class="bg-white rounded-lg border border-stone-200 p-4">
-            <h3 class="font-medium text-stone-800">{scene.sequence_number}. {scene.scene_title}</h3>
-            <p class="text-xs text-stone-400">{scene.scene_type} · {scene.start_datetime}</p>
-            {scene.scene_summary && (
-              <p class="text-sm text-stone-600 mt-2">{scene.scene_summary}</p>
-            )}
+        <section class="museum-reading__section">
+          <div class="museum-kicker">SCENES · {arcScenes.length}</div>
+          <div class="museum-story-scenes">
+            {arcScenes.map((scene) => (
+              <article class="museum-card museum-story-scene">
+                <div class="museum-meta">{String(scene.sequence_number ?? '').padStart(2, '0')} · {scene.scene_type || 'SCENE'} · {scene.start_datetime || 'TIME UNKNOWN'}</div>
+                <h2>{scene.scene_title}</h2>
+                {scene.scene_summary && <p class="museum-prose">{scene.scene_summary}</p>}
+                {scene.evidence_level && <span class={`evidence-badge evidence-${scene.evidence_level}`}>證據 {scene.evidence_level}</span>}
+              </article>
+            ))}
           </div>
-        ))}
+        </section>
       </div>
     </div>
   ) : (
-    <div class="max-w-3xl mx-auto px-4 py-16 text-center">
-      <h1 class="text-2xl font-bold text-stone-700">故事不存在</h1>
-      <a href="./stories" class="text-amber-600">回到故事列表</a>
-    </div>
+    <div class="museum-page"><div class="museum-reading museum-centered"><div class="museum-kicker">RECORD NOT FOUND</div><h1 class="museum-title">故事不存在</h1><a class="museum-button" href={sitePath('stories', lang)}>回到戰役故事</a></div></div>
   )}
 </MainLayout>

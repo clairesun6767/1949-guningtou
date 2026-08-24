@@ -1,0 +1,26 @@
+---
+import type { HistoricalPerson } from '../../data/types';
+
+interface Props {
+  person: HistoricalPerson;
+  href: string;
+}
+
+const { person, href } = Astro.props;
+---
+
+<a href={href} class="museum-card museum-card-link museum-person-card">
+  <div class="museum-person-card__top">
+    <div>
+      <div class="museum-kicker">人物檔案</div>
+      <h3>{person.name_zh}</h3>
+    </div>
+    {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>證據 {person.evidence_level}</span>}
+  </div>
+  <p class="museum-person-card__role">{person.role_in_battle || person.primary_category || '角色待補'}</p>
+  <div class="museum-meta-grid">
+    <dl class="museum-meta"><dt>單位</dt><dd>{person.unit || '—'}</dd></dl>
+    <dl class="museum-meta"><dt>軍階</dt><dd>{person.rank_at_event || '—'}</dd></dl>
+  </div>
+  {(person.short_bio || person.biographical_summary) && <p class="museum-person-card__summary">{person.short_bio || person.biographical_summary}</p>}
+</a>

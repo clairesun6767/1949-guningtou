@@ -1,0 +1,32 @@
+{
+  "version": "0.6.0",
+  "scope": "regional",
+  "coordinateSystem": "EPSG:4326",
+  "bounds": {
+    "west": 117.97,
+    "south": 24.34,
+    "east": 118.58,
+    "north": 24.65
+  },
+  "width": 2048,
+  "height": 1041,
+  "channels": {
+    "maskA": {
+      "r": "agriculture",
+      "g": "forest",
+      "b": "settlement"
+    },
+    "maskB": {
+      "r": "beach",
+      "g": "open-ground"
+    }
+  },
+  "source": {
+    "name": "OpenStreetMap contributors",
+    "url": "https://www.openstreetmap.org/copyright",
+    "license": "Open Database License (ODbL) 1.0",
+    "acquired": "2026-08-23",
+    "referenceEra": "modern_reference"
+  },
+  "note": "Build-time semantic classification masks. Linear data and buildings remain geometry."
+}

@@ -1,92 +1,84 @@
 ---
 import MainLayout from '../../../layouts/MainLayout.astro';
 import MiniMap from '../../../components/map/MiniMap';
+import MetadataRow from '../../../components/museum/MetadataRow.astro';
+import SourceCitation from '../../../components/museum/SourceCitation.astro';
+import { sitePath } from '../../../data/paths';
 import { pois } from '../../../data/loader';
-const base = import.meta.env.BASE_URL;
 
 export function getStaticPaths() {
   const langs = ['zh-tw', 'zh-cn', 'en'];
   const paths = [];
   for (const lang of langs) {
-    for (const poi of pois) {
-      paths.push({ params: { lang, id: poi.poi_id } });
-    }
+    for (const poi of pois) paths.push({ params: { lang, id: poi.poi_id } });
   }
   return paths;
 }
 
-const { id } = Astro.params;
-const poi = pois.find((p) => p.poi_id === id);
+const { id, lang } = Astro.params;
+const poi = pois.find((item) => item.poi_id === id);
 ---
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   {poi ? (
-    <div class="max-w-5xl mx-auto px-4 py-12">
-      <a href={`${base}/locations`} class="text-sm text-stone-500 hover:text-stone-700 no-underline">&larr; 回到地點列表</a>
+    <div class="museum-page">
+      <div class="museum-container">
+        <a href={sitePath('locations', lang)} class="museum-link">← 回到地點探索</a>
+        <div class="museum-location-detail">
+          <div class="museum-location-detail__copy">
+            <div class="museum-kicker museum-space-before">PLACE RECORD · {poi.poi_id}</div>
+            <h1 class="museum-title">{poi.name_chinese}</h1>
+            {poi.name_english && <p class="museum-deck">{poi.name_english}</p>}
 
-      <!-- Two-column layout -->
-      <div class="flex flex-col lg:flex-row gap-8 mt-4">
-        <!-- Left: content -->
-        <div class="flex-1 min-w-0">
-          <h1 class="text-3xl font-serif font-bold mb-1">{poi.name_chinese}</h1>
-          {poi.name_english && <p class="text-stone-400 mb-6">{poi.name_english}</p>}
+            <div class="museum-person-detail__status">
+              {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>證據 {poi.evidence_level}</span>}
+              {poi.verification_status && <SourceCitation text={poi.verification_status} />}
+            </div>
 
-          <div class="bg-white rounded-xl border border-stone-200 p-6 mb-4">
-            <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">歷史背景</h2>
-            <p class="text-stone-700 leading-relaxed">{poi.historical_background ?? poi.description}</p>
-          </div>
+            {poi.historical_background && (
+              <section class="museum-reading__section">
+                <div class="museum-kicker">HISTORICAL BACKGROUND</div>
+                <h2>歷史背景</h2>
+                <p class="museum-prose">{poi.historical_background}</p>
+              </section>
+            )}
 
-          {poi.battle_role && (
-            <div class="bg-white rounded-xl border border-stone-200 p-6 mb-4">
-              <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">戰役角色</h2>
-              <p class="text-stone-700 leading-relaxed">{poi.battle_role}</p>
-            </div>
-          )}
+            {poi.battle_role && (
+              <section class="museum-reading__section">
+                <div class="museum-kicker">BATTLE ROLE</div>
+                <h2>戰役角色</h2>
+                <p class="museum-prose">{poi.battle_role}</p>
+              </section>
+            )}
 
-          {poi.historical_context && (
-            <div class="bg-white rounded-xl border border-stone-200 p-6 mb-4">
-              <h2 class="font-semibold text-sm text-stone-500 uppercase tracking-wide mb-2">歷史脈絡</h2>
-              <p class="text-stone-700 leading-relaxed">{poi.historical_context}</p>
-            </div>
-          )}
+            {poi.historical_context && (
+              <section class="museum-reading__section">
+                <div class="museum-kicker">CONTEXT</div>
+                <h2>歷史脈絡</h2>
+                <p class="museum-prose">{poi.historical_context}</p>
+              </section>
+            )}
 
-          <div class="grid grid-cols-2 gap-3 text-sm">
-            <div class="bg-white rounded-lg border border-stone-200 p-3">
-              <span class="text-stone-400 text-xs">GPS 座標</span>
-              <div class="font-mono text-sm mt-0.5">{poi.latitude}, {poi.longitude}</div>
-            </div>
-            <div class="bg-white rounded-lg border border-stone-200 p-3">
-              <span class="text-stone-400 text-xs">座標精度</span>
-              <div class="text-sm mt-0.5">{poi.coordinate_accuracy ?? '未知'}</div>
-            </div>
-            <div class="bg-white rounded-lg border border-stone-200 p-3">
-              <span class="text-stone-400 text-xs">類別</span>
-              <div class="text-sm mt-0.5">{poi.category ?? '未分類'}</div>
-            </div>
-            <div class="bg-white rounded-lg border border-stone-200 p-3">
-              <span class="text-stone-400 text-xs">開放狀態</span>
-              <div class="text-sm mt-0.5">{poi.open_status ?? '未知'}</div>
+            <div class="museum-meta-grid museum-location-detail__meta">
+              <MetadataRow label="GPS 座標" value={`${poi.latitude}, ${poi.longitude}`} />
+              <MetadataRow label="座標精度" value={poi.coordinate_accuracy} />
+              <MetadataRow label="類別" value={poi.category} />
+              <MetadataRow label="開放狀態" value={poi.open_status} />
             </div>
           </div>
-
-          {poi.evidence_level && (
-            <div class="mt-4 flex items-center gap-2 text-xs text-stone-500">
-              <span class={`evidence-badge evidence-${poi.evidence_level}`}>證據等級 {poi.evidence_level}</span>
-              {poi.verification_status && <span>{poi.verification_status}</span>}
-            </div>
-          )}
-        </div>
-
-        <!-- Right: mini map -->
-        <div class="w-full lg:w-80 shrink-0">
-          <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poi.name_chinese} />
+          <aside class="museum-location-detail__map">
+            <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poi.name_chinese} />
+          </aside>
         </div>
       </div>
     </div>
   ) : (
-    <div class="max-w-3xl mx-auto px-4 py-16 text-center">
-      <h1 class="text-2xl font-bold text-stone-700">地點不存在</h1>
-      <a href={`${base}/locations`} class="text-amber-600">回到地點列表</a>
+    <div class="museum-page">
+      <div class="museum-reading museum-centered">
+        <div class="museum-kicker">RECORD NOT FOUND</div>
+        <h1 class="museum-title">地點不存在</h1>
+        <a class="museum-button" href={sitePath('locations', lang)}>回到地點探索</a>
+      </div>
     </div>
   )}
 </MainLayout>

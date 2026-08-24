@@ -1,6 +1,10 @@
 ---
 import MainLayout from '../../../layouts/MainLayout.astro';
-import { storyArcs } from '../../../data/loader';
+import SectionHeading from '../../../components/museum/SectionHeading.astro';
+import { sitePath } from '../../../data/paths';
+import { storyArcs, scenes, narrativeBeats } from '../../../data/loader';
+
+const lang = Astro.params.lang;
 
 export function getStaticPaths() {
   return [
@@ -11,23 +15,21 @@ export function getStaticPaths() {
 }
 ---
 
-
-
-<MainLayout lang={Astro.params.lang}>
-  <div class="max-w-4xl mx-auto px-4 py-16">
-    <h1 class="text-3xl font-serif font-bold mb-2">戰役故事</h1>
-    <p class="text-stone-500 mb-8">{storyArcs.length} 條故事弧線 · 33 個場景 · 115 個敘事節拍</p>
-
-    <div class="grid md:grid-cols-2 gap-4">
-      {storyArcs.map((arc) => (
-        <a href={`/stories/${arc.story_arc_id}`} class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 transition no-underline">
-          <h3 class="font-medium text-stone-800">{arc.title}</h3>
-          {arc.theme && <p class="text-xs text-stone-400 mt-1">{arc.theme}</p>}
-          {arc.historical_scope && (
-            <p class="text-sm text-stone-500 mt-2 line-clamp-2">{arc.historical_scope}</p>
-          )}
-        </a>
-      ))}
+<MainLayout lang={lang}>
+  <div class="museum-page">
+    <div class="museum-container">
+      <SectionHeading level={1} index="01" eyebrow="NARRATIVE ARCS" title="戰役故事" description={`${storyArcs.length} 條故事弧線 · ${scenes.length} 個場景 · ${narrativeBeats.length} 個敘事節拍。從結構化資料回到一段可被閱讀的歷史經驗。`} />
+      <div class="museum-grid museum-grid--2">
+        {storyArcs.map((arc) => (
+          <a href={sitePath(`stories/${arc.story_arc_id}`, lang)} class="museum-card museum-card-link museum-story-card">
+            <div class="museum-story-card__head"><span class="museum-label">{arc.story_arc_id}</span><span class="museum-citation">{arc.content_type || 'NARRATIVE'}</span></div>
+            <h2>{arc.title}</h2>
+            {arc.theme && <p class="museum-story-card__theme">{arc.theme}</p>}
+            {arc.historical_scope && <p>{arc.historical_scope}</p>}
+            <span class="museum-link">進入故事 →</span>
+          </a>
+        ))}
+      </div>
     </div>
   </div>
 </MainLayout>

@@ -1,8 +1,8 @@
 ---
 import MainLayout from '../../../layouts/MainLayout.astro';
 import LocationExplorer from '../../../components/map/LocationExplorer';
+import SectionHeading from '../../../components/museum/SectionHeading.astro';
 import { pois } from '../../../data/loader';
-const base = import.meta.env.BASE_URL;
 
 export function getStaticPaths() {
   return [
@@ -17,10 +17,10 @@ export function getStaticPaths() {
 
 
 <MainLayout lang={Astro.params.lang}>
-  <div class="px-4 py-12">
-    <h1 class="text-3xl font-serif font-bold mb-2 max-w-6xl mx-auto">地點探索</h1>
-    <p class="text-stone-500 mb-8 max-w-6xl mx-auto">{pois.length} 個古寧頭戰役相關地點 · 點擊卡片在地圖上定位</p>
-
-    <LocationExplorer client:only="react" />
+  <div class="museum-page">
+    <div class="museum-container">
+      <SectionHeading level={1} index="01" eyebrow="PLACE & TERRAIN" title="地點探索" description={`${pois.length} 個古寧頭戰役相關地點。選取地點後在地圖上定位，或進入檔案查看座標、戰役角色與來源狀態。`} />
+      <LocationExplorer client:only="react" lang={Astro.params.lang} />
+    </div>
   </div>
 </MainLayout>

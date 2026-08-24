@@ -1,0 +1,23 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  source?: string;
+  priority?: boolean;
+}
+
+const { src, alt, caption, source, priority = false } = Astro.props;
+---
+
+<figure class="museum-historic-image">
+  <a href={src} target="_blank" rel="noopener noreferrer" aria-label={`查看原始影像：${alt}`}>
+    <img src={src} alt={alt} loading={priority ? 'eager' : 'lazy'} decoding="async" />
+  </a>
+  {(caption || source) && (
+    <figcaption>
+      {caption && <span>{caption}</span>}
+      {source && <span class="museum-citation">來源：{source}</span>}
+    </figcaption>
+  )}
+</figure>

@@ -53,6 +53,8 @@ function extractArray<T>(data: unknown, key: string): T[] {
   if (Array.isArray(data)) return data as T[];
   if (data && typeof data === 'object') {
     const obj = data as Record<string, unknown>;
+    const keyedValue = obj[key];
+    if (Array.isArray(keyedValue)) return keyedValue as T[];
     for (const k of Object.keys(obj)) {
       if (Array.isArray(obj[k]) && obj[k].length > 0) return obj[k] as T[];
     }
@@ -134,8 +136,9 @@ export function getEventPOIs(eventId: string): POI[] {
 
 /** 取得某 POI 關聯的所有事件 */
 export function getPOIEvents(poiId: string): Event[] {
+  void poiId;
   return events.filter(
-    (e) => {
+    () => {
       // related_pois could be stored in multiple ways
       return false; // 需從事件中反向查詢
     },

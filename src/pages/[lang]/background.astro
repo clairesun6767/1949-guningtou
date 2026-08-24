@@ -1,5 +1,6 @@
 ---
-const base = import.meta.env.BASE_URL;
+import MainLayout from '../../layouts/MainLayout.astro';
+import { sitePath } from '../../data/paths';
 
 export function getStaticPaths() {
   return [
@@ -8,10 +9,17 @@ export function getStaticPaths() {
     { params: { lang: 'en' } },
   ];
 }
+
+const destination = sitePath('context', Astro.params.lang);
 ---
 
-
-
-<meta http-equiv="refresh" content="{`0;url=${base}context/`}" />
-<script>location.href='{`${base}context/`}'</script>
-<p>合併至「認識戰役」。<a href="{`${base}context/`}">點此前往</a></p>
+<MainLayout lang={Astro.params.lang}>
+  <meta http-equiv="refresh" content={`0;url=${destination}`} />
+  <div class="museum-page">
+    <div class="museum-reading museum-centered">
+      <div class="museum-kicker">REDIRECT</div>
+      <h1 class="museum-title">本頁內容已合併至「戰前國際情勢」</h1>
+      <a class="museum-button" href={destination}>前往戰前國際情勢 →</a>
+    </div>
+  </div>
+</MainLayout>

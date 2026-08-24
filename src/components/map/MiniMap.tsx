@@ -33,7 +33,7 @@ export default function MiniMap({ lat, lng, name }: Props) {
     // Marker
     const icon = L.divIcon({
       className: '',
-      html: '<div style="width:14px;height:14px;border-radius:50%;background:#d97706;border:3px solid white;box-shadow:0 0 8px rgba(0,0,0,.5)"></div>',
+      html: '<div style="width:14px;height:14px;border-radius:50%;background:#a78a5b;border:3px solid #f6f2e9;box-shadow:0 0 0 4px rgba(23,23,19,.18)"></div>',
       iconSize: [14, 14],
       iconAnchor: [7, 7],
     });
@@ -46,12 +46,10 @@ export default function MiniMap({ lat, lng, name }: Props) {
   }, [lat, lng, name]);
 
   return (
-    <div className="rounded-xl overflow-hidden border border-stone-200 shadow-sm sticky top-20">
-      <div className="bg-stone-50 px-4 py-2 text-xs text-stone-500 font-medium border-b border-stone-200">
-        📍 地圖位置
-      </div>
-      <div ref={containerRef} className="w-full h-72" />
-      <div className="bg-stone-50 px-4 py-1.5 text-xs text-stone-400 font-mono text-center">
+    <div className="museum-mini-map">
+      <div className="museum-mini-map__head"><span className="museum-kicker">LOCATION MAP</span></div>
+      <div ref={containerRef} className="museum-mini-map__canvas" />
+      <div className="museum-mini-map__foot museum-citation">
         {lat.toFixed(4)}, {lng.toFixed(4)}
       </div>
     </div>

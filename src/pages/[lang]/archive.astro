@@ -1,5 +1,19 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import HistoricImage from '../../components/museum/HistoricImage.astro';
+import EvidenceCard from '../../components/museum/EvidenceCard.astro';
+import SectionHeading from '../../components/museum/SectionHeading.astro';
+import { sitePath } from '../../data/paths';
+import { sources } from '../../data/loader';
+
+const categories = [
+  { id: 'ARC-01', title: '歷史照片', description: '1949 年戰役期間與戰後拍攝的影像記錄。', status: '建置中', note: '照片資料待補' },
+  { id: 'ARC-02', title: '空照圖', description: '1944 年航照與歷年影像，記錄金門地貌的變化。', status: '部分可用', note: '已有航照入口' },
+  { id: 'ARC-03', title: '衛星與今昔', description: '現代地理影像，支援戰場地景的對照閱讀。', status: '建置中', note: '影像圖層待補' },
+  { id: 'ARC-04', title: '3D 與地形', description: '戰車、碉堡、聚落建築與地形資料的空間索引。', status: '建置中', note: '模型資料待補' },
+  { id: 'ARC-05', title: '影片與口述', description: '紀錄片、訪談與第一人稱敘述，保存個人記憶。', status: '建置中', note: '影音資料待補' },
+  { id: 'ARC-06', title: '掃描文件', description: '地圖、文件、證件與家書的高解析掃描檔。', status: '建置中', note: '掃描資料待補' },
+];
 
 export function getStaticPaths() {
   return [
@@ -10,102 +24,57 @@ export function getStaticPaths() {
 }
 ---
 
-
-
-
 <MainLayout lang={Astro.params.lang}>
-  <div class="max-w-4xl mx-auto px-4 py-16">
-    <h1 class="text-3xl font-serif font-bold mb-2">數位典藏</h1>
-    <p class="text-stone-500 mb-10">整合照片、空照、衛星、3D、影片、口述歷史與 GIS 資源</p>
+  <div class="museum-page">
+    <div class="museum-container">
+      <SectionHeading level={1} index="01" eyebrow="DIGITAL ARCHIVE" title="數位典藏" description="典藏不是素材牆，而是每一件影像、文件與口述記憶的來源、時間與保存狀態。" />
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">📷</div>
-        <h2 class="font-bold text-stone-800">歷史照片</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          1949 年戰役期間與戰後拍攝的歷史照片。含灘頭、村落、部隊與戰車等影像記錄。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
+      <div class="museum-archive-feature">
+        <HistoricImage src="/1949-guningtou/aerial-1944.png" alt="1944 年古寧頭地區航照圖" caption="1944 年航照 · 古寧頭地區" source="中央研究院 GIS 中心" priority />
+        <div class="museum-card museum-card--dark museum-archive-feature__copy">
+          <div class="museum-kicker">ARCHIVE NOTE · ARC-1944-AERIAL</div>
+          <h2>一張影像，先把戰場放回它的地形。</h2>
+          <p>航照讓我們看見灘頭、聚落與道路之間的關係。進入地圖，可以將這個視角與現代位置及戰役路線並置。</p>
+          <a class="museum-button museum-button--outline" href={sitePath('map', Astro.params.lang)}>在地圖中查看 →</a>
+        </div>
       </div>
 
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🛩️</div>
-        <h2 class="font-bold text-stone-800">空照圖</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          1944 年美軍航照、歷年台灣農林航空測量所空照。記錄金門地貌的歷史變遷。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-green-100 text-green-600 px-2 py-0.5 rounded">部分可用</span>
+      <div class="museum-section--compact museum-archive-section">
+        <SectionHeading index="02" eyebrow="COLLECTIONS" title="典藏分類" description="目前可用與建置中的內容分開標示；尚未有原始資料的項目，不以裝飾性卡片取代史料。" />
+        <div class="museum-grid museum-grid--3">
+          {categories.map((category) => (
+            <article class="museum-card museum-archive-card">
+              <div class="museum-archive-card__head">
+                <span class="museum-label">{category.id}</span>
+                <span class={`museum-status ${category.status === '部分可用' ? 'museum-status--available' : ''}`}>{category.status}</span>
+              </div>
+              <h3>{category.title}</h3>
+              <p>{category.description}</p>
+              <div class="museum-citation">{category.note}</div>
+            </article>
+          ))}
+        </div>
       </div>
 
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🛰️</div>
-        <h2 class="font-bold text-stone-800">衛星圖</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          現代高解析衛星影像，用於今昔對比分析。展示古寧頭地區數十年來的地景變化。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
+      <section class="museum-section--compact">
+        <SectionHeading index="03" eyebrow="PROVENANCE" title="先看來源，再看敘事" description="文獻資料庫提供可追溯的書目與來源等級；這些記錄是數位典藏的骨架。" />
+        <div class="museum-grid museum-grid--3">
+          {sources.slice(0, 3).map((source) => <EvidenceCard source={source} />)}
+        </div>
+        <div class="museum-home-timeline__footer">
+          <span class="museum-meta">{sources.length} SOURCE RECORDS</span>
+          <a class="museum-link" href={sitePath('sources', Astro.params.lang)}>進入完整文獻資料庫 →</a>
+        </div>
+      </section>
 
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🧊</div>
-        <h2 class="font-bold text-stone-800">3D 模型</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          戰車、碉堡、聚落建築的 3D 掃描模型。未來將整合至 Battlefield OS 互動體驗。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
-
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🎬</div>
-        <h2 class="font-bold text-stone-800">影片</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          紀錄片、訪談影片、戰地實景拍攝。口述歷史受訪者的第一人稱敘述。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
-
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🎙️</div>
-        <h2 class="font-bold text-stone-800">口述歷史</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          戰役參與者、居民、目擊者的訪談錄音與逐字稿。保存即將消逝的個人記憶。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
-
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🗺️</div>
-        <h2 class="font-bold text-stone-800">GIS 圖層</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          地理資訊系統圖層：戰役部署圖、部隊推進路線、防禦工事分布、今昔地圖疊加。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
-
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">📜</div>
-        <h2 class="font-bold text-stone-800">掃描文物</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          地圖、文件、證件、家書等實體文物的高解析掃描檔。可縮放檢視原始細節。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
-
-      <div class="bg-white rounded-xl border border-stone-200 p-5 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🖼️</div>
-        <h2 class="font-bold text-stone-800">今昔對比</h2>
-        <p class="text-xs text-stone-500 mt-1 leading-relaxed">
-          1949 年 vs 現代照片的疊圖對比。直觀呈現地景與聚落的變遷軌跡。
-        </p>
-        <span class="inline-block mt-3 text-xs bg-stone-100 text-stone-500 px-2 py-0.5 rounded">建置中</span>
-      </div>
-    </div>
-
-    <div class="mt-10 bg-amber-50 rounded-xl border border-amber-200 p-5 text-center">
-      <h3 class="font-bold text-amber-800 mb-1">徵集數位素材</h3>
-      <p class="text-sm text-amber-700">
-        如果你持有古寧頭戰役相關的歷史照片、空照、影片或口述歷史錄音，歡迎提供數位化素材。
-      </p>
+      <section class="museum-archive-callout">
+        <div>
+          <div class="museum-kicker">MATERIALS WANTED</div>
+          <h2>你手上的影像，也可能是下一條證據。</h2>
+        </div>
+        <p>如果你持有古寧頭戰役相關的歷史照片、空照、影片或口述歷史錄音，歡迎提供數位化素材與來源資訊。</p>
+        <a class="museum-button" href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml">提供素材或回報史料 →</a>
+      </section>
     </div>
   </div>
 </MainLayout>

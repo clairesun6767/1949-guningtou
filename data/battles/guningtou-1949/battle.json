@@ -1,0 +1,37 @@
+{
+  "id": "BAT-GUN-1949",
+  "schemaVersion": "1.0.0",
+  "slug": "guningtou-1949",
+  "title": {
+    "zh-Hant": "1949 古寧頭戰役",
+    "en": "Battle of Guningtou, 1949"
+  },
+  "startTime": {
+    "kind": "unknown",
+    "precision": "unknown",
+    "timezone": "Asia/Taipei",
+    "sourceRefs": [],
+    "confidence": "unknown",
+    "notes": "BR-1 does not infer a replay epoch from mixed-precision legacy records."
+  },
+  "endTime": {
+    "kind": "unknown",
+    "precision": "unknown",
+    "timezone": "Asia/Taipei",
+    "sourceRefs": [],
+    "confidence": "unknown",
+    "notes": "BR-1 calibration scope ends at an editorial phase boundary, not an invented timestamp."
+  },
+  "timezone": "Asia/Taipei",
+  "geographicExtent": null,
+  "defaultPerspectiveRef": "PER-NEUTRAL-EDITORIAL",
+  "phaseRefs": ["PHA-GUN-0001"],
+  "factionRefs": [],
+  "sourceRefs": [],
+  "confidence": "unknown",
+  "metadata": {
+    "scope": "BR-1 coordinate calibration skeleton only",
+    "productionSourceOfTruth": "legacy data/*.json through adapter",
+    "animationAuthorized": false
+  }
+}

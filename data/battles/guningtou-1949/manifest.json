@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.0.0",
+  "packageId": "PKG-GUN-1949-BR1",
+  "battleId": "BAT-GUN-1949",
+  "packageVersion": "0.1.0-br1",
+  "packageRole": "calibration-overlay",
+  "minimumEngineVersion": "0.1.0",
+  "defaultLocale": "zh-Hant",
+  "supportedLocales": ["zh-Hant", "en"],
+  "reviewStatus": "Incomplete",
+  "sourceCatalog": {
+    "adapter": "legacy-battlefield-sources",
+    "path": "../../sources.json"
+  },
+  "files": {
+    "battle": "battle.json",
+    "phases": "phases.json",
+    "factions": "factions.json",
+    "formations": "formations.json",
+    "units": "units.json",
+    "commanders": "commanders.json",
+    "locations": "locations.geojson",
+    "routes": "routes.geojson",
+    "battleMovements": "battle-movements.geojson",
+    "battleAreas": "battle-areas.geojson",
+    "events": "events.json",
+    "evidence": "evidence.json",
+    "perspectives": "perspectives.json",
+    "uncertainties": "uncertainties.json",
+    "media": "media.json",
+    "cameraCues": "camera-cues.json",
+    "groundControlPoints": "ground-control-points.json",
+    "imageryGeoreferencing": "imagery-georeferencing.json",
+    "historicalBattleMapRegistration": "historical-battle-map-registration.json",
+    "historicalBattleMapTraces": "historical-battle-map-traces.geojson",
+    "historicalBattlePhases": "historical-battle-phases.json"
+  },
+  "migrations": [
+    {
+      "from": "1.x",
+      "to": "2.x",
+      "strategy": "Future explicit migration; v1 remains readable until a tested adapter exists."
+    }
+  ]
+}

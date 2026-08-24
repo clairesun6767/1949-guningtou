@@ -1,0 +1,21 @@
+---
+import HistoricalBattleMapRegistrationEditor from '../../components/dev/HistoricalBattleMapRegistrationEditor';
+import '../../styles/global.css';
+
+const isDevelopment = import.meta.env.DEV;
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Historical Battle Map Registration · Development Only</title>
+  </head>
+  <body>
+    {isDevelopment
+      ? <HistoricalBattleMapRegistrationEditor client:only="react" />
+      : <main style="min-height:100vh;padding:10vw;background:#151613;color:#f1ecdf;font-family:sans-serif"><p>Historical Battle Map Registration is available only in the local development server.</p></main>}
+  </body>
+</html>

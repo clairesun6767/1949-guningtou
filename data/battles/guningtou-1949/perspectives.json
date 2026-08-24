@@ -1,0 +1,52 @@
+[
+  {
+    "id": "PER-ROC",
+    "schemaVersion": "1.0.0",
+    "kind": "roc",
+    "label": { "zh-Hant": "中華民國國軍史觀", "en": "ROC account" },
+    "accounts": [],
+    "sourceRefs": [],
+    "confidence": "unknown",
+    "metadata": { "vocabularyOnly": true }
+  },
+  {
+    "id": "PER-PLA",
+    "schemaVersion": "1.0.0",
+    "kind": "pla",
+    "label": { "zh-Hant": "中國人民解放軍史觀", "en": "PLA account" },
+    "accounts": [],
+    "sourceRefs": [],
+    "confidence": "unknown",
+    "metadata": { "vocabularyOnly": true }
+  },
+  {
+    "id": "PER-NEUTRAL-EDITORIAL",
+    "schemaVersion": "1.0.0",
+    "kind": "neutral-editorial",
+    "label": { "zh-Hant": "中立編輯整理", "en": "Neutral editorial synthesis" },
+    "accounts": [],
+    "sourceRefs": [],
+    "confidence": "unknown",
+    "metadata": { "vocabularyOnly": true, "notFactualTruth": true }
+  },
+  {
+    "id": "PER-DISPUTED",
+    "schemaVersion": "1.0.0",
+    "kind": "disputed",
+    "label": { "zh-Hant": "爭議說法", "en": "Disputed account" },
+    "accounts": [],
+    "sourceRefs": [],
+    "confidence": "disputed",
+    "metadata": { "vocabularyOnly": true }
+  },
+  {
+    "id": "PER-UNKNOWN",
+    "schemaVersion": "1.0.0",
+    "kind": "unknown",
+    "label": { "zh-Hant": "未知史觀", "en": "Unknown perspective" },
+    "accounts": [],
+    "sourceRefs": [],
+    "confidence": "unknown",
+    "metadata": { "vocabularyOnly": true }
+  }
+]

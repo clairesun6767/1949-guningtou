@@ -1,0 +1,24 @@
+---
+import type { POI } from '../../data/types';
+
+interface Props {
+  poi: POI;
+  href: string;
+}
+
+const { poi, href } = Astro.props;
+---
+
+<a href={href} class="museum-card museum-card-link museum-location-card">
+  <div class="museum-location-card__head">
+    <div class="museum-kicker">{poi.category || '戰場地點'}</div>
+    {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>證據 {poi.evidence_level}</span>}
+  </div>
+  <h3>{poi.name_chinese}</h3>
+  {poi.name_english && <p class="museum-location-card__english">{poi.name_english}</p>}
+  <p class="museum-location-card__summary">{poi.short_description || poi.description || '尚無摘要'}</p>
+  <div class="museum-meta-grid">
+    <dl class="museum-meta"><dt>座標</dt><dd>{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</dd></dl>
+    <dl class="museum-meta"><dt>編號</dt><dd>{poi.poi_id}</dd></dl>
+  </div>
+</a>

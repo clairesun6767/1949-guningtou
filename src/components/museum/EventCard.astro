@@ -1,0 +1,20 @@
+---
+import type { Event } from '../../data/types';
+
+interface Props {
+  event: Event;
+}
+
+const { event } = Astro.props;
+---
+
+<article class="museum-card museum-event-card">
+  <div class="museum-event-card__head">
+    <div class="museum-meta">{event.date}{event.time_start ? ` · ${event.time_start}` : ''}</div>
+    {event.evidence_level && <span class={`evidence-badge evidence-${event.evidence_level}`}>證據 {event.evidence_level}</span>}
+  </div>
+  <h3>{event.title}</h3>
+  <p class="museum-event-card__location">{event.location || '位置未詳'}{event.event_type ? ` · ${event.event_type}` : ''}</p>
+  <p class="museum-event-card__description">{event.description}</p>
+  {event.source_ids && event.source_ids.length > 0 && <div class="museum-citation">來源：{event.source_ids.join(' · ')}</div>}
+</article>

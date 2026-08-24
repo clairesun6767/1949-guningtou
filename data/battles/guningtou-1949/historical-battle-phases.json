@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "0.8.0",
+  "battleId": "BAT-GUN-1949",
+  "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+  "timePrecision": "relative_phase",
+  "note": "These phases are an interface sequence for source-traced geometry. They do not invent clock times. The source drawing is an operation overview, so the final 1949-10-27 phase intentionally has no source-traced geometry until separately reviewed.",
+  "phases": [
+    {
+      "id": "HMP-01",
+      "sequence": 1,
+      "date": "1949-10-25",
+      "startProgress": 0,
+      "endProgress": 0.16,
+      "title": { "zh-Hant": "登陸", "en": "Landing" },
+      "summary": { "zh-Hant": "歷史圖面顯示北岸登陸方向與灘岸附近的多條藍、紅色行動線；不表示船隻航跡。", "en": "The source drawing shows northern coastal landing directions and several blue/red action graphics; it is not a vessel track." },
+      "traceIds": ["HBT-PLA-ARROW-01", "HBT-ROC-FRONT-01"],
+      "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+    },
+    {
+      "id": "HMP-02",
+      "sequence": 2,
+      "date": "1949-10-25",
+      "startProgress": 0.16,
+      "endProgress": 0.34,
+      "title": { "zh-Hant": "向內陸展開", "en": "Inland expansion" },
+      "summary": { "zh-Hant": "圖面中的分支箭頭與寬帶形狀表示行動方向與範圍，不等同道路或單一部隊路徑。", "en": "Branches and broad bands in the drawing indicate direction and area, not roads or a single unit track." },
+      "traceIds": ["HBT-PLA-ARROW-01", "HBT-PLA-ARROW-02", "HBT-PLA-CORRIDOR-01", "HBT-ROC-FRONT-01"],
+      "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+    },
+    {
+      "id": "HMP-03",
+      "sequence": 3,
+      "date": "1949-10-26",
+      "startProgress": 0.34,
+      "endProgress": 0.52,
+      "title": { "zh-Hant": "反擊", "en": "Counterattack" },
+      "summary": { "zh-Hant": "藍色路徑與紅色箭頭在圖面上交會；其歷史關係可展示，精確時間與道路追蹤仍未建立。", "en": "Blue paths and red arrows meet in the drawing; the historical relationship is displayable, but exact timing and road-following tracks are not established." },
+      "traceIds": ["HBT-ROC-ARROW-01", "HBT-ROC-ARROW-02", "HBT-PLA-ARROW-02", "HBT-BATTLE-AREA-01"],
+      "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+    },
+    {
+      "id": "HMP-04",
+      "sequence": 4,
+      "date": "1949-10-26",
+      "startProgress": 0.52,
+      "endProgress": 0.70,
+      "title": { "zh-Hant": "包圍與戰線收縮", "en": "Encirclement and contraction" },
+      "summary": { "zh-Hant": "圖面保留多條分支與封鎖／防線符號；不把它們合併成一條直線。", "en": "The source preserves branches and blocking/defensive symbols; they are not collapsed into one straight line." },
+      "traceIds": ["HBT-PLA-ARROW-03", "HBT-ROC-FRONT-02", "HBT-BATTLE-AREA-01", "HBT-BATTLE-AREA-02"],
+      "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+    },
+    {
+      "id": "HMP-05",
+      "sequence": 5,
+      "date": "1949-10-26",
+      "startProgress": 0.70,
+      "endProgress": 0.84,
+      "title": { "zh-Hant": "北端收縮", "en": "Northern contraction" },
+      "summary": { "zh-Hant": "以圖面所示北端方向與防線關係作為相對階段展示；沒有補入未標示的鐘點。", "en": "The relative northern direction and defensive relationship in the source are shown as a phase; no unmarked clock time is added." },
+      "traceIds": ["HBT-PLA-ARROW-03", "HBT-ROC-ARROW-03", "HBT-ROC-FRONT-02"],
+      "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+    },
+    {
+      "id": "HMP-06",
+      "sequence": 6,
+      "date": "1949-10-27",
+      "startProgress": 0.84,
+      "endProgress": 1,
+      "title": { "zh-Hant": "最後戰鬥", "en": "Final battle" },
+      "summary": { "zh-Hant": "這張來源圖是戰役經過總覽，未提供可獨立確認的 10/27 專屬路線；本階段維持誠實空白。", "en": "The source is an operation overview and does not provide independently confirmable 10/27-specific routes; this phase remains honestly empty." },
+      "traceIds": [],
+      "sourceIds": ["IMG-HIST-GUN-ROUTE-001"]
+    }
+  ]
+}

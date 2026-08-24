@@ -1,7 +1,16 @@
 # build output
 dist/
-# generated types
 .astro/
+
+# local caches and generated tooling state
+.cache/
+.vite/
+cache/
+coverage/
+tmp/
+
+# desktop attachment staging area; keep private source documents out of Git
+.hermes/
 
 # dependencies
 node_modules/
@@ -13,9 +22,34 @@ yarn-error.log*
 pnpm-debug.log*
 
 
-# environment variables
+# environment variables and local secrets
 .env
-.env.production
+.env.*
+!.env.example
+
+# logs and local reports
+*.log
+
+# raw geospatial inputs are not publishable project assets;
+# commit only the derived, documented public terrain assets.
+*.dem
+*.hgt
+*.tif
+*.tiff
+*.geotiff
+*.img
+*.asc
+*.bil
+*.vrt
+*.las
+*.laz
+*.gpkg
+*.pbf
+*.mbtiles
+
+# the uploaded source image is copied to public/map-data for the site;
+# keep this duplicate workspace upload local.
+/古寧頭戰役路線圖.jpg
 
 # macOS-specific files
 .DS_Store

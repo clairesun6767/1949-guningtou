@@ -1,0 +1,24 @@
+---
+import type { Source } from '../../data/types';
+
+interface Props {
+  source: Source;
+}
+
+const { source } = Astro.props;
+const externalHref = source.url_or_identifier?.startsWith('http') ? source.url_or_identifier : undefined;
+---
+
+<article class="museum-card museum-evidence-card">
+  <div class="museum-evidence-card__head">
+    <span class="museum-label">{source.source_type || '文獻來源'}</span>
+    <span class="museum-citation">{source.source_id}</span>
+  </div>
+  <h3>{source.title}</h3>
+  <p class="museum-evidence-card__author">{source.author_or_institution}{source.publication_date ? ` · ${source.publication_date}` : ''}</p>
+  {source.relevance_summary && <p class="museum-evidence-card__summary">{source.relevance_summary}</p>}
+  <div class="museum-evidence-card__footer">
+    <span class="museum-citation">來源等級 L{source.source_level ?? '—'}</span>
+    {externalHref && <a class="museum-link" href={externalHref} target="_blank" rel="noopener noreferrer">開啟來源 ↗</a>}
+  </div>
+</article>

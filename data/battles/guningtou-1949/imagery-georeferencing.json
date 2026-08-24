@@ -1,0 +1,54 @@
+[
+  {
+    "imageId": "IMG-GUN-1944-001",
+    "imagePath": "/aerial-1944.png",
+    "width": 2548,
+    "height": 1127,
+    "crs": "unknown",
+    "bounds": null,
+    "gcpRefs": [],
+    "sourceDescription": "Repository 1944 aerial image; scripts/kinmen_1944.xml is a reference descriptor. Rights and exact lineage require review.",
+    "captureDate": "1944",
+    "verificationStatus": "pending-manual-verification",
+    "transformMethod": "unknown",
+    "transformStatus": "pending",
+    "errorModel": {
+      "gcpCount": 0,
+      "residuals": [],
+      "rmsePixels": null,
+      "rmseMeters": null,
+      "transformType": "unknown",
+      "confidence": "unknown",
+      "verificationStatus": "pending-manual-verification"
+    },
+    "notes": {
+      "zh-Hant": "尚未建立 GCP、bounds、transform 或 RMSE；不得視為已對齊地形。"
+    }
+  },
+  {
+    "imageId": "IMG-GUN-1944-002",
+    "imagePath": "/aerial-1944a.png",
+    "width": 2935,
+    "height": 1157,
+    "crs": "unknown",
+    "bounds": null,
+    "gcpRefs": [],
+    "sourceDescription": "Repository 1944 aerial image variant; scripts/kinmen_1944.xml is a reference descriptor. Rights and exact lineage require review.",
+    "captureDate": "1944",
+    "verificationStatus": "pending-manual-verification",
+    "transformMethod": "unknown",
+    "transformStatus": "pending",
+    "errorModel": {
+      "gcpCount": 0,
+      "residuals": [],
+      "rmsePixels": null,
+      "rmseMeters": null,
+      "transformType": "unknown",
+      "confidence": "unknown",
+      "verificationStatus": "pending-manual-verification"
+    },
+    "notes": {
+      "zh-Hant": "尚未建立 GCP、bounds、transform 或 RMSE；不得視為已對齊地形。"
+    }
+  }
+]

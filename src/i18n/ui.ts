@@ -10,6 +10,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     siteTagline: '以歷史見和平',
     siteDesc: '1949 年古寧頭戰役數位知識平台。以歷史見和平，多史觀並存。',
     home: '首頁',
+    navMore: '更多',
     search: '搜尋...',
 
     // Nav groups
@@ -65,6 +66,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     siteTagline: '以历史见和平',
     siteDesc: '1949 年古宁头战役数字知识平台。以历史见和平，多史观并存。',
     home: '首页',
+    navMore: '更多',
     search: '搜索...',
 
     navUnderstanding: '认识战役',
@@ -116,6 +118,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     siteTagline: 'Learning Peace Through History',
     siteDesc: 'Digital knowledge platform for the 1949 Battle of Guningtou. Multiple perspectives, one history.',
     home: 'Home',
+    navMore: 'More',
     search: 'Search...',
 
     navUnderstanding: 'Understanding the Battle',

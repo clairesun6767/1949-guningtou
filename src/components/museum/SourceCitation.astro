@@ -1,0 +1,13 @@
+---
+interface Props {
+  id?: string;
+  text?: string;
+  href?: string;
+}
+
+const { id, text, href } = Astro.props;
+---
+
+<span class="museum-citation">
+  {href ? <a href={href} target="_blank" rel="noopener noreferrer">{id || text}</a> : (id || text || '來源未標示')}
+</span>

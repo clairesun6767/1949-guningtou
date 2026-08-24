@@ -1,44 +1,50 @@
 ---
-// ============================================================
-// 首頁 — 3D 地球主視覺 + 和平宣言 + 四日速覽 + 導航
-// ============================================================
+// 首頁 — 以航照、地點、時間與史料帶領使用者進入博物館
 import MainLayout from '../../layouts/MainLayout.astro';
-import { sitePath } from '../../data/paths';
 import HeroMap from '../../components/hero/HeroMap';
-import { STATS, timeline, events } from '../../data/loader';
+import HistoricImage from '../../components/museum/HistoricImage.astro';
+import PersonCard from '../../components/museum/PersonCard.astro';
+import EvidenceCard from '../../components/museum/EvidenceCard.astro';
+import SectionHeading from '../../components/museum/SectionHeading.astro';
+import { sitePath } from '../../data/paths';
+import { STATS, events, persons, sources, pois } from '../../data/loader';
+
 const { lang } = Astro.params;
 
-// 四日戰役摘要
 const battleDays = [
   {
-    date: '10/24',
+    date: '10.24',
     label: '第一日',
     title: '戰前準備與出發',
-    description: '解放軍第一梯隊從廈門出發。強勁東北季風將船團吹離預定航線，往古寧頭方向偏移。國軍戰車排演習後一輛 M5A1 在嚨口拋錨。',
-    events: events.filter(e => e.date?.includes('1949-10-24')).length,
+    description: '第一梯隊從廈門出發。季風、潮汐與航線偏移，成為戰役開始前的重要條件。',
+    count: events.filter((event) => event.date?.includes('1949-10-24')).length,
   },
   {
-    date: '10/25',
+    date: '10.25',
     label: '第二日',
     title: '登陸與交戰',
-    description: '凌晨 00:30 熊震球發射第一砲。解放軍三個團在 10 公里灘頭登陸。國軍第 201 師與戰車部隊展開反擊。',
-    events: events.filter(e => e.date?.includes('1949-10-25')).length,
+    description: '凌晨第一砲響起，登陸部隊在古寧頭海岸與守軍交會。',
+    count: events.filter((event) => event.date?.includes('1949-10-25')).length,
   },
   {
-    date: '10/26',
+    date: '10.26',
     label: '第三日',
-    title: '國軍增援與包圍',
-    description: '國軍增援部隊抵達，對登陸解放軍形成包圍。解放軍缺乏補給與重武器，戰況陷入膠著。',
-    events: events.filter(e => e.date?.includes('1949-10-26')).length,
+    title: '增援與包圍',
+    description: '增援抵達後，戰線逐漸收縮，登陸部隊面臨補給與重武器的限制。',
+    count: events.filter((event) => event.date?.includes('1949-10-26')).length,
   },
   {
-    date: '10/27',
+    date: '10.27',
     label: '第四日',
     title: '戰役終局',
-    description: '解放軍殘部退至北山斷崖，彈盡援絕。古寧頭戰役結束，兩岸從此走向分治格局。',
-    events: events.filter(e => e.date?.includes('1949-10-27')).length,
+    description: '戰事在北山一帶走向終局，留下分治、記憶與持續被閱讀的史料。',
+    count: events.filter((event) => event.date?.includes('1949-10-27')).length,
   },
 ];
+
+const featuredPeople = persons.slice(0, 3);
+const featuredSources = sources.slice(0, 3);
+const featuredEvents = events.slice(0, 3);
 
 export function getStaticPaths() {
   return [
@@ -49,157 +55,130 @@ export function getStaticPaths() {
 }
 ---
 
+<MainLayout lang={lang}>
+  <HeroMap client:only="react" base="/1949-guningtou" lang={lang} />
 
-
-
-<MainLayout lang={Astro.params.lang}>
-  <!-- ===== HERO: 3D 地球 ===== -->
-  <HeroMap client:only="react" base="/1949-guningtou" />
-
-  <!-- ===== 和平宣言 ===== -->
-  <section class="max-w-3xl mx-auto px-4 py-20 text-center">
-    <blockquote class="font-serif text-xl md:text-2xl text-stone-600 leading-relaxed italic">
-      「每一發砲彈落下之處，現在是潮汐來回的沙灘。」
-    </blockquote>
-    <p class="mt-6 text-stone-500 leading-relaxed max-w-2xl mx-auto">
-      歷史已然發生，無法改變。<br />
-      我們無意評判對錯，只願呈現那些發生在金門海岸上的真實片刻。
-    </p>
-    <p class="mt-4 text-stone-700 font-medium">
-      理解戰爭，是為了不必再經歷戰爭。
-    </p>
-  </section>
-
-  <!-- ===== 為何研究古寧頭 ===== -->
-  <section class="max-w-3xl mx-auto px-4 pb-16 text-center">
-    <h2 class="text-xl font-serif font-bold text-stone-700 mb-6">為何研究古寧頭？</h2>
-    <div class="grid sm:grid-cols-3 gap-4">
-      <div class="bg-white rounded-xl border border-stone-200 p-5">
-        <div class="text-2xl mb-2">🌏</div>
-        <h3 class="font-bold text-stone-700 text-sm">1949 是什麼年代？</h3>
-        <p class="text-xs text-stone-500 mt-1">二戰結束、冷戰開始、國共內戰 — 古寧頭是這個時代的縮影。</p>
+  <section class="museum-section museum-home-context">
+    <div class="museum-container">
+      <div class="museum-home-context__intro">
+        <div class="museum-kicker">01 · CONTEXT</div>
+        <h2>不是一張戰況圖，<br />而是一個仍在發生的<span class="museum-title__nowrap">閱讀現場。</span></h2>
+        <p>這座數位博物館將 1949 年古寧頭戰役拆回時間、地點、人物與來源，讓不同位置留下的記憶可以被並置、被查證，也被理解。</p>
       </div>
-      <div class="bg-white rounded-xl border border-stone-200 p-5">
-        <div class="text-2xl mb-2">📖</div>
-        <h3 class="font-bold text-stone-700 text-sm">多史觀並存</h3>
-        <p class="text-xs text-stone-500 mt-1">國軍、共軍、居民 — 三種視角，同一場戰役，不同的記憶。</p>
+      <div class="museum-home-context__facts">
+        <div class="museum-home-fact"><strong>1949</strong><span>台海局勢急遽轉折的年代</span></div>
+        <div class="museum-home-fact"><strong>4 DAYS</strong><span>1949.10.24—10.27 的戰役時間</span></div>
+        <div class="museum-home-fact"><strong>1 PLACE</strong><span>金門古寧頭，作為共同的地理現場</span></div>
       </div>
-      <div class="bg-white rounded-xl border border-stone-200 p-5">
-        <div class="text-2xl mb-2">🕊️</div>
-        <h3 class="font-bold text-stone-700 text-sm">以歷史見和平</h3>
-        <p class="text-xs text-stone-500 mt-1">理解戰爭的代價，是為了珍惜今日的和平。</p>
-      </div>
-    </div>
-    <div class="mt-8">
-      <a href="./timeline" class="inline-block px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition no-underline">
-        進入歷史 →
-      </a>
     </div>
   </section>
 
-  <!-- ===== 四日戰役速覽 ===== -->
-  <section class="max-w-5xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-serif font-bold text-center text-stone-700 mb-8">
-      關鍵四日 · 1949 年 10 月
-    </h2>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      {
-        battleDays.map((day) => (
-          <a
-            href="./timeline"
-            class="block bg-white rounded-xl border border-stone-200 p-5 hover:border-amber-300 hover:shadow-md transition-all no-underline group"
-          >
-            <div class="text-3xl font-bold text-stone-800 group-hover:text-amber-600 transition-colors">
-              {day.date}
-            </div>
-            <div class="text-xs text-stone-400 mt-1">{day.label}</div>
-            <h3 class="font-bold text-stone-700 mt-3 text-sm">{day.title}</h3>
-            <p class="text-xs text-stone-500 mt-2 line-clamp-3 leading-relaxed">
-              {day.description}
-            </p>
-            <div class="mt-3 text-xs text-amber-600 font-medium">
-              {day.events} 個事件 →
-            </div>
+  <section class="museum-section museum-section--compact">
+    <div class="museum-container">
+      <SectionHeading index="02" eyebrow="ORIENTATION" title="先看見戰場，再進入敘事" description="1944 年航照保留了地形與聚落的尺度。地圖不是背景，而是理解登陸、推進與防守的第一份證據。" />
+      <div class="museum-home-map-grid">
+        <HistoricImage src="/1949-guningtou/aerial-1944a.png" alt="1944 年古寧頭地區航照圖" caption="古寧頭地區航照 · 可開啟原始影像查看細節" source="中央研究院 GIS 中心" priority />
+        <div class="museum-paper museum-home-map-note">
+          <div class="museum-kicker">FIELD NOTE</div>
+          <h3>Where did this happen?</h3>
+          <p>嚨口、北山、林厝、南山與湖尾，不只是地名。它們是部隊移動、居民生活與戰鬥記憶交疊的空間。</p>
+          <div class="museum-meta-grid">
+            <dl class="museum-meta"><dt>地點資料</dt><dd>{STATS.totalPOIs} 個 POI</dd></dl>
+            <dl class="museum-meta"><dt>核心位置</dt><dd>{pois.slice(0, 1).map((poi) => poi.name_chinese).join('、') || '古寧頭'}</dd></dl>
+          </div>
+          <a class="museum-button museum-button--outline" href={sitePath('map', lang)}>進入戰役地圖 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="museum-section museum-home-timeline">
+    <div class="museum-container">
+      <SectionHeading index="03" eyebrow="TIME RAIL" title="四日戰役，逐段展開" description="從出發到終局，時間軸將事件放回發生的日期、時間、位置與證據等級。" />
+      <div class="museum-home-days">
+        {battleDays.map((day) => (
+          <a href={sitePath('timeline', lang)} class="museum-card museum-card-link museum-day-card">
+            <div class="museum-day-card__date">{day.date}</div>
+            <div class="museum-kicker">{day.label}</div>
+            <h3>{day.title}</h3>
+            <p>{day.description}</p>
+            <div class="museum-citation">{day.count} 個已整理事件 · 展開時間軸 →</div>
           </a>
-        ))
-      }
-    </div>
-  </section>
-
-  <!-- ===== 關鍵數字 ===== -->
-  <section class="max-w-4xl mx-auto px-4 py-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-stone-200">
-        <div class="text-3xl font-bold text-amber-600">{STATS.totalTimeline}</div>
-        <div class="text-sm text-stone-500 mt-1">時間點</div>
+        ))}
       </div>
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-stone-200">
-        <div class="text-3xl font-bold text-amber-600">{STATS.totalEvents}</div>
-        <div class="text-sm text-stone-500 mt-1">歷史事件</div>
-      </div>
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-stone-200">
-        <div class="text-3xl font-bold text-amber-600">{STATS.totalPOIs}</div>
-        <div class="text-sm text-stone-500 mt-1">戰役地點</div>
-      </div>
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-stone-200">
-        <div class="text-3xl font-bold text-amber-600">{STATS.totalPersons}</div>
-        <div class="text-sm text-stone-500 mt-1">關鍵人物</div>
+      <div class="museum-home-timeline__footer">
+        <span class="museum-meta">{STATS.totalTimeline} TIMELINE RECORDS · 1949.10.24—10.27</span>
+        <a class="museum-link" href={sitePath('timeline', lang)}>查看完整時間軸 →</a>
       </div>
     </div>
   </section>
 
-  <!-- ===== 導航入口 ===== -->
-  <section class="max-w-4xl mx-auto px-4 py-8">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <a href="./context" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">🌏</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">戰前情勢</div>
-        <div class="text-xs text-stone-500 mt-1">1945-1949 國際背景</div>
-      </a>
-      <a href="./timeline" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">⏱️</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">時間軸</div>
-        <div class="text-xs text-stone-500 mt-1">{STATS.totalTimeline} 條時間點</div>
-      </a>
-      <a href="./map" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">🗺️</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">戰役地圖</div>
-        <div class="text-xs text-stone-500 mt-1">{STATS.totalPOIs} 個地點</div>
-      </a>
-      <a href="./locations" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">📍</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">地點探索</div>
-        <div class="text-xs text-stone-500 mt-1">POI 詳情與導覽</div>
-      </a>
-      <a href="./figures" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">👤</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">人物誌</div>
-        <div class="text-xs text-stone-500 mt-1">{STATS.totalPersons} 位人物</div>
-      </a>
-      <a href="./stories" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">📖</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">戰役故事</div>
-        <div class="text-xs text-stone-500 mt-1">12 條故事弧線</div>
-      </a>
-      <a href="./aftermath" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">🕊️</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">戰後影響</div>
-        <div class="text-xs text-stone-500 mt-1">和平反思</div>
-      </a>
-      <a href="./sources" class="block bg-white p-5 rounded-lg border border-stone-200 hover:border-amber-300 hover:shadow-sm transition-all text-center no-underline group">
-        <div class="text-2xl mb-2">📚</div>
-        <div class="font-medium text-stone-800 group-hover:text-amber-700">史料來源</div>
-        <div class="text-xs text-stone-500 mt-1">{STATS.totalSources} 筆文獻</div>
-      </a>
+  <section class="museum-section">
+    <div class="museum-container">
+      <SectionHeading index="04" eyebrow="PEOPLE" title="戰爭由人經歷，也由人記得" description="人物資料不只呈現指揮鏈，也把軍人、居民與不同陣營留下的敘述放回各自的位置。" />
+      <div class="museum-grid museum-grid--3">
+        {featuredPeople.map((person) => <PersonCard person={person} href={sitePath(`figures/${person.person_id}`, lang)} />)}
+      </div>
+      <div class="museum-home-timeline__footer">
+        <span class="museum-meta">{STATS.totalPersons} PERSON RECORDS</span>
+        <a class="museum-link" href={sitePath('figures', lang)}>瀏覽人物檔案 →</a>
+      </div>
     </div>
   </section>
 
-  <!-- ===== Footer quote ===== -->
-  <section class="max-w-3xl mx-auto px-4 pb-16 text-center">
-    <div class="border-t border-stone-200 pt-12">
-      <p class="font-serif text-lg text-stone-500 italic">
-        「歷史無法改變，但和平可以選擇。」
-      </p>
+  <section class="museum-section museum-home-evidence">
+    <div class="museum-container">
+      <SectionHeading index="05" eyebrow="EVIDENCE" title="讓史料成為入口" description="每一項陳述都應該有可追溯的來源；存在差異之處，則保留差異本身。" />
+      <div class="museum-grid museum-grid--3">
+        {featuredSources.map((source) => <EvidenceCard source={source} />)}
+      </div>
+      <div class="museum-home-evidence__footer">
+        <span class="museum-meta">{STATS.totalSources} SOURCES · PROVENANCE FIRST</span>
+        <a class="museum-link" href={sitePath('sources', lang)}>進入文獻資料庫 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="museum-section museum-section--compact">
+    <div class="museum-container">
+      <SectionHeading index="06" eyebrow="EVENTS" title="從一個事件開始追問" description="先讀一個具體片刻，再沿著來源、人物與地點向外展開。" />
+      <div class="museum-grid museum-grid--3">
+        {featuredEvents.map((event) => (
+          <article class="museum-card museum-home-event">
+            <div class="museum-meta">{event.date}{event.time_start ? ` · ${event.time_start}` : ''}</div>
+            <h3>{event.title}</h3>
+            <p>{event.description}</p>
+            <div class="museum-citation">{event.location || '位置未詳'} · {event.event_id}</div>
+          </article>
+        ))}
+      </div>
+      <div class="museum-home-timeline__footer">
+        <a class="museum-link" href={sitePath('analysis', lang)}>依事件類型閱讀 →</a>
+        <a class="museum-link" href={sitePath('perspectives', lang)}>比較多元史觀 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="museum-section museum-home-explore">
+    <div class="museum-container museum-home-explore__inner">
+      <div>
+        <div class="museum-kicker">07 · EXPLORE</div>
+        <h2>從哪裡開始，由你決定。</h2>
+      </div>
+      <div class="museum-home-explore__links">
+        <a href={sitePath('timeline', lang)}>時間軸 <span>01</span></a>
+        <a href={sitePath('map', lang)}>戰場地圖 <span>02</span></a>
+        <a href={sitePath('figures', lang)}>人物檔案 <span>03</span></a>
+        <a href={sitePath('archive', lang)}>數位典藏 <span>04</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="museum-section museum-home-reflection">
+    <div class="museum-reading">
+      <div class="museum-kicker">08 · REFLECTION</div>
+      <blockquote>「理解戰爭，不是為了讓戰爭看起來很酷；是為了看見它如何發生、誰曾經歷，以及和平為何值得被珍惜。」</blockquote>
+      <a class="museum-button" href={sitePath('peace', lang)}>閱讀戰後至今 →</a>
     </div>
   </section>
 </MainLayout>

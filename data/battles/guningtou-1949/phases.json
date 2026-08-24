@@ -1,0 +1,37 @@
+[
+  {
+    "id": "PHA-GUN-0001",
+    "schemaVersion": "1.0.0",
+    "battleId": "BAT-GUN-1949",
+    "name": {
+      "zh-Hant": "第一波登陸至第一階段推進（校準範圍）",
+      "en": "First landing wave to initial advance (calibration scope)"
+    },
+    "sequence": 1,
+    "startTime": {
+      "kind": "sequence-only",
+      "precision": "sequence-only",
+      "timezone": "Asia/Taipei",
+      "sequence": 1,
+      "sourceRefs": [],
+      "confidence": "unknown",
+      "notes": "Editorial ordering only; no exact start timestamp asserted."
+    },
+    "endTime": {
+      "kind": "sequence-only",
+      "precision": "sequence-only",
+      "timezone": "Asia/Taipei",
+      "sequence": 2,
+      "sourceRefs": [],
+      "confidence": "unknown",
+      "notes": "Editorial ordering only; no exact end timestamp asserted."
+    },
+    "description": {
+      "zh-Hant": "BR-1 資料校準邊界；不是可播放的精確時間區段。"
+    },
+    "participatingUnitRefs": [],
+    "eventRefs": [],
+    "sourceRefs": [],
+    "confidence": "unknown"
+  }
+]

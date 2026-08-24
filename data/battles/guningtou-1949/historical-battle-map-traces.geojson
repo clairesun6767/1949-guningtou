@@ -1,0 +1,399 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "schemaVersion": "0.8.0",
+    "battleId": "BAT-GUN-1949",
+    "title": "Guningtou historical battle map source traces",
+    "coordinateSystem": "EPSG:4326",
+    "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+    "sourceImage": "/map-data/historical-battle-map.jpg",
+    "sourceTraceMethod": "historical_map_trace",
+    "registrationMethod": "schematic_only",
+    "registrationStatus": "schematic_pending",
+    "reviewStatus": "reviewed_with_human_confirmation_pending",
+    "disclaimer": {
+      "zh-Hant": "依歷史戰役圖描繪，位置為示意性套準，非精密測量路徑。",
+      "en": "Traced from a historical battle map; positions are schematically registered, not precision-measured routes."
+    },
+    "note": "This dataset is intentionally separate from routes.geojson and battle-movements.geojson. Coordinates are provisional source-trace placement for an interactive comparison, not GPS tracks or modern-road snapping."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "HBT-PLA-ARROW-01",
+      "properties": {
+        "id": "HBT-PLA-ARROW-01",
+        "battleDate": "1949-10-25",
+        "timeRange": { "start": "1949-10-25", "end": "1949-10-25", "precision": "date-level" },
+        "side": "pla",
+        "featureType": "historical_attack_arrow",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0001", "LOC-GUN-0002"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Red arrow graphic in the uploaded source map, traced as an approximate landing-to-inland direction. Do not interpret as a vessel track or road route.",
+        "label": { "zh-Hant": "歷史圖紅色箭頭一：灘岸至內陸", "en": "Source red arrow 1: coast toward inland" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[757, 164], [706, 245], [641, 294], [565, 326]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.354, 24.465], [118.348, 24.468], [118.340, 24.471], [118.333, 24.473]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-PLA-ARROW-02",
+      "properties": {
+        "id": "HBT-PLA-ARROW-02",
+        "battleDate": "1949-10-25",
+        "timeRange": { "start": "1949-10-25", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "pla",
+        "featureType": "historical_movement_path",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0003", "LOC-GUN-0004"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Central red branch copied from the source graphic. The map does not provide a verified unit track or exact time.",
+        "label": { "zh-Hant": "歷史圖紅色行動線二：中央分支", "en": "Source red movement line 2: central branch" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[432, 570], [431, 482], [430, 386], [429, 293], [382, 252]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.326, 24.461], [118.326, 24.466], [118.329, 24.470], [118.333, 24.474]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-PLA-CORRIDOR-01",
+      "properties": {
+        "id": "HBT-PLA-CORRIDOR-01",
+        "battleDate": "1949-10-25",
+        "timeRange": { "start": "1949-10-25", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "pla",
+        "featureType": "historical_movement_corridor",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0001", "LOC-GUN-0005", "LOC-GUN-0006"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Broad red/blue operational envelope visible in the source map. It is an area of action, not a single route.",
+        "label": { "zh-Hant": "歷史圖行動範圍：內陸展開", "en": "Source movement corridor: inland expansion" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[361, 213], [486, 250], [623, 318], [744, 383], [626, 425], [469, 392], [351, 309]] }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[118.351, 24.464], [118.346, 24.474], [118.333, 24.482], [118.312, 24.483], [118.308, 24.477], [118.327, 24.469], [118.347, 24.461], [118.351, 24.464]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-PLA-ARROW-03",
+      "properties": {
+        "id": "HBT-PLA-ARROW-03",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "date-level" },
+        "side": "pla",
+        "featureType": "historical_attack_arrow",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Northern red arrow/branch from the source drawing. Its phase association is relative and its endpoint is not a measured position.",
+        "label": { "zh-Hant": "歷史圖紅色箭頭三：北端方向", "en": "Source red arrow 3: northern direction" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[683, 204], [650, 283], [589, 337], [507, 363]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.344, 24.475], [118.336, 24.478], [118.326, 24.480], [118.315, 24.481]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-ROC-ARROW-01",
+      "properties": {
+        "id": "HBT-ROC-ARROW-01",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "date-level" },
+        "side": "roc",
+        "featureType": "historical_attack_arrow",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Blue counterattack arrow from the source drawing. The blue/red colour association is preserved as a map symbol, not treated as a GPS assertion.",
+        "label": { "zh-Hant": "歷史圖藍色箭頭一：反擊方向", "en": "Source blue arrow 1: counterattack direction" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[274, 588], [302, 512], [341, 432], [408, 372], [493, 342]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.302, 24.466], [118.307, 24.472], [118.314, 24.477], [118.324, 24.480]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-ROC-ARROW-02",
+      "properties": {
+        "id": "HBT-ROC-ARROW-02",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "date-level" },
+        "side": "roc",
+        "featureType": "historical_movement_path",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0003", "LOC-GUN-0004", "LOC-GUN-0005"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Blue curved path retained as a separate branch so the source map's non-linear movement is not flattened into a straight axis.",
+        "label": { "zh-Hant": "歷史圖藍色行動線二：西側分支", "en": "Source blue movement line 2: western branch" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[204, 484], [280, 438], [377, 400], [488, 362], [585, 334]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.301, 24.477], [118.310, 24.476], [118.320, 24.474], [118.330, 24.472]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-ROC-ARROW-03",
+      "properties": {
+        "id": "HBT-ROC-ARROW-03",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "date-level" },
+        "side": "roc",
+        "featureType": "historical_movement_path",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Blue northern path/defence symbol copied as an independent feature. Small labels beside it remain unresolved.",
+        "label": { "zh-Hant": "歷史圖藍色行動線三：北側防守", "en": "Source blue movement line 3: northern defence" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[126, 190], [207, 239], [289, 292], [367, 342], [455, 365]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.309, 24.486], [118.310, 24.481], [118.316, 24.478], [118.325, 24.477]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-ROC-FRONT-01",
+      "properties": {
+        "id": "HBT-ROC-FRONT-01",
+        "battleDate": "1949-10-25",
+        "timeRange": { "start": "1949-10-25", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "roc",
+        "featureType": "battle_front",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0001", "LOC-GUN-0002", "LOC-GUN-0004"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Blue sawtooth/defensive line symbol represented as a broad schematic front. It is not a surveyed boundary.",
+        "label": { "zh-Hant": "歷史圖藍色防線一", "en": "Source blue defensive front 1" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[75, 214], [169, 173], [267, 171], [369, 211], [479, 264], [592, 275], [703, 292], [827, 298]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.303, 24.481], [118.313, 24.484], [118.324, 24.482], [118.336, 24.477], [118.347, 24.473]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-ROC-FRONT-02",
+      "properties": {
+        "id": "HBT-ROC-FRONT-02",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "roc",
+        "featureType": "defensive_line",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Secondary blue line visible in the source. Kept separate from the northern front because the source uses separate branches and symbols.",
+        "label": { "zh-Hant": "歷史圖藍色防線二", "en": "Source blue defensive front 2" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[242, 550], [343, 505], [454, 461], [580, 439], [719, 428]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.306, 24.465], [118.317, 24.466], [118.329, 24.468], [118.342, 24.470]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-BATTLE-AREA-01",
+      "properties": {
+        "id": "HBT-BATTLE-AREA-01",
+        "battleDate": "1949-10-25",
+        "timeRange": { "start": "1949-10-25", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "neutral",
+        "featureType": "battle_area",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0004"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Circled concentration/battle graphic in the source map, displayed as an approximate area rather than a boundary claim.",
+        "label": { "zh-Hant": "歷史圖戰鬥區一", "en": "Source battle area 1" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[392, 266], [454, 244], [512, 281], [498, 345], [431, 364], [383, 322]] }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[118.325, 24.472], [118.334, 24.470], [118.340, 24.474], [118.337, 24.480], [118.329, 24.480], [118.325, 24.472]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-BATTLE-AREA-02",
+      "properties": {
+        "id": "HBT-BATTLE-AREA-02",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "neutral",
+        "featureType": "battle_area",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "approximate",
+        "reviewStatus": "reviewed",
+        "visibility": "production",
+        "researchOnly": false,
+        "relatedLocations": ["LOC-GUN-0005", "LOC-GUN-0006"],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001", "SRC-0004", "SRC-0027"],
+        "notes": "Northern circled/clustered graphic from the source. It is an approximate battle area, not a modern administrative polygon.",
+        "label": { "zh-Hant": "歷史圖戰鬥區二", "en": "Source battle area 2" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[218, 345], [289, 312], [362, 339], [381, 404], [310, 431], [241, 405]] }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[118.304, 24.477], [118.312, 24.475], [118.319, 24.478], [118.319, 24.484], [118.311, 24.486], [118.304, 24.477]]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-RESEARCH-BRANCH-01",
+      "properties": {
+        "id": "HBT-RESEARCH-BRANCH-01",
+        "battleDate": "1949-10-25",
+        "timeRange": { "start": "1949-10-25", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "unknown",
+        "featureType": "historical_movement_path",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "interpretive",
+        "reviewStatus": "needs_human_confirmation",
+        "visibility": "research",
+        "researchOnly": true,
+        "relatedLocations": [],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001"],
+        "notes": "Dashed/partially legible branch in the source. Retained for research review only; side and geographic identity are not asserted.",
+        "label": { "zh-Hant": "研究線：待確認分支", "en": "Research trace: unresolved branch" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[536, 393], [596, 373], [660, 349], [722, 320]] }
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[118.320, 24.462], [118.329, 24.465], [118.339, 24.468], [118.348, 24.470]]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "HBT-RESEARCH-BRANCH-02",
+      "properties": {
+        "id": "HBT-RESEARCH-BRANCH-02",
+        "battleDate": "1949-10-26",
+        "timeRange": { "start": "1949-10-26", "end": "1949-10-26", "precision": "relative_phase" },
+        "side": "unknown",
+        "featureType": "historical_movement_corridor",
+        "sourceMapId": "IMG-HIST-GUN-ROUTE-001",
+        "sourceImage": "/map-data/historical-battle-map.jpg",
+        "sourceTraceMethod": "historical_map_trace",
+        "registrationMethod": "schematic_only",
+        "confidence": "interpretive",
+        "reviewStatus": "needs_human_confirmation",
+        "visibility": "research",
+        "researchOnly": true,
+        "relatedLocations": [],
+        "relatedUnits": [],
+        "sourceIds": ["IMG-HIST-GUN-ROUTE-001"],
+        "notes": "A broad uncertain graphic around the southern/eastern part of the source. It is deliberately excluded from visitor playback.",
+        "label": { "zh-Hant": "研究範圍：待確認寬帶", "en": "Research corridor: unresolved broad band" },
+        "sourceGraphic": { "imageWidth": 1000, "imageHeight": 641, "points": [[481, 411], [585, 401], [691, 418], [776, 450], [666, 478], [554, 465]] }
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[[118.316, 24.458], [118.330, 24.459], [118.344, 24.462], [118.351, 24.467], [118.338, 24.470], [118.323, 24.466], [118.316, 24.458]]]
+      }
+    }
+  ]
+}

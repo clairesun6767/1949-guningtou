@@ -1,0 +1,79 @@
+---
+import BattlefieldCoordinateEditor from '../../components/dev/BattlefieldCoordinateEditor';
+import { adaptLegacySources } from '../../battle-replay/adapters/legacy/index.js';
+import type {
+  BattlePackageData,
+  BattlePackageManifest,
+  GroundControlPointDataset,
+  ImageryGeoreferencingMetadata,
+} from '../../battle-replay/types/index.js';
+import '../../styles/global.css';
+import manifestJson from '../../../data/battles/guningtou-1949/manifest.json';
+import battleJson from '../../../data/battles/guningtou-1949/battle.json';
+import phasesJson from '../../../data/battles/guningtou-1949/phases.json';
+import factionsJson from '../../../data/battles/guningtou-1949/factions.json';
+import formationsJson from '../../../data/battles/guningtou-1949/formations.json';
+import unitsJson from '../../../data/battles/guningtou-1949/units.json';
+import commandersJson from '../../../data/battles/guningtou-1949/commanders.json';
+import eventsJson from '../../../data/battles/guningtou-1949/events.json';
+import evidenceJson from '../../../data/battles/guningtou-1949/evidence.json';
+import perspectivesJson from '../../../data/battles/guningtou-1949/perspectives.json';
+import uncertaintiesJson from '../../../data/battles/guningtou-1949/uncertainties.json';
+import mediaJson from '../../../data/battles/guningtou-1949/media.json';
+import cameraCuesJson from '../../../data/battles/guningtou-1949/camera-cues.json';
+import gcpJson from '../../../data/battles/guningtou-1949/ground-control-points.json';
+import imageryJson from '../../../data/battles/guningtou-1949/imagery-georeferencing.json';
+import sourcesJson from '../../../data/sources.json';
+import locationsRaw from '../../../data/battles/guningtou-1949/locations.geojson?raw';
+import routesRaw from '../../../data/battles/guningtou-1949/routes.geojson?raw';
+import battleAreasRaw from '../../../data/battles/guningtou-1949/battle-areas.geojson?raw';
+
+const isDevelopment = import.meta.env.DEV;
+let editorProps: {
+  manifest: BattlePackageManifest;
+  initialData: BattlePackageData;
+  initialLocations: any;
+  initialRoutes: any;
+  initialGroundControlPoints: GroundControlPointDataset;
+  initialImagery: ImageryGeoreferencingMetadata[];
+} | null = null;
+
+if (isDevelopment) {
+  const manifest = manifestJson as BattlePackageManifest;
+  const sources = adaptLegacySources(sourcesJson);
+  const initialLocations = JSON.parse(locationsRaw);
+  const initialRoutes = JSON.parse(routesRaw);
+  const initialData: BattlePackageData = {
+    battle: battleJson as BattlePackageData['battle'], phases: phasesJson as BattlePackageData['phases'],
+    factions: factionsJson, formations: formationsJson, units: unitsJson, commanders: commandersJson,
+    locations: initialLocations.features, routes: initialRoutes.features,
+    battleAreas: JSON.parse(battleAreasRaw).features, events: eventsJson, evidence: evidenceJson,
+    sources, perspectives: perspectivesJson as BattlePackageData['perspectives'], uncertainties: uncertaintiesJson,
+    media: mediaJson, cameraCues: cameraCuesJson,
+  };
+  editorProps = {
+    manifest,
+    initialData,
+    initialLocations,
+    initialRoutes,
+    initialGroundControlPoints: gcpJson as GroundControlPointDataset,
+    initialImagery: imageryJson as ImageryGeoreferencingMetadata[],
+  };
+}
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#151613" />
+    <title>Battlefield Coordinate Editor · Development Only</title>
+  </head>
+  <body>
+    {isDevelopment && editorProps
+      ? <BattlefieldCoordinateEditor client:only="react" {...editorProps} />
+      : <main style="min-height:100vh;padding:10vw;background:#151613;color:#f1ecdf;font-family:sans-serif"><p>Battlefield Coordinate Editor is available only in the local development server.</p></main>}
+  </body>
+</html>

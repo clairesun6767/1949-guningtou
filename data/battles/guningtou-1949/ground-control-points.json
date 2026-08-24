@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1.0.0",
+  "datasetId": "GCPSET-GUN-1944",
+  "battleId": "BAT-GUN-1949",
+  "controlPoints": [],
+  "notes": {
+    "zh-Hant": "BR-1.5 空白 GCP 資料集。控制點必須由人工辨識與輸入，不得自動生成。"
+  }
+}

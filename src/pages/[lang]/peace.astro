@@ -1,6 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-const base = import.meta.env.BASE_URL;
+import { sitePath } from '../../data/paths';
 
 export function getStaticPaths() {
   return [
@@ -14,9 +14,13 @@ export function getStaticPaths() {
 
 
 <MainLayout lang={Astro.params.lang}>
-  <meta http-equiv="refresh" content={`0;url=${base}aftermath/`} />
-  <div class="max-w-3xl mx-auto px-4 py-16 text-center">
-    <p class="text-stone-500">頁面已合併至「戰後影響」。正在重新導向...</p>
-    <a href={`${base}aftermath/`} class="text-amber-600">點此前往</a>
+  <meta http-equiv="refresh" content={`0;url=${sitePath('aftermath', Astro.params.lang)}`} />
+  <div class="museum-page">
+    <div class="museum-reading museum-centered">
+      <div class="museum-kicker">REFLECTION</div>
+      <h1 class="museum-title">頁面已合併至「戰後影響」</h1>
+      <p class="museum-deck museum-deck--centered museum-space-after">正在重新導向，或直接進入戰後影響頁面。</p>
+      <a class="museum-button" href={sitePath('aftermath', Astro.params.lang)}>前往戰後影響 →</a>
+    </div>
   </div>
 </MainLayout>

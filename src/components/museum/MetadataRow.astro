@@ -1,0 +1,14 @@
+---
+interface Props {
+  label: string;
+  value?: string | number | null;
+  tone?: 'light' | 'dark';
+}
+
+const { label, value, tone = 'light' } = Astro.props;
+---
+
+<dl class:list={['museum-meta', tone === 'dark' && 'museum-meta--dark']}>
+  <dt>{label}</dt>
+  <dd>{value || '—'}</dd>
+</dl>

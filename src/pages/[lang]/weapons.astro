@@ -1,6 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-const base = import.meta.env.BASE_URL;
+import SectionHeading from '../../components/museum/SectionHeading.astro';
 
 const rocWeapons = [
   { name: 'M5A1  Stuart 輕戰車', cat: '戰車', desc: '古寧頭戰役關鍵裝備。國軍戰車第3團第1連配備，66號車在嚨口發射第一砲。重15噸，37mm主砲，裝甲厚度12-67mm。', note: '66號車由熊震球操作' },
@@ -37,52 +37,53 @@ export function getStaticPaths() {
 
 
 <MainLayout lang={Astro.params.lang}>
-  <div class="max-w-4xl mx-auto px-4 py-16">
-    <h1 class="text-3xl font-serif font-bold mb-2">武器裝備</h1>
-    <p class="text-stone-500 mb-10">國軍與共軍於古寧頭戰役使用的主要武器裝備</p>
+  <div class="museum-page">
+    <div class="museum-container">
+      <SectionHeading level={1} index="01" eyebrow="MATERIAL CULTURE" title="武器裝備" description="國軍與共軍於古寧頭戰役使用的主要武器裝備。以規格、用途與使用情境閱讀物質條件，而不是把裝備做成遊戲道具。" />
 
     <!-- ROC Weapons -->
-    <section class="mb-12">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-bold">國</span>
+    <section class="museum-content-section">
+      <div class="museum-content-section__heading museum-content-section__heading--spacious">
+        <span class="museum-category-mark museum-category-mark--roc">國</span>
         <h2 class="text-xl font-serif font-bold">國軍裝備</h2>
       </div>
-      <div class="grid sm:grid-cols-2 gap-4">
+      <div class="museum-grid museum-grid--2 museum-equipment-grid">
         {rocWeapons.map(w => (
-          <div class="bg-white rounded-xl border border-stone-200 p-4 hover:shadow-md transition">
-            <div class="flex items-start justify-between">
-              <h3 class="font-bold text-stone-800 text-sm">{w.name}</h3>
-              <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded">{w.cat}</span>
+          <div class="museum-content-card museum-content-card--interactive museum-equipment-card">
+            <div class="museum-equipment-card__heading">
+              <h3 class="museum-content-card__title">{w.name}</h3>
+              <span class="museum-tag museum-tag--roc">{w.cat}</span>
             </div>
-            <p class="text-xs text-stone-500 mt-2 leading-relaxed">{w.desc}</p>
-            {w.note && <p class="text-xs text-amber-600 mt-1 italic">{w.note}</p>}
+            <p class="museum-content-card__body museum-content-card__body--small">{w.desc}</p>
+            {w.note && <p class="museum-equipment-card__note">{w.note}</p>}
           </div>
         ))}
       </div>
     </section>
 
     <!-- PLA Weapons -->
-    <section class="mb-12">
-      <div class="flex items-center gap-3 mb-6">
-        <span class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white text-sm font-bold">共</span>
+    <section class="museum-content-section">
+      <div class="museum-content-section__heading museum-content-section__heading--spacious">
+        <span class="museum-category-mark museum-category-mark--pla">共</span>
         <h2 class="text-xl font-serif font-bold">共軍裝備</h2>
       </div>
-      <div class="grid sm:grid-cols-2 gap-4">
+      <div class="museum-grid museum-grid--2 museum-equipment-grid">
         {plaWeapons.map(w => (
-          <div class="bg-white rounded-xl border border-stone-200 p-4 hover:shadow-md transition">
-            <div class="flex items-start justify-between">
-              <h3 class="font-bold text-stone-800 text-sm">{w.name}</h3>
-              <span class="text-xs bg-red-50 text-red-600 px-2 py-0.5 rounded">{w.cat}</span>
+          <div class="museum-content-card museum-content-card--interactive museum-equipment-card">
+            <div class="museum-equipment-card__heading">
+              <h3 class="museum-content-card__title">{w.name}</h3>
+              <span class="museum-tag museum-tag--pla">{w.cat}</span>
             </div>
-            <p class="text-xs text-stone-500 mt-2 leading-relaxed">{w.desc}</p>
-            {w.note && <p class="text-xs text-amber-600 mt-1 italic">{w.note}</p>}
+            <p class="museum-content-card__body museum-content-card__body--small">{w.desc}</p>
+            {w.note && <p class="museum-equipment-card__note">{w.note}</p>}
           </div>
         ))}
       </div>
     </section>
 
-    <div class="bg-amber-50 rounded-xl border border-amber-200 p-4 text-center text-sm text-amber-700">
+    <div class="museum-callout museum-callout--archive museum-callout--centered museum-callout--small">
       🏗️ 本章節持續擴充中 — 未來將加入武器規格表、歷史照片與 3D 模型
+    </div>
     </div>
   </div>
 </MainLayout>

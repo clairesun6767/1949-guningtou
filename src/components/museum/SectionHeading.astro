@@ -1,0 +1,18 @@
+---
+interface Props {
+  index?: string;
+  eyebrow: string;
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+  level?: 1 | 2;
+}
+
+const { index, eyebrow, title, description, align = 'left', level = 2 } = Astro.props;
+---
+
+<header class:list={['museum-section-heading', align === 'center' && 'museum-section-heading--center']}>
+  <div class="museum-kicker">{index ? `${index} · ` : ''}{eyebrow}</div>
+  {level === 1 ? <h1 class="museum-title">{title}</h1> : <h2 class="museum-title">{title}</h2>}
+  {description && <p class="museum-deck">{description}</p>}
+</header>

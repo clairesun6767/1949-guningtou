@@ -1,0 +1,32 @@
+{
+  "version": "0.6.0",
+  "scope": "guningtou",
+  "coordinateSystem": "EPSG:4326",
+  "bounds": {
+    "west": 118.285,
+    "south": 24.44,
+    "east": 118.37,
+    "north": 24.5
+  },
+  "width": 2048,
+  "height": 1446,
+  "channels": {
+    "maskA": {
+      "r": "agriculture",
+      "g": "forest",
+      "b": "settlement"
+    },
+    "maskB": {
+      "r": "beach",
+      "g": "open-ground"
+    }
+  },
+  "source": {
+    "name": "OpenStreetMap contributors",
+    "url": "https://www.openstreetmap.org/copyright",
+    "license": "Open Database License (ODbL) 1.0",
+    "acquired": "2026-08-23",
+    "referenceEra": "modern_reference"
+  },
+  "note": "Build-time semantic classification masks. Linear data and buildings remain geometry."
+}
