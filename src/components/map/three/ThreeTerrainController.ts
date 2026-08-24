@@ -258,11 +258,16 @@ export function createTerrainBundle(
   const terrainMaterial = new THREE.MeshStandardMaterial({
     vertexColors: true,
     alphaMap: landMask,
-    alphaTest: .45,
+    // Land/ocean clipping is kept as an explicit, independent mask in the
+    // shader below. Classification feathering must never control terrain
+    // existence through the material alpha channel.
+    alphaTest: 0,
     roughness: HistoricalTerrainStyle.terrain.roughness,
     metalness: 0,
     transparent: false,
+    opacity: 1,
     depthWrite: true,
+    depthTest: true,
   });
   const classificationUniforms = {
     agriculture: { value: 1 },
@@ -321,6 +326,12 @@ export function createTerrainBundle(
       // Do not feather local LOD edges through alphaTest: that discards the
       // local boundary after regional triangles have been removed, producing
       // long gaps and temporal shimmer at the ownership seam.
+    `).replace('#include <alphamap_fragment>', `
+      #include <alphamap_fragment>
+      // This is the independent land/ocean mask only. Classification colors
+      // above never participate in this existence test or in alpha blending.
+      if (diffuseColor.a < 0.45) discard;
+      diffuseColor.a = 1.0;
     `);
   };
   terrainMaterial.customProgramCacheKey = () => `classification-v08-${localLod ? 'local' : 'regional'}`;

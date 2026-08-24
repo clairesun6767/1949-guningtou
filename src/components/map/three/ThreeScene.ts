@@ -535,7 +535,7 @@ export class ThreeScene {
       'regional-only', 'local-only', 'terrain-ownership',
     ].includes(this.qaMode);
     const regionalVisible = !['local-only', 'classification-local-only'].includes(this.qaMode);
-    const localVisible = !['regional-only', 'classification-regional-only', 'no-lod'].includes(this.qaMode);
+    const localVisible = !['regional-only', 'classification-regional-only', 'classification-no-lod', 'no-lod'].includes(this.qaMode);
     this.regional.group.visible = regionalVisible;
     this.local.group.visible = localVisible;
     this.cartography.group.visible = !terrainOnly;
