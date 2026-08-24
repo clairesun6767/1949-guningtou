@@ -12,6 +12,7 @@ const SCALE = HistoricalTerrainStyle.terrain.worldUnitsPerMetre;
 interface MaterialState {
   material: THREE.Material & { opacity: number };
   baseOpacity: number;
+  baseColor?: THREE.Color;
   scope: 'regional' | 'local';
 }
 
@@ -303,7 +304,8 @@ export class ThreeCartographicLayer {
 
   private track(materialValue: THREE.Material & { opacity: number }, baseOpacity: number, scope: 'regional' | 'local') {
     materialValue.transparent = true;
-    this.materialStates.push({ material: materialValue, baseOpacity, scope });
+    const color = 'color' in materialValue && materialValue.color instanceof THREE.Color ? materialValue.color.clone() : undefined;
+    this.materialStates.push({ material: materialValue, baseOpacity, baseColor: color, scope });
   }
 
   updateVisibility(enabled: Set<MapLayerId>) {
@@ -316,10 +318,14 @@ export class ThreeCartographicLayer {
     this.regional.root.visible = regionalOpacity > .01;
     this.local.root.visible = localOpacity > .01;
     for (const state of this.materialStates) {
-      const focusDim = battleFocus ? .72 : 1;
+      const focusDim = battleFocus ? .9 : 1;
       const target = state.baseOpacity * (state.scope === 'regional' ? regionalOpacity : localOpacity) * focusDim;
       state.material.opacity += (target - state.material.opacity) * .08;
       state.material.depthWrite = state.material.opacity > state.baseOpacity * .95;
+      if (state.baseColor && 'color' in state.material && state.material.color instanceof THREE.Color) {
+        state.material.color.copy(state.baseColor);
+        if (battleFocus) state.material.color.offsetHSL(0, -.2, -.08);
+      }
     }
   }
 

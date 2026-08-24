@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Position } from '../../../battle-replay/types/index.js';
 import type { BattleMapFeature, CameraPresetId, LayerState, MapLayerId } from '../../../battle-replay/visualization/types.js';
-import type { HistoricalTraceFeature } from '../../../battle-replay/visualization/historicalTraces.js';
+import type { HistoricalTraceFeature, HistoricalTraceVisualProgress } from '../../../battle-replay/visualization/historicalTraces.js';
 import { ThreeScene, type TerrainQaMode } from './ThreeScene.js';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   compact: boolean;
   features: BattleMapFeature[];
   historicalTraces: HistoricalTraceFeature[];
-  historicalTraceProgress: Map<string, number>;
+  historicalTraceProgress: Map<string, HistoricalTraceVisualProgress>;
   cameraId: CameraPresetId;
   activeDate: string;
   focus?: Position;

@@ -4,7 +4,7 @@ import { CSS2DObject, CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer
 import { wgs84ToLocalMeters } from '../../../battle-replay/visualization/adapters/threeAdapter.js';
 import type { Position } from '../../../battle-replay/types/index.js';
 import type { BattleMapFeature, CameraPresetId, MapLayerId } from '../../../battle-replay/visualization/types.js';
-import type { HistoricalTraceFeature } from '../../../battle-replay/visualization/historicalTraces.js';
+import type { HistoricalTraceFeature, HistoricalTraceVisualProgress } from '../../../battle-replay/visualization/historicalTraces.js';
 import { landPolygons, loadCartographicAsset } from './CartographicAsset.js';
 import { HistoricalTerrainStyle, type TerrainExaggeration, type TerrainPitch } from './HistoricalTerrainStyle.js';
 import { HistoricalCartographicStyle } from './HistoricalCartographicStyle.js';
@@ -169,7 +169,7 @@ export class ThreeScene {
     this.coverageMask = coverageMask;
     this.textureQa = textureQa;
     this.battleMovements = new ThreeBattleMovementLayer(local.asset, options.reducedMotion);
-    this.historicalTraces = new ThreeHistoricalTraceLayer(local.asset, options.reducedMotion, options.onSelectHistoricalTrace);
+    this.historicalTraces = new ThreeHistoricalTraceLayer(local.asset, options.mobile, options.reducedMotion, options.onSelectHistoricalTrace);
     this.qaMode = options.qaMode;
     this.regional.terrainMaterial.opacity = 1;
     this.local.terrainMaterial.opacity = 1;
@@ -336,7 +336,7 @@ export class ThreeScene {
     this.applyQaMode();
   }
 
-  updateHistoricalTraceProgress(progressById: Map<string, number>) {
+  updateHistoricalTraceProgress(progressById: Map<string, HistoricalTraceVisualProgress>) {
     this.historicalTraces.updateProgress(progressById);
   }
 
@@ -403,6 +403,7 @@ export class ThreeScene {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height, false);
     this.labelRenderer.setSize(width, height);
+    this.historicalTraces.resize(width, height);
   }
 
   captureDataUrl() {

@@ -44,6 +44,9 @@ export interface HistoricalTraceProperties {
   relatedUnits: string[];
   sourceIds: string[];
   notes: string;
+  /** Optional explicit presentation fields; legacy `label` remains the raw source label. */
+  sourceLabel?: LocalizedText;
+  visitorLabel?: LocalizedText;
   label?: LocalizedText;
   description?: LocalizedText;
   sourceGraphic?: SourceGraphicReference;
@@ -93,6 +96,11 @@ export interface HistoricalTracePhaseCollection {
   timePrecision: 'relative_phase';
   note: string;
   phases: HistoricalTracePhase[];
+}
+
+export interface HistoricalTraceVisualProgress {
+  reveal: number;
+  opacity: number;
 }
 
 function isLineGeometry(geometry: GeoJsonGeometry) {
@@ -151,8 +159,41 @@ export function historicalTraceMatchesDate(feature: HistoricalTraceFeature, acti
   return feature.properties.battleDate.slice(0, 10) === activeDate;
 }
 
+export function historicalTraceSourceLabel(feature: HistoricalTraceFeature, locale = 'zh-Hant') {
+  const label = feature.properties.sourceLabel ?? feature.properties.label;
+  return label?.[locale] ?? label?.['zh-Hant'] ?? label?.en ?? feature.id;
+}
+
+const VISITOR_TRACE_LABELS: Record<string, LocalizedText> = {
+  'HBT-PLA-ARROW-01': { 'zh-Hant': '共軍登陸', 'zh-Hans': '共军登陆', en: 'PLA landing' },
+  'HBT-PLA-ARROW-02': { 'zh-Hant': '共軍向內陸推進', 'zh-Hans': '共军向内陆推进', en: 'PLA inland advance' },
+  'HBT-PLA-CORRIDOR-01': { 'zh-Hant': '共軍行動區域', 'zh-Hans': '共军行动区域', en: 'PLA action area' },
+  'HBT-PLA-ARROW-03': { 'zh-Hant': '共軍北向推進', 'zh-Hans': '共军北向推进', en: 'PLA northward advance' },
+  'HBT-ROC-ARROW-01': { 'zh-Hant': '國軍反擊', 'zh-Hans': '国军反击', en: 'ROC counterattack' },
+  'HBT-ROC-ARROW-02': { 'zh-Hant': '國軍反擊方向', 'zh-Hans': '国军反击方向', en: 'ROC counterattack direction' },
+  'HBT-ROC-ARROW-03': { 'zh-Hant': '國軍防線', 'zh-Hans': '国军防线', en: 'ROC defensive line' },
+  'HBT-ROC-FRONT-01': { 'zh-Hant': '國軍防線', 'zh-Hans': '国军防线', en: 'ROC defensive line' },
+  'HBT-ROC-FRONT-02': { 'zh-Hant': '國軍防線', 'zh-Hans': '国军防线', en: 'ROC defensive line' },
+  'HBT-BATTLE-AREA-01': { 'zh-Hant': '戰鬥／行動區域', 'zh-Hans': '战斗／行动区域', en: 'Battle / action area' },
+  'HBT-BATTLE-AREA-02': { 'zh-Hant': '戰鬥／行動區域', 'zh-Hans': '战斗／行动区域', en: 'Battle / action area' },
+  'HBT-RESEARCH-BRANCH-01': { 'zh-Hant': '研究用待確認分支', 'zh-Hans': '研究用待确认分支', en: 'Research unresolved branch' },
+  'HBT-RESEARCH-BRANCH-02': { 'zh-Hant': '研究用待確認範圍', 'zh-Hans': '研究用待确认范围', en: 'Research unresolved area' },
+};
+
+export function historicalTraceVisitorLabel(feature: HistoricalTraceFeature, locale = 'zh-Hant') {
+  const label = feature.properties.visitorLabel ?? VISITOR_TRACE_LABELS[feature.id];
+  if (label) return label[locale] ?? label['zh-Hant'] ?? label.en ?? feature.id;
+  if (feature.properties.featureType === 'battle_front' || feature.properties.featureType === 'defensive_line') {
+    return locale === 'en' ? 'ROC defensive line' : locale === 'zh-Hans' ? '国军防线' : '國軍防線';
+  }
+  if (feature.properties.side === 'pla') return locale === 'en' ? 'PLA attack' : locale === 'zh-Hans' ? '共军进攻' : '共軍進攻';
+  if (feature.properties.side === 'roc') return locale === 'en' ? 'ROC counterattack' : locale === 'zh-Hans' ? '国军反击' : '國軍反擊';
+  return locale === 'en' ? 'Battle / action area' : locale === 'zh-Hans' ? '战斗／行动区域' : '戰鬥／行動區域';
+}
+
+/** Backwards-compatible alias: historicalTraceLabel always means the raw source label. */
 export function historicalTraceLabel(feature: HistoricalTraceFeature, locale = 'zh-Hant') {
-  return feature.properties.label?.[locale] ?? feature.properties.label?.['zh-Hant'] ?? feature.properties.label?.en ?? feature.id;
+  return historicalTraceSourceLabel(feature, locale);
 }
 
 export function phaseAtProgress(phases: HistoricalTracePhase[], progress: number) {
@@ -169,6 +210,35 @@ export function traceProgressAtProgress(featureId: string, phases: HistoricalTra
   if (normalized < phase.startProgress) return 0;
   const localRange = Math.max(.0001, phase.endProgress - phase.startProgress);
   return Math.max(0, Math.min(1, (normalized - phase.startProgress) / localRange));
+}
+
+function smoothProgress(value: number) {
+  const normalized = Math.max(0, Math.min(1, value));
+  return normalized * normalized * (3 - 2 * normalized);
+}
+
+export function traceVisualProgressAtProgress(feature: HistoricalTraceFeature, phases: HistoricalTracePhase[], progress: number): HistoricalTraceVisualProgress {
+  const normalized = Math.max(0, Math.min(1, progress));
+  const isFront = feature.properties.featureType === 'battle_front' || feature.properties.featureType === 'defensive_line';
+  if (!isFront) {
+    const reveal = traceProgressAtProgress(feature.id, phases, normalized);
+    return { reveal, opacity: reveal };
+  }
+
+  const relatedPhases = phases.filter(phase => phase.traceIds.includes(feature.id));
+  let opacity = 0;
+  for (const phase of relatedPhases) {
+    const fade = Math.min(.045, Math.max(.018, (phase.endProgress - phase.startProgress) * .25));
+    if (normalized < phase.startProgress || normalized > phase.endProgress + fade) continue;
+    if (normalized < phase.startProgress + fade) {
+      opacity = Math.max(opacity, smoothProgress((normalized - phase.startProgress) / fade));
+    } else if (normalized <= phase.endProgress) {
+      opacity = 1;
+    } else {
+      opacity = Math.max(opacity, 1 - smoothProgress((normalized - phase.endProgress) / fade));
+    }
+  }
+  return { reveal: opacity > .001 ? 1 : 0, opacity };
 }
 
 export function parseHistoricalTraceCollection(raw: string): HistoricalTraceCollection {

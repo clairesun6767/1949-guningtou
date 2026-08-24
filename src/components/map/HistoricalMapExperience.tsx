@@ -12,12 +12,13 @@ import {
   browserSupportsWebGL,
   chooseHistoricalRenderer,
   projectPosition,
-  historicalTraceLabel,
+  historicalTraceSourceLabel,
+  historicalTraceVisitorLabel,
   historicalTraceMatchesDate,
   parseHistoricalTraceCollection,
   parseHistoricalTracePhases,
   phaseAtProgress,
-  traceProgressAtProgress,
+  traceVisualProgressAtProgress,
   type BattleMapFeature,
   type CameraPresetId,
   type HistoricalConfidence,
@@ -103,7 +104,8 @@ const COPY = {
     corridorNote: '大致行動範圍，非精確行軍路線', noMovementGeometry: '目前史料不足以建立可信的 10/27 行動幾何',
     interactionHint: '左鍵旋轉 · 滾輪縮放 · 中鍵平移',
     candidateEmpty: '目前沒有經審查的候選路線幾何。', rendererFallback: '3D 渲染無法使用，已切換備援模式。', visitor3d: '訪客 3D', atlasFallback: 'Atlas 備援',
-    sourceTrace: '歷史圖描繪', sourceMap: '歷史戰役圖', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: '依歷史戰役圖描繪，位置為示意性套準，非精密測量路徑。',
+    sourceTrace: '戰役圖例', sourceMap: '歷史戰役圖', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: '依歷史戰役圖描繪，位置為示意性套準，非精密測量路徑。',
+    battleLegend: '戰役圖例', plaAttack: '共軍進攻', rocCounterattack: '國軍反擊', rocDefense: '國軍防線', battleArea: '戰鬥／行動區域',
     play: '播放', pause: '暫停', previousPhase: '上一階段', nextPhase: '下一階段', followBattle: '跟隨戰況', sourceReview: '來源圖檢視',
   },
   'zh-cn': {
@@ -121,7 +123,8 @@ const COPY = {
     corridorNote: '大致行动范围，非精确行军路线', noMovementGeometry: '目前史料不足以建立可信的 10/27 行动几何',
     interactionHint: '左键旋转 · 滚轮缩放 · 中键平移',
     candidateEmpty: '目前没有经审查的候选路线几何。', rendererFallback: '3D 渲染无法使用，已切换备用模式。', visitor3d: '访客 3D', atlasFallback: 'Atlas 备用',
-    sourceTrace: '历史图描绘', sourceMap: '历史战役图', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: '依历史战役图描绘，位置为示意性套准，非精密测量路径。',
+    sourceTrace: '战役图例', sourceMap: '历史战役图', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: '依历史战役图描绘，位置为示意性套准，非精密测量路径。',
+    battleLegend: '战役图例', plaAttack: '共军进攻', rocCounterattack: '国军反击', rocDefense: '国军防线', battleArea: '战斗／行动区域',
     play: '播放', pause: '暂停', previousPhase: '上一阶段', nextPhase: '下一阶段', followBattle: '跟随战况', sourceReview: '来源图检视',
   },
   en: {
@@ -139,7 +142,8 @@ const COPY = {
     corridorNote: 'Approximate movement area, not an exact route.', noMovementGeometry: 'Insufficient evidence to establish credible 10/27 movement geometry.',
     interactionHint: 'Left drag rotate · Wheel zoom · Middle drag pan',
     candidateEmpty: 'No reviewed candidate route geometry available.', rendererFallback: '3D rendering unavailable; a fallback renderer is active.', visitor3d: 'Visitor 3D', atlasFallback: 'Atlas fallback',
-    sourceTrace: 'Historical map trace', sourceMap: 'Historical Battle Map', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: 'Traced from a historical battle map; positions are schematically registered, not precision-measured routes.',
+    sourceTrace: 'Battle legend', sourceMap: 'Historical Battle Map', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: 'Traced from a historical battle map; positions are schematically registered, not precision-measured routes.',
+    battleLegend: 'Battle legend', plaAttack: 'PLA attack', rocCounterattack: 'ROC counterattack', rocDefense: 'ROC defensive line', battleArea: 'Battle / action area',
     play: 'Play', pause: 'Pause', previousPhase: 'Previous phase', nextPhase: 'Next phase', followBattle: 'Follow battle', sourceReview: 'Source review',
   },
 } as const;
@@ -213,6 +217,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const [activeDay, setActiveDay] = useState(0);
   const [researchMode, setResearchMode] = useState(false);
   const [playbackPlaying, setPlaybackPlaying] = useState(false);
+  const [playbackModeActive, setPlaybackModeActive] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<0.5 | 1 | 2>(1);
   const [playbackProgress, setPlaybackProgress] = useState(0);
   const [followBattle, setFollowBattle] = useState(false);
@@ -258,26 +263,26 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const activeMovements = visibleFeatures.filter(feature => ['direction', 'corridor', 'route'].includes(feature.type));
   const productionMovements = activeMovements.filter(feature => !feature.researchOnly && feature.visibility === 'production');
   const activeMovementTypes = new Set(productionMovements.map(feature => feature.type));
-  const playbackTraceMode = playbackPlaying || playbackProgress > 0;
+  const playbackTraceMode = playbackModeActive || playbackPlaying || playbackProgress > 0;
   const activeHistoricalTraces = useMemo(() => {
     if (terrainIsolationQa) return [];
     if (!enabledLayers.has('historical-battle-traces')) return [];
-    if (playbackTraceMode && activePhase?.traceIds.length === 0) return [];
     return historicalTraceFeatures.filter(feature => (
       feature.properties.reviewStatus === 'reviewed'
       && (!feature.properties.researchOnly || researchMode)
       && (playbackTraceMode || historicalTraceMatchesDate(feature, activeStep.date))
     ));
-  }, [activePhase?.traceIds.length, activeStep.date, enabledLayers, playbackTraceMode, researchMode, terrainIsolationQa]);
+  }, [activeStep.date, enabledLayers, playbackModeActive, playbackTraceMode, researchMode, terrainIsolationQa]);
   const historicalTraceProgress = useMemo(() => {
-    const progress = new Map<string, number>();
+    const progress = new Map<string, ReturnType<typeof traceVisualProgressAtProgress>>();
     activeHistoricalTraces.forEach(feature => {
-      progress.set(feature.id, playbackTraceMode ? traceProgressAtProgress(feature.id, historicalPhases, playbackProgress) : 1);
+      progress.set(feature.id, playbackTraceMode ? traceVisualProgressAtProgress(feature, historicalPhases, playbackProgress) : { reveal: 1, opacity: 1 });
     });
     return progress;
   }, [activeHistoricalTraces, playbackProgress, playbackTraceMode]);
   const productionHistoricalTraces = activeHistoricalTraces.filter(feature => !feature.properties.researchOnly);
   const activeHistoricalSides = new Set(productionHistoricalTraces.map(feature => feature.properties.side));
+  const activeHistoricalTraceTypes = new Set(productionHistoricalTraces.map(feature => feature.properties.featureType));
 
   useEffect(() => {
     playbackProgressRef.current = playbackProgress;
@@ -369,6 +374,10 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
     setStoryFocus(undefined);
     setTourIndex(-1);
     setCameraId('strategic');
+    setPlaybackModeActive(false);
+    playbackProgressRef.current = 0;
+    setPlaybackProgress(0);
+    setPlaybackPlaying(false);
     setOpenPanel(null);
   }
 
@@ -435,6 +444,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   function setPlaybackPosition(progress: number, play = false) {
     const next = Math.max(0, Math.min(1, progress));
     playbackProgressRef.current = next;
+    setPlaybackModeActive(true);
     setPlaybackProgress(next);
     setPlaybackPlaying(play);
   }
@@ -612,11 +622,12 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         {rendererStatus === 'ready' && <div className="historical-map__geographic-status"><span>{activeRenderer === 'three' ? 'CARTOGRAPHIC TERRAIN · 2.25× RELIEF' : dictionary.geographicReference}</span><strong>{terrainSource === 'srtm-reference' ? 'OSM SURFACE · SRTM ELEVATION · MODERN REFERENCE' : terrainSource === 'cesium-world-terrain' ? dictionary.worldTerrain : dictionary.ellipsoid}</strong></div>}
         {rendererStatus === 'fallback' && <div className="historical-map__renderer-fallback" role="status">{dictionary.rendererFallback}</div>}
         {rendererStatus === 'ready' && interactionHintVisible && <aside className="historical-map__interaction-hint" aria-label="Map interaction help">{dictionary.interactionHint}</aside>}
-        {!terrainIsolationQa && cameraId !== 'strategic' && enabledLayers.has('historical-battle-traces') && <aside className="historical-map__source-trace-legend" aria-label={dictionary.sourceTrace}>
-          <strong>{dictionary.sourceTrace.toUpperCase()}</strong>
-          {activeHistoricalSides.has('pla') && <span><i className="is-pla" />PLA · red source graphics</span>}
-          {activeHistoricalSides.has('roc') && <span><i className="is-roc" />ROC · blue source graphics</span>}
-          {activeHistoricalSides.has('neutral') && <span><i className="is-front" />front / battle area</span>}
+        {!terrainIsolationQa && cameraId !== 'strategic' && enabledLayers.has('historical-battle-traces') && <aside className="historical-map__source-trace-legend" aria-label={dictionary.battleLegend}>
+          <strong>{dictionary.battleLegend.toUpperCase()}</strong>
+          {activeHistoricalSides.has('pla') && <span><i className="is-pla" />{dictionary.plaAttack}</span>}
+          {activeHistoricalSides.has('roc') && <span><i className="is-roc" />{dictionary.rocCounterattack}</span>}
+          {([...activeHistoricalTraceTypes].some(type => ['battle_front', 'defensive_line'].includes(type))) && <span><i className="is-front" />{dictionary.rocDefense}</span>}
+          {([...activeHistoricalTraceTypes].some(type => ['battle_area', 'historical_movement_corridor'].includes(type))) && <span><i className="is-area" />{dictionary.battleArea}</span>}
           <small>{productionHistoricalTraces.length} reviewed traces · {dictionary.sourceTraceDisclaimer}</small>
         </aside>}
         {!terrainIsolationQa && cameraId !== 'strategic' && enabledLayers.has('battle-movement') && (productionMovements.length > 0 || researchMode) && <aside className="historical-map__movement-legend" aria-label="Battle movement legend">
@@ -709,13 +720,18 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
               <span>{dictionary.sourceReview} · {selectedTrace.id}</span>
               <button type="button" onClick={() => setSelectedTraceId(null)} aria-label={dictionary.close}>×</button>
             </div>
-            <h2>{historicalTraceLabel(selectedTrace, lang === 'zh-tw' ? 'zh-Hant' : lang)}</h2>
+            <h2>{historicalTraceVisitorLabel(selectedTrace, lang === 'zh-tw' ? 'zh-Hant' : lang)}</h2>
+            <p className="historical-map__trace-source-label">{historicalTraceSourceLabel(selectedTrace, lang === 'zh-tw' ? 'zh-Hant' : lang)}</p>
             <p>{selectedTrace.properties.notes}</p>
             <dl className="historical-map__poi-data">
+              <div><dt>VISITOR LABEL</dt><dd>{historicalTraceVisitorLabel(selectedTrace, lang === 'zh-tw' ? 'zh-Hant' : lang)}</dd></div>
+              <div><dt>SOURCE LABEL</dt><dd>{historicalTraceSourceLabel(selectedTrace, lang === 'zh-tw' ? 'zh-Hant' : lang)}</dd></div>
+              <div><dt>SOURCE TRACE ID</dt><dd>{selectedTrace.id}</dd></div>
               <div><dt>FEATURE</dt><dd>{selectedTrace.properties.featureType}</dd></div>
               <div><dt>SIDE</dt><dd>{selectedTrace.properties.side}</dd></div>
               <div><dt>CONFIDENCE</dt><dd>{selectedTrace.properties.confidence}</dd></div>
               <div><dt>REGISTRATION</dt><dd>{selectedTrace.properties.registrationMethod}</dd></div>
+              <div><dt>SOURCE IMAGE</dt><dd>{selectedTrace.properties.sourceImage}</dd></div>
               <div><dt>SOURCE</dt><dd>{selectedTrace.properties.sourceIds.join(' · ')}</dd></div>
             </dl>
             <p className="historical-map__trace-disclaimer">{dictionary.sourceTraceDisclaimer}</p>
@@ -739,7 +755,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           <div className="historical-map__playback-head">
             <span>{activePhase?.date ?? activeStep.date}</span>
             <strong>{localized(activePhase?.title, lang) ?? localized(activeStep.label, lang)}</strong>
-            <small>{activePhase?.id ?? 'HMP-01'} · {Math.round(playbackProgress * 100)}%</small>
+            <small>{researchMode ? activePhase?.id ?? '—' : `${Math.round(playbackProgress * 100)}%`}</small>
           </div>
           <div className="historical-map__playback-controls">
             <button type="button" onClick={() => movePlaybackPhase(-1)} aria-label={dictionary.previousPhase}>←</button>

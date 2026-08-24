@@ -23,6 +23,9 @@ import {
   parseHistoricalTracePhases,
   phaseAtProgress,
   traceProgressAtProgress,
+  historicalTraceSourceLabel,
+  historicalTraceVisitorLabel,
+  traceVisualProgressAtProgress,
   validateHistoricalTraceCollection,
   toCesiumPointFeatures,
   toThreePointFeatures,
@@ -412,6 +415,23 @@ test('V0.8 historical phase playback preserves an honest empty 10/27 phase', () 
   const firstTrace = phases[0].traceIds[0];
   assert.equal(traceProgressAtProgress(firstTrace, phases, 0), 0);
   assert.equal(traceProgressAtProgress(firstTrace, phases, 1), 1);
+});
+
+test('V0.8.2 visitor trace presentation separates semantic labels from source labels', () => {
+  const dir = path.join(root, 'data', 'battles', 'guningtou-1949');
+  const traces = parseHistoricalTraceCollection(fs.readFileSync(path.join(dir, 'historical-battle-map-traces.geojson'), 'utf8'));
+  const phases = parseHistoricalTracePhases(fs.readFileSync(path.join(dir, 'historical-battle-phases.json'), 'utf8')).phases;
+  const landing = traces.features.find(feature => feature.id === 'HBT-PLA-ARROW-01');
+  const front = traces.features.find(feature => feature.id === 'HBT-ROC-FRONT-01');
+  assert.ok(landing);
+  assert.ok(front);
+  assert.equal(historicalTraceVisitorLabel(landing, 'zh-Hant'), '共軍登陸');
+  assert.match(historicalTraceSourceLabel(landing, 'zh-Hant'), /歷史圖紅色/);
+  assert.deepEqual(traceVisualProgressAtProgress(landing, phases, 0), { reveal: 0, opacity: 0 });
+  assert.ok(traceVisualProgressAtProgress(landing, phases, 0.08).reveal > 0);
+  assert.equal(traceVisualProgressAtProgress(front, phases, 0.08).reveal, 1);
+  assert.equal(traceVisualProgressAtProgress(front, phases, 0.08).opacity, 1);
+  assert.equal(traceVisualProgressAtProgress(front, phases, 0.99).opacity, 0);
 });
 
 test('V0.8 local terrain ownership uses an explicit coverage mask', () => {
