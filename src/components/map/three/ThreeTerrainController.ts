@@ -228,6 +228,10 @@ export async function loadClassificationMasks(aUrl: string, bUrl: string, option
   const filter = options.filter ?? 'mipmap';
   for (const texture of masks) {
     texture.colorSpace = THREE.NoColorSpace;
+    // The generated masks store the northern edge in image row 0 while terrain
+    // UVs use v=1 for that same edge. Keep the default image upload orientation
+    // explicit so the geographic raster/UV contract is not implicit.
+    texture.flipY = true;
     texture.generateMipmaps = filter === 'mipmap';
     texture.minFilter = filter === 'nearest' ? THREE.NearestFilter : filter === 'linear' ? THREE.LinearFilter : THREE.LinearMipmapLinearFilter;
     texture.magFilter = filter === 'nearest' ? THREE.NearestFilter : THREE.LinearFilter;
@@ -313,10 +317,13 @@ export function createTerrainBundle(
         diffuseColor.rgb = vec3(0.96, 0.96, 0.96);
         diffuseColor.a = 1.0;
       }
-      ${localLod ? 'if (solidTerrain < 0.5) { float localEdge = min(min(vClassificationUv.x, 1.0 - vClassificationUv.x), min(vClassificationUv.y, 1.0 - vClassificationUv.y)); diffuseColor.a *= smoothstep(0.0, 0.035, localEdge); }' : ''}
+      // Local ownership is already resolved by the regional coverage mask.
+      // Do not feather local LOD edges through alphaTest: that discards the
+      // local boundary after regional triangles have been removed, producing
+      // long gaps and temporal shimmer at the ownership seam.
     `);
   };
-  terrainMaterial.customProgramCacheKey = () => `classification-v07-${localLod ? 'local' : 'regional'}`;
+  terrainMaterial.customProgramCacheKey = () => `classification-v08-${localLod ? 'local' : 'regional'}`;
   const built = buildGeometry(asset, exaggeration, holeBounds, coverageMask);
   const terrain = new THREE.Mesh(built.geometry, terrainMaterial);
   terrain.name = `terrain-mesh-${asset.id}`;

@@ -53,7 +53,7 @@ export default function ThreeHistoricalTerrainRenderer({
   const [qaMode] = useState<TerrainQaMode>(() => {
     if (!import.meta.env.DEV) return 'none';
     const value = new URLSearchParams(window.location.search).get('qa');
-    return ['terrain-solid', 'terrain-seam', 'terrain-only', 'classification-only', 'regional-only', 'local-only', 'terrain-ownership', 'no-lod', 'texture-nearest', 'texture-linear', 'texture-mipmap', 'anisotropy-1', 'anisotropy-4', 'anisotropy-8', 'anisotropy-max'].includes(value ?? '')
+    return ['terrain-solid', 'terrain-seam', 'terrain-only', 'classification-only', 'classification-regional-only', 'classification-local-only', 'classification-both', 'classification-no-lod', 'classification-uv-debug', 'classification-alpha-debug', 'regional-only', 'local-only', 'terrain-ownership', 'no-lod', 'texture-nearest', 'texture-linear', 'texture-mipmap', 'anisotropy-1', 'anisotropy-4', 'anisotropy-8', 'anisotropy-max'].includes(value ?? '')
       ? value as TerrainQaMode
       : 'none';
   });

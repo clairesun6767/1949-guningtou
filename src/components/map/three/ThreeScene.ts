@@ -36,6 +36,12 @@ export type TerrainQaMode =
   | 'terrain-seam'
   | 'terrain-only'
   | 'classification-only'
+  | 'classification-regional-only'
+  | 'classification-local-only'
+  | 'classification-both'
+  | 'classification-no-lod'
+  | 'classification-uv-debug'
+  | 'classification-alpha-debug'
   | 'regional-only'
   | 'local-only'
   | 'terrain-ownership'
@@ -133,9 +139,9 @@ export class ThreeScene {
       loadClassificationMasks(`${root}/map-data/guningtou-classification-a.png`, `${root}/map-data/guningtou-classification-b.png`, textureQa),
     ]);
     const exaggeration = HistoricalCartographicStyle.terrain.verticalExaggeration;
-    const activeCoverage = options.qaMode === 'no-lod' ? undefined : localCoverage;
+    const activeCoverage = ['no-lod', 'classification-no-lod'].includes(options.qaMode) ? undefined : localCoverage;
     const regional = createTerrainBundle(regionalAsset, exaggeration, landPolygons(regionalCoastline), regionalMasks, false, localAsset.bounds, activeCoverage);
-    const local = createTerrainBundle(localAsset, exaggeration, landPolygons(localCoastline), localMasks, true);
+    const local = createTerrainBundle(localAsset, exaggeration, landPolygons(localCoastline), localMasks, options.qaMode !== 'classification-no-lod');
     const cartography = new ThreeCartographicLayer(
       regionalCartography,
       localCartography,
@@ -522,9 +528,14 @@ export class ThreeScene {
   }
 
   private applyQaMode() {
-    const terrainOnly = ['terrain-solid', 'terrain-seam', 'terrain-only', 'classification-only', 'regional-only', 'local-only', 'terrain-ownership'].includes(this.qaMode);
-    const regionalVisible = this.qaMode !== 'local-only';
-    const localVisible = this.qaMode !== 'regional-only' && this.qaMode !== 'no-lod';
+    const terrainOnly = [
+      'terrain-solid', 'terrain-seam', 'terrain-only', 'classification-only',
+      'classification-regional-only', 'classification-local-only', 'classification-both',
+      'classification-no-lod', 'classification-uv-debug', 'classification-alpha-debug',
+      'regional-only', 'local-only', 'terrain-ownership',
+    ].includes(this.qaMode);
+    const regionalVisible = !['local-only', 'classification-local-only'].includes(this.qaMode);
+    const localVisible = !['regional-only', 'classification-regional-only', 'no-lod'].includes(this.qaMode);
     this.regional.group.visible = regionalVisible;
     this.local.group.visible = localVisible;
     this.cartography.group.visible = !terrainOnly;
@@ -534,8 +545,12 @@ export class ThreeScene {
     this.strategicLabels.visible = !terrainOnly && this.labelsEnabled && ['strategic', 'kinmen'].includes(this.currentCameraId);
     this.terrainQaGroup.visible = this.qaMode === 'terrain-seam';
     this.terrainOwnershipGroup.visible = this.qaMode === 'terrain-ownership';
-    setTerrainClassificationQa(this.regional, this.qaMode === 'classification-only');
-    setTerrainClassificationQa(this.local, this.qaMode === 'classification-only');
+    const classificationQa = [
+      'classification-only', 'classification-regional-only', 'classification-local-only',
+      'classification-both', 'classification-no-lod', 'classification-uv-debug', 'classification-alpha-debug',
+    ].includes(this.qaMode);
+    setTerrainClassificationQa(this.regional, classificationQa);
+    setTerrainClassificationQa(this.local, classificationQa);
     setTerrainSolid(this.regional, this.qaMode === 'terrain-solid');
     setTerrainSolid(this.local, this.qaMode === 'terrain-solid');
   }
