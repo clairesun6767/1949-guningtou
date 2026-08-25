@@ -449,6 +449,21 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
     setPlaybackPlaying(play);
   }
 
+  function setTimelineDate(index: number) {
+    const nextIndex = Math.max(0, Math.min(GUNINGTOU_TIMELINE_STEPS.length - 1, index));
+    setActiveDay(nextIndex);
+    setDetailReady(true);
+    setPlaybackModeActive(false);
+    setPlaybackPlaying(false);
+    setFollowBattle(false);
+    playbackProgressRef.current = 0;
+    setPlaybackProgress(0);
+    // A date selection is a review view, not a playback phase.  Move to the
+    // battlefield framing so the date-specific source traces are immediately
+    // legible; the camera system itself remains unchanged.
+    setCameraId(nextIndex < 2 ? 'battle_overview' : 'guningtou');
+  }
+
   function movePlaybackPhase(direction: -1 | 1) {
     const currentIndex = Math.max(0, historicalPhases.findIndex(phase => phase.id === activePhase?.id));
     const nextIndex = Math.max(0, Math.min(historicalPhases.length - 1, currentIndex + direction));
@@ -740,6 +755,14 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         )}
 
         {!selectedLocation && cameraId !== 'strategic' && <aside className="historical-map__integrity-note"><strong>{dictionary.mapMeaning}</strong><span>{dictionary.mapMeaningBody}</span></aside>}
+        <div className="historical-map__playback-overlay" data-playback-overlay data-active-date={activeStep.date}>
+          <button type="button" onClick={() => movePlaybackPhase(-1)} aria-label={dictionary.previousPhase} title={dictionary.previousPhase}>←</button>
+          <button type="button" className="is-primary" onClick={() => setPlaybackPosition(playbackProgress >= 1 ? 0 : playbackProgress, !playbackPlaying)} aria-label={playbackPlaying ? dictionary.pause : dictionary.play} title={playbackPlaying ? dictionary.pause : dictionary.play}>{playbackPlaying ? 'Ⅱ' : '▶'}</button>
+          <button type="button" onClick={() => movePlaybackPhase(1)} aria-label={dictionary.nextPhase} title={dictionary.nextPhase}>→</button>
+          <span className="historical-map__playback-overlay-speed" aria-label="Playback speed">
+            {[0.5, 1, 2].map(speed => <button type="button" key={speed} className={playbackSpeed === speed ? 'is-active' : ''} onClick={() => setPlaybackSpeed(speed as 0.5 | 1 | 2)} aria-pressed={playbackSpeed === speed}>{speed}×</button>)}
+          </span>
+        </div>
       </div>
 
       <div id="battle-map-timeline" className="historical-map__timeline">
@@ -748,13 +771,13 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           <small>{activeStep.eventIds.join(' · ')} · {activeStep.sourceIds.join(' · ')}</small>
         </div>
         <div className="historical-map__timeline-control">
-          <input type="range" min="0" max="2" step="1" value={effectiveDay} onChange={event => { const index = Number(event.target.value); setActiveDay(index); setPlaybackPosition(historicalPhases.find(phase => phase.date === GUNINGTOU_TIMELINE_STEPS[index].date)?.startProgress ?? 0); }} aria-label="Battle timeline date" />
-          <div>{GUNINGTOU_TIMELINE_STEPS.map((step, index) => <button type="button" key={step.id} className={index === effectiveDay ? 'is-active' : ''} onClick={() => { setActiveDay(index); setPlaybackPosition(historicalPhases.find(phase => phase.date === step.date)?.startProgress ?? 0); }}>{step.date.slice(5)}</button>)}</div>
+          <input type="range" min="0" max="2" step="1" value={effectiveDay} onChange={event => setTimelineDate(Number(event.target.value))} aria-label="Battle timeline date" />
+          <div>{GUNINGTOU_TIMELINE_STEPS.map((step, index) => <button type="button" key={step.id} className={index === effectiveDay ? 'is-active' : ''} onClick={() => setTimelineDate(index)}>{step.date.slice(5)}</button>)}</div>
         </div>
         <div className="historical-map__playback" data-playback-state={playbackPlaying ? 'playing' : 'paused'} data-playback-progress={playbackProgress.toFixed(3)}>
           <div className="historical-map__playback-head">
-            <span>{activePhase?.date ?? activeStep.date}</span>
-            <strong>{localized(activePhase?.title, lang) ?? localized(activeStep.label, lang)}</strong>
+            <span>{playbackModeActive ? activePhase?.date ?? activeStep.date : activeStep.date}</span>
+            <strong>{playbackModeActive ? localized(activePhase?.title, lang) ?? localized(activeStep.label, lang) : localized(activeStep.label, lang)}</strong>
             <small>{researchMode ? activePhase?.id ?? '—' : `${Math.round(playbackProgress * 100)}%`}</small>
           </div>
           <div className="historical-map__playback-controls">

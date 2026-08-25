@@ -91,7 +91,12 @@ function textureQaForMode(mode: TerrainQaMode): { filter: ClassificationTextureF
   if (mode === 'anisotropy-4') return { filter: 'mipmap', anisotropy: 4 };
   if (mode === 'anisotropy-8') return { filter: 'mipmap', anisotropy: 8 };
   if (mode === 'anisotropy-max') return { filter: 'mipmap', anisotropy: 16 };
-  return { filter: mode === 'texture-mipmap' ? 'mipmap' : 'mipmap', anisotropy: 8 };
+  // Production keeps the classification masks single-resolution.  The masks
+  // are cartographic data rather than photographic detail, so mip transitions
+  // and high anisotropy add temporal aliasing during orbit/zoom without adding
+  // useful information.  The explicit QA modes above remain available for
+  // isolating those variables.
+  return { filter: mode === 'texture-mipmap' ? 'mipmap' : 'linear', anisotropy: mode === 'texture-mipmap' ? 8 : 1 };
 }
 
 export class ThreeScene {
@@ -352,21 +357,34 @@ export class ThreeScene {
     this.applyQaMode();
   }
 
-  fitBattleMovement(features: BattleMapFeature[]) {
+  fitBattleMovement(features: BattleMapFeature[], historicalTraces: HistoricalTraceFeature[] = []) {
     if (['strategic', 'kinmen'].includes(this.currentCameraId)) return false;
     const movementFeatures = features.filter(feature => ['direction', 'corridor', 'route'].includes(feature.type));
-    if (!movementFeatures.length) return false;
+    if (!movementFeatures.length && !historicalTraces.length) return false;
     const relatedIds = new Set(movementFeatures.flatMap(feature => feature.relatedLocations));
     const coordinates: Position[] = [];
-    const collect = (feature: BattleMapFeature) => {
-      if (feature.geometry?.type === 'Point') coordinates.push(feature.geometry.coordinates);
-      if (feature.geometry?.type === 'LineString') coordinates.push(...feature.geometry.coordinates);
-      if (feature.geometry?.type === 'MultiLineString') coordinates.push(...feature.geometry.coordinates.flat());
-      if (feature.geometry?.type === 'Polygon') coordinates.push(...feature.geometry.coordinates.flat());
-      if (feature.geometry?.type === 'MultiPolygon') coordinates.push(...feature.geometry.coordinates.flat(2));
+    const collectGeometry = (geometry: BattleMapFeature['geometry'] | HistoricalTraceFeature['geometry']) => {
+      if (!geometry) return;
+      if (geometry.type === 'Point') {
+        coordinates.push(geometry.coordinates);
+        return;
+      }
+      if (geometry.type === 'MultiPoint') {
+        coordinates.push(...geometry.coordinates);
+        return;
+      }
+      if (geometry.type === 'LineString') {
+        coordinates.push(...geometry.coordinates);
+        return;
+      }
+      if (geometry.type === 'MultiLineString') coordinates.push(...geometry.coordinates.flat());
+      if (geometry.type === 'Polygon') coordinates.push(...geometry.coordinates.flat());
+      if (geometry.type === 'MultiPolygon') coordinates.push(...geometry.coordinates.flat(2));
     };
-    movementFeatures.forEach(collect);
-    this.currentFeatures.filter(feature => feature.type === 'location' && relatedIds.has(feature.id)).forEach(collect);
+    const collectBattleFeature = (feature: BattleMapFeature) => collectGeometry(feature.geometry);
+    movementFeatures.forEach(collectBattleFeature);
+    this.currentFeatures.filter(feature => feature.type === 'location' && relatedIds.has(feature.id)).forEach(collectBattleFeature);
+    historicalTraces.forEach(feature => collectGeometry(feature.geometry));
     if (!coordinates.length) return false;
     const longitudes = coordinates.map(([longitude]) => longitude);
     const latitudes = coordinates.map(([, latitude]) => latitude);

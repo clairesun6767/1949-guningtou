@@ -14,6 +14,7 @@ interface MaterialState {
   baseOpacity: number;
   baseColor?: THREE.Color;
   scope: 'regional' | 'local';
+  lastBattleFocus?: boolean;
 }
 
 interface ScopeBundle {
@@ -244,6 +245,8 @@ export class ThreeCartographicLayer {
   private readonly materialStates: MaterialState[] = [];
   private readonly regional: ScopeBundle;
   private readonly local: ScopeBundle;
+  private regionalVisible = true;
+  private localVisible = false;
 
   constructor(
     regionalCartography: CartographicAsset,
@@ -304,6 +307,11 @@ export class ThreeCartographicLayer {
 
   private track(materialValue: THREE.Material & { opacity: number }, baseOpacity: number, scope: 'regional' | 'local') {
     materialValue.transparent = true;
+    // These are transparent cartographic overlays sitting above the terrain.
+    // Writing their depth while the regional/local blend changes causes the
+    // next transparent overlay to alternate between visible and occluded.
+    // Keep depth testing for terrain contact, but never write overlay depth.
+    materialValue.depthWrite = false;
     const color = 'color' in materialValue && materialValue.color instanceof THREE.Color ? materialValue.color.clone() : undefined;
     this.materialStates.push({ material: materialValue, baseOpacity, baseColor: color, scope });
   }
@@ -315,17 +323,21 @@ export class ThreeCartographicLayer {
   }
 
   tick(regionalOpacity: number, localOpacity: number, battleFocus = false) {
-    this.regional.root.visible = regionalOpacity > .01;
-    this.local.root.visible = localOpacity > .01;
+    if (this.regionalVisible ? regionalOpacity < .005 : regionalOpacity > .02) this.regionalVisible = !this.regionalVisible;
+    if (this.localVisible ? localOpacity < .005 : localOpacity > .02) this.localVisible = !this.localVisible;
+    this.regional.root.visible = this.regionalVisible;
+    this.local.root.visible = this.localVisible;
     for (const state of this.materialStates) {
       const focusDim = battleFocus ? .9 : 1;
       const target = state.baseOpacity * (state.scope === 'regional' ? regionalOpacity : localOpacity) * focusDim;
-      state.material.opacity += (target - state.material.opacity) * .08;
-      state.material.depthWrite = state.material.opacity > state.baseOpacity * .95;
-      if (state.baseColor && 'color' in state.material && state.material.color instanceof THREE.Color) {
+      const delta = target - state.material.opacity;
+      if (Math.abs(delta) > .0005) state.material.opacity += delta * .08;
+      else state.material.opacity = target;
+      if (state.baseColor && state.lastBattleFocus !== battleFocus && 'color' in state.material && state.material.color instanceof THREE.Color) {
         state.material.color.copy(state.baseColor);
         if (battleFocus) state.material.color.offsetHSL(0, -.2, -.08);
       }
+      state.lastBattleFocus = battleFocus;
     }
   }
 

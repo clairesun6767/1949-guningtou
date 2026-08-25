@@ -93,7 +93,7 @@ export default function ThreeHistoricalTerrainRenderer({
         window.addEventListener('resize', handleResize, { passive: true });
         setStatus('ready');
         setStats(scene.getStats());
-        if (!['strategic', 'kinmen'].includes(cameraId)) scene.fitBattleMovement(features);
+        if (!['strategic', 'kinmen'].includes(cameraId)) scene.fitBattleMovement(features, historicalTraces);
         callbacksRef.current.onReady();
       } catch (error) {
         if (!disposed) callbacksRef.current.onError(error);
@@ -115,8 +115,8 @@ export default function ThreeHistoricalTerrainRenderer({
 
   useEffect(() => {
     if (!sceneRef.current || ['strategic', 'kinmen'].includes(cameraId)) return;
-    sceneRef.current.fitBattleMovement(features);
-  }, [activeDate, cameraId]);
+    sceneRef.current.fitBattleMovement(features, historicalTraces);
+  }, [activeDate, cameraId, historicalTraces]);
 
   useEffect(() => {
     sceneRef.current?.updateFeatures(features, labelsEnabled, selectedId);

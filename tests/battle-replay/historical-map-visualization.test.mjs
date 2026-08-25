@@ -434,6 +434,27 @@ test('V0.8.2 visitor trace presentation separates semantic labels from source la
   assert.equal(traceVisualProgressAtProgress(front, phases, 0.99).opacity, 0);
 });
 
+test('V0.8.3 stabilizes cartographic overlays and exposes manual trace correction workflow', () => {
+  const scene = fs.readFileSync(path.join(root, 'src', 'components', 'map', 'three', 'ThreeScene.ts'), 'utf8');
+  const cartography = fs.readFileSync(path.join(root, 'src', 'components', 'map', 'three', 'ThreeCartographicLayer.ts'), 'utf8');
+  const renderer = fs.readFileSync(path.join(root, 'src', 'components', 'map', 'three', 'ThreeHistoricalTerrainRenderer.tsx'), 'utf8');
+  const experience = fs.readFileSync(path.join(root, 'src', 'components', 'map', 'HistoricalMapExperience.tsx'), 'utf8');
+  const editor = fs.readFileSync(path.join(root, 'src', 'components', 'dev', 'HistoricalBattleMapRegistrationEditor.tsx'), 'utf8');
+  const guide = fs.readFileSync(path.join(root, 'Guningtou_Trace_Manual_Correction_Guide_V0.8.3.md'), 'utf8');
+  assert.match(scene, /return \{ filter: mode === 'texture-mipmap' \? 'mipmap' : 'linear'/);
+  assert.match(scene, /fitBattleMovement\(features: BattleMapFeature\[\], historicalTraces/);
+  assert.match(cartography, /materialValue\.depthWrite = false/);
+  assert.doesNotMatch(cartography, /state\.material\.depthWrite = state\.material\.opacity/);
+  assert.match(renderer, /fitBattleMovement\(features, historicalTraces\)/);
+  assert.match(experience, /data-playback-overlay/);
+  assert.match(experience, /function setTimelineDate/);
+  assert.match(editor, /拖曳目前 visitor map vertex/);
+  assert.match(editor, /下載正式 trace dataset/);
+  assert.match(editor, /sourceIds/);
+  assert.match(guide, /國軍反擊方向/);
+  assert.match(guide, /不得任意修改/);
+});
+
 test('V0.8 local terrain ownership uses an explicit coverage mask', () => {
   const maskPath = path.join(root, 'public', 'terrain', 'guningtou-local-coverage-mask.json');
   const mask = JSON.parse(fs.readFileSync(maskPath, 'utf8'));
