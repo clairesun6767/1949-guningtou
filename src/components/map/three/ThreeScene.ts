@@ -183,8 +183,9 @@ export class ThreeScene {
     this.labelsEnabled = options.labelsEnabled;
     this.selectedId = options.selectedId;
     this.enabledLayers = new Set(options.enabledLayers);
-    this.scene.background = new THREE.Color(this.qaMode === 'terrain-solid' ? 0x050505 : HistoricalTerrainStyle.scene.background);
-    this.scene.fog = new THREE.Fog(HistoricalTerrainStyle.scene.fog, HistoricalTerrainStyle.scene.fogNear, HistoricalTerrainStyle.scene.fogFar);
+    const clearColor = new THREE.Color(this.qaMode === 'terrain-solid' ? 0x050505 : HistoricalTerrainStyle.sea.color);
+    this.scene.background = clearColor.clone();
+    this.scene.fog = new THREE.Fog(clearColor, HistoricalTerrainStyle.scene.fogNear, HistoricalTerrainStyle.scene.fogFar);
 
     this.camera = new THREE.PerspectiveCamera(HistoricalTerrainStyle.camera.fovDegrees, 1, .05, 240);
     this.renderer = new THREE.WebGLRenderer({
@@ -193,6 +194,7 @@ export class ThreeScene {
       powerPreference: options.mobile ? 'default' : 'high-performance',
       preserveDrawingBuffer: import.meta.env.DEV,
     });
+    this.renderer.setClearColor(clearColor, 1);
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.04;
@@ -249,13 +251,17 @@ export class ThreeScene {
   }
 
   private addEnvironment() {
-    const seaGeometry = new THREE.PlaneGeometry(82, 48, 20, 12);
+    // The ocean is presentation context, not a geographic boundary.  Keep it
+    // substantially larger than every supported strategic pan/orbit envelope;
+    // the scene clear color above is the same color so even an extreme camera
+    // angle cannot reveal a plane edge or a second outside background.
+    const seaGeometry = new THREE.PlaneGeometry(360, 260, 24, 18);
     const seaColors: number[] = [];
     const seaPosition = seaGeometry.getAttribute('position');
     const shallow = new THREE.Color(0x49625f);
     const deep = new THREE.Color(HistoricalTerrainStyle.sea.color);
     for (let index = 0; index < seaPosition.count; index += 1) {
-      const t = THREE.MathUtils.clamp((seaPosition.getY(index) + 24) / 48, 0, 1);
+      const t = THREE.MathUtils.clamp((seaPosition.getY(index) + 130) / 260, 0, 1);
       const color = deep.clone().lerp(shallow, t * .42);
       seaColors.push(color.r, color.g, color.b);
     }

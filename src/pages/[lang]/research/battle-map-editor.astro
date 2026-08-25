@@ -1,11 +1,18 @@
 ---
-import HistoricalBattleMapRegistrationEditor from '../../components/dev/HistoricalBattleMapRegistrationEditor';
-import '../../styles/global.css';
+import HistoricalBattleMapRegistrationEditor from '../../../components/dev/HistoricalBattleMapRegistrationEditor';
+import '../../../styles/global.css';
 
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
 ---
 
 <!doctype html>
-<html lang="zh-Hant">
+<html lang={Astro.params.lang === 'en' ? 'en' : 'zh-Hant'}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

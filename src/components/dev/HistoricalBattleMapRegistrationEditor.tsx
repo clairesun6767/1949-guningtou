@@ -1,8 +1,9 @@
-import { useMemo, useRef, useState, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react';
 import registrationRaw from '../../../data/battles/guningtou-1949/historical-battle-map-registration.json';
+import historicalPhasesRaw from '../../../data/battles/guningtou-1949/historical-battle-phases.json?raw';
 import tracesRaw from '../../../data/battles/guningtou-1949/historical-battle-map-traces.geojson?raw';
 import locationsRaw from '../../../data/battles/guningtou-1949/locations.geojson?raw';
-import { historicalTraceSourceLabel, historicalTraceVisitorLabel, type HistoricalTraceCollection, type HistoricalTraceFeature } from '../../battle-replay/visualization/historicalTraces.js';
+import { historicalTraceSourceLabel, historicalTraceVisitorLabel, parseHistoricalTraceCollection, parseHistoricalTracePhases, type HistoricalTraceCollection, type HistoricalTraceFeature } from '../../battle-replay/visualization/historicalTraces.js';
 import type { GeoJsonGeometry, Position } from '../../battle-replay/types/index.js';
 import './historical-map-registration.css';
 
@@ -22,6 +23,26 @@ interface Props {
 
 type TraceFilter = 'all' | 'pla' | 'roc' | 'defense' | 'battle-area';
 
+interface WorkbenchDraft {
+  schemaVersion: '0.8.3';
+  baseCommit: string;
+  savedAt: string;
+  lastExportSignature: string;
+  anchors: AnchorDraft[];
+  traceDrafts: Record<string, HistoricalTraceFeature>;
+  selectedTraceId: string | null;
+  traceFilter: TraceFilter;
+  showSource: boolean;
+  showVisitor: boolean;
+  sourceOpacity: number;
+}
+
+interface EditSnapshot {
+  anchors: AnchorDraft[];
+  traceDrafts: Record<string, HistoricalTraceFeature>;
+  selectedTraceId: string | null;
+}
+
 const TRACE_PRIORITY: Record<string, number> = {
   'HBT-ROC-ARROW-01': 1,
   'HBT-ROC-ARROW-02': 2,
@@ -36,8 +57,64 @@ const TRACE_PRIORITY: Record<string, number> = {
 const sourceMapWidth = 1000;
 const sourceMapHeight = 641;
 const traceCollection = JSON.parse(tracesRaw) as HistoricalTraceCollection;
+const phaseCollection = parseHistoricalTracePhases(historicalPhasesRaw);
 const locationCollection = JSON.parse(locationsRaw) as { features: Array<{ id: string; geometry: { coordinates: [number, number] }; properties: { historicalName?: Record<string, string> } }> };
 const geographicBounds = { west: 118.28, east: 118.37, south: 24.44, north: 24.5 };
+const BASE_COMMIT = '77ebf146bddcf8b4d98bd332a9f512fecbf39252';
+const DRAFT_STORAGE_KEY = 'battlefield-os:guningtou:historical-trace-workbench:v0.8.3';
+
+function cloneAnchors(value: readonly AnchorDraft[]): AnchorDraft[] {
+  return value.map(anchor => ({
+    ...anchor,
+    sourcePixel: [...anchor.sourcePixel] as [number, number],
+    geographicReference: [...anchor.geographicReference] as [number, number],
+  }));
+}
+
+const canonicalAnchors = cloneAnchors(registrationRaw.anchors as AnchorDraft[]);
+
+function isTraceFilter(value: unknown): value is TraceFilter {
+  return value === 'all' || value === 'pla' || value === 'roc' || value === 'defense' || value === 'battle-area';
+}
+
+function isAnchorDraft(value: unknown): value is AnchorDraft {
+  if (!value || typeof value !== 'object') return false;
+  const anchor = value as Partial<AnchorDraft>;
+  return typeof anchor.id === 'string'
+    && Array.isArray(anchor.sourcePixel) && anchor.sourcePixel.length === 2
+    && Array.isArray(anchor.geographicReference) && anchor.geographicReference.length === 2
+    && typeof anchor.enabled === 'boolean'
+    && (anchor.status === 'candidate' || anchor.status === 'needs_human_confirmation')
+    && (anchor.confidence === 'unknown' || anchor.confidence === 'approximate')
+    && typeof anchor.notes === 'string';
+}
+
+function readWorkbenchDraft(): WorkbenchDraft | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(DRAFT_STORAGE_KEY);
+    if (!raw) return null;
+    const draft = JSON.parse(raw) as Partial<WorkbenchDraft>;
+    if (draft.schemaVersion !== '0.8.3' || draft.baseCommit !== BASE_COMMIT) return null;
+    if (!Array.isArray(draft.anchors) || !draft.anchors.every(isAnchorDraft) || !draft.traceDrafts || typeof draft.traceDrafts !== 'object') return null;
+    if (!isTraceFilter(draft.traceFilter)) return null;
+    return {
+      schemaVersion: '0.8.3',
+      baseCommit: BASE_COMMIT,
+      savedAt: typeof draft.savedAt === 'string' ? draft.savedAt : new Date().toISOString(),
+      lastExportSignature: typeof draft.lastExportSignature === 'string' ? draft.lastExportSignature : '',
+      anchors: cloneAnchors(draft.anchors as AnchorDraft[]),
+      traceDrafts: draft.traceDrafts as Record<string, HistoricalTraceFeature>,
+      selectedTraceId: typeof draft.selectedTraceId === 'string' ? draft.selectedTraceId : null,
+      traceFilter: draft.traceFilter,
+      showSource: draft.showSource !== false,
+      showVisitor: draft.showVisitor !== false,
+      sourceOpacity: typeof draft.sourceOpacity === 'number' ? Math.max(0, Math.min(1, draft.sourceOpacity)) : 1,
+    };
+  } catch {
+    return null;
+  }
+}
 
 function sourceUrl(base: string) {
   return base.replace(/\/$/, '') + '/map-data/historical-battle-map.jpg';
@@ -49,9 +126,18 @@ function downloadJson(filename: string, value: unknown) {
   const link = document.createElement('a');
   link.href = url;
   link.download = filename;
+  document.body.appendChild(link);
   link.click();
-  URL.revokeObjectURL(url);
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
+function serializeEditState(anchors: AnchorDraft[], traceDrafts: Record<string, HistoricalTraceFeature>) {
+  const features = traceCollection.features.map(feature => traceDrafts[feature.id] ?? feature);
+  return JSON.stringify({ anchors, features });
+}
+
+const canonicalEditSignature = serializeEditState(canonicalAnchors, {});
 
 function geographicPoint([longitude, latitude]: Position) {
   return {
@@ -139,19 +225,27 @@ function traceClass(feature: HistoricalTraceFeature) {
 
 export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-guningtou' }: Props) {
   const imageRef = useRef<HTMLImageElement>(null);
-  const [anchors, setAnchors] = useState<AnchorDraft[]>(registrationRaw.anchors as AnchorDraft[]);
+  const traceImportRef = useRef<HTMLInputElement>(null);
+  const registrationImportRef = useRef<HTMLInputElement>(null);
+  const [restoredDraft] = useState<WorkbenchDraft | null>(() => readWorkbenchDraft());
+  const [anchors, setAnchors] = useState<AnchorDraft[]>(() => cloneAnchors(restoredDraft?.anchors ?? canonicalAnchors));
   const [pendingSource, setPendingSource] = useState<[number, number] | null>(null);
   const [message, setMessage] = useState('點擊左側來源圖，再點擊右側現代參考圖建立一組停用的候選 anchor。');
-  const [selectedTraceId, setSelectedTraceId] = useState(traceCollection.features[0]?.id ?? null);
-  const [traceDrafts, setTraceDrafts] = useState<Record<string, HistoricalTraceFeature>>({});
+  const [selectedTraceId, setSelectedTraceId] = useState<string | null>(restoredDraft?.selectedTraceId ?? traceCollection.features[0]?.id ?? null);
+  const [traceDrafts, setTraceDrafts] = useState<Record<string, HistoricalTraceFeature>>(() => restoredDraft?.traceDrafts ?? {});
   const [sourceControlPointIndex, setSourceControlPointIndex] = useState(0);
   const [geometryPathIndex, setGeometryPathIndex] = useState(0);
   const [vertexIndex, setVertexIndex] = useState(0);
   const [draggingVertex, setDraggingVertex] = useState<{ pathIndex: number; vertexIndex: number } | null>(null);
   const [editControlPoint, setEditControlPoint] = useState(false);
-  const [traceFilter, setTraceFilter] = useState<TraceFilter>('all');
-  const [showSource, setShowSource] = useState(true);
-  const [showVisitor, setShowVisitor] = useState(true);
+  const [traceFilter, setTraceFilter] = useState<TraceFilter>(restoredDraft?.traceFilter ?? 'all');
+  const [showSource, setShowSource] = useState(restoredDraft?.showSource ?? true);
+  const [showVisitor, setShowVisitor] = useState(restoredDraft?.showVisitor ?? true);
+  const [sourceOpacity, setSourceOpacity] = useState(restoredDraft?.sourceOpacity ?? 1);
+  const [lastSavedAt, setLastSavedAt] = useState<string | null>(restoredDraft?.savedAt ?? null);
+  const [lastExportSignature, setLastExportSignature] = useState(restoredDraft?.lastExportSignature || canonicalEditSignature);
+  const [undoStack, setUndoStack] = useState<EditSnapshot[]>([]);
+  const [redoStack, setRedoStack] = useState<EditSnapshot[]>([]);
 
   const selectedTrace = traceCollection.features.find(feature => feature.id === selectedTraceId) ?? null;
   const selectedTraceDraft = selectedTrace ? traceDrafts[selectedTrace.id] ?? selectedTrace : null;
@@ -166,10 +260,179 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
     return traceCollection.features.map(feature => traceDrafts[feature.id] ?? feature);
   }
 
-  function updateSelectedTraceDraft(updater: (feature: HistoricalTraceFeature) => HistoricalTraceFeature) {
+  const currentEditSignature = useMemo(() => serializeEditState(anchors, traceDrafts), [anchors, traceDrafts]);
+  const hasUnexportedChanges = currentEditSignature !== lastExportSignature;
+  const hasBrowserSessionState = currentEditSignature !== canonicalEditSignature
+    || selectedTraceId !== (traceCollection.features[0]?.id ?? null)
+    || traceFilter !== 'all'
+    || !showSource
+    || !showVisitor
+    || sourceOpacity !== 1;
+  const draftStatus = hasUnexportedChanges
+    ? '有未匯出的修改 · 已儲存至瀏覽器草稿'
+    : lastSavedAt
+      ? '已儲存至瀏覽器草稿'
+      : '目前使用 GitHub 版本';
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!hasBrowserSessionState) {
+      window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+      return;
+    }
+    const savedAt = new Date().toISOString();
+    const draft: WorkbenchDraft = {
+      schemaVersion: '0.8.3',
+      baseCommit: BASE_COMMIT,
+      savedAt,
+      lastExportSignature,
+      anchors,
+      traceDrafts,
+      selectedTraceId,
+      traceFilter,
+      showSource,
+      showVisitor,
+      sourceOpacity,
+    };
+    try {
+      window.localStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+      setLastSavedAt(savedAt);
+    } catch {
+      setMessage('瀏覽器草稿儲存失敗；請改用「匯出修改」保存檔案。');
+    }
+  }, [anchors, hasBrowserSessionState, lastExportSignature, selectedTraceId, showSource, showVisitor, sourceOpacity, traceDrafts, traceFilter]);
+
+  function currentSnapshot(): EditSnapshot {
+    return {
+      anchors: cloneAnchors(anchors),
+      traceDrafts: { ...traceDrafts },
+      selectedTraceId,
+    };
+  }
+
+  function pushHistory() {
+    setUndoStack(current => [...current, currentSnapshot()].slice(-60));
+    setRedoStack([]);
+  }
+
+  function restoreSnapshot(snapshot: EditSnapshot) {
+    setAnchors(cloneAnchors(snapshot.anchors));
+    setTraceDrafts({ ...snapshot.traceDrafts });
+    setSelectedTraceId(snapshot.selectedTraceId);
+    setPendingSource(null);
+    setDraggingVertex(null);
+  }
+
+  function undo() {
+    const previous = undoStack.at(-1);
+    if (!previous) return;
+    setRedoStack(current => [...current, currentSnapshot()].slice(-60));
+    setUndoStack(current => current.slice(0, -1));
+    restoreSnapshot(previous);
+    setMessage('已復原上一個人工編修動作。');
+  }
+
+  function redo() {
+    const next = redoStack.at(-1);
+    if (!next) return;
+    setUndoStack(current => [...current, currentSnapshot()].slice(-60));
+    setRedoStack(current => current.slice(0, -1));
+    restoreSnapshot(next);
+    setMessage('已重做上一個人工編修動作。');
+  }
+
+  function updateSelectedTraceDraft(updater: (feature: HistoricalTraceFeature) => HistoricalTraceFeature, recordHistory = true) {
     if (!selectedTraceDraft) return;
+    if (recordHistory) pushHistory();
     const next = updater(selectedTraceDraft);
     setTraceDrafts(current => ({ ...current, [next.id]: next }));
+  }
+
+  function traceVertexCount(feature: HistoricalTraceFeature) {
+    return geometryPaths(feature.geometry).reduce((count, path) => count + path.length, 0);
+  }
+
+  function modifiedTraceIds() {
+    return traceCollection.features
+      .filter(feature => JSON.stringify(feature) !== JSON.stringify(traceDrafts[feature.id] ?? feature))
+      .map(feature => feature.id);
+  }
+
+  function exportModifiedFiles() {
+    const features = draftFeatures();
+    const registrationChanged = JSON.stringify(anchors) !== JSON.stringify(canonicalAnchors);
+    const baseVertexCount = traceCollection.features.reduce((count, feature) => count + traceVertexCount(feature), 0);
+    const currentVertexCount = features.reduce((count, feature) => count + traceVertexCount(feature), 0);
+    const changedIds = modifiedTraceIds();
+    downloadJson('historical-battle-map-traces.geojson', { ...traceCollection, features });
+    if (registrationChanged) downloadJson('historical-battle-map-registration.json', { ...registrationRaw, anchors });
+    downloadJson('trace-edit-summary.json', {
+      baseCommit: BASE_COMMIT,
+      timestamp: new Date().toISOString(),
+      modifiedTraceIds: changedIds,
+      addedVertices: Math.max(0, currentVertexCount - baseVertexCount),
+      removedVertices: Math.max(0, baseVertexCount - currentVertexCount),
+      registrationChanged,
+    });
+    setLastExportSignature(currentEditSignature);
+    setMessage(registrationChanged
+      ? '已匯出 trace dataset、registration JSON 與 trace-edit-summary；檔案尚未寫回 GitHub。'
+      : '已匯出 trace dataset 與 trace-edit-summary；檔案尚未寫回 GitHub。');
+  }
+
+  function resetToCanonical() {
+    if (typeof window !== 'undefined' && !window.confirm('重新載入目前 GitHub 版本？這會清除本瀏覽器中的人工編修草稿。')) return;
+    pushHistory();
+    setAnchors(cloneAnchors(canonicalAnchors));
+    setTraceDrafts({});
+    setSelectedTraceId(traceCollection.features[0]?.id ?? null);
+    setTraceFilter('all');
+    setShowSource(true);
+    setShowVisitor(true);
+    setSourceOpacity(1);
+    setLastExportSignature(canonicalEditSignature);
+    setLastSavedAt(null);
+    if (typeof window !== 'undefined') window.localStorage.removeItem(DRAFT_STORAGE_KEY);
+    setMessage('已重新載入目前 GitHub 版本；瀏覽器草稿已清除。');
+  }
+
+  function handleTraceImport(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0];
+    event.currentTarget.value = '';
+    if (!file) return;
+    void file.text().then(raw => {
+      try {
+        const imported = parseHistoricalTraceCollection(raw);
+        const canonicalIds = new Set(traceCollection.features.map(feature => feature.id));
+        if (imported.features.length !== traceCollection.features.length || imported.features.some(feature => !canonicalIds.has(feature.id))) {
+          throw new Error('請匯入與目前專案相同 trace IDs 的完整 GeoJSON dataset。');
+        }
+        pushHistory();
+        setTraceDrafts(Object.fromEntries(imported.features.map(feature => [feature.id, feature])));
+        setMessage(`已匯入 ${imported.features.length} 條 trace；請確認後再按「匯出修改」。`);
+      } catch (error) {
+        setMessage('trace GeoJSON 匯入失敗：' + (error instanceof Error ? error.message : String(error)));
+      }
+    });
+  }
+
+  function handleRegistrationImport(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.currentTarget.files?.[0];
+    event.currentTarget.value = '';
+    if (!file) return;
+    void file.text().then(raw => {
+      try {
+        const imported = JSON.parse(raw) as { anchors?: unknown };
+        if (!Array.isArray(imported.anchors) || !imported.anchors.every(isAnchorDraft)) {
+          throw new Error('registration JSON 必須包含格式正確的 anchors 陣列。');
+        }
+        pushHistory();
+        setAnchors(cloneAnchors(imported.anchors));
+        setMessage(`已匯入 ${imported.anchors.length} 個 anchor；請確認後再按「匯出修改」。`);
+      } catch (error) {
+        setMessage('registration JSON 匯入失敗：' + (error instanceof Error ? error.message : String(error)));
+      }
+    });
   }
 
   function handleSourceClick(event: MouseEvent<HTMLDivElement>) {
@@ -181,6 +444,7 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
       Math.round(((event.clientY - rect.top) / rect.height) * sourceMapHeight),
     ];
     if (editControlPoint && selectedTraceDraft?.properties.sourceGraphic) {
+      pushHistory();
       const points = selectedTraceDraft.properties.sourceGraphic.points.map(point => [...point] as [number, number]);
       const index = Math.max(0, Math.min(points.length - 1, sourceControlPointIndex));
       points[index] = source;
@@ -203,6 +467,7 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
 
   function handleReferenceClick(event: MouseEvent<SVGSVGElement>) {
     if (!pendingSource) return;
+    pushHistory();
     const rect = event.currentTarget.getBoundingClientRect();
     const x = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
     const y = Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100));
@@ -225,10 +490,12 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
   }
 
   function removeAnchor(id: string) {
+    pushHistory();
     setAnchors(current => current.filter(anchor => anchor.id !== id));
   }
 
   function updateAnchor(id: string, enabled: boolean) {
+    pushHistory();
     setAnchors(current => current.map(anchor => anchor.id === id ? { ...anchor, enabled, status: enabled ? 'candidate' : 'needs_human_confirmation' } : anchor));
   }
 
@@ -243,6 +510,7 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
 
   function setTraceReviewStatus(status: HistoricalTraceFeature['properties']['reviewStatus']) {
     if (!selectedTraceDraft) return;
+    pushHistory();
     setTraceDrafts(current => ({
       ...current,
       [selectedTraceDraft.id]: { ...selectedTraceDraft, properties: { ...selectedTraceDraft.properties, reviewStatus: status } },
@@ -254,12 +522,13 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
     const path = editablePath(selectedTraceDraft.geometry, pathIndex);
     if (!path[nextVertexIndex]) return;
     const nextPath = path.map((value, index) => index === nextVertexIndex ? position : value);
-    updateSelectedTraceDraft(feature => ({ ...feature, geometry: replaceEditablePath(feature.geometry, pathIndex, nextPath) }));
+    updateSelectedTraceDraft(feature => ({ ...feature, geometry: replaceEditablePath(feature.geometry, pathIndex, nextPath) }), false);
   }
 
   function handleReferencePointerDown(event: ReactPointerEvent<SVGCircleElement>, pathIndex: number, nextVertexIndex: number) {
     event.stopPropagation();
     event.currentTarget.setPointerCapture(event.pointerId);
+    pushHistory();
     setGeometryPathIndex(pathIndex);
     setVertexIndex(nextVertexIndex);
     setDraggingVertex({ pathIndex, vertexIndex: nextVertexIndex });
@@ -305,17 +574,26 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
   }
 
   return (
-    <main className="historical-registration" data-enabled-anchor-count={enabledAnchors.length}>
+    <main className="historical-registration" data-enabled-anchor-count={enabledAnchors.length} data-draft-status={hasUnexportedChanges ? 'unexported' : 'saved'}>
       <header className="historical-registration__masthead">
         <div>
-          <span>DEVELOPMENT ONLY · V0.8</span>
-          <h1>Historical Battle Map Registration</h1>
+          <span>RESEARCH WORKBENCH · V0.8.3</span>
+          <h1>研究編修工具</h1>
+          <h2>Historical Battle Map Registration</h2>
           <p>來源圖：古寧頭戰役路線圖.jpg · 目前是 schematic_only，不是精密地理套準。</p>
+          <p className="historical-registration__draft-banner">目前修改儲存在此瀏覽器，尚未寫入 GitHub 專案。<strong>{draftStatus}</strong></p>
         </div>
         <div className="historical-registration__actions">
+          <button type="button" onClick={exportModifiedFiles}>匯出修改</button>
+          <button type="button" onClick={() => traceImportRef.current?.click()}>匯入 trace GeoJSON</button>
+          <button type="button" onClick={() => registrationImportRef.current?.click()}>匯入 registration JSON</button>
+          <button type="button" onClick={resetToCanonical}>重新載入 GitHub 版本</button>
+          <button type="button" onClick={undo} disabled={!undoStack.length}>復原</button>
+          <button type="button" onClick={redo} disabled={!redoStack.length}>重做</button>
           <button type="button" onClick={() => downloadJson('historical-battle-map-registration.draft.json', { ...registrationRaw, anchors })}>保存 anchor set</button>
           <button type="button" onClick={() => downloadJson('historical-battle-map-traces.review-draft.geojson', { ...traceCollection, features: draftFeatures() })}>下載 trace review draft</button>
-          <button type="button" onClick={() => downloadJson('historical-battle-map-traces.geojson', { ...traceCollection, features: draftFeatures() })}>下載正式 trace dataset</button>
+          <input ref={traceImportRef} className="historical-registration__file-input" type="file" accept=".geojson,.json,application/geo+json,application/json" onChange={handleTraceImport} aria-label="匯入 trace GeoJSON" />
+          <input ref={registrationImportRef} className="historical-registration__file-input" type="file" accept=".json,application/json" onChange={handleRegistrationImport} aria-label="匯入 registration JSON" />
         </div>
       </header>
 
@@ -325,6 +603,7 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
         <strong>NONE</strong><span>auto-selected transform</span>
         <strong>{registrationRaw.registrationMethod}</strong><span>registration method</span>
         <strong>MANUAL</strong><span>trace correction priority</span>
+        <strong>{phaseCollection.phases.length}</strong><span>historical phases loaded</span>
       </section>
 
       <div className="historical-registration__comparison">
@@ -334,8 +613,12 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
             <button type="button" className={showSource ? 'is-selected' : ''} onClick={() => setShowSource(value => !value)}>{showSource ? '隱藏 source map' : '顯示 source map'}</button>
             <small>選 trace 後可在圖上檢視 sourceGraphic</small>
           </div>
+          <label className="historical-registration__opacity-control">source overlay opacity
+            <input type="range" min="0" max="1" step="0.05" value={sourceOpacity} onChange={event => setSourceOpacity(Number(event.target.value))} />
+            <output>{Math.round(sourceOpacity * 100)}%</output>
+          </label>
           <div className={`historical-registration__source ${showSource ? '' : 'is-hidden'}`} onClick={handleSourceClick}>
-            <img ref={imageRef} src={sourceUrl(base)} alt="古寧頭戰役路線圖" />
+            <img ref={imageRef} src={sourceUrl(base)} alt="古寧頭戰役路線圖" style={{ opacity: sourceOpacity }} />
             {pendingSource && <span className="historical-registration__pending-point" style={{ left: (pendingSource[0] / sourceMapWidth) * 100 + '%', top: (pendingSource[1] / sourceMapHeight) * 100 + '%' }} />}
             {showSource && selectedTraceDraft?.properties.sourceGraphic && <svg viewBox="0 0 1000 641" aria-hidden="true">
               <polyline points={selectedTraceDraft.properties.sourceGraphic.points.map(point => point.join(',')).join(' ')} />
@@ -388,7 +671,8 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
           <li>開啟 historical source map overlay，選擇一條既有 trace。</li>
           <li>對照來源戰役圖、visitor map 與 canonical location 參考。</li>
           <li>拖曳節點；需要時新增或刪除 vertex，再檢查路線方向。</li>
-          <li>保存正式 trace dataset，回正式 map 檢查 10/25 與 10/26。</li>
+          <li>按「匯出修改」下載 GeoJSON；若跨電腦，先匯入 trace／registration JSON。</li>
+          <li>回正式 map 檢查 10/25 與 10/26；不需要時用「重新載入 GitHub 版本」清除草稿。</li>
         </ol>
         <p>優先順序：國軍反擊方向 → 國軍防線 → 共軍登陸後向內陸推進。sourceIds、confidence、provenance、visitorLabel、sourceLabel 與 canonical Locations 不得任意改動。</p>
       </section>
@@ -443,7 +727,7 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
         </section>
       </section>
 
-      <footer className="historical-registration__footer">正式 map 直接讀取 <code>data/battles/guningtou-1949/historical-battle-map-traces.geojson</code>。下載正式 dataset 後由研究者審查並替換該檔，再執行 validation / tests / typecheck / build；不修改 canonical Locations。</footer>
+      <footer className="historical-registration__footer">正式 map 直接讀取 <code>data/battles/guningtou-1949/historical-battle-map-traces.geojson</code>。本工具只在瀏覽器保存草稿與下載檔案，不會寫入 GitHub；由研究者審查後再替換資料檔並執行 validation / tests / typecheck / build。不修改 canonical Locations。</footer>
     </main>
   );
 }

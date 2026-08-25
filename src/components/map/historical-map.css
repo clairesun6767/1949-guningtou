@@ -33,7 +33,7 @@
 .cesium-historical-renderer__credits { position: absolute; right: 8px; bottom: 4px; max-width: 55%; color: rgba(220,214,199,.54); font-size: 8px; text-align: right; }
 .cesium-historical-renderer__credits a { color: inherit; }
 .cesium-historical-renderer__loading { position: absolute; right: 24px; bottom: 74px; color: #908a7d; font: 9px var(--font-mono); letter-spacing: .12em; }
-.three-historical-renderer { position: absolute; z-index: 2; inset: 0; overflow: hidden; background: #a4aaa0; opacity: 0; transition: opacity 700ms ease; }
+.three-historical-renderer { position: absolute; z-index: 2; inset: 0; overflow: hidden; background: #31494a; opacity: 0; transition: opacity 700ms ease; }
 .three-historical-renderer--ready { opacity: 1; }
 .three-historical-renderer__stage,
 .three-historical-renderer__label-stage,
