@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — V1.3 Historical Evidence Closure
+
+- Reviewed all nine V1.2 research gaps using repository evidence only and added a machine-readable human-review queue.
+- Added versioned Evidence Matrix audit fields and production traceability validation without promoting historical entities or routes.
+- Correctly preserved the Historical Evidence Gate as `BLOCKED`; no production historical vertical slice or synthetic-data promotion was introduced.
+
 ## Unreleased — V1.2 Historical Evidence Boundary
 
 - Added the typed Source Registry view, HistoricalClaim model, Evidence Matrix, Route Audit migration map, Research Gap backlog, and HistoricalDataValidator.

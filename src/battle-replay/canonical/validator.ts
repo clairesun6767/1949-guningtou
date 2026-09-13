@@ -9,17 +9,18 @@ import type {
   Formation,
   Unit,
 } from '../types/index.js';
-import { evaluateVerticalSliceGate } from './evidenceGate.js';
+import { evaluateVerticalSliceGate, meetsEvidenceGate } from './evidenceGate.js';
 import type {
   HistoricalClaim,
   HistoricalDataBundle,
   HistoricalDataValidationReport,
   HistoricalEvidenceMatrixRow,
+  HumanReviewQueueItem,
   ResearchGap,
   RouteAuditRecord,
   SourceRegistryEntry,
 } from './types.js';
-import { HISTORICAL_EVIDENCE_LEVELS } from './types.js';
+import { HISTORICAL_EVIDENCE_LEVELS, HUMAN_REVIEW_ACTIONS } from './types.js';
 
 const evidenceLevels = new Set<string>(HISTORICAL_EVIDENCE_LEVELS);
 const claimSubjectTypes = new Set([
@@ -34,6 +35,12 @@ const researchEntityTypes = new Set([
 ]);
 const researchPriorities = new Set(['P0', 'P1', 'P2']);
 const researchStatuses = new Set(['OPEN', 'IN_PROGRESS', 'BLOCKED', 'CLOSED']);
+const matrixDimensions = ['event', 'time', 'location', 'unit', 'route'] as const;
+const humanReviewDimensions = new Set([
+  ...matrixDimensions,
+  'source', 'package', 'identity', 'region',
+]);
+const humanReviewActions = new Set<string>(HUMAN_REVIEW_ACTIONS);
 
 function nonEmpty(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
@@ -43,6 +50,10 @@ function localizedHasValue(value: unknown): boolean {
   return typeof value === 'object'
     && value !== null
     && Object.values(value as Record<string, unknown>).some(item => nonEmpty(item));
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function idsOf(records: Array<{ id: EntityId }>): Set<string> {
@@ -253,11 +264,39 @@ function validateDimension(
   }
 }
 
+function validateSnapshot(
+  snapshot: unknown,
+  path: string,
+  rowId: string,
+  collector: DiagnosticCollector,
+): void {
+  if (!isRecord(snapshot)) {
+    collector.error('HISTORICAL_MATRIX_SNAPSHOT_REQUIRED', 'Evidence matrix requires a versioned evidence snapshot.', {
+      path, entityId: rowId, domain: 'schema',
+    });
+    return;
+  }
+  matrixDimensions.forEach(dimension => {
+    if (!evidenceLevels.has(snapshot[dimension] as string)) {
+      collector.error('HISTORICAL_MATRIX_SNAPSHOT_LEVEL_INVALID', `Unsupported ${dimension} snapshot evidence level: ${String(snapshot[dimension])}.`, {
+        path: `${path}.${dimension}`, entityId: rowId, domain: 'schema',
+      });
+    }
+  });
+  if (snapshot.qualification !== 'QUALIFIED' && snapshot.qualification !== 'BLOCKED') {
+    collector.error('HISTORICAL_MATRIX_SNAPSHOT_QUALIFICATION_INVALID', `Unsupported snapshot qualification: ${String(snapshot.qualification)}.`, {
+      path: `${path}.qualification`, entityId: rowId, domain: 'schema',
+    });
+  }
+}
+
 function validateEvidenceMatrix(
   rows: HistoricalEvidenceMatrixRow[],
   sourceIds: Set<string>,
   claimIds: Set<string>,
   entityIds: Record<string, Set<string>>,
+  researchGapIds: Set<string>,
+  humanReviewIds: Set<string>,
   collector: DiagnosticCollector,
 ): void {
   registerUnique(rows, 'evidenceMatrix', collector);
@@ -293,6 +332,76 @@ function validateEvidenceMatrix(
         path: `${path}.overall`, entityId: row.id, domain: 'schema',
       });
     }
+    if (!Array.isArray(row.claimIds)) {
+      collector.error('HISTORICAL_MATRIX_CLAIM_IDS_REQUIRED', 'V1.3 evidence matrix rows require top-level claimIds for audit tracing.', {
+        path: `${path}.claimIds`, entityId: row.id, domain: 'schema',
+      });
+    } else {
+      row.claimIds.forEach((claimId, claimIndex) => {
+        if (!claimIds.has(claimId)) {
+          collector.error('HISTORICAL_MATRIX_CLAIM_BROKEN', `Matrix top-level claim reference does not resolve: ${String(claimId)}.`, {
+            path: `${path}.claimIds[${claimIndex}]`, entityId: row.id, domain: 'integrity',
+          });
+        }
+      });
+      if (row.gateStatus === 'QUALIFIED' && row.claimIds.length === 0) {
+        collector.error('HISTORICAL_PRODUCTION_CLAIM_REQUIRED', 'A qualified production candidate requires at least one claim reference.', {
+          path: `${path}.claimIds`, entityId: row.eventId, domain: 'historical',
+        });
+      }
+    }
+    if (!Array.isArray(row.conflicts)) {
+      collector.error('HISTORICAL_MATRIX_CONFLICTS_REQUIRED', 'V1.3 evidence matrix rows require an explicit conflicts array.', {
+        path: `${path}.conflicts`, entityId: row.id, domain: 'schema',
+      });
+    }
+    if (!Array.isArray(row.gapIds)) {
+      collector.error('HISTORICAL_MATRIX_GAPS_REQUIRED', 'V1.3 evidence matrix rows require gap IDs for unresolved dimensions.', {
+        path: `${path}.gapIds`, entityId: row.id, domain: 'schema',
+      });
+    } else {
+      row.gapIds.forEach((gapId, gapIndex) => {
+        if (!researchGapIds.has(gapId)) {
+          collector.error('HISTORICAL_MATRIX_GAP_BROKEN', `Matrix research gap reference does not resolve: ${String(gapId)}.`, {
+            path: `${path}.gapIds[${gapIndex}]`, entityId: row.id, domain: 'integrity',
+          });
+        }
+      });
+    }
+    if (!nonEmpty(row.changeReason)) {
+      collector.error('HISTORICAL_MATRIX_CHANGE_REASON_REQUIRED', 'V1.3 evidence matrix rows require a change reason.', {
+        path: `${path}.changeReason`, entityId: row.id, domain: 'historical',
+      });
+    }
+    if (!Array.isArray(row.humanDecisionRef)) {
+      collector.error('HISTORICAL_MATRIX_HUMAN_REVIEW_REF_REQUIRED', 'V1.3 evidence matrix rows require human review references when evidence remains unresolved.', {
+        path: `${path}.humanDecisionRef`, entityId: row.id, domain: 'schema',
+      });
+    } else {
+      row.humanDecisionRef.forEach((reviewId, reviewIndex) => {
+        if (!humanReviewIds.has(reviewId)) {
+          collector.error('HISTORICAL_MATRIX_HUMAN_REVIEW_REF_BROKEN', `Human review reference does not resolve: ${String(reviewId)}.`, {
+            path: `${path}.humanDecisionRef[${reviewIndex}]`, entityId: row.id, domain: 'integrity',
+          });
+        }
+      });
+    }
+    validateSnapshot(row.v1_2, `${path}.v1_2`, row.id, collector);
+    validateSnapshot(row.v1_3, `${path}.v1_3`, row.id, collector);
+    if (isRecord(row.v1_3)) {
+      matrixDimensions.forEach(dimension => {
+        if (row.v1_3[dimension] !== row.dimensions[dimension].level) {
+          collector.error('HISTORICAL_MATRIX_V1_3_LEVEL_STALE', `V1.3 snapshot for ${dimension} does not match the current dimension.`, {
+            path: `${path}.v1_3.${dimension}`, entityId: row.id, domain: 'integrity',
+          });
+        }
+      });
+      if (row.v1_3.qualification !== row.gateStatus) {
+        collector.error('HISTORICAL_MATRIX_V1_3_QUALIFICATION_STALE', 'V1.3 snapshot qualification does not match gateStatus.', {
+          path: `${path}.v1_3.qualification`, entityId: row.id, domain: 'integrity',
+        });
+      }
+    }
     requireSourceIds(row.sourceIds, sourceIds, collector, `${path}.sourceIds`, row.id, false);
     const evaluation = evaluateVerticalSliceGate(row);
     const expectedStatus = evaluation.pass ? 'QUALIFIED' : 'BLOCKED';
@@ -300,6 +409,18 @@ function validateEvidenceMatrix(
       collector.error('HISTORICAL_GATE_STATUS_STALE', `Matrix gateStatus=${row.gateStatus} does not match explicit dimensions (${expectedStatus}).`, {
         path: `${path}.gateStatus`, entityId: row.id, domain: 'integrity',
       });
+    }
+    if (row.gateStatus === 'QUALIFIED') {
+      if (row.eventNamespace !== 'canonical') {
+        collector.error('HISTORICAL_PRODUCTION_EVENT_NOT_CANONICAL', 'A qualified production event must resolve to the canonical package namespace.', {
+          path: `${path}.eventNamespace`, entityId: row.eventId, domain: 'integrity',
+        });
+      }
+      if (row.sourceIds.length === 0) {
+        collector.error('HISTORICAL_PRODUCTION_SOURCE_REQUIRED', 'A qualified production candidate requires source IDs.', {
+          path: `${path}.sourceIds`, entityId: row.eventId, domain: 'historical',
+        });
+      }
     }
   });
 }
@@ -342,7 +463,6 @@ function validateRouteAudit(
 }
 
 function validateResearchGaps(rows: ResearchGap[], collector: DiagnosticCollector): void {
-  registerUnique(rows, 'researchGaps', collector);
   rows.forEach((gap, index) => {
     const path = `researchGaps[${index}]`;
     if (!researchEntityTypes.has(gap.entityType)) {
@@ -373,6 +493,139 @@ function validateResearchGaps(rows: ResearchGap[], collector: DiagnosticCollecto
   });
 }
 
+function validateHumanReviewQueue(
+  rows: HumanReviewQueueItem[],
+  sourceIds: Set<string>,
+  claimIds: Set<string>,
+  researchGapIds: Set<string>,
+  collector: DiagnosticCollector,
+): void {
+  rows.forEach((item, index) => {
+    const path = `humanReviewQueue[${index}]`;
+    if (!nonEmpty(item.candidateId) || !nonEmpty(item.question)) {
+      collector.error('HUMAN_REVIEW_FIELDS_REQUIRED', 'Human review queue item requires candidateId and question.', {
+        path, entityId: item.id, domain: 'schema',
+      });
+    }
+    if (!humanReviewDimensions.has(item.dimension)) {
+      collector.error('HUMAN_REVIEW_DIMENSION_INVALID', `Unsupported human review dimension: ${item.dimension}.`, {
+        path: `${path}.dimension`, entityId: item.id, domain: 'schema',
+      });
+    }
+    if (!evidenceLevels.has(item.currentEvidenceLevel)) {
+      collector.error('HUMAN_REVIEW_CURRENT_LEVEL_INVALID', `Unsupported current evidence level: ${item.currentEvidenceLevel}.`, {
+        path: `${path}.currentEvidenceLevel`, entityId: item.id, domain: 'schema',
+      });
+    }
+    if (!evidenceLevels.has(item.requiredEvidenceLevel)) {
+      collector.error('HUMAN_REVIEW_REQUIRED_LEVEL_INVALID', `Unsupported required evidence level: ${item.requiredEvidenceLevel}.`, {
+        path: `${path}.requiredEvidenceLevel`, entityId: item.id, domain: 'schema',
+      });
+    }
+    if (item.gapId !== undefined && !researchGapIds.has(item.gapId)) {
+      collector.error('HUMAN_REVIEW_GAP_BROKEN', `Human review gap reference does not resolve: ${item.gapId}.`, {
+        path: `${path}.gapId`, entityId: item.id, domain: 'integrity',
+      });
+    }
+    requireSourceIds(item.sourceIds, sourceIds, collector, `${path}.sourceIds`, item.id, false);
+    if (!Array.isArray(item.claimIds)) {
+      collector.error('HUMAN_REVIEW_CLAIMS_REQUIRED', 'Human review queue claimIds must be an array.', {
+        path: `${path}.claimIds`, entityId: item.id, domain: 'schema',
+      });
+    } else {
+      item.claimIds.forEach((claimId, claimIndex) => {
+        if (!claimIds.has(claimId)) {
+          collector.error('HUMAN_REVIEW_CLAIM_BROKEN', `Human review claim reference does not resolve: ${String(claimId)}.`, {
+            path: `${path}.claimIds[${claimIndex}]`, entityId: item.id, domain: 'integrity',
+          });
+        }
+      });
+    }
+    if (item.conflict !== null && !nonEmpty(item.conflict)) {
+      collector.error('HUMAN_REVIEW_CONFLICT_INVALID', 'Human review conflict must be null or a non-empty explanation.', {
+        path: `${path}.conflict`, entityId: item.id, domain: 'schema',
+      });
+    }
+    if (!Array.isArray(item.possibleActions) || item.possibleActions.length === 0) {
+      collector.error('HUMAN_REVIEW_ACTIONS_REQUIRED', 'Human review queue item requires at least one possible action.', {
+        path: `${path}.possibleActions`, entityId: item.id, domain: 'schema',
+      });
+    } else {
+      item.possibleActions.forEach((action, actionIndex) => {
+        if (!humanReviewActions.has(action)) {
+          collector.error('HUMAN_REVIEW_ACTION_INVALID', `Unsupported human review action: ${String(action)}.`, {
+            path: `${path}.possibleActions[${actionIndex}]`, entityId: item.id, domain: 'schema',
+          });
+        }
+      });
+    }
+  });
+}
+
+interface ProductionSubject {
+  subjectType: 'battle' | 'event' | 'unit' | 'formation' | 'location' | 'route' | 'region';
+  subjectId: string;
+  sourceRefs: unknown;
+  metadata: unknown;
+}
+
+function productionSubjects(data: BattlePackageData): ProductionSubject[] {
+  return [
+    { subjectType: 'battle', subjectId: data.battle.id, sourceRefs: data.battle.sourceRefs, metadata: data.battle.metadata },
+    ...data.events.map(event => ({ subjectType: 'event' as const, subjectId: event.id, sourceRefs: event.sourceRefs, metadata: event.metadata })),
+    ...data.units.map(unit => ({ subjectType: 'unit' as const, subjectId: unit.id, sourceRefs: unit.sourceRefs, metadata: unit.metadata })),
+    ...data.formations.map(formation => ({ subjectType: 'formation' as const, subjectId: formation.id, sourceRefs: formation.sourceRefs, metadata: formation.metadata })),
+    ...data.locations.map(feature => ({ subjectType: 'location' as const, subjectId: feature.properties.id, sourceRefs: feature.properties.sourceRefs, metadata: feature.properties.metadata })),
+    ...data.routes.map(feature => ({ subjectType: 'route' as const, subjectId: feature.properties.id, sourceRefs: feature.properties.sourceRefs, metadata: undefined })),
+    ...data.battleAreas.map(feature => ({ subjectType: 'region' as const, subjectId: feature.properties.id, sourceRefs: feature.properties.sourceRefs, metadata: undefined })),
+  ];
+}
+
+function validateProductionEnabledEntities(
+  bundle: HistoricalDataBundle,
+  sourceIds: Set<string>,
+  collector: DiagnosticCollector,
+): void {
+  productionSubjects(bundle.packageData).forEach(subject => {
+    if (!isRecord(subject.metadata) || subject.metadata.productionEnabled !== true) return;
+    const path = `production.${subject.subjectType}.${subject.subjectId}`;
+    const sourceRefs = Array.isArray(subject.sourceRefs) ? subject.sourceRefs : [];
+    if (sourceRefs.length === 0) {
+      collector.error('HISTORICAL_PRODUCTION_SOURCE_REQUIRED', 'A production-enabled historical entity requires direct sourceRefs.', {
+        path: `${path}.sourceRefs`, entityId: subject.subjectId, domain: 'historical',
+      });
+    }
+    sourceRefs.forEach((sourceId, index) => {
+      if (!nonEmpty(sourceId) || !sourceIds.has(sourceId)) {
+        collector.error('HISTORICAL_PRODUCTION_SOURCE_REFERENCE_BROKEN', `Production source reference does not resolve: ${String(sourceId)}.`, {
+          path: `${path}.sourceRefs[${index}]`, entityId: subject.subjectId, domain: 'integrity',
+        });
+      }
+    });
+    const claims = bundle.claims.filter(claim => claim.subjectNamespace === 'canonical'
+      && claim.subjectType === subject.subjectType
+      && claim.subjectId === subject.subjectId);
+    if (claims.length === 0) {
+      collector.error('HISTORICAL_PRODUCTION_CLAIM_REQUIRED', 'A production-enabled historical entity requires a canonical HistoricalClaim.', {
+        path, entityId: subject.subjectId, domain: 'historical',
+      });
+      return;
+    }
+    const qualifiedClaims = claims.filter(claim => meetsEvidenceGate(claim.evidenceLevel));
+    if (qualifiedClaims.length === 0) {
+      collector.error('HISTORICAL_PRODUCTION_CLAIM_NOT_QUALIFIED', 'A production-enabled historical entity requires a Supported or Verified HistoricalClaim.', {
+        path, entityId: subject.subjectId, domain: 'historical',
+      });
+      return;
+    }
+    if (!qualifiedClaims.some(claim => claim.sourceIds.some(sourceId => sourceRefs.includes(sourceId)))) {
+      collector.error('HISTORICAL_PRODUCTION_TRACE_DISCONNECTED', 'Production entity, qualifying claim, and sourceRefs must form one traceable chain.', {
+        path, entityId: subject.subjectId, domain: 'integrity',
+      });
+    }
+  });
+}
+
 function validateParentCycles(data: BattlePackageData, collector: DiagnosticCollector): void {
   const unitCycles = hasCycle(data.units as Array<Unit & { parentUnitId?: string }>, 'parentUnitId');
   unitCycles.forEach(id => collector.error('CIRCULAR_PARENT_UNIT', `Circular parent unit relationship includes ${id}.`, {
@@ -396,10 +649,15 @@ export class HistoricalDataValidator {
     const sourceIds = validateSourceRegistry(bundle.sourceRegistry, collector);
     const entityIds = packageEntityIds(bundle.packageData);
     const claimIds = registerUnique(bundle.claims, 'claims', collector);
+    const researchGapIds = registerUnique(bundle.researchGaps, 'researchGaps', collector);
+    const humanReviewQueue = bundle.humanReviewQueue ?? [];
+    const humanReviewIds = registerUnique(humanReviewQueue, 'humanReviewQueue', collector);
     bundle.claims.forEach((claim, index) => validateClaim(claim, index, sourceIds, entityIds, collector));
-    validateEvidenceMatrix(bundle.evidenceMatrix, sourceIds, claimIds, entityIds, collector);
+    validateEvidenceMatrix(bundle.evidenceMatrix, sourceIds, claimIds, entityIds, researchGapIds, humanReviewIds, collector);
     validateRouteAudit(bundle.routeAudit, sourceIds, collector);
     validateResearchGaps(bundle.researchGaps, collector);
+    validateHumanReviewQueue(humanReviewQueue, sourceIds, claimIds, researchGapIds, collector);
+    validateProductionEnabledEntities(bundle, sourceIds, collector);
     validateParentCycles(bundle.packageData, collector);
     return this.report(collector, bundle);
   }
@@ -421,6 +679,7 @@ export class HistoricalDataValidator {
         evidenceRows: bundle?.evidenceMatrix?.length ?? 0,
         routeAuditRows: bundle?.routeAudit?.length ?? 0,
         researchGaps: bundle?.researchGaps?.length ?? 0,
+        humanReviewQueue: bundle?.humanReviewQueue?.length ?? 0,
       },
     };
   }

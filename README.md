@@ -63,6 +63,11 @@ astro dev stop
 - [Historical Evidence Matrix](docs/HISTORICAL_EVIDENCE_MATRIX.md)
 - [Historical Research Backlog](docs/HISTORICAL_RESEARCH_BACKLOG.md)
 - [V1.2 驗收報告](docs/V1_2_ACCEPTANCE_REPORT.md)
+- [V1.3 Research Gap Review](docs/V1_3_RESEARCH_GAP_REVIEW.md)
+- [V1.3 Human Review Queue](docs/V1_3_HUMAN_REVIEW_QUEUE.md)
+- [V1.3 Canonical Diff](docs/V1_3_CANONICAL_DIFF.md)
+- [V1.3 Blocked Report](docs/V1_3_BLOCKED_REPORT.md)
+- [V1.3 驗收報告](docs/V1_3_ACCEPTANCE_REPORT.md)
 
 ## 部署
 

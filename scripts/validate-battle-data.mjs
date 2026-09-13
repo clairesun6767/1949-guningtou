@@ -73,6 +73,7 @@ function loadHistoricalEvidencePackage(manifest, packageDirectory, data) {
     evidenceMatrix: load('evidenceMatrix'),
     routeAudit: load('routeAudit'),
     researchGaps: load('researchGaps'),
+    humanReviewQueue: load('humanReviewQueue'),
   };
 }
 
@@ -158,7 +159,7 @@ if (process.argv.includes('--json')) {
   console.log(`Unresolved entities: ${validation.unresolvedEntityIds.join(', ') || 'none'}`);
   console.log(`Unverified coordinates: ${validation.unverifiedCoordinateIds.join(', ') || 'none'}`);
   console.log(`Unresolved legacy references: ${legacy.unresolvedReferences.join(', ') || 'none'}`);
-  console.log(`Historical data: errors=${historicalValidation.errors}, warnings=${historicalValidation.warnings}, info=${historicalValidation.info}; sources=${historicalEvidence.sourceRegistry.length}, claims=${historicalEvidence.claims.length}, evidenceRows=${historicalEvidence.evidenceMatrix.length}, routeAudit=${historicalEvidence.routeAudit.length}, researchGaps=${historicalEvidence.researchGaps.length}`);
+  console.log(`Historical data: errors=${historicalValidation.errors}, warnings=${historicalValidation.warnings}, info=${historicalValidation.info}; sources=${historicalEvidence.sourceRegistry.length}, claims=${historicalEvidence.claims.length}, evidenceRows=${historicalEvidence.evidenceMatrix.length}, routeAudit=${historicalEvidence.routeAudit.length}, researchGaps=${historicalEvidence.researchGaps.length}, humanReviewQueue=${historicalEvidence.humanReviewQueue.length}`);
   console.log(`Historical vertical slice: ${candidateSelection.selected ? `QUALIFIED (${candidateSelection.selected.eventId})` : 'BLOCKED'}; qualified=${candidateSelection.qualifiedEventIds.join(', ') || 'none'}`);
   console.log(`Manifest files: missing=${missingFiles.join(', ') || 'none'}`);
   for (const diagnostic of validation.diagnostics) {

@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "packageId": "PKG-GUN-1949-BR1",
   "battleId": "BAT-GUN-1949",
-  "packageVersion": "0.2.0-v1.2-evidence-audit",
+  "packageVersion": "0.3.0-v1.3-evidence-closure",
   "packageRole": "calibration-overlay",
   "minimumEngineVersion": "0.1.0",
   "defaultLocale": "zh-Hant",
@@ -38,7 +38,8 @@
     "historicalClaims": "historical-claims.json",
     "evidenceMatrix": "evidence-matrix.json",
     "routeAudit": "route-audit.json",
-    "researchGaps": "research-gaps.json"
+    "researchGaps": "research-gaps.json",
+    "humanReviewQueue": "human-review-queue.json"
   },
   "migrations": [
     {

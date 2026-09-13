@@ -46,6 +46,7 @@ function currentHistoricalBundle() {
     evidenceMatrix: readPackage('evidence-matrix.json'),
     routeAudit: readPackage('route-audit.json'),
     researchGaps: readPackage('research-gaps.json'),
+    humanReviewQueue: readPackage('human-review-queue.json'),
   };
 }
 
@@ -61,6 +62,7 @@ test('V1.2 historical package supplements validate without promoting incomplete 
     evidenceRows: 5,
     routeAuditRows: 12,
     researchGaps: 9,
+    humanReviewQueue: 9,
   });
 
   const selection = selectFirstQualifiedHistoricalEvent(bundle.evidenceMatrix);
@@ -92,6 +94,56 @@ test('Evidence Gate checks explicit dimensions and does not average away a missi
   assert.equal(staticResult.pass, true);
   assert.equal(staticResult.presentation, 'static-context-only');
   assert.deepEqual(evaluateVerticalSliceGate(staticContextRow, { requireRoute: true }).failures, ['route']);
+});
+
+test('V1.3 evidence matrix preserves the audit trail without changing qualification', () => {
+  const bundle = currentHistoricalBundle();
+
+  for (const row of bundle.evidenceMatrix) {
+    assert.ok(row.claimIds.length > 0);
+    assert.ok(Array.isArray(row.conflicts));
+    assert.ok(row.gapIds.length > 0);
+    assert.deepEqual(row.v1_3, {
+      event: row.dimensions.event.level,
+      time: row.dimensions.time.level,
+      location: row.dimensions.location.level,
+      unit: row.dimensions.unit.level,
+      route: row.dimensions.route.level,
+      qualification: row.gateStatus,
+    });
+    assert.ok(row.humanDecisionRef.length > 0);
+    assert.equal(row.v1_2.qualification, 'BLOCKED');
+    assert.equal(row.v1_3.qualification, 'BLOCKED');
+  }
+  assert.ok(bundle.routeAudit.every(route => route.enabled === false));
+});
+
+test('partial, unsupported, and disputed dimensions cannot qualify; all supported dimensions can', () => {
+  const row = currentHistoricalBundle().evidenceMatrix[0];
+  const baseDimensions = Object.fromEntries(Object.entries(row.dimensions).map(([key, dimension]) => [
+    key,
+    { ...dimension, level: 'SUPPORTED' },
+  ]));
+  const fullySupported = evaluateVerticalSliceGate({
+    ...row,
+    dimensions: baseDimensions,
+    routePresentation: 'exact-route-animation',
+  });
+  assert.equal(fullySupported.pass, true);
+  assert.deepEqual(fullySupported.failures, []);
+
+  for (const level of ['PARTIAL', 'NO_EVIDENCE', 'DISPUTED']) {
+    const result = evaluateVerticalSliceGate({
+      ...row,
+      dimensions: {
+        ...baseDimensions,
+        location: { ...baseDimensions.location, level },
+      },
+      routePresentation: 'static-context-only',
+    });
+    assert.equal(result.pass, false);
+    assert.ok(result.failures.includes('location'));
+  }
 });
 
 test('Legacy adapter preserves the migration boundary and promotes zero routes', () => {
@@ -147,4 +199,54 @@ test('HistoricalDataValidator catches circular parent units', () => {
 
   assert.equal(report.valid, false);
   assert.ok(report.diagnostics.some(diagnostic => diagnostic.code === 'CIRCULAR_PARENT_UNIT'));
+});
+
+test('production-enabled historical entities require a qualified claim and source trace', () => {
+  const bundle = currentHistoricalBundle();
+  const entity = {
+    id: 'EVT-CANONICAL-TEST',
+    sourceRefs: ['SRC-0004'],
+    metadata: { productionEnabled: true },
+  };
+  const withEntity = {
+    ...bundle,
+    packageData: { ...bundle.packageData, events: [entity] },
+  };
+  const withoutClaim = new HistoricalDataValidator().validate(withEntity);
+  assert.equal(withoutClaim.valid, false);
+  assert.ok(withoutClaim.diagnostics.some(diagnostic => diagnostic.code === 'HISTORICAL_PRODUCTION_CLAIM_REQUIRED'));
+
+  const qualifiedClaim = {
+    ...bundle.claims[0],
+    id: 'CLM-CANONICAL-TEST',
+    subjectType: 'event',
+    subjectId: entity.id,
+    subjectNamespace: 'canonical',
+    evidenceLevel: 'SUPPORTED',
+    sourceIds: ['SRC-0004'],
+  };
+  const valid = new HistoricalDataValidator().validate({
+    ...withEntity,
+    claims: [...bundle.claims, qualifiedClaim],
+  });
+  assert.equal(valid.valid, true);
+
+  const noSourceEntity = { ...entity, id: 'EVT-CANONICAL-NO-SOURCE', sourceRefs: [] };
+  const noSourceClaim = { ...qualifiedClaim, id: 'CLM-CANONICAL-NO-SOURCE', subjectId: noSourceEntity.id };
+  const noSource = new HistoricalDataValidator().validate({
+    ...bundle,
+    packageData: { ...bundle.packageData, events: [noSourceEntity] },
+    claims: [...bundle.claims, noSourceClaim],
+  });
+  assert.equal(noSource.valid, false);
+  assert.ok(noSource.diagnostics.some(diagnostic => diagnostic.code === 'HISTORICAL_PRODUCTION_SOURCE_REQUIRED'));
+});
+
+test('V1.3 leaves canonical and presentation geometry counts unchanged', () => {
+  assert.equal(readPackage('locations.geojson').features.length, 6);
+  assert.equal(readPackage('events.json').length, 0);
+  assert.equal(readPackage('units.json').length, 0);
+  assert.equal(readPackage('routes.geojson').features.length, 0);
+  assert.equal(readPackage('battle-movements.geojson').features.length, 5);
+  assert.equal(readPackage('historical-battle-map-traces.geojson').features.length, 13);
 });

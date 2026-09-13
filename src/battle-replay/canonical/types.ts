@@ -89,6 +89,17 @@ export interface EvidenceDimension {
   notes?: string;
 }
 
+export type HistoricalEvidenceDimension = 'event' | 'time' | 'location' | 'unit' | 'route';
+
+export interface HistoricalEvidenceSnapshot {
+  event: HistoricalEvidenceLevel;
+  time: HistoricalEvidenceLevel;
+  location: HistoricalEvidenceLevel;
+  unit: HistoricalEvidenceLevel;
+  route: HistoricalEvidenceLevel;
+  qualification: 'QUALIFIED' | 'BLOCKED';
+}
+
 export interface HistoricalEvidenceMatrixRow {
   id: string;
   eventId: string;
@@ -105,6 +116,13 @@ export interface HistoricalEvidenceMatrixRow {
   routePresentation: 'exact-route-animation' | 'static-context-only' | 'not-available';
   gateStatus: 'QUALIFIED' | 'BLOCKED';
   sourceIds: string[];
+  claimIds: string[];
+  conflicts: string[];
+  gapIds: string[];
+  v1_2: HistoricalEvidenceSnapshot;
+  v1_3: HistoricalEvidenceSnapshot;
+  changeReason: string;
+  humanDecisionRef: string[];
   notes?: string;
 }
 
@@ -150,6 +168,30 @@ export interface ResearchGap {
   notes?: string;
 }
 
+export const HUMAN_REVIEW_ACTIONS = [
+  'APPROVE',
+  'REJECT',
+  'REQUEST_MORE_EVIDENCE',
+  'KEEP_BLOCKED',
+] as const;
+
+export type HumanReviewAction = typeof HUMAN_REVIEW_ACTIONS[number];
+export type HumanReviewDimension = HistoricalEvidenceDimension | 'source' | 'package' | 'identity' | 'region';
+
+export interface HumanReviewQueueItem {
+  id: string;
+  candidateId: string;
+  dimension: HumanReviewDimension;
+  gapId?: string;
+  claimIds: string[];
+  sourceIds: string[];
+  currentEvidenceLevel: HistoricalEvidenceLevel;
+  requiredEvidenceLevel: HistoricalEvidenceLevel;
+  conflict: string | null;
+  question: string;
+  possibleActions: HumanReviewAction[];
+}
+
 export interface HistoricalDataBundle {
   packageData: BattlePackageData;
   manifest?: BattlePackageManifest;
@@ -158,6 +200,7 @@ export interface HistoricalDataBundle {
   evidenceMatrix: HistoricalEvidenceMatrixRow[];
   routeAudit: RouteAuditRecord[];
   researchGaps: ResearchGap[];
+  humanReviewQueue: HumanReviewQueueItem[];
 }
 
 export interface EvidenceGateResult {
@@ -182,6 +225,7 @@ export interface HistoricalDataValidationReport {
     evidenceRows: number;
     routeAuditRows: number;
     researchGaps: number;
+    humanReviewQueue: number;
   };
 }
 

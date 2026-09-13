@@ -22,7 +22,8 @@
     "claims": "historical-claims.json",
     "matrix": "evidence-matrix.json",
     "routeAudit": "route-audit.json",
-    "researchGaps": "research-gaps.json"
+    "researchGaps": "research-gaps.json",
+    "humanReviewQueue": "human-review-queue.json"
   },
   "promotionRule": "Event, Time, Location, and Unit must each be at least SUPPORTED; exact route animation also requires Route at least SUPPORTED."
 }

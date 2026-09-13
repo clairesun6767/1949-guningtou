@@ -40,6 +40,13 @@
     "routePresentation": "static-context-only",
     "gateStatus": "BLOCKED",
     "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "claimIds": ["CLM-GUN-0003", "CLM-GUN-0004", "CLM-GUN-0005", "CLM-GUN-0006"],
+    "conflicts": ["The named location pair is not resolved to canonical Locations, and the legacy unit index has no direct event/source binding."],
+    "gapIds": ["RG-GUN-0001", "RG-GUN-0002", "RG-GUN-0009"],
+    "v1_2": { "event": "SUPPORTED", "time": "SUPPORTED", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "v1_3": { "event": "SUPPORTED", "time": "SUPPORTED", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "changeReason": "Repository-only review found no page-level location citation, direct unit binding, or human decision; all V1.2 levels remain unchanged.",
+    "humanDecisionRef": ["HRQ-GUN-0001", "HRQ-GUN-0002", "HRQ-GUN-0005"],
     "notes": "Candidate 1. Event and time are the strongest current records, but Location and Unit do not reach Supported."
   },
   {
@@ -83,6 +90,13 @@
     "routePresentation": "static-context-only",
     "gateStatus": "BLOCKED",
     "sourceIds": ["SRC-0004", "SRC-0027"],
+    "claimIds": ["CLM-GUN-0001", "CLM-GUN-0002"],
+    "conflicts": ["The legacy event is marked as conflicting_sources and describes multiple beaches rather than one canonical location or route."],
+    "gapIds": ["RG-GUN-0007", "RG-GUN-0009"],
+    "v1_2": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "v1_3": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "changeReason": "Existing broad landing records were cross-referenced but no new source excerpt or human decision closed any dimension.",
+    "humanDecisionRef": ["HRQ-GUN-0004", "HRQ-GUN-0005"],
     "notes": "Candidate 2. Broad landing context is displayable only as an uncertainty-aware area statement."
   },
   {
@@ -126,6 +140,13 @@
     "routePresentation": "static-context-only",
     "gateStatus": "BLOCKED",
     "sourceIds": ["SRC-0004", "SRC-0027"],
+    "claimIds": ["CLM-GUN-0007"],
+    "conflicts": ["The current record supports only a broad day-level engagement context; location and unit identity remain unresolved."],
+    "gapIds": ["RG-GUN-0007", "RG-GUN-0009"],
+    "v1_2": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "v1_3": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "changeReason": "Repository cross-reference did not add page-level citation or canonical event/location/unit bindings; levels remain unchanged.",
+    "humanDecisionRef": ["HRQ-GUN-0004", "HRQ-GUN-0005"],
     "notes": "Candidate 3. The event can remain a research lead, not a production vertical slice."
   },
   {
@@ -169,6 +190,13 @@
     "routePresentation": "static-context-only",
     "gateStatus": "BLOCKED",
     "sourceIds": ["SRC-0004", "SRC-0027"],
+    "claimIds": ["CLM-GUN-0008", "CLM-GUN-0010"],
+    "conflicts": ["The recapture record and R08 direction candidate do not authorize one exact target geometry or one source-backed unit route."],
+    "gapIds": ["RG-GUN-0004", "RG-GUN-0005", "RG-GUN-0007", "RG-GUN-0009"],
+    "v1_2": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "v1_3": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "changeReason": "Route and location candidates were reviewed without promoting geometry or inferring unit bindings; no evidence level changed.",
+    "humanDecisionRef": ["HRQ-GUN-0003", "HRQ-GUN-0004", "HRQ-GUN-0005", "HRQ-GUN-0006"],
     "notes": "Candidate 4. Use as a research target for the future ROC counterattack slice."
   },
   {
@@ -212,6 +240,13 @@
     "routePresentation": "static-context-only",
     "gateStatus": "BLOCKED",
     "sourceIds": ["SRC-0004", "SRC-0027"],
+    "claimIds": ["CLM-GUN-0009", "CLM-GUN-0011"],
+    "conflicts": ["The final engagement context does not define a canonical northern-cliff location, and PLA retreat must not be merged with ROC encirclement."],
+    "gapIds": ["RG-GUN-0006", "RG-GUN-0007", "RG-GUN-0008", "RG-GUN-0009"],
+    "v1_2": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "v1_3": { "event": "PARTIAL", "time": "PARTIAL", "location": "PARTIAL", "unit": "PARTIAL", "route": "NO_EVIDENCE", "qualification": "BLOCKED" },
+    "changeReason": "Existing end-phase context was separated conceptually from route evidence, but no source-backed boundary or human decision closed the candidate.",
+    "humanDecisionRef": ["HRQ-GUN-0004", "HRQ-GUN-0005", "HRQ-GUN-0007", "HRQ-GUN-0008"],
     "notes": "Candidate 5. Preserve as a narrative/research lead; do not animate an exact path."
   }
 ]

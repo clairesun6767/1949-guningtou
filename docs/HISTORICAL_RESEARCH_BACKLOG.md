@@ -1,6 +1,8 @@
-# 古寧頭 Historical Research Backlog — V1.2
+# 古寧頭 Historical Research Backlog — V1.3
 
 研究缺口不是程式錯誤；它們是目前 repository 材料不足以通過 Evidence Gate 的明確問題。Machine-readable list: `data/battles/guningtou-1949/research-gaps.json`.
+
+V1.3 只完成 repository 內材料的交叉核對與人工審查佇列建立，沒有將任何 gap 標記為 `CLOSED`，也沒有把 legacy record 升格為 canonical historical entity。詳見 [`V1_3_RESEARCH_GAP_REVIEW.md`](V1_3_RESEARCH_GAP_REVIEW.md) 與 [`V1_3_HUMAN_REVIEW_QUEUE.md`](V1_3_HUMAN_REVIEW_QUEUE.md)。
 
 ## P0 — blocks the first historical vertical slice
 
@@ -32,3 +34,10 @@
 - 不以 Web 搜尋結果、AI 推論、道路形狀或座標鄰近補齊缺口。
 - 研究完成後先更新 `historical-claims.json`、evidence matrix 與 audit，再由 validator/Gate 決定是否可接入正式 Engine。
 - 任何 route promotion 都要保留 source provenance、legacy IDs、confidence 與 uncertainty；不刪除 R01–R12 的原始稽核記錄。
+
+## V1.3 review result
+
+- P0 gaps reviewed: 5; closed: 0.
+- P1 gaps reviewed: 3; closed: 0.
+- P2 gaps reviewed: 1; closed: 0.
+- Remaining decision: human review must supply or reject the missing page-level, unit-level, location, and route evidence before the Gate can be re-evaluated.
