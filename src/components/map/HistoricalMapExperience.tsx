@@ -26,6 +26,11 @@ import {
   type MapLayerId,
   type BattleMovementCollection,
 } from '../../battle-replay/visualization/index';
+import {
+  BattlefieldEngine,
+  confidenceToEvidenceLevel,
+  type RuntimeBattleData,
+} from '../../battle-replay/runtime/index';
 import './historical-map.css';
 
 interface Props {
@@ -87,6 +92,31 @@ const locationFeatures: BattleMapFeature[] = canonicalLocations.map(location => 
     referenceEra: location.properties.confidence === 'confirmed' ? 'historical_verified' : 'historical_approximate',
   },
 }));
+
+// The current canonical package intentionally has no approved routes, units,
+// or typed events.  The runtime still receives the verified POI boundary here;
+// empty arrays remain honest and prevent the renderer from inventing a slice.
+const runtimeMapData: RuntimeBattleData = {
+  pois: canonicalLocations.map(location => ({
+    id: location.properties.id,
+    name: location.properties.historicalName,
+    position: location.geometry.coordinates,
+    locationType: location.properties.locationType,
+    historicalStatus: location.properties.verificationStatus,
+    sourceIds: [...location.properties.sourceRefs],
+    evidenceIds: [],
+    confidence: confidenceToEvidenceLevel(location.properties.confidence),
+    sourceConfidence: location.properties.confidence,
+    verificationStatus: location.properties.verificationStatus,
+    provenance: { ...location.properties.coordinateProvenance },
+  })),
+  events: [],
+  units: [],
+  routes: [],
+  sources: [],
+  regions: [],
+  stories: [],
+};
 
 const COPY = {
   'zh-tw': {
@@ -211,15 +241,11 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const [cameraId, setCameraId] = useState<CameraPresetId>(getInitialCameraId);
   const [detailReady, setDetailReady] = useState(false);
   const [isFlying, setIsFlying] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [storyFocus, setStoryFocus] = useState<[number, number] | undefined>();
   const [tourIndex, setTourIndex] = useState(-1);
   const [activeDay, setActiveDay] = useState(0);
-  const [researchMode, setResearchMode] = useState(false);
-  const [playbackPlaying, setPlaybackPlaying] = useState(false);
   const [playbackModeActive, setPlaybackModeActive] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<0.5 | 1 | 2>(1);
-  const [playbackProgress, setPlaybackProgress] = useState(0);
   const [followBattle, setFollowBattle] = useState(false);
   const [selectedTraceId, setSelectedTraceId] = useState<string | null>(null);
   const [sourceMapOpacity, setSourceMapOpacity] = useState(.55);
@@ -235,9 +261,15 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const [rendererStatus, setRendererStatus] = useState<'idle' | 'loading' | 'ready' | 'fallback'>('idle');
   const [terrainSource, setTerrainSource] = useState<'srtm-reference' | 'ellipsoid' | 'cesium-world-terrain'>('srtm-reference');
   const viewportRef = useRef<HTMLDivElement>(null);
-  const playbackFrameRef = useRef<number | null>(null);
-  const lastPlaybackFrameRef = useRef<number | null>(null);
-  const playbackProgressRef = useRef(0);
+  const battlefieldEngine = useMemo(() => new BattlefieldEngine({
+    data: runtimeMapData,
+    timeline: { startTime: 0, endTime: 1, initialTime: 0, speed: 1 / 18000 },
+  }), []);
+  const [runtimeSnapshot, setRuntimeSnapshot] = useState(() => battlefieldEngine.getSnapshot());
+  const playbackProgress = runtimeSnapshot.timeline.currentTime;
+  const playbackPlaying = runtimeSnapshot.timeline.playing;
+  const researchMode = runtimeSnapshot.state.researchMode;
+  const selectedId = runtimeSnapshot.state.selectedPOI;
 
   const preset = CAMERA_PRESETS[cameraId];
   const activePhase = phaseAtProgress(historicalPhases, playbackProgress);
@@ -285,38 +317,16 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const activeHistoricalTraceTypes = new Set(productionHistoricalTraces.map(feature => feature.properties.featureType));
 
   useEffect(() => {
-    playbackProgressRef.current = playbackProgress;
-  }, [playbackProgress]);
+    const unsubscribe = battlefieldEngine.subscribe(setRuntimeSnapshot);
+    return () => {
+      unsubscribe();
+      battlefieldEngine.dispose();
+    };
+  }, [battlefieldEngine]);
 
   useEffect(() => {
-    if (!playbackPlaying) {
-      if (playbackFrameRef.current !== null) cancelAnimationFrame(playbackFrameRef.current);
-      playbackFrameRef.current = null;
-      lastPlaybackFrameRef.current = null;
-      return;
-    }
-    const tick = (now: number) => {
-      const previous = lastPlaybackFrameRef.current ?? now;
-      const elapsed = Math.max(0, now - previous);
-      lastPlaybackFrameRef.current = now;
-      const next = Math.min(1, playbackProgressRef.current + (elapsed / 18000) * playbackSpeed);
-      playbackProgressRef.current = next;
-      setPlaybackProgress(next);
-      if (next >= 1) {
-        setPlaybackPlaying(false);
-        playbackFrameRef.current = null;
-        lastPlaybackFrameRef.current = null;
-        return;
-      }
-      playbackFrameRef.current = requestAnimationFrame(tick);
-    };
-    playbackFrameRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (playbackFrameRef.current !== null) cancelAnimationFrame(playbackFrameRef.current);
-      playbackFrameRef.current = null;
-      lastPlaybackFrameRef.current = null;
-    };
-  }, [playbackPlaying, playbackSpeed]);
+    battlefieldEngine.setSpeed(playbackSpeed / 18000);
+  }, [battlefieldEngine, playbackSpeed]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
@@ -358,6 +368,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   async function enterBattlefield() {
     if (isFlying) return;
     setIsFlying(true);
+    battlefieldEngine.setMode('BATTLEFIELD');
     setDetailReady(true);
     setStoryFocus(undefined);
     setCameraId('kinmen');
@@ -370,20 +381,20 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   }
 
   function resetCamera() {
-    setSelectedId(null);
+    battlefieldEngine.selectPOI(null);
+    battlefieldEngine.setMode('EXPLORE');
+    battlefieldEngine.seek(0);
+    battlefieldEngine.pause();
     setStoryFocus(undefined);
     setTourIndex(-1);
     setCameraId('strategic');
     setPlaybackModeActive(false);
-    playbackProgressRef.current = 0;
-    setPlaybackProgress(0);
-    setPlaybackPlaying(false);
     setOpenPanel(null);
   }
 
   function focusLocation(location: CanonicalLocation, index = canonicalLocations.findIndex(item => item.id === location.id)) {
     setDetailReady(true);
-    setSelectedId(location.id);
+    battlefieldEngine.selectPOI(location.id);
     setStoryFocus(undefined);
     setTourIndex(index);
     setCameraId(location.properties.locationType === 'landing-zone' || location.properties.locationType === 'coast' ? 'landing_coast' : 'poi_focus');
@@ -397,7 +408,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
 
   function focusStoryZone(zone: (typeof CARTOGRAPHIC_STORY_ZONES)[keyof typeof CARTOGRAPHIC_STORY_ZONES]) {
     setDetailReady(true);
-    setSelectedId(null);
+    battlefieldEngine.selectPOI(null);
     setStoryFocus(zone.focus);
     setCameraId(zone.cameraId);
     setOpenPanel(null);
@@ -425,28 +436,26 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   }
 
   function toggleResearchMode() {
-    setResearchMode(value => {
-      const next = !value;
-      setEnabledLayers(current => {
-        const layers = new Set(current);
-        if (next) layers.add('research-layer');
-        else {
-          layers.delete('research-layer');
-          layers.delete('candidate-routes');
-          layers.delete('historical-battle-map');
-        }
-        return layers;
-      });
-      return next;
+    const next = !researchMode;
+    battlefieldEngine.setResearchMode(next);
+    setEnabledLayers(current => {
+      const layers = new Set(current);
+      if (next) layers.add('research-layer');
+      else {
+        layers.delete('research-layer');
+        layers.delete('candidate-routes');
+        layers.delete('historical-battle-map');
+      }
+      return layers;
     });
   }
 
   function setPlaybackPosition(progress: number, play = false) {
     const next = Math.max(0, Math.min(1, progress));
-    playbackProgressRef.current = next;
     setPlaybackModeActive(true);
-    setPlaybackProgress(next);
-    setPlaybackPlaying(play);
+    battlefieldEngine.seek(next);
+    if (play) battlefieldEngine.play();
+    else battlefieldEngine.pause();
   }
 
   function setTimelineDate(index: number) {
@@ -454,10 +463,9 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
     setActiveDay(nextIndex);
     setDetailReady(true);
     setPlaybackModeActive(false);
-    setPlaybackPlaying(false);
+    battlefieldEngine.seek(0);
+    battlefieldEngine.pause();
     setFollowBattle(false);
-    playbackProgressRef.current = 0;
-    setPlaybackProgress(0);
     // A date selection is a review view, not a playback phase.  Move to the
     // battlefield framing so the date-specific source traces are immediately
     // legible; the camera system itself remains unchanged.
@@ -505,7 +513,12 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
               }}
               onSelectHistoricalTrace={id => {
                 setSelectedTraceId(id);
-                setResearchMode(true);
+                battlefieldEngine.setResearchMode(true);
+                setEnabledLayers(current => {
+                  const next = new Set(current);
+                  next.add('research-layer');
+                  return next;
+                });
                 setDetailReady(true);
               }}
               onReady={() => {
@@ -708,7 +721,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           <aside className="historical-map__poi-card" aria-live="polite">
             <div className="historical-map__poi-card-head">
               <span>{locationTypeLabel[selectedLocation.properties.locationType] ?? selectedLocation.properties.locationType} · {selectedLocation.id}</span>
-              <button type="button" onClick={() => setSelectedId(null)} aria-label={dictionary.close}>×</button>
+              <button type="button" onClick={() => battlefieldEngine.selectPOI(null)} aria-label={dictionary.close}>×</button>
             </div>
             <h2>{localized(selectedLocation.properties.historicalName, lang)}</h2>
             <p>{localized(selectedLocation.properties.notes, lang) ?? selectedLocation.properties.coordinateProvenance.notes ?? dictionary.missing}</p>

@@ -8,3 +8,4 @@ export * from './services/geoJsonRoundTrip.js';
 export * from './services/routeEditing.js';
 export * from './services/editorPersistence.js';
 export * from './visualization/index.js';
+export * from './runtime/index.js';
