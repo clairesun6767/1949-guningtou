@@ -29,6 +29,22 @@ Largest relevant artifacts observed:
 | `dist/_astro/ThreeHistoricalTerrainRenderer.B6oOkg_m.js` | 652,194 |
 | `dist/map-data/regional-cartography.geojson` | 505,997 |
 
+## After V1.1 runtime boundary
+
+Command: `npm.cmd run build` after the runtime extraction and map clock/state bridge.
+
+- Result: PASS
+- Output: Astro static
+- Pages: 279
+- Dist files: 718
+- Dist bytes: 28,313,306 (27.00 MiB)
+- JavaScript: 132 files / 7,920,712 bytes
+- CSS: 34 files / 235,558 bytes
+- Change from baseline: +2,154 bytes total, all within the JavaScript bundle; no new dependency was added.
+- Existing warning: some chunks exceed 500 kB after minification; unchanged as a correctness issue.
+
+The runtime modules are renderer-neutral and do not create additional terrain, texture, or WebGL assets.
+
 ## Runtime smoke baseline
 
 Test page: local `/1949-guningtou/zh-tw/map/?qa=classification-both`, Codex in-app browser, initial load.
@@ -71,4 +87,3 @@ No FPS or memory value is inferred from screenshot smoothness. Phase 1 must add 
 - Do not recreate terrain materials, textures, or scene geometry on camera movement.
 - Reuse the current texture filtering/ownership stabilization unless a measured regression justifies a change.
 - Any new runtime system must be testable without starting WebGL.
-

@@ -6,7 +6,7 @@
 - Baseline: `a8774e2becb4fa7f998e890bfb14a8b1efaf3372`
 - Baseline branch: `main`
 - Development branch required by the execution spec: `feature/battlefield-engine`
-- Current phase: Phase 0 audit complete; implementation not yet started
+- Current phase: Phase 8 synthetic vertical slice complete; formal historical slice awaits an evidence-gated event/unit/route
 - Scope rule: preserve the existing site and V0.8.x rendering/data invariants, then add the smallest compatible engine boundary
 
 This plan is derived from the current repository audit in `docs/CURRENT_ARCHITECTURE_AUDIT.md`. It deliberately uses adapters and extraction before new runtime modules. It does not authorize rewriting historical data, canonical Locations, terrain assets, coordinate conversion, or source-traced battle geometry.
@@ -56,8 +56,9 @@ Add only after the audit documents are committed and the compatibility checks re
 4. `runtime/EventEngine.ts` — pure event interval queries and enter/exit crossing detection. It emits domain commands, never imports Three.js or mutates a scene.
 5. `runtime/UnitSystem.ts` — unit records, visibility, spawn/hide, route interpolation, timeline state, and confidence/provenance gating. A unit without a reviewed position must remain unknown/hidden rather than receive an invented coordinate.
 6. `runtime/CameraDirector.ts` — renderer-neutral `orbit`, `flyTo`, `follow`, `lookAt`, `cinematicPath`, `freeExplore`, `play`, `interrupt`, `resume`, and `cancel` commands; the first adapter delegates to the existing Three camera controller.
-7. `runtime/dataAdapter.ts` — maps the current battle package and legacy data into runtime inputs without changing source files.
-8. `runtime/index.ts` — one public runtime entry point for the React island and future renderers.
+7. `runtime/BattlefieldEngine.ts` — composes the systems, synchronizes derived state, and exposes the renderer-neutral vertical-slice boundary.
+8. `runtime/dataAdapter.ts` — maps the current battle package and legacy data into runtime inputs without changing source files.
+9. `runtime/index.ts` — one public runtime entry point for the React island and future renderers.
 
 ### P1 scaffolding (do not expand in the first vertical slice)
 
@@ -112,51 +113,51 @@ Add only after the audit documents are committed and the compatibility checks re
 - Baseline validation/tests/typecheck/build.
 - Create `CURRENT_ARCHITECTURE_AUDIT.md` and this plan.
 
-### Phase 0.5 — Git safety (next)
+### Phase 0.5 — Git safety (complete)
 
 - Verify the audit-only diff.
 - Create `feature/battlefield-engine` only if it does not already exist; never overwrite an existing branch.
 - Preserve `main` as the deployed baseline.
 
-### Phase 1 — Existing visual integrity
+### Phase 1 — Existing visual integrity (complete)
 
 - Verify strategic, Kinmen, Guningtou, landing-coast, battle-overview, and mobile presets.
 - Run continuous zoom, orbit, and pan smoke checks at the current production-like page.
 - Record ocean/world boundary, terrain seam, local ownership, POI, camera, mobile, console, and long-strip status.
 - Keep `terrain-solid` as the control sample and do not change the terrain solution unless a reproducible failure is found.
 
-### Phase 2 — Data layer
+### Phase 2 — Data layer (complete)
 
 - Define runtime input types and the historical evidence boundary.
 - Add pure adapters for POI/event/unit/route/source/region/story input.
 - Add tests for confidence/status gating, source preservation, unknown values, and no candidate-route leakage.
 
-### Phase 3 — Battlefield state
+### Phase 3 — Battlefield state (complete)
 
 - Introduce the single state shape and reducer/action model.
 - Bridge current selected POI, selected region, mode, active date, and visible feature derivation without changing the visitor UI.
 
-### Phase 4 — Timeline
+### Phase 4 — Timeline (complete)
 
 - Implement and test TimelineEngine API: play, pause, seek, speed, current time, subscribe.
 - Replace the local clock path only after the compatibility adapter proves identical current behavior.
 
-### Phase 5 — Event
+### Phase 5 — Event (complete)
 
 - Implement deterministic active/enter/exit event queries.
 - Connect event snapshots to state and existing narrative/label opportunities; no direct Three.js calls.
 
-### Phase 6 — Unit
+### Phase 6 — Unit (complete in synthetic fixture; formal unit data remains empty)
 
 - Implement UnitSystem and route interpolation against test-only `NON_HISTORICAL_TEST_DATA` first.
 - Do not assign a historical unit a coordinate unless the source-backed data already contains it and validator checks pass.
 
-### Phase 7 — Camera
+### Phase 7 — Camera (contract complete; Three adapter follow-up)
 
 - Add CameraDirector commands and the Three adapter.
 - Demonstrate fly-to and free-explore interruption/cancellation using existing camera presets and a canonical POI, without changing coordinate conversion.
 
-### Phase 8 — Vertical slice
+### Phase 8 — Vertical slice (synthetic slice complete; historical evidence gate partial)
 
 - Select a candidate event only from the current evidence inventory. If no event passes the evidence gate, ship a clearly marked test fixture demo and record the blocker rather than inventing history.
 - Demonstrate: open battlefield → seek → event activation → test/approved unit visibility → route interpolation → camera command → POI selection → narration/state output → return to explore.
@@ -210,4 +211,3 @@ Each commit must keep the working tree reviewable, run the relevant tests, and a
 ## 10. Definition of done for this plan
 
 The plan is complete only when the acceptance criteria above are backed by files and test output. A clean build alone is not sufficient. If an evidence gate or performance measurement is unavailable, record `PARTIAL` or `NOT AVAILABLE` with the blocker; do not replace it with invented historical data or an unmeasured claim.
-

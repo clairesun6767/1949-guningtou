@@ -53,6 +53,11 @@ astro dev stop
 - [元件指南](docs/design-system/COMPONENT_GUIDE.md)
 - [原始 UI / UX 缺口報告](docs/UI_GAP_REPORT.md)
 - [本次 UI 重構報告](docs/DIGITAL_WAR_MUSEUM_UI_REFACTOR_REPORT.md)
+- [V1.1 架構總覽](docs/ARCHITECTURE.md)
+- [Battlefield Engine](docs/BATTLEFIELD_ENGINE.md)
+- [歷史資料邊界](docs/HISTORICAL_DATA_SCHEMA.md)
+- [V1.1 垂直切片報告](docs/VERTICAL_SLICE_REPORT.md)
+- [V1.1 驗收報告](docs/V1_1_ACCEPTANCE_REPORT.md)
 
 ## 部署
 
