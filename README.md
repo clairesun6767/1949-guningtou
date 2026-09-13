@@ -58,6 +58,11 @@ astro dev stop
 - [歷史資料邊界](docs/HISTORICAL_DATA_SCHEMA.md)
 - [V1.1 垂直切片報告](docs/VERTICAL_SLICE_REPORT.md)
 - [V1.1 驗收報告](docs/V1_1_ACCEPTANCE_REPORT.md)
+- [Historical Source Registry](docs/SOURCE_REGISTRY.md)
+- [Historical Data Inventory](docs/HISTORICAL_DATA_INVENTORY.md)
+- [Historical Evidence Matrix](docs/HISTORICAL_EVIDENCE_MATRIX.md)
+- [Historical Research Backlog](docs/HISTORICAL_RESEARCH_BACKLOG.md)
+- [V1.2 驗收報告](docs/V1_2_ACCEPTANCE_REPORT.md)
 
 ## 部署
 

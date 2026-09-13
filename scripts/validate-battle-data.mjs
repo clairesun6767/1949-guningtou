@@ -5,6 +5,11 @@ import { fileURLToPath } from 'node:url';
 
 import { adaptLegacyBattlefieldData, adaptLegacySources } from '../node_modules/.cache/battle-replay/adapters/legacy/index.js';
 import { validateBattlePackage, validateGeospatialCalibration } from '../node_modules/.cache/battle-replay/validation/index.js';
+import {
+  adaptLegacySourceRegistry,
+  HistoricalDataValidator,
+  selectFirstQualifiedHistoricalEvent,
+} from '../node_modules/.cache/battle-replay/canonical/index.js';
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(scriptDirectory, '..');
@@ -56,6 +61,27 @@ function loadCanonicalPackage() {
   };
 }
 
+function loadHistoricalEvidencePackage(manifest, packageDirectory, data) {
+  const load = key => readJson(path.join(packageDirectory, manifest.files[key]));
+  const sourceCatalogPath = path.resolve(packageDirectory, manifest.sourceCatalog.path);
+  const sourceRegistry = adaptLegacySourceRegistry(readJson(sourceCatalogPath));
+  return {
+    packageData: data,
+    manifest,
+    sourceRegistry,
+    claims: load('historicalClaims'),
+    evidenceMatrix: load('evidenceMatrix'),
+    routeAudit: load('routeAudit'),
+    researchGaps: load('researchGaps'),
+  };
+}
+
+function missingManifestFiles(manifest, packageDirectory) {
+  return Object.entries(manifest.files)
+    .filter(([, relativePath]) => !fs.existsSync(path.join(packageDirectory, relativePath)))
+    .map(([key, relativePath]) => `${key}:${relativePath}`);
+}
+
 function loadLegacyAdapterReport() {
   const dataDirectory = path.join(root, 'data');
   const files = listLegacyJsonFiles(dataDirectory);
@@ -101,12 +127,24 @@ const calibrationValidation = validateGeospatialCalibration(
   new Set(data.sources.map(source => source.id)),
 );
 const legacy = loadLegacyAdapterReport();
+const historicalEvidence = loadHistoricalEvidencePackage(manifest, packageDirectory, data);
+const historicalValidation = new HistoricalDataValidator().validate(historicalEvidence);
+const candidateSelection = selectFirstQualifiedHistoricalEvent(historicalEvidence.evidenceMatrix);
+const missingFiles = missingManifestFiles(manifest, packageDirectory);
 const result = {
   packageId: manifest.packageId,
   schemaVersion: manifest.schemaVersion,
   validation,
   calibrationValidation,
   legacy,
+  historical: {
+    validation: historicalValidation,
+    sourceRegistryCount: historicalEvidence.sourceRegistry.length,
+    candidateSelection,
+  },
+  manifestFiles: {
+    missing: missingFiles,
+  },
 };
 
 if (process.argv.includes('--json')) {
@@ -120,6 +158,9 @@ if (process.argv.includes('--json')) {
   console.log(`Unresolved entities: ${validation.unresolvedEntityIds.join(', ') || 'none'}`);
   console.log(`Unverified coordinates: ${validation.unverifiedCoordinateIds.join(', ') || 'none'}`);
   console.log(`Unresolved legacy references: ${legacy.unresolvedReferences.join(', ') || 'none'}`);
+  console.log(`Historical data: errors=${historicalValidation.errors}, warnings=${historicalValidation.warnings}, info=${historicalValidation.info}; sources=${historicalEvidence.sourceRegistry.length}, claims=${historicalEvidence.claims.length}, evidenceRows=${historicalEvidence.evidenceMatrix.length}, routeAudit=${historicalEvidence.routeAudit.length}, researchGaps=${historicalEvidence.researchGaps.length}`);
+  console.log(`Historical vertical slice: ${candidateSelection.selected ? `QUALIFIED (${candidateSelection.selected.eventId})` : 'BLOCKED'}; qualified=${candidateSelection.qualifiedEventIds.join(', ') || 'none'}`);
+  console.log(`Manifest files: missing=${missingFiles.join(', ') || 'none'}`);
   for (const diagnostic of validation.diagnostics) {
     console.log(`${diagnostic.severity} [${diagnostic.domain}/${diagnostic.code}] ${diagnostic.entityId ? `${diagnostic.entityId}: ` : ''}${diagnostic.message}`);
   }
@@ -131,4 +172,4 @@ if (process.argv.includes('--json')) {
   }
 }
 
-if (!validation.valid || !calibrationValidation.valid || legacy.parseFailures.length > 0) process.exitCode = 1;
+if (!validation.valid || !calibrationValidation.valid || !historicalValidation.valid || missingFiles.length > 0 || legacy.parseFailures.length > 0) process.exitCode = 1;

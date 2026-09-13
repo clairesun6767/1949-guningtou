@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — V1.2 Historical Evidence Boundary
+
+- Added the typed Source Registry view, HistoricalClaim model, Evidence Matrix, Route Audit migration map, Research Gap backlog, and HistoricalDataValidator.
+- Preserved legacy source IDs and candidate route records without promoting unsupported events, units, locations, or routes.
+- Confirmed that no current candidate satisfies the production Historical Evidence Gate; the V1.1 synthetic slice remains test-only.
+
 ## Unreleased — V1.1 P0
 
 - Added the renderer-neutral `BattlefieldEngine` boundary with centralized state, timeline, event, unit, camera, and evidence-aware adapter services.

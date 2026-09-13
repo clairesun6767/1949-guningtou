@@ -1,8 +1,8 @@
-# Historical Data Boundary — V1.1
+# Historical Data Boundary — V1.2
 
 ## Purpose
 
-The V1.1 runtime reads the existing battle package through typed adapters. It does not migrate, rewrite, or promote historical records. The runtime vocabulary is intentionally explicit about evidence so that a renderer cannot turn an approximation into a verified fact.
+The V1.2 runtime reads the existing battle package through typed adapters and adds an evidence-management boundary. It does not silently migrate, rewrite, or promote historical records. The vocabulary is intentionally explicit about evidence so that a renderer cannot turn an approximation into a verified fact.
 
 ## Source layers
 
@@ -15,6 +15,43 @@ The V1.1 runtime reads the existing battle package through typed adapters. It do
 | `evidence.json`, `sources` | Evidence and provenance | Source IDs, evidence IDs, confidence, source confidence, and source metadata survive the boundary |
 | `battle-movements.geojson` | Approximate/probable visual interpretation | Remains the existing movement/area presentation layer, not a verified route or unit track |
 | `historical-battle-map-traces.geojson` | Schematic source-map transcription | Remains separate from canonical routes; source map identity, labels, registration, and research flags stay intact |
+
+## V1.2 evidence-management records
+
+These records live beside the existing battle package and do not replace its entity files:
+
+| Record | Role |
+| --- | --- |
+| `historical-claims.json` | Claim-level assertions with `subjectType`, `subjectId`, namespace, predicate, value, source IDs, evidence level, and notes |
+| `evidence-matrix.json` | Explicit Event/Time/Location/Unit/Route dimensions for candidate events; no score averaging |
+| `route-audit.json` | R01–R12 migration mapping with legacy IDs, status, provenance, and enablement policy; original candidates are retained |
+| `research-gaps.json` | P0/P1/P2 questions that identify missing source, unit, location, region, or route evidence |
+
+The root `data/sources.json` remains the authoritative Source Registry during migration. `adaptLegacySourceRegistry()` creates a typed review view from that file; no duplicate editable source catalog is introduced.
+
+## Historical Claim
+
+```ts
+{
+  id,
+  subjectType,
+  subjectId,
+  subjectNamespace: 'canonical' | 'legacy',
+  predicate,
+  value,
+  sourceIds,
+  evidenceLevel,
+  notes
+}
+```
+
+`sourceIds` identify the source records. They do not by themselves establish the claim's evidence level. A claim can remain `PARTIAL`, `DISPUTED`, or `NO_EVIDENCE` while being schema-valid.
+
+## HistoricalDataValidator
+
+`src/battle-replay/canonical/validator.ts` checks the V1.2 supplemental records for duplicate IDs, source references, canonical subject references, supported evidence levels, localized titles, route enablement, stale Gate status, malformed optional time/coordinates, and circular parent units/formations. Existing `validateBattlePackage()` remains responsible for the BR-1 entity package and GeoJSON integrity.
+
+Validation errors are structural/integrity failures. Insufficient historical evidence is valid data and is reported by the Evidence Gate and Research Backlog instead of being treated as a schema error.
 
 ## Runtime evidence vocabulary
 
@@ -50,4 +87,4 @@ Every other route is `candidate`, `deprecated`, or `insufficient_evidence` and i
 
 ## Data-change boundary
 
-The Phase 1 runtime work changed TypeScript contracts and tests only. No historical JSON, canonical Location, terrain, classification texture, battle movement, or source-trace file was edited.
+The V1.2 work adds explicit evidence-management records derived from repository material. It does not change canonical Location coordinates, terrain, classification texture, battle movement geometry, or source-trace geometry. No legacy record is promoted to a production Event/Unit/Route without a future explicit review decision.

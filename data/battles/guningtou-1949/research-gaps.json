@@ -1,0 +1,92 @@
+[
+  {
+    "id": "RG-GUN-0001",
+    "entityType": "event",
+    "entityId": "EVT-0008",
+    "question": "Which primary or reliable secondary source, with page or excerpt, supports the 1949-10-26 command-change time and the 水頭—湖南高地 location?",
+    "requiredEvidence": ["OFFICIAL_RECORD or BOOK", "page-level citation or archival excerpt", "explicit time and location statement"],
+    "priority": "P0",
+    "status": "OPEN",
+    "notes": "This is the strongest current event candidate, but its Location dimension is not yet Supported."
+  },
+  {
+    "id": "RG-GUN-0002",
+    "entityType": "unit",
+    "entityId": "U-0003",
+    "question": "Which source directly identifies the canonical unit record and its participation in the selected event?",
+    "requiredEvidence": ["unit identity citation", "event participation citation", "stable unit-to-source mapping"],
+    "priority": "P0",
+    "status": "OPEN",
+    "notes": "The legacy unit index currently contains names but no related_sources values."
+  },
+  {
+    "id": "RG-GUN-0003",
+    "entityType": "location",
+    "entityId": "LOC-GUN-0003",
+    "question": "Can 安岐 be established as a 1949 historical event node rather than only a modern geographic reference?",
+    "requiredEvidence": ["historical map or official record naming 安岐 in the event context", "identity review", "location-level citation"],
+    "priority": "P0",
+    "status": "OPEN",
+    "notes": "The existing coordinate is preserved; no movement endpoint may be inferred from it."
+  },
+  {
+    "id": "RG-GUN-0004",
+    "entityType": "location",
+    "entityId": "LOC-GUN-0005",
+    "question": "Can the existing probable, area-only 南山 Location be linked to the historical event area with a source-backed boundary or point?",
+    "requiredEvidence": ["historical map or archival description", "legacy POI-0008 identity confirmation", "area/point scope"],
+    "priority": "P1",
+    "status": "OPEN",
+    "notes": "The canonical Location remains valid as an area-only candidate and must not be treated as an exact event point."
+  },
+  {
+    "id": "RG-GUN-0005",
+    "entityType": "route-audit",
+    "entityId": "R08",
+    "question": "Which source supports the full geometry of the ROC counterattack from 埔頭 to each target, and which segments are only directional?",
+    "requiredEvidence": ["original battle map or operational record", "control points or segment annotations", "unit/time binding"],
+    "priority": "P0",
+    "status": "OPEN",
+    "notes": "R08 remains the highest-priority manual review route candidate; no canonical LineString is created by this audit."
+  },
+  {
+    "id": "RG-GUN-0006",
+    "entityType": "route-audit",
+    "entityId": "R11",
+    "question": "Can the late PLA retreat to the northern coast be separated from ROC encirclement and tied to a source-backed sequence?",
+    "requiredEvidence": ["source-backed retreat description", "separate ROC encirclement evidence", "time/phase boundary"],
+    "priority": "P1",
+    "status": "OPEN",
+    "notes": "The existing audit explicitly prohibits drawing both sides as one route."
+  },
+  {
+    "id": "RG-GUN-0007",
+    "entityType": "source-catalog",
+    "entityId": "data/sources.json",
+    "question": "Which catalog records can be upgraded from a source pointer to a page-level Historical Claim citation?",
+    "requiredEvidence": ["verified bibliographic record", "page/section or archival identifier", "claim-level excerpt reference"],
+    "priority": "P0",
+    "status": "OPEN",
+    "notes": "Source existence and claim support remain separate."
+  },
+  {
+    "id": "RG-GUN-0008",
+    "entityType": "region",
+    "entityId": "REG-GUN-NORTH-COAST",
+    "question": "Which historical source defines the boundary of the northern coastal battle area used by the event and trace presentations?",
+    "requiredEvidence": ["historical map or archival boundary description", "region geometry review", "source provenance"],
+    "priority": "P1",
+    "status": "OPEN",
+    "notes": "Existing battle traces and battle movements remain separate schematic/presentation layers."
+  },
+  {
+    "id": "RG-GUN-0009",
+    "entityType": "event",
+    "entityId": "CANONICAL_PACKAGE",
+    "question": "Which first event satisfies Event, Time, Location, and Unit >= SUPPORTED without relying on inferred references?",
+    "requiredEvidence": ["canonical event record", "canonical unit binding", "canonical location binding", "source-backed claims"],
+    "priority": "P0",
+    "status": "BLOCKED",
+    "notes": "No candidate passes the V1.2 Evidence Gate in the current repository."
+  }
+]

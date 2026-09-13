@@ -1,0 +1,149 @@
+[
+  {
+    "id": "CLM-GUN-0001",
+    "subjectType": "event",
+    "subjectId": "EVT-0001",
+    "subjectNamespace": "legacy",
+    "predicate": "occurred_during",
+    "value": "1949-10-24 20:00 to 1949-10-25 06:00",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "Legacy event records a first-echelon amphibious operation, but the source set and multiple landing areas do not establish a single canonical track."
+  },
+  {
+    "id": "CLM-GUN-0002",
+    "subjectType": "event",
+    "subjectId": "EVT-0001",
+    "subjectNamespace": "legacy",
+    "predicate": "location_text",
+    "value": "金門北部海域→嚨口—古寧頭—湖尾",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The source text names a broad coastal operation area; it does not identify one exact landing coordinate."
+  },
+  {
+    "id": "CLM-GUN-0003",
+    "subjectType": "event",
+    "subjectId": "EVT-0008",
+    "subjectNamespace": "legacy",
+    "predicate": "command_change",
+    "value": "胡璉抵達金門接掌指揮權",
+    "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "evidenceLevel": "SUPPORTED",
+    "notes": "The legacy event is marked verified and has a broad source list. No page-level or excerpt-level citation is present in the repository, so this is not promoted to VERIFIED."
+  },
+  {
+    "id": "CLM-GUN-0004",
+    "subjectType": "event",
+    "subjectId": "EVT-0008",
+    "subjectNamespace": "legacy",
+    "predicate": "recorded_time",
+    "value": {
+      "start": "1949-10-26T10:00:00+08:00",
+      "end": "1949-10-26T12:00:00+08:00",
+      "precision": "hour"
+    },
+    "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "evidenceLevel": "SUPPORTED",
+    "notes": "This preserves the existing hour range. It does not invent a minute-level timestamp."
+  },
+  {
+    "id": "CLM-GUN-0005",
+    "subjectType": "event",
+    "subjectId": "EVT-0008",
+    "subjectNamespace": "legacy",
+    "predicate": "location_text",
+    "value": "水頭—湖南高地",
+    "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The current six canonical Locations do not contain an approved mapping for both named places. The free-text location remains unresolved."
+  },
+  {
+    "id": "CLM-GUN-0006",
+    "subjectType": "event",
+    "subjectId": "EVT-0008",
+    "subjectNamespace": "legacy",
+    "predicate": "participating_unit_text",
+    "value": ["第118師", "第25軍"],
+    "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "Unit names are preserved from the legacy event. The legacy unit index has no direct source references for these records, so the identity is not promoted to a supported canonical unit assertion."
+  },
+  {
+    "id": "CLM-GUN-0007",
+    "subjectType": "event",
+    "subjectId": "EVT-0010",
+    "subjectNamespace": "legacy",
+    "predicate": "engagement_at",
+    "value": "嚨口登陸與殲滅戰",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The legacy record provides a day-level event and named units, but the location is an estimated legacy POI and the canonical event package is still empty."
+  },
+  {
+    "id": "CLM-GUN-0008",
+    "subjectType": "event",
+    "subjectId": "EVT-0019",
+    "subjectNamespace": "legacy",
+    "predicate": "territory_recapture",
+    "value": "國軍奪回林厝、南山",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The event supports a broad recapture statement, but 林厝 has no matching canonical Location and the source catalog has no page-level citation."
+  },
+  {
+    "id": "CLM-GUN-0009",
+    "subjectType": "event",
+    "subjectId": "EVT-0021",
+    "subjectNamespace": "legacy",
+    "predicate": "final_engagement_at",
+    "value": "古寧頭北端懸崖",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The final engagement is retained as a legacy historical claim; it is not a canonical route or an exact position assertion."
+  },
+  {
+    "id": "CLM-GUN-0010",
+    "subjectType": "route",
+    "subjectId": "R08",
+    "subjectNamespace": "legacy",
+    "predicate": "counterattack_direction",
+    "value": "埔頭→林厝／古寧頭／南山",
+    "sourceIds": ["SRC-0004", "SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The Route Audit identifies this as the strongest existing counterattack relationship, but recommends splitting targets and does not authorize a LineString."
+  },
+  {
+    "id": "CLM-GUN-0011",
+    "subjectType": "route",
+    "subjectId": "R11",
+    "subjectNamespace": "legacy",
+    "predicate": "retreat_and_encirclement_context",
+    "value": "古寧頭北端→北山斷崖；退守與國軍包圍必須分開表達",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The source material supports a late retreat/encirclement context, not one shared route for both sides."
+  },
+  {
+    "id": "CLM-GUN-0012",
+    "subjectType": "location",
+    "subjectId": "LOC-GUN-0006",
+    "subjectNamespace": "canonical",
+    "predicate": "legacy_identity_candidate",
+    "value": "POI-0006／古寧頭（北山）",
+    "sourceIds": ["SRC-0001", "SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The canonical Location keeps its existing probable, area-only coordinate provenance; this claim does not promote the location to an exact historical event point."
+  },
+  {
+    "id": "CLM-GUN-0013",
+    "subjectType": "location",
+    "subjectId": "LOC-GUN-0005",
+    "subjectNamespace": "canonical",
+    "predicate": "legacy_identity_candidate",
+    "value": "POI-0008／南山",
+    "sourceIds": ["SRC-0001", "SRC-0004", "SRC-0027"],
+    "evidenceLevel": "PARTIAL",
+    "notes": "The package already records a legacy reference, but the Location remains area-only and pending historical identity review."
+  }
+]

@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "packageId": "PKG-GUN-1949-BR1",
   "battleId": "BAT-GUN-1949",
-  "packageVersion": "0.1.0-br1",
+  "packageVersion": "0.2.0-v1.2-evidence-audit",
   "packageRole": "calibration-overlay",
   "minimumEngineVersion": "0.1.0",
   "defaultLocale": "zh-Hant",
@@ -33,7 +33,12 @@
     "imageryGeoreferencing": "imagery-georeferencing.json",
     "historicalBattleMapRegistration": "historical-battle-map-registration.json",
     "historicalBattleMapTraces": "historical-battle-map-traces.geojson",
-    "historicalBattlePhases": "historical-battle-phases.json"
+    "historicalBattlePhases": "historical-battle-phases.json",
+    "canonicalIndex": "canonical-index.json",
+    "historicalClaims": "historical-claims.json",
+    "evidenceMatrix": "evidence-matrix.json",
+    "routeAudit": "route-audit.json",
+    "researchGaps": "research-gaps.json"
   },
   "migrations": [
     {

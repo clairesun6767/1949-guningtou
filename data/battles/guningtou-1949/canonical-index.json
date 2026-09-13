@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0.0",
+  "battleId": "BAT-GUN-1949",
+  "role": "canonical-evidence-index",
+  "status": "INCOMPLETE",
+  "authoritativeSourceCatalog": "../../sources.json",
+  "migration": {
+    "from": "legacy data/*.json",
+    "to": "this battle package",
+    "policy": "explicit-review-only",
+    "noSecondTruth": true
+  },
+  "entities": {
+    "sources": "../../sources.json (typed through adaptLegacySourceRegistry)",
+    "poi": "locations.geojson",
+    "events": "events.json",
+    "units": "units.json",
+    "routes": "routes.geojson",
+    "regions": "battle-areas.geojson"
+  },
+  "evidenceRecords": {
+    "claims": "historical-claims.json",
+    "matrix": "evidence-matrix.json",
+    "routeAudit": "route-audit.json",
+    "researchGaps": "research-gaps.json"
+  },
+  "promotionRule": "Event, Time, Location, and Unit must each be at least SUPPORTED; exact route animation also requires Route at least SUPPORTED."
+}

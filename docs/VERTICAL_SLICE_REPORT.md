@@ -1,14 +1,14 @@
-# V1.1 Vertical Slice Report
+# V1.1 / V1.2 Vertical Slice Report
 
 ## Result
 
-The renderer-neutral vertical slice is **PASS in the synthetic test harness** and **PARTIAL for the formal historical package**.
+The renderer-neutral vertical slice is **PASS in the synthetic test harness**. The V1.2 evidence audit leaves the formal historical slice **BLOCKED**, because no repository candidate meets the required Event/Time/Location/Unit threshold without inference.
 
 ## Evidence gate
 
-The current `data/battles/guningtou-1949/` package contains an empty typed `events.json`, empty `units.json`, and empty canonical `routes.geojson`. Existing `battle-movements.geojson` contains reviewed approximate axes/corridors, but those are explicitly not unit routes. The historical source-map traces are schematic-only and are not a substitute for a verified route.
+The current `data/battles/guningtou-1949/` package contains an empty typed `events.json`, empty `units.json`, and empty canonical `routes.geojson`. V1.2 adds `historical-claims.json`, `evidence-matrix.json`, `route-audit.json`, and `research-gaps.json` without promoting a legacy record. Existing `battle-movements.geojson` contains reviewed approximate axes/corridors, but those are explicitly not unit routes. The historical source-map traces are schematic-only and are not a substitute for a verified route.
 
-Consequently, no historical event/unit/route was selected or invented for a production demo. This is an evidence blocker, not a runtime failure.
+The strongest candidate is legacy `EVT-0008`, but its Location and Unit dimensions remain `PARTIAL`; all five audited candidates are blocked. Consequently, no historical event/unit/route was selected or invented for a production demo. This is an evidence blocker, not a runtime failure.
 
 ## Synthetic acceptance flow
 

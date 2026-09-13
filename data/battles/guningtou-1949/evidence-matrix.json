@@ -1,0 +1,217 @@
+[
+  {
+    "id": "EM-GUN-0001",
+    "eventId": "EVT-0008",
+    "eventNamespace": "legacy",
+    "title": { "zh-Hant": "胡璉抵達金門接掌指揮權", "en": "Hu Lien assumes command in Kinmen" },
+    "dimensions": {
+      "event": {
+        "level": "SUPPORTED",
+        "claimIds": ["CLM-GUN-0003"],
+        "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+        "notes": "Strongest event candidate in the current legacy catalog, but source excerpts are not captured."
+      },
+      "time": {
+        "level": "SUPPORTED",
+        "claimIds": ["CLM-GUN-0004"],
+        "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+        "notes": "Existing hour range is retained without minute-level precision."
+      },
+      "location": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0005"],
+        "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+        "notes": "水頭—湖南高地 has no complete approved mapping in the six canonical Locations."
+      },
+      "unit": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0006"],
+        "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+        "notes": "Names are present in legacy free text; direct unit-level provenance is missing."
+      },
+      "route": {
+        "level": "NO_EVIDENCE",
+        "claimIds": [],
+        "sourceIds": [],
+        "notes": "No canonical route geometry or route-specific evidence exists."
+      }
+    },
+    "overall": "PARTIAL",
+    "routePresentation": "static-context-only",
+    "gateStatus": "BLOCKED",
+    "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+    "notes": "Candidate 1. Event and time are the strongest current records, but Location and Unit do not reach Supported."
+  },
+  {
+    "id": "EM-GUN-0002",
+    "eventId": "EVT-0001",
+    "eventNamespace": "legacy",
+    "title": { "zh-Hant": "解放軍渡海登陸作戰（第一梯隊）", "en": "First-echelon amphibious operation" },
+    "dimensions": {
+      "event": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0001"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The legacy event is marked as conflicting_sources."
+      },
+      "time": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0001"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "A broad overnight range is available; no independently verified unit-level time."
+      },
+      "location": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0002"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "Multiple beaches and a broad coastal area cannot be collapsed to one canonical point."
+      },
+      "unit": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0001"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "First-echelon unit names are legacy free text without direct unit-index source references."
+      },
+      "route": {
+        "level": "NO_EVIDENCE",
+        "claimIds": [],
+        "sourceIds": [],
+        "notes": "No exact landing or advance route is authorized."
+      }
+    },
+    "overall": "PARTIAL",
+    "routePresentation": "static-context-only",
+    "gateStatus": "BLOCKED",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "notes": "Candidate 2. Broad landing context is displayable only as an uncertainty-aware area statement."
+  },
+  {
+    "id": "EM-GUN-0003",
+    "eventId": "EVT-0010",
+    "eventNamespace": "legacy",
+    "title": { "zh-Hant": "嚨口登陸與殲滅戰", "en": "Longkou landing engagement" },
+    "dimensions": {
+      "event": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0007"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "Legacy record is partially verified at day level."
+      },
+      "time": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0007"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "Only the date is stable in the current record."
+      },
+      "location": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0007"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "Legacy 嚨口 is estimated and does not resolve to a precise event coordinate."
+      },
+      "unit": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0007"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "Named unit text is not yet a source-backed canonical unit binding."
+      },
+      "route": {
+        "level": "NO_EVIDENCE",
+        "claimIds": [],
+        "sourceIds": [],
+        "notes": "No exact route geometry is present."
+      }
+    },
+    "overall": "PARTIAL",
+    "routePresentation": "static-context-only",
+    "gateStatus": "BLOCKED",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "notes": "Candidate 3. The event can remain a research lead, not a production vertical slice."
+  },
+  {
+    "id": "EM-GUN-0004",
+    "eventId": "EVT-0019",
+    "eventNamespace": "legacy",
+    "title": { "zh-Hant": "國軍奪回林厝、南山", "en": "ROC recaptures Lincuo and Nanshan" },
+    "dimensions": {
+      "event": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0008"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The broad recapture statement is retained without a stronger assertion."
+      },
+      "time": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0008"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The existing 12:00–15:00 window remains a legacy record, not a page-cited canonical time."
+      },
+      "location": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0008"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "林厝 has no matching canonical Location; 南山 remains area-only."
+      },
+      "unit": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0008"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The legacy unit name is not yet a canonical source-backed binding."
+      },
+      "route": {
+        "level": "NO_EVIDENCE",
+        "claimIds": [],
+        "sourceIds": [],
+        "notes": "The strongest R08 direction remains a candidate relationship, not a route."
+      }
+    },
+    "overall": "PARTIAL",
+    "routePresentation": "static-context-only",
+    "gateStatus": "BLOCKED",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "notes": "Candidate 4. Use as a research target for the future ROC counterattack slice."
+  },
+  {
+    "id": "EM-GUN-0005",
+    "eventId": "EVT-0021",
+    "eventNamespace": "legacy",
+    "title": { "zh-Hant": "北端崖下殲滅戰", "en": "Final battle below the northern cliff" },
+    "dimensions": {
+      "event": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0009"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The final engagement remains a partially verified legacy event."
+      },
+      "time": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0009"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The date and broad window are insufficient for a supported runtime interval."
+      },
+      "location": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0009"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The current canonical package has no exact northern-cliff Location."
+      },
+      "unit": {
+        "level": "PARTIAL",
+        "claimIds": ["CLM-GUN-0009"],
+        "sourceIds": ["SRC-0004", "SRC-0027"],
+        "notes": "The opposing formations remain legacy free-text references."
+      },
+      "route": {
+        "level": "NO_EVIDENCE",
+        "claimIds": [],
+        "sourceIds": [],
+        "notes": "The terminal battle is not a newly inferred movement route."
+      }
+    },
+    "overall": "PARTIAL",
+    "routePresentation": "static-context-only",
+    "gateStatus": "BLOCKED",
+    "sourceIds": ["SRC-0004", "SRC-0027"],
+    "notes": "Candidate 5. Preserve as a narrative/research lead; do not animate an exact path."
+  }
+]

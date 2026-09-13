@@ -9,3 +9,4 @@ export * from './services/routeEditing.js';
 export * from './services/editorPersistence.js';
 export * from './visualization/index.js';
 export * from './runtime/index.js';
+export * from './canonical/index.js';
