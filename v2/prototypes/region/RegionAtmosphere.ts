@@ -5,6 +5,8 @@ import {
   type RegionPerformanceTier,
   type RegionVariantId,
 } from '../../config/region.js';
+import type { EnvironmentState } from '../../environment/EnvironmentState.js';
+import type { RegionSunState } from '../../environment/RegionSun.js';
 import { tierSettings } from './RegionPerformance.js';
 
 export interface RegionAtmosphereHandle {
@@ -15,6 +17,9 @@ export interface RegionAtmosphereHandle {
   setPostProcessingEnabled(enabled: boolean): void;
   setLightingMode(mode: RegionLightingMode): void;
   setAmbientOcclusionEnabled(enabled: boolean): void;
+  setSunState(state: RegionSunState | EnvironmentState): void;
+  setAtmosphereDensity(density: number): void;
+  setExposure(exposure: number): void;
   dispose(): void;
 }
 
@@ -102,6 +107,22 @@ export function createRegionAtmosphere(scene: THREE.Scene, renderer: THREE.WebGL
     },
     setAmbientOcclusionEnabled(enabled) {
       ambient.intensity = enabled ? 0.5 : 0.25;
+    },
+    setSunState(state) {
+      const direction = 'sunDirection' in state ? state.sunDirection : state.direction;
+      const color = 'sunColor' in state ? state.sunColor : state.color;
+      const intensity = 'sunIntensity' in state ? state.sunIntensity : state.intensity;
+      sun.color.set(color);
+      sun.intensity = intensity;
+      sun.position.set(direction.x * 48, direction.y * 48, direction.z * 48);
+      sun.shadow.camera.updateProjectionMatrix();
+    },
+    setAtmosphereDensity(density) {
+      const safeDensity = Number.isFinite(density) ? Math.min(0.03, Math.max(0.0005, density)) : settings.fogDensity;
+      if (scene.fog instanceof THREE.FogExp2) scene.fog.density = safeDensity;
+    },
+    setExposure(exposure) {
+      renderer.toneMappingExposure = Number.isFinite(exposure) ? Math.min(2, Math.max(0.6, exposure)) : 1.18;
     },
     dispose() {
       if (scene.background instanceof THREE.Texture) scene.background.dispose();

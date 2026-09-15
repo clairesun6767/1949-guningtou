@@ -56,6 +56,26 @@ export const HISTORICAL_AERIAL_1945: HistoricalSourceMetadata = {
   resourceTemplate: 'https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_1945-png-{TileMatrix}-{TileCol}-{TileRow}',
 };
 
+export const HISTORICAL_AERIAL_1944: HistoricalSourceMetadata = {
+  ...HISTORICAL_AERIAL_1945,
+  year: 1944,
+  layerName: '金門舊航照影像(1944) / Kinmen_1944',
+  sourcePageUrl: 'https://gis.sinica.edu.tw/showwmts/index.php?s=kinmen&l=Kinmen_1944',
+  bounds: { west: 118.1987492, south: 24.3932995, east: 118.4750534, north: 24.5208965 },
+  resourceTemplate: 'https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_1944-png-{TileMatrix}-{TileCol}-{TileRow}',
+};
+
+export const HISTORICAL_AERIAL_1958: HistoricalSourceMetadata = {
+  ...HISTORICAL_AERIAL_1945,
+  year: 1958,
+  layerName: '金門舊航照圖(1958.09.10) / Kinmen_aerialphoto_1958',
+  sourcePageUrl: 'https://gis.sinica.edu.tw/showwmts/index.php?s=kinmen&l=Kinmen_aerialphoto_1958',
+  bounds: { west: 118.1973476, south: 24.3789698, east: 118.4924002, north: 24.5542212 },
+  resourceTemplate: 'https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_aerialphoto_1958-png-{TileMatrix}-{TileCol}-{TileRow}',
+};
+
+export const HISTORICAL_AERIAL_SOURCE_YEARS = [1944, 1945, 1958] as const;
+
 export const HISTORICAL_AERIAL_CONFIG = {
   defaultYear: 1945,
   defaultMode: 'OFF' as HistoricalAerialMode,
@@ -73,8 +93,8 @@ export const HISTORICAL_AERIAL_MODES: Array<{
   description: string;
 }> = [
   { id: 'OFF', label: '歷史地形', englishLabel: 'HISTORICAL TERRAIN', description: '現代 DEM × 檔案色調' },
-  { id: 'AERIAL', label: '1945 航照', englishLabel: '1945 AERIAL', description: '來源審查中；不載入影像' },
-  { id: 'AERIAL_RELIEF', label: '航照 × 地形', englishLabel: 'AERIAL + RELIEF', description: '來源審查中；保留地形陰影' },
+  { id: 'AERIAL', label: '多年度航照', englishLabel: '1944 / 1945 / 1958 AERIAL', description: '1944＋1945 primary；1958 fallback' },
+  { id: 'AERIAL_RELIEF', label: '航照 × 地形', englishLabel: 'AERIAL + RELIEF', description: '保留現代 DEM 地形陰影' },
 ];
 
 export const HISTORICAL_ART_PALETTE = {

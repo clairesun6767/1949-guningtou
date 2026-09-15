@@ -5,6 +5,9 @@ import {
   type RegionTerrainQualityId,
   type RegionVariantId,
 } from '../../config/region.js';
+import type { EnvironmentState } from '../../environment/EnvironmentState.js';
+import type { CloudShadowState } from '../../environment/RegionCloudShadow.js';
+import { REGION_CLOUD_DENSITY_GLSL } from '../../environment/RegionCloudShadow.js';
 import { tierSettings } from './RegionPerformance.js';
 
 export interface RegionOceanHandle {
@@ -12,6 +15,10 @@ export interface RegionOceanHandle {
   setVisible(visible: boolean): void;
   setVariant(variant: RegionVariantId): void;
   setTerrainQuality(quality: RegionTerrainQualityId): void;
+  setEnhanced(enabled: boolean): void;
+  setEnvironmentState(state: EnvironmentState): void;
+  setCloudShadow(state: CloudShadowState): void;
+  setFeature(feature: 'coastalDepth' | 'oceanMotion' | 'sunGlint', enabled: boolean): void;
   tick(now: number, cameraPosition?: THREE.Vector3): void;
   dispose(): void;
 }
@@ -33,6 +40,18 @@ export function createRegionOcean(tier: RegionPerformanceTier): RegionOceanHandl
     fogColor: { value: colorValue(REGION_VARIANTS.neutral.fog) },
     sunColor: { value: colorValue(REGION_VARIANTS.neutral.sun) },
     qualityMode: { value: 0 },
+    enhanced: { value: 0 },
+    coastalDepth: { value: 1 },
+    oceanMotion: { value: 1 },
+    sunGlint: { value: 1 },
+    cloudCoverage: { value: 0.42 },
+    cloudOpacity: { value: 0.46 },
+    cloudShadowEnabled: { value: 0 },
+    cloudShadowStrength: { value: 0 },
+    cloudShadowOffset: { value: new THREE.Vector2() },
+    windDirection: { value: new THREE.Vector2(0.86, 0.5) },
+    windSpeed: { value: 0.42 },
+    atmosphereDensity: { value: 0.007 },
     sunDirection: { value: new THREE.Vector3(-0.42, 0.86, 0.28).normalize() },
   };
   const material = new THREE.ShaderMaterial({
@@ -59,7 +78,20 @@ export function createRegionOcean(tier: RegionPerformanceTier): RegionOceanHandl
       uniform vec3 sunColor;
       uniform vec3 sunDirection;
       uniform float qualityMode;
+      uniform float enhanced;
+      uniform float coastalDepth;
+      uniform float oceanMotion;
+      uniform float sunGlint;
+      uniform float cloudCoverage;
+      uniform float cloudOpacity;
+      uniform float cloudShadowEnabled;
+      uniform float cloudShadowStrength;
+      uniform vec2 cloudShadowOffset;
+      uniform vec2 windDirection;
+      uniform float windSpeed;
+      uniform float atmosphereDensity;
       varying vec3 vAtmosphereDirection;
+      ${REGION_CLOUD_DENSITY_GLSL}
       void main() {
         vec3 direction = normalize(vAtmosphereDirection);
         float seaBlend = smoothstep(-0.14, 0.14, direction.y);
@@ -73,15 +105,27 @@ export function createRegionOcean(tier: RegionPerformanceTier): RegionOceanHandl
 
         float lowFrequencyMotion = sin(direction.x * 17.0 + time * 0.00017)
           * cos(direction.z * 13.0 - time * 0.00013) * 0.014;
+        float strategicMotion = regionEnvFbm(direction.xz * 12.0 + windDirection * time * windSpeed * 0.00009) * 0.035;
         vec3 seaNormal = vec3(0.0, 1.0, 0.0);
         vec3 toViewer = normalize(-direction);
         float fresnel = pow(1.0 - max(dot(seaNormal, toViewer), 0.0), 3.0);
         float sunResponse = pow(max(dot(reflect(-sunDirection, seaNormal), toViewer), 0.0), 30.0);
         float sunGlow = pow(max(dot(direction, sunDirection), 0.0), 96.0);
         float oceanWeight = 1.0 - smoothstep(-0.02, 0.2, direction.y);
-        color += oceanWeight * vec3(lowFrequencyMotion + fresnel * 0.025 + sunResponse * 0.045);
-        color += sunColor * sunGlow * 0.028;
-        color = mix(color, fogColor, horizonHaze * qualityMode * 0.08);
+        float coastalTransition = smoothstep(-0.54, -0.12, direction.y) * coastalDepth;
+        float roughnessVariation = regionEnvNoise(direction.xz * 9.0 + vec2(13.0, -9.0));
+        float cloudField = regionEnvCloudDensity(direction.xz * 1.6 + cloudShadowOffset * 0.01 + windDirection * time * windSpeed * 0.00008, cloudCoverage);
+        float projectedCloudShadow = cloudShadowEnabled * cloudField * cloudShadowStrength * oceanWeight;
+        float enhancedWeight = enhanced;
+        color += oceanWeight * vec3(lowFrequencyMotion * oceanMotion + strategicMotion * enhancedWeight
+          + fresnel * (0.025 + enhancedWeight * 0.035)
+          + sunResponse * 0.045 * sunGlint
+          + coastalTransition * 0.018
+          + roughnessVariation * 0.008 * enhancedWeight);
+        color += sunColor * sunGlow * 0.028 * sunGlint;
+        color = mix(color, fogColor, horizonHaze * (qualityMode * 0.08 + enhancedWeight * atmosphereDensity * 8.0));
+        color *= 1.0 - projectedCloudShadow * 0.34;
+        color = mix(color, mix(shallow, deep, 0.35), coastalTransition * enhancedWeight * 0.14);
         gl_FragColor = vec4(color, 1.0);
       }
     `,
@@ -106,6 +150,29 @@ export function createRegionOcean(tier: RegionPerformanceTier): RegionOceanHandl
     },
     setTerrainQuality(quality) {
       uniforms.qualityMode.value = quality === 'A' ? 0 : 1;
+    },
+    setEnhanced(enabled) {
+      uniforms.enhanced.value = enabled ? 1 : 0;
+    },
+    setEnvironmentState(state) {
+      uniforms.sunDirection.value.set(state.sunDirection.x, state.sunDirection.y, state.sunDirection.z).normalize();
+      uniforms.sunColor.value.set(state.sunColor);
+      uniforms.cloudCoverage.value = state.cloudCoverage;
+      uniforms.cloudOpacity.value = state.cloudOpacity;
+      uniforms.windDirection.value.set(state.windDirection.x, state.windDirection.y);
+      uniforms.windSpeed.value = state.windSpeed;
+      uniforms.atmosphereDensity.value = state.atmosphereDensity;
+    },
+    setCloudShadow(state) {
+      uniforms.cloudShadowEnabled.value = state.enabled ? 1 : 0;
+      uniforms.cloudShadowStrength.value = state.strength;
+      uniforms.cloudShadowOffset.value.set(state.offset.x, state.offset.y);
+      uniforms.cloudCoverage.value = state.coverage;
+      uniforms.windDirection.value.set(state.windDirection.x, state.windDirection.y);
+      uniforms.windSpeed.value = state.windSpeed;
+    },
+    setFeature(feature, enabled) {
+      uniforms[feature].value = enabled ? 1 : 0;
     },
     tick(now, cameraPosition) {
       uniforms.time.value = now;

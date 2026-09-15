@@ -130,6 +130,26 @@ export class RegionCamera {
     this.applyTargetBounds();
   }
 
+  setReviewPolar(degrees: number) {
+    this.tween = undefined;
+    this.controls.autoRotate = false;
+    this.controls.enabled = true;
+    const target = this.controls.target.clone();
+    const offset = this.camera.position.clone().sub(target);
+    const distance = clampRegionDistance(offset.length(), this.options.mobile);
+    const polar = THREE.MathUtils.degToRad(clampRegionPolarDegrees(degrees));
+    const azimuth = Math.atan2(offset.x, offset.z);
+    const horizontal = distance * Math.sin(polar);
+    const vertical = distance * Math.cos(polar);
+    this.camera.position.set(
+      target.x + Math.sin(azimuth) * horizontal,
+      target.y + vertical,
+      target.z + Math.cos(azimuth) * horizontal,
+    );
+    this.controls.update();
+    this.applyTargetBounds();
+  }
+
   update(now: number) {
     if (this.tween) {
       const duration = Math.max(1, this.tween.duration);

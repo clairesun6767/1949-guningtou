@@ -1,0 +1,39 @@
+{
+  "generatedAt": "2026-09-15T11:23:46.454Z",
+  "browser": "Chrome headless actual page output",
+  "privacy": "safe screenshots only; local-only screenshots remain ignored",
+  "screenshots": [
+    {
+      "name": "A3P_P0_BASELINE",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=guningtou&debug=closed",
+      "privacy": "safe",
+      "note": "P0 modern DEM and baseline environment; no aerial pixels requested.",
+      "path": "docs/2.0/screenshots/gate-a3p/A3P_P0_BASELINE.png",
+      "bytes": 1407943
+    },
+    {
+      "name": "A3P_P1_ENVIRONMENT",
+      "query": "?historical=H0&environment=P1&time=T1&weather=W2&camera=guningtou&debug=closed",
+      "privacy": "safe",
+      "note": "P1 environment benchmark with T1 dawn and W2 cloud preset.",
+      "path": "docs/2.0/screenshots/gate-a3p/A3P_P1_ENVIRONMENT.png",
+      "bytes": 1430245
+    },
+    {
+      "name": "A3P_COVERAGE_MASK",
+      "query": "?historical=H0&environment=P0&coverage=on&camera=guningtou&debug=closed",
+      "privacy": "safe",
+      "note": "Metadata-only 1944/1945/1958 KML coverage review; no aerial pixels requested.",
+      "path": "docs/2.0/screenshots/gate-a3p/A3P_COVERAGE_MASK.png",
+      "bytes": 1407997
+    },
+    {
+      "name": "A3P_P1_DEBUG",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=guningtou&debug=open",
+      "privacy": "safe",
+      "note": "P1 debug panel with CPU frame and environment controls.",
+      "path": "docs/2.0/screenshots/gate-a3p/A3P_P1_DEBUG.png",
+      "bytes": 1431652
+    }
+  ]
+}

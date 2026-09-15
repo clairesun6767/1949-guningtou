@@ -11,11 +11,20 @@ import {
   type RegionVariantId,
 } from '../../config/region.js';
 import { lonLatToWorld } from '../../shared/geo.js';
+import type { GeographicBounds } from '../../config/region.js';
+import type { CloudShadowState } from '../../environment/RegionCloudShadow.js';
+import { REGION_CLOUD_DENSITY_GLSL } from '../../environment/RegionCloudShadow.js';
 import type { RegionCoastlineAsset, RegionTerrainAsset } from '../../shared/regionDataProvider.js';
 
 export interface RegionTerrainTextures {
   classificationA: THREE.Texture;
   classificationB: THREE.Texture;
+}
+
+export interface RegionAerialBinding {
+  texture: THREE.Texture;
+  bounds: GeographicBounds;
+  available: boolean;
 }
 
 export interface RegionTerrainHandle {
@@ -42,6 +51,10 @@ export interface RegionTerrainHandle {
   setHistoricalToneEnabled(enabled: boolean): void;
   setHistoricalMode(mode: HistoricalAerialMode): void;
   setAerialOpacity(opacity: number): void;
+  setAerialTexture(binding: RegionAerialBinding | null): void;
+  setCoverageMaskDebug(enabled: boolean): void;
+  setCloudShadow(state: CloudShadowState): void;
+  setCloudShadowTime(time: number): void;
   dispose(): void;
 }
 
@@ -149,6 +162,17 @@ function historicalModeIndex(mode: HistoricalAerialMode) {
   return mode === 'AERIAL' ? 1 : mode === 'AERIAL_RELIEF' ? 2 : 0;
 }
 
+function aerialUvBoundsFor(terrainBounds: GeographicBounds, aerialBounds: GeographicBounds) {
+  const longitudeSpan = Math.max(0.0001, terrainBounds.east - terrainBounds.west);
+  const latitudeSpan = Math.max(0.0001, terrainBounds.north - terrainBounds.south);
+  return new THREE.Vector4(
+    (aerialBounds.west - terrainBounds.west) / longitudeSpan,
+    (terrainBounds.north - aerialBounds.north) / latitudeSpan,
+    (aerialBounds.east - terrainBounds.west) / longitudeSpan,
+    (terrainBounds.north - aerialBounds.south) / latitudeSpan,
+  );
+}
+
 export function createRegionTerrain(
   asset: RegionTerrainAsset,
   coastline: RegionCoastlineAsset,
@@ -179,6 +203,17 @@ export function createRegionTerrain(
     historicalLow: { value: new THREE.Color(HISTORICAL_ART_PALETTE.low) },
     historicalMiddle: { value: new THREE.Color(HISTORICAL_ART_PALETTE.middle) },
     historicalHigh: { value: new THREE.Color(HISTORICAL_ART_PALETTE.high) },
+    historicalAerialTexture: { value: textures.classificationA },
+    aerialUvBounds: { value: new THREE.Vector4(0, 0, 1, 1) },
+    aerialAvailable: { value: 0 },
+    coverageMaskDebug: { value: 0 },
+    cloudShadowEnabled: { value: 0 },
+    cloudShadowCoverage: { value: 0 },
+    cloudShadowStrength: { value: 0 },
+    cloudShadowOffset: { value: new THREE.Vector2() },
+    cloudShadowWindDirection: { value: new THREE.Vector2(0.86, 0.5) },
+    cloudShadowWindSpeed: { value: 0.42 },
+    cloudShadowTime: { value: 0 },
   };
   const material = new THREE.MeshStandardMaterial({
     vertexColors: true,
@@ -200,12 +235,25 @@ export function createRegionTerrain(
     shader.uniforms.regionHistoricalLow = uniforms.historicalLow;
     shader.uniforms.regionHistoricalMiddle = uniforms.historicalMiddle;
     shader.uniforms.regionHistoricalHigh = uniforms.historicalHigh;
-    shader.vertexShader = `uniform float regionMaxElevation; varying vec2 vRegionUv; varying float vRegionHeight;\n${shader.vertexShader}`
+    shader.uniforms.regionHistoricalAerialTexture = uniforms.historicalAerialTexture;
+    shader.uniforms.regionAerialUvBounds = uniforms.aerialUvBounds;
+    shader.uniforms.regionAerialAvailable = uniforms.aerialAvailable;
+    shader.uniforms.regionCoverageMaskDebug = uniforms.coverageMaskDebug;
+    shader.uniforms.regionCloudShadowEnabled = uniforms.cloudShadowEnabled;
+    shader.uniforms.regionCloudShadowCoverage = uniforms.cloudShadowCoverage;
+    shader.uniforms.regionCloudShadowStrength = uniforms.cloudShadowStrength;
+    shader.uniforms.regionCloudShadowOffset = uniforms.cloudShadowOffset;
+    shader.uniforms.regionCloudShadowWindDirection = uniforms.cloudShadowWindDirection;
+    shader.uniforms.regionCloudShadowWindSpeed = uniforms.cloudShadowWindSpeed;
+    shader.uniforms.regionCloudShadowTime = uniforms.cloudShadowTime;
+    shader.vertexShader = `uniform float regionMaxElevation; varying vec2 vRegionUv; varying float vRegionHeight; varying float vRegionVariation; varying vec2 vRegionPlanarPosition;\n${shader.vertexShader}`
       .replace('#include <uv_vertex>', '#include <uv_vertex>\n    vRegionUv = uv;')
-      .replace('#include <begin_vertex>', '#include <begin_vertex>\n    vRegionHeight = clamp(position.y / regionMaxElevation, 0.0, 1.0);');
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\n    vRegionHeight = clamp(position.y / regionMaxElevation, 0.0, 1.0);\n    vRegionVariation = fract(sin(dot(transformed.xz, vec2(12.9898, 78.233))) * 43758.5453);\n    vRegionPlanarPosition = transformed.xz;');
     shader.fragmentShader = `
       varying vec2 vRegionUv;
       varying float vRegionHeight;
+      varying float vRegionVariation;
+      varying vec2 vRegionPlanarPosition;
       uniform sampler2D regionClassificationA;
       uniform sampler2D regionClassificationB;
       uniform float regionTextureEnabled;
@@ -218,6 +266,18 @@ export function createRegionTerrain(
       uniform vec3 regionHistoricalLow;
       uniform vec3 regionHistoricalMiddle;
       uniform vec3 regionHistoricalHigh;
+      uniform sampler2D regionHistoricalAerialTexture;
+      uniform vec4 regionAerialUvBounds;
+      uniform float regionAerialAvailable;
+      uniform float regionCoverageMaskDebug;
+      uniform float regionCloudShadowEnabled;
+      uniform float regionCloudShadowCoverage;
+      uniform float regionCloudShadowStrength;
+      uniform vec2 regionCloudShadowOffset;
+      uniform vec2 regionCloudShadowWindDirection;
+      uniform float regionCloudShadowWindSpeed;
+      uniform float regionCloudShadowTime;
+      ${REGION_CLOUD_DENSITY_GLSL}
       ${shader.fragmentShader}
     `.replace('#include <color_fragment>', `
       #include <color_fragment>
@@ -240,16 +300,31 @@ export function createRegionTerrain(
       float historicalReliefLift = step(1.5, regionHistoricalMode) * 0.035;
       historicalColor *= 1.0 + historicalReliefLift;
       diffuseColor.rgb = mix(diffuseColor.rgb, historicalColor, regionHistoricalTone * 0.88);
-      // The aerial slot remains deliberately empty while the source-rights gate is blocked.
-      float sourcePixelsAvailable = 0.0;
-      diffuseColor.rgb = mix(diffuseColor.rgb, historicalColor, sourcePixelsAvailable * regionAerialOpacity);
+      vec2 aerialSpan = max(regionAerialUvBounds.zw - regionAerialUvBounds.xy, vec2(0.0001));
+      vec2 aerialUv = (vRegionUv - regionAerialUvBounds.xy) / aerialSpan;
+      float aerialEdge = min(min(aerialUv.x, 1.0 - aerialUv.x), min(aerialUv.y, 1.0 - aerialUv.y));
+      float aerialCoverage = smoothstep(-0.035, 0.065, aerialEdge);
+      vec4 aerialSample = texture2D(regionHistoricalAerialTexture, aerialUv);
+      vec3 aerialColor = mix(historicalColor, aerialSample.rgb, aerialSample.a);
+      float sourcePixelsAvailable = regionAerialAvailable;
+      vec3 aerialPresentation = mix(aerialColor, mix(aerialColor, historicalColor, 0.18), step(1.5, regionHistoricalMode));
+      diffuseColor.rgb = mix(diffuseColor.rgb, aerialPresentation, sourcePixelsAvailable * regionAerialOpacity * aerialCoverage);
+      if (regionCoverageMaskDebug > 0.5) {
+        float coverageLine = 1.0 - smoothstep(0.0, 0.035, abs(aerialEdge));
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.88, 0.48, 0.24), coverageLine);
+      }
+      vec2 cloudPoint = vRegionPlanarPosition + regionCloudShadowOffset
+        + regionCloudShadowWindDirection * regionCloudShadowTime * regionCloudShadowWindSpeed * 0.00008;
+      float cloudDensity = regionEnvCloudDensity(cloudPoint * 0.026, regionCloudShadowCoverage);
+      float cloudDarkening = regionCloudShadowEnabled * cloudDensity * regionCloudShadowStrength;
+      diffuseColor.rgb *= 1.0 - cloudDarkening * 0.38;
       float contour = 1.0 - smoothstep(0.0, 0.07, abs(fract(vRegionHeight * 11.0) - 0.5));
       float contourStrength = regionContourMode < 0.5 ? 0.0 : regionContourMode < 1.5 ? 0.12 : 0.24;
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.48, 0.46, 0.34), contour * contourStrength);
       diffuseColor.rgb *= mix(0.96, 1.0, regionAoEnabled);
     `);
   };
-  material.customProgramCacheKey = () => 'v2-region-terrain-material-2';
+  material.customProgramCacheKey = () => 'v2-region-terrain-material-3';
   const mesh = new THREE.Mesh(built.geometry, material);
   mesh.name = 'v2-region-terrain-mesh';
   mesh.castShadow = true;
@@ -325,6 +400,26 @@ export function createRegionTerrain(
     },
     setAerialOpacity(opacity) {
       uniforms.aerialOpacity.value = Math.min(100, Math.max(0, opacity)) / 100;
+    },
+    setAerialTexture(binding) {
+      uniforms.historicalAerialTexture.value = binding?.texture ?? textures.classificationA;
+      uniforms.aerialAvailable.value = binding?.available ? 1 : 0;
+      uniforms.aerialUvBounds.value.copy(binding ? aerialUvBoundsFor(asset.bounds, binding.bounds) : new THREE.Vector4(0, 0, 1, 1));
+    },
+    setCoverageMaskDebug(enabled) {
+      uniforms.coverageMaskDebug.value = enabled ? 1 : 0;
+    },
+    setCloudShadow(state) {
+      uniforms.cloudShadowEnabled.value = state.enabled ? 1 : 0;
+      uniforms.cloudShadowCoverage.value = state.coverage;
+      uniforms.cloudShadowStrength.value = state.strength;
+      uniforms.cloudShadowOffset.value.set(state.offset.x, state.offset.y);
+      uniforms.cloudShadowWindDirection.value.set(state.windDirection.x, state.windDirection.y);
+      uniforms.cloudShadowWindSpeed.value = state.windSpeed;
+      uniforms.cloudShadowTime.value = state.time;
+    },
+    setCloudShadowTime(time) {
+      uniforms.cloudShadowTime.value = Number.isFinite(time) ? time : 0;
     },
     dispose() {
       built.geometry.dispose();

@@ -9,6 +9,7 @@
   "include": [
     ".astro/types.d.ts",
     "v2/config/**/*.ts",
+    "v2/environment/**/*.ts",
     "v2/shared/**/*.ts",
     "v2/prototypes/region/**/*.ts"
   ]

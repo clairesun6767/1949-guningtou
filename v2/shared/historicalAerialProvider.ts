@@ -1,8 +1,11 @@
 import {
+  HISTORICAL_AERIAL_1944,
   HISTORICAL_AERIAL_1945,
+  HISTORICAL_AERIAL_1958,
   type HistoricalAerialProviderMode,
   type HistoricalSourceMetadata,
 } from '../config/historicalAerial.js';
+import type { HistoricalAerialYear } from './historicalAerialDataset.js';
 
 export interface HistoricalAerialLoadResult {
   status: 'disabled' | 'rights-blocked';
@@ -17,6 +20,12 @@ export interface HistoricalAerialProvider {
   loadLayer(year?: number): Promise<HistoricalAerialLoadResult>;
   canUsePixels(): boolean;
 }
+
+const LEGACY_METADATA_BY_YEAR: Record<HistoricalAerialYear, HistoricalSourceMetadata> = {
+  1944: HISTORICAL_AERIAL_1944,
+  1945: HISTORICAL_AERIAL_1945,
+  1958: HISTORICAL_AERIAL_1958,
+};
 
 export function clampHistoricalAerialOpacity(value: number) {
   if (!Number.isFinite(value)) return 0;
@@ -39,8 +48,9 @@ export function createHistoricalAerialProvider(mode: HistoricalAerialProviderMod
     mode,
     metadata,
     async loadMetadata(year = metadata.year) {
-      if (year !== metadata.year) throw new Error(`Historical aerial year ${year} is not configured for this prototype.`);
-      return metadata;
+      const nextMetadata = LEGACY_METADATA_BY_YEAR[year as HistoricalAerialYear];
+      if (!nextMetadata) throw new Error(`Historical aerial year ${year} is not configured for this prototype.`);
+      return { ...nextMetadata, usageMode: mode };
     },
     async loadLayer(year = metadata.year) {
       const loadedMetadata = await this.loadMetadata(year);
