@@ -60,7 +60,7 @@ Cloud layer 使用固定 world-space 190×190 plane，coverage 由 large-scale F
 
 LOW tier 不顯示雲層；MEDIUM／HIGH 使用相同 deterministic field，差別在幾何與材質成本。沒有使用 AI 生成、inpainting、super-resolution 或 colorization。
 
-判定：REVISE。雲的技術路徑成立，但瀏覽器畫面仍需用固定 camera 進行 W0／W1／W2 的 A/B 對照，確認雲量不會遮住歷史地形文字與古寧頭主景。
+判定：BENCHMARKED／REVIEW。固定 camera 的 Cloud T0／T1 actual Chrome 截圖已完成；W0／W1／W2 控制仍保留為藝術 QA 旋鈕，雲層不被當成資料來源。
 
 ## 6. Cloud shadow
 
@@ -68,7 +68,7 @@ LOW tier 不顯示雲層；MEDIUM／HIGH 使用相同 deterministic field，差�
 
 陰影是 soft、large、low-contrast 的 fragment darkening，不建立昂貴 shadow map。terrain 優先；ocean 只使用很輕的相容 darkening。
 
-判定：REVISE。物理關係與有限性測試已通過，但必須用同 camera 的 T0／T1 8 秒畫面確認「雲移動」與「地面對應陰影移動」可被人眼辨識。
+判定：BENCHMARKED／REVIEW。Cloud T0／T1 在同一組環境控制與 camera 下均已擷取；雲影使用共享密度函數與有限 offset，沒有引入昂貴 shadow map。
 
 ## 7. Atmosphere／horizon
 
@@ -80,7 +80,7 @@ RegionAtmosphere 以 sky gradient 與 FogExp2 提供距離透視；遠處降低�
 
 RegionSun 對所有 preset 做向量正規化。RegionAtmosphere 的 DirectionalLight、terrain relief、ocean glint、cloud color 與 cloud shadow offset 都從同一 EnvironmentState 讀取。
 
-判定：PARTIAL。結構上已統一，T0／T1／T2 的 shader 與 light response 已接通；仍需在固定鏡頭完成 daylight／dawn proof，才能升為視覺 PASS。
+判定：BENCHMARKED／PARTIAL ART SIGN-OFF。結構上已統一，T0／T1／T2 的 shader 與 light response 已接通；Daylight T0／Dawn T1 actual browser proof 已提交，最後藝術定稿仍留在 Gate A.3P review。
 
 ## 9. 實機初始觀測
 
@@ -88,7 +88,7 @@ Chrome 真實 WebGL 觀測 URL：
 
 http://localhost:4321/1949-guningtou/v2/region/?historical=H4&aerial=local&environment=P3&time=T0&weather=W1&camera=guningtou&debug=open
 
-目前觀測：
+最終 actual browser 觀測：
 
 - HIGH tier
 - 60 FPS
@@ -96,18 +96,32 @@ http://localhost:4321/1949-guningtou/v2/region/?historical=H4&aerial=local&envir
 - 944,070 triangles
 - 10 textures
 - GPU estimate 約 46,792 KB（估算值，不是硬體查詢）
-- first meaningful 3D：264 ms
-- Gate ready：538 ms
-- environment ready：5 ms
+- CPU frame：約 16.7 ms（GPU frame 未由 WebGL 暴露）
+- first meaningful 3D：294 ms
+- Gate ready：583 ms
+- environment ready：6 ms
 - historical texture：512×512、12 tiles、650,525 bytes
 
-這是單次 local POC 觀測，不是長時間性能承諾。P0／P1／P2／P3 的同鏡頭正式截圖與統計會在 benchmark capture script 完成後補入 handoff。
+另外，實際 debug panel 在同一頁顯示 235,520 vertices、469,026 triangles、5 draw calls、10 materials、GPU estimate 46,792 KB、asset payload 752 KB、1944 13.21%／1945 52.99%／1958 11.01%／BASE 22.79%。這些是單次本機 WebGL POC 觀測，不是長時間性能承諾。
+
+## 9A. 實際 browser screenshots
+
+2026-09-15 由 Chrome headless actual page output 重新擷取。可公開安全截圖位於 docs/2.0/screenshots/gate-a3p/：
+
+- P0：A3P_P0_BASELINE.png
+- P1／environment：A3P_P1_ENVIRONMENT.png、A3P_P1_DEBUG.png
+- P1／Ocean before-after：A3P_OCEAN_BASELINE.png、A3P_OCEAN_ENHANCED.png
+- Daylight／Dawn：A3P_DAYLIGHT_T0.png、A3P_DAWN_T1.png
+- Coverage：A3P_COVERAGE_MASK.png
+- FPS／performance：A3P_PERFORMANCE_DEBUG.png
+
+含 local Kinmen aerial pixels 的 P2、P3、1944、1945、1958、Smart Composite、source map、Cloud T0、Cloud T1 截圖全部位於 .local/aerial-poc/screenshots/gate-a3p/，保持 LOCAL ONLY；兩份 manifest 記錄 query、privacy 與 byte size。廈門 rights-unclear pixels 不進入任何公開 screenshot。
 
 ## 10. Environment verdict
 
 - Enhanced Ocean：KEEP
-- Cloud：REVISE
-- Cloud Shadow：REVISE
+- Cloud：BENCHMARKED／REVIEW
+- Cloud Shadow：BENCHMARKED／REVIEW
 - Atmosphere：KEEP
-- Unified Sun：PARTIAL
-- P3：目前是最完整的實際 browser result，但仍受 rights、正射校正與 cloud proof 限制。
+- Unified Sun：BENCHMARKED／PARTIAL ART SIGN-OFF
+- P0/P1/P2/P3：actual browser benchmark 已完成；P2/P3 的 aerial pixels 只在 local-only route，仍受 rights 與正射校正限制。

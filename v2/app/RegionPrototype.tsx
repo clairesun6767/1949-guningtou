@@ -61,6 +61,40 @@ function firstQueryValue<T extends string>(value: string | null | undefined, val
   return value && values.includes(value as T) ? value as T : fallback;
 }
 
+interface RegionQueryState {
+  localAerialPoc: boolean;
+  historicalBenchmark: HistoricalBenchmarkMode;
+  environmentMode: EnvironmentBenchmarkMode;
+  environmentTime: EnvironmentTimePreset;
+  environmentWeather: EnvironmentWeather;
+  selectionMode: HistoricalAerialSelectionMode;
+  aerialYear: HistoricalAerialYear;
+  benchmarkMode: boolean;
+  compositionMode: boolean;
+  historicalReviewMode: boolean;
+}
+
+function readRegionQueryState(search = ''): RegionQueryState {
+  const params = new URLSearchParams(search);
+  const localAerialPoc = params.get('aerial') === 'local';
+  const historicalBenchmark = firstQueryValue(params.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, localAerialPoc ? 'H4' : 'H0');
+  const queryYear = Number(params.get('year'));
+  const benchmarkMode = params.has('benchmark');
+
+  return {
+    localAerialPoc,
+    historicalBenchmark,
+    environmentMode: firstQueryValue(params.get('environment')?.toUpperCase(), ENVIRONMENT_MODE_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].environmentMode),
+    environmentTime: firstQueryValue(params.get('time')?.toUpperCase(), ENVIRONMENT_TIME_OPTIONS, 'T0'),
+    environmentWeather: firstQueryValue(params.get('weather')?.toUpperCase(), ENVIRONMENT_WEATHER_OPTIONS, 'W1'),
+    selectionMode: firstQueryValue(params.get('mode')?.toLowerCase(), HISTORICAL_SELECTION_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].selectionMode ?? 'smart'),
+    aerialYear: queryYear === 1944 || queryYear === 1958 ? queryYear : 1945,
+    benchmarkMode,
+    compositionMode: !benchmarkMode,
+    historicalReviewMode: !benchmarkMode && !params.has('composition'),
+  };
+}
+
 interface ReviewConfiguration {
   preset: RegionPresetId;
   variant: RegionVariantId;
@@ -88,18 +122,19 @@ function deviceProfile() {
 }
 
 export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Props) {
-  const queryParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
-  const localAerialPoc = queryParams.get('aerial') === 'local';
-  const queryHistoricalBenchmark = firstQueryValue(queryParams.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, localAerialPoc ? 'H4' : 'H0');
-  const queryEnvironmentMode = firstQueryValue(queryParams.get('environment')?.toUpperCase(), ENVIRONMENT_MODE_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[queryHistoricalBenchmark].environmentMode);
-  const queryEnvironmentTime = firstQueryValue(queryParams.get('time')?.toUpperCase(), ENVIRONMENT_TIME_OPTIONS, 'T0');
-  const queryEnvironmentWeather = firstQueryValue(queryParams.get('weather')?.toUpperCase(), ENVIRONMENT_WEATHER_OPTIONS, 'W1');
-  const querySelectionMode = firstQueryValue(queryParams.get('mode')?.toLowerCase(), HISTORICAL_SELECTION_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[queryHistoricalBenchmark].selectionMode ?? 'smart');
-  const queryYear = Number(queryParams.get('year'));
-  const queryAerialYear: HistoricalAerialYear = queryYear === 1944 || queryYear === 1958 ? queryYear : 1945;
-  const benchmarkMode = queryParams.has('benchmark');
-  const compositionMode = !benchmarkMode;
-  const historicalReviewMode = !benchmarkMode && !queryParams.has('composition');
+  const [queryState, setQueryState] = useState<RegionQueryState>(() => readRegionQueryState());
+  const {
+    localAerialPoc,
+    historicalBenchmark: queryHistoricalBenchmark,
+    environmentMode: queryEnvironmentMode,
+    environmentTime: queryEnvironmentTime,
+    environmentWeather: queryEnvironmentWeather,
+    selectionMode: querySelectionMode,
+    aerialYear: queryAerialYear,
+    benchmarkMode,
+    compositionMode,
+    historicalReviewMode,
+  } = queryState;
   const [profile, setProfile] = useState({ mobile: false, reducedMotion: false, tier: 'HIGH' as RegionPerformanceTier });
   const [profileReady, setProfileReady] = useState(false);
   const sceneMountRef = useRef<HTMLDivElement>(null);
@@ -146,6 +181,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   const stageCopy = STAGE_COPY[stage];
 
   useEffect(() => {
+    const nextQueryState = readRegionQueryState(window.location.search);
+    setQueryState(nextQueryState);
+    setAerialOpacity(nextQueryState.localAerialPoc ? 65 : 0);
     setProfile(deviceProfile());
     setProfileReady(true);
   }, []);
@@ -233,7 +271,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     setEnvironmentWeather(requestedEnvironmentWeather);
     setHistoricalSelectionMode(requestedSelectionMode);
     setCoverageMaskDebug(requestedCoverage);
-    setAerialYear(queryYear === 1944 || queryYear === 1958 ? queryYear : 1945);
+    setAerialYear(queryAerialYear);
     sceneRef.current?.setEnvironmentBenchmarkMode(requestedEnvironmentMode);
     sceneRef.current?.setEnvironmentTime(requestedEnvironmentTime);
     sceneRef.current?.setEnvironmentWeather(requestedEnvironmentWeather);

@@ -23,6 +23,12 @@ const SOURCE_PAGES: Record<HistoricalAerialYear, string> = {
   1958: 'https://gis.sinica.edu.tw/showwmts/index.php?s=kinmen&l=Kinmen_aerialphoto_1958',
 };
 
+export const HISTORICAL_AERIAL_KML_PATHS: Record<HistoricalAerialYear, string> = {
+  1944: 'public/research/kinmen-kml/kinmen-1944.kml',
+  1945: 'public/research/kinmen-kml/kinmen-1945.kml',
+  1958: 'public/research/kinmen-kml/kinmen-1958.kml',
+};
+
 function createDataset(year: HistoricalAerialYear): HistoricalAerialDataset {
   return HistoricalAerialKmlParser.parse(KML_METADATA_MIRRORS[year], {
     id: datasetIdForYear(year),
@@ -35,6 +41,7 @@ function createDataset(year: HistoricalAerialYear): HistoricalAerialDataset {
     usageStatus: 'not-verified',
     historicalRole: year === 1958 ? 'FALLBACK' : 'PRIMARY',
     coordinateOrder: 'UNKNOWN',
+    sourceKmlPath: HISTORICAL_AERIAL_KML_PATHS[year],
   });
 }
 
@@ -49,6 +56,17 @@ export const HISTORICAL_AERIAL_DATASET_REGISTRY = new Map(
 );
 
 export const HISTORICAL_AERIAL_YEARS: readonly HistoricalAerialYear[] = [1944, 1945, 1958];
+
+export const HISTORICAL_AERIAL_SOURCE_REGISTRY = HISTORICAL_AERIAL_DATASETS.map(dataset => ({
+  id: dataset.id,
+  year: dataset.year,
+  name: dataset.name,
+  sourceKmlPath: dataset.sourceKmlPath,
+  sourcePageUrl: dataset.source.sourcePageUrl,
+  rightsStatus: dataset.rightsStatus,
+  historicalRole: dataset.historicalRole,
+  bounds: { ...dataset.bounds },
+}));
 
 export function listHistoricalAerialDatasets() {
   return HISTORICAL_AERIAL_DATASETS.map(dataset => ({ ...dataset, bounds: { ...dataset.bounds } }));
@@ -71,6 +89,7 @@ export function validateHistoricalAerialRegistry() {
       && dataset.maxLevel === 19
       && dataset.tileTemplate.includes('{{z}}')
       && dataset.tileTemplate.includes('{{x}}')
-      && dataset.tileTemplate.includes('{{y}}');
+      && dataset.tileTemplate.includes('{{y}}')
+      && dataset.sourceKmlPath === HISTORICAL_AERIAL_KML_PATHS[year];
   });
 }

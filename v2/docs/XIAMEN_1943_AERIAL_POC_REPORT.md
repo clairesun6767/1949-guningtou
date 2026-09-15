@@ -1,90 +1,154 @@
-# 廈門 1943-11-22 航照原型與目前進度報告
+# 廈門二戰時期航照候選資料 — Single-image registration POC
 
 > 報告日期：2026-09-15（Asia/Taipei）
-> 專案：1949 古寧頭 2.0 — Gate A.3P 研究原型
-> Git 分支：`feature/2.0-art-region-environment-poc`
+> 專案：1949 古寧頭 2.0 — Gate A.3P
+> Git 分支：feature/2.0-art-region-environment-poc
 
-## 1. 本次完成事項
+## 1. 結論與資料真實性
 
-- 將使用者提供的八張廈門黑白航照整理為可由網站讀取的研究資產。
-- 保留原始上傳順序：第一批五張為 A-01–A-05，後續三張為 B-01–B-03。
-- 建立 `manifest.json` 與 TypeScript source registry，記錄尺寸、bytes、SHA-256、批次與狀態。
-- 在區域頁接入「廈門航照／XIAMEN AERIAL」證據瀏覽面板：可切換八張縮圖、預覽與開啟原圖。
-- 明確禁止將這八張影像當成已正射配準的 3D 地圖貼圖；目前是 `EVIDENCE GALLERY ONLY`。
-- 整理 NHHC、NARA、USAAF、公開轉載副本與 1946 歷史地圖的五級搜尋結果。
+這八張廈門影像目前只能作：
 
-## 2. 影像 provenance 與權利邊界
+EVIDENCE / GEOREGISTRATION RESEARCH
 
-| 欄位 | 判定 |
+它們不是已驗證的 1943–1945 historical aerial dataset，也沒有進入 Kinmen 1944／1945／1958 renderer、mosaic 或 terrain projection。
+
+| 欄位 | 目前值 |
 | --- | --- |
-| 使用者宣稱日期 | `1943-11-22` |
-| 第一批原始標註 | 曾稱為 1944；後續更正，保留作審計資訊 |
-| 官方館藏編號 | 尚未驗證 |
-| 空間配準 | 未完成；無 GCP、RMSE、flight／frame／spot |
-| 影像用途 | 研究證據瀏覽、局部比對、後續拼接研究 |
-| 3D 貼圖用途 | 暫不啟用；避免產生假 coverage 或假正射影像 |
-| 權利狀態 | `BLOCKED — RIGHTS UNCLEAR` |
-| GitHub 狀態 | 本分支按使用者要求提交研究原型資產；不代表取得官方館藏再散布授權 |
+| Dataset ID | XIAMEN_WWII_AERIAL_UNVERIFIED_01 |
+| UI | 廈門二戰時期航照候選資料 |
+| claimedDate | 1943-11-22（使用者提供的 claim） |
+| verifiedDate | null |
+| UI status | DATE UNVERIFIED |
+| provenance clue | 影像上保留 53-8-12、53-8-20 兩個可辨識字串；本報告不自行解讀 |
+| rights | BLOCKED — RIGHTS UNCLEAR |
+| alignment | NOT ORTHORECTIFIED |
+| applicationMode | EVIDENCE / GEOREGISTRATION RESEARCH |
 
-照片內可辨識的印刷日期似乎另有 `53-8-12`／`53-8-20`，與 `1943-11-22` 不一致；本報告不自行解讀，標記為待考。
+先前曾出現 1944 的工作標籤，後由使用者更正為 1943-11-22；這段只作 provenance history，不等於 verifiedDate。
 
-## 3. 依指定順序的來源研究結果
+## 2. Rights boundary 與檔案治理
+
+- 八張 JPEG 已從 Git repository 移除 pixels。
+- 本機像素位置：.local/aerial-poc/xiamen/
+- GitHub metadata 位置：public/research/xiamen-1943/
+- 公開 manifest 保存：ID、label、claimedDate、verifiedDate=null、dateStatus、literal clues、dimensions、bytes、SHA-256、source registry 與 georegistration state。
+- public/research/xiamen-1943/README.md 說明 local-only policy；public/research/xiamen-1943/ 不再含 JPEG。
+- astro dev 只在本機提供 /.local/aerial-poc/ 路由，並限制在 root .local/aerial-poc 內；static build 不複製 ignored pixels。
+- local asset 可用時 UI 顯示預覽；不存在、production 或 onError 時顯示 LOCAL PIXEL NOT FOUND，不留下 broken image。
+
+八張影像維持上傳順序：A-01–A-05 為第一批，B-01–B-03 為後續三張。逐張檔名、960×1280 dimensions、bytes 與 SHA-256 以 metadata manifest 和 TypeScript registry 為準。
+
+## 3. Archival reverse lookup
+
+依指定順序的目前結果：
 
 ### 第一優先：NHHC — Milton E. Miles Collection
 
-NHHC 官方 `UA 25.01` 目錄的 `Box 17 / S-2` 明列 `panoramic of Amoy & Kulangsu`，是目前最接近本批影像主題的館藏線索。館藏頁沒有公開列出這八張照片的逐張 negative、print、envelope 或 frame 編號，因此目前只能記為 `strong archival lead`，不能宣稱已完成比對。
+NHHC UA 25.01 的 Box 17／S-2 目錄列出 panoramic of Amoy & Kulangsu，是最接近本批主題的館藏 lead。逐張 negative、print、frame、envelope 與日期尚未取得，不能把目錄 lead 當作八張影像的 provenance proof。
 
-來源：[NHHC — UA 25.01 RADM Milton E. Miles Collection](https://www.history.navy.mil/our-collections/photography/alphabetical---donations0/m/ua-25-01-radm-milton-e--miles-collection.html)
+來源：https://www.history.navy.mil/our-collections/photography/alphabetical---donations0/m/ua-25-01-radm-milton-e--miles-collection.html
 
-### 第二優先：NARA RG 373
+### 第二優先：NARA RG 373／24N118E
 
-NARA 官方研究指南說明 RG 373 的 JX 系列約有 1933–1945 年日本軍航照，需先用 degree-square overlay，再由 flight／date／mission／spot／exposure 追到 film can。研究目標暫記為 `24N118E / Amoy / Hsia-men / Kulangsu`；公開搜尋尚未找到 `1943-11-22` 的精確 flight／spot／film-can 編號。
+RG 373 JX 的 degree-square target 記為 24N118E／Amoy／Hsia-men／Kulangsu。公開指南要求從 overlay 追 flight、date、mission、spot、exposure，再對到 film can；本次尚未取得任何可核對本批影像的 identifier。
 
-來源：[NARA — Japanese Flown Foreign Aerial Photography (JX) in RG 373](https://www.archives.gov/research/cartographic/aerial-photography/rg-373-jx-foreign-aerial-photography)
+來源：https://www.archives.gov/research/cartographic/aerial-photography/rg-373-jx-foreign-aerial-photography
 
-### 第三優先：USAAF 第 14 航空軍／第 21 攝影偵察中隊
+### 第三優先：USAAF 14th Air Force／21st PRS
 
-第 21 攝影偵察中隊在中國戰區執行偵察；公開的中國航照副本可保留原始題註、座標、黑白媒材與 `21ST PHOTO. RCN. SQ. - 14TH U.S.A.A.F.` 格式。這證明了可用「題註格式＋地名／座標＋影像形狀」反查，但本次仍未找到廈門的對應公開影像。
+公開中國戰區航照副本可用來反查中隊題註、座標格式與影像外觀；尚未找到本批廈門影像的 exact flight、mission、frame 或 print number。
 
-來源：[Historical Photographs of China — USAAF aerial view / Bi-s119](https://www.hpcbristol.sjtu.edu.cn/visual/bi-s119)
-
-另有研究文章提到 1943-11-22 的第 21 中隊航照卷，但內容指向臺灣，不足以驗證本批廈門照片；因此只列為方法與日期交叉參考，不列為 provenance 證明。
+來源：https://www.hpcbristol.sjtu.edu.cn/visual/bi-s119
 
 ### 第四優先：Flickr／Wikimedia／Internet Archive
 
-目前公開索引找到的 Xiamen aerial 主要是現代照片、ISS 影像或一般航空照片；`Amoy, from Kulangseu` 是 1885 年出版物的圖像，不是 1943 年美軍航照。沒有找到能反推出本批影像原始館藏號的公開副本。
+目前沒有找到能反推出本批影像原始館藏編號的 matching public copy。Wikimedia 的 Amoy, from Kulangseu 是 1885 圖像，不作二戰航照證明。
 
-來源：[Wikimedia Commons — Aerial photographs of Xiamen](https://commons.wikimedia.org/wiki/Category:Aerial_photographs_of_Xiamen)、[Amoy, from Kulangseu（1885）](https://commons.wikimedia.org/wiki/File:Amoy,_from_Kulangseu.jpg)
+來源：https://commons.wikimedia.org/wiki/Category:Aerial_photographs_of_Xiamen
 
-### 第五優先：1946 HSIA-MEN 1:12,500 Tier B fallback
+### 第五優先：1946 HSIA-MEN 1:12,500
 
-中央研究院東南沿海百年歷史地圖 WMTS 明確列出 `1946 HSIA-MEN [12500] : Amoy_12500_1946`。它是歷史地圖，不是航照；可在無航照區域作 Tier B 空間／城市紋理 fallback。
+Amoy_12500_1946 是中研院歷史地圖候選，可作沒有航照區域的 Tier B cartographic fallback；不是本八張航照，也不綁定到本 Dataset。
 
-來源：[中央研究院東南沿海百年歷史地圖 WMTS](https://gis.sinica.edu.tw/southeast_coast/)
+來源：https://gis.sinica.edu.tw/southeast_coast/
 
-## 4. 原型整合方式
+目前下列欄位全部維持 NONE VERIFIED：flight、mission、frame、spot、exposure、film can、negative／print number、exact date。完整研究矩陣見 XIAMEN_1943_1946_AERIAL_SOURCE_RESEARCH.md。
 
-目前區域頁的新增面板位於歷史來源資訊下方：
+## 4. GCP candidate workflow
 
-- `A-01`–`A-05`：第一批五張。
-- `B-01`–`B-03`：後續三張。
-- 點擊縮圖可切換預覽；點擊「開啟原圖」可另開完整 JPEG。
-- 預覽只代表影像證據，不代表影像已落在地圖上正確位置。
-- 原有 1944／1945／1958 航照 adapter 仍維持原先的權利阻擋與 local POC 邊界，沒有將未配準的廈門照片硬接進 Three.js aerial shader。
+第一張實驗影像固定選 A-01：amoy-1943-11-22-set-a-01。候選點只表示影像 pixel coordinate 與觀察，不是已核對的地理控制點：
 
-## 5. 檔案與資料路徑
+| candidate | approximate pixel | observation | target lon/lat | confidence |
+| --- | ---: | --- | --- | --- |
+| Xiamen coastline | 871,330 | 水陸界線候選 | null | low |
+| harbor | 805,520 | 港灣邊緣候選 | null | low |
+| major bay | 740,845 | 海灣轉折候選 | null | low |
+| persistent landmark | 288,694 | 大型固定構造物候選 | null | medium |
+| road corridor | 470,535 | 道路走廊候選 | null | low |
+| Gulangyu／islands | B-03／126,1020 | 島嶼候選觀察 | null | low |
 
-- 原型影像：`public/research/xiamen-1943/*.jpg`
-- 機讀清單：`public/research/xiamen-1943/manifest.json`
-- 資產說明：`public/research/xiamen-1943/README.md`
-- UI source registry：`v2/config/xiamen1943Aerial.ts`
-- 證據瀏覽面板：`v2/app/XiamenHistoricalAerialPanel.tsx`
-- 本報告：`v2/docs/XIAMEN_1943_AERIAL_POC_REPORT.md`
+reference source 暫以 1946 HSIA-MEN 1:12,500／Amoy_12500_1946 加現代 coastline cross-check；這只作研究參照，不把地圖候選當作 aerial verification。
 
-## 6. 下一步
+Registration QA 規則：
 
-1. 向 NHHC 索取 `UA 25.01 / Box 17 / S-2 / panoramic of Amoy & Kulangsu` 的完整影像清單、envelope／negative／print 編號、原始題註與複製條件。
-2. 向 NARA 查詢 `RG 373 / 24N118E` overlay 上的 flight、mission、spot、exposure、film-can 與數位複製狀態。
-3. 以廈門現代海岸線、港灣、道路、水體與可辨識建物建立 GCP；先做單張 registration QA，再判定是否能拼接。
-4. 只有在日期、館藏號與再利用權利均獲確認後，才把局部影像轉為真正的 map overlay／derivative texture。
-5. 無航照區域暫用 `Amoy_12500_1946` 進行 Tier B fallback，並保留歷史地圖與航照的來源標籤差異。
+- 至少 4 個已核對 reference targets。
+- 每個 residual 不大於 8 pixels。
+- 點位需有足夠空間分布，不能集中在同一條海岸線。
+- QA pass 前不研究 mosaic、不做 terrain projection。
+
+目前 verified target count=0、residuals 為空、qaStatus=NOT PASSED、mosaicAllowed=false、terrainProjectionAllowed=false。參數與 workflow 位於 v2/config/xiamenGcpWorkflow.ts；UI 以 GCP CANDIDATE WORKFLOW／A-01 SINGLE IMAGE／BLOCKED 顯示。
+
+## 5. Gate A.3P 主原型已完成的相關部分
+
+廈門影像沒有進入主地圖，但本輪 Gate A.3P 其餘 pipeline 已接通：
+
+- 1944／1945／1958 metadata-only KML mirrors：public/research/kinmen-kml/
+- HistoricalAerialDatasetRegistry、coverage outline、year switching。
+- 1944／1945 smart composite，1958 missing-data fallback，source-year mask。
+- actual Three.js DEM terrain projection：以 geographic bounds 產生 UV，航照不當 height map。
+- Enhanced Ocean、Clouds、Cloud Shadows、Unified Sun、Atmosphere。
+- P0／P1／P2／P3 environment benchmark 與 local/public screenshot 分流。
+
+詳細管線見 GATE_A3P_KML_AERIAL_PIPELINE_REPORT.md；環境與性能見 GATE_A3P_ENVIRONMENT_BENCHMARK_REPORT.md。
+
+## 6. 實際 browser evidence 與 privacy
+
+Chrome headless actual page output 已於 2026-09-15 重新擷取：
+
+安全、可提交 GitHub 的截圖：
+
+- docs/2.0/screenshots/gate-a3p/A3P_P0_BASELINE.png
+- docs/2.0/screenshots/gate-a3p/A3P_P1_ENVIRONMENT.png
+- docs/2.0/screenshots/gate-a3p/A3P_OCEAN_BASELINE.png
+- docs/2.0/screenshots/gate-a3p/A3P_OCEAN_ENHANCED.png
+- docs/2.0/screenshots/gate-a3p/A3P_DAYLIGHT_T0.png
+- docs/2.0/screenshots/gate-a3p/A3P_DAWN_T1.png
+- docs/2.0/screenshots/gate-a3p/A3P_COVERAGE_MASK.png
+- docs/2.0/screenshots/gate-a3p/A3P_PERFORMANCE_DEBUG.png
+- docs/2.0/screenshots/gate-a3p/A3P_P1_DEBUG.png
+
+含 local Kinmen pixels 的截圖全部為 LOCAL ONLY：
+
+- .local/aerial-poc/screenshots/gate-a3p/A3P_H1_1944_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_H2_1945_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_H3_1958_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_H4_SMART_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_SOURCE_DISTRIBUTION_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_P2_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_P3_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_CLOUD_T0_LOCAL.png
+- .local/aerial-poc/screenshots/gate-a3p/A3P_CLOUD_T1_LOCAL.png
+
+上述 local screenshots 不含廈門八張 JPEG；廈門 rights-unclear pixels 只存在 .local/aerial-poc/xiamen/，不進任何 GitHub screenshot。
+
+## 7. QA 結果
+
+- npm.cmd run test:v2：40／40 passed。
+- npm.cmd run build：280 pages built。
+- clean Astro dev browser QA：無 hydration、broken image、404 或 failed-to-fetch log。
+- LOCAL Smart Composite debug：60 FPS、CPU frame 約 16.7 ms、5 calls、469,026 triangles、512×512、12 tiles、650,525 bytes；source distribution 為 1944 13.21%、1945 52.99%、1958 11.01%、BASE 22.79%。
+- GCP registration QA：BLOCKED，尚未通過。
+
+## 8. Gate boundary
+
+本次停在 Gate A.3P，不進 Gate B。下一次涉及廈門的合法進展必須先完成 archival reverse lookup 或取得可書面確認的使用權，再以 A-01 的 single-image registration QA 驗證；QA 通過後才可評估 mosaic／terrain projection。

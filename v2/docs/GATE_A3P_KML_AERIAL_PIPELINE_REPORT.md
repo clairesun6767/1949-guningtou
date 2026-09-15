@@ -2,7 +2,7 @@
 
 審查日期：2026-09-15（Asia/Taipei）
 
-本報告記錄 1944、1945、1958 三份使用者提供 KML 的實際解析、低量本機 POC、品質分析與 smart source mask。POC 僅供本機評估；航照像素、拼接圖與含受限像素的畫面均被 .gitignore 排除。
+本報告記錄 1944、1945、1958 三份使用者提供 KML 的實際解析、低量本機 POC、品質分析與 smart source mask。POC 僅供本機評估；航照像素、拼接圖與含受限像素的畫面放在 root .local/aerial-poc/ 並被 .gitignore 排除；GitHub 只保留 KML metadata、程式、測試、報告與安全截圖。
 
 ## 結論
 
@@ -28,6 +28,16 @@ Parser 的選擇順序是：
 2. 解析其 LatLonBox 與 Link href。
 3. 忽略只提供 1×1 GIF 的 Icon href。
 4. 正規化 z／x／y placeholder，並預設 GoogleMapsCompatible／EPSG:3857。
+
+## 1A. Git-tracked KML mirrors 與 registry
+
+為了讓 GitHub 上的 GPT／reviewer 能沿同一條 parser 路徑檢視來源結構，本次新增 metadata-only KML mirrors：
+
+- public/research/kinmen-kml/kinmen-1944.kml
+- public/research/kinmen-kml/kinmen-1945.kml
+- public/research/kinmen-kml/kinmen-1958.kml
+
+三檔保留 LatLonBox、gx:MapTilePyramid、tile template、來源頁與權利邊界；Icon 是 1×1 GIF placeholder，不是提交的航照像素。HistoricalAerialDatasetRegistry 以 HISTORICAL_AERIAL_KML_PATHS 對應三檔，測試會從檔案重新 parse 並核對 registry path。
 
 ## 2. KML metadata 驗證
 
@@ -102,7 +112,7 @@ Parser 的選擇順序是：
 
 ## 7. Smart composite 與來源分布
 
-smart-composite-z12.png 與 source-mask-z12.png 都只存在 public/.local/aerial-poc；Git 不追蹤它們。
+smart-composite-z12.png 與 source-mask-z12.png 都只存在 .local/aerial-poc/；Git 不追蹤它們。
 
 | source | 實際像素比例 |
 | --- | ---: |
@@ -133,9 +143,25 @@ KML／WMTS 公開可讀不等於取得 pixel redistribution permission。本次 
 
 可提交 GitHub 的只有 parser、registry、provider、quality analyzer、selection/source-mask API、coverage geometry、UI、tests、reports 與不含受限像素的安全畫面。
 
+廈門八張使用者 JPEG 的日期、館藏與公開再散布權均未確認，因此已自 Git 移除 pixels，實體只保留在 .local/aerial-poc/xiamen/。GitHub 的 public/research/xiamen-1943/ 僅保留 manifest、README 與 provenance／SHA-256／dimensions；UI 在 production 或 local pixel 不存在時顯示 graceful fallback，不渲染 broken image。
+
+## 9A. 實際 browser evidence
+
+由 Chrome headless actual page output 於 2026-09-15 重新擷取；安全截圖已進 Git：
+
+- P0/P1：docs/2.0/screenshots/gate-a3p/A3P_P0_BASELINE.png、A3P_P1_ENVIRONMENT.png
+- Ocean before/after：A3P_OCEAN_BASELINE.png、A3P_OCEAN_ENHANCED.png
+- Daylight/Dawn：A3P_DAYLIGHT_T0.png、A3P_DAWN_T1.png
+- Coverage：A3P_COVERAGE_MASK.png
+- P1 performance：A3P_PERFORMANCE_DEBUG.png、A3P_P1_DEBUG.png
+
+1944、1945、1958、Smart Composite、P2/P3、source map、Cloud T0/T1 的畫面含 local Kinmen pixels，全部放在 .local/aerial-poc/screenshots/gate-a3p/，不提交 GitHub。每次截圖的 query、privacy 與 byte size 見兩個 screenshot manifest.json。
+
 ## 10. 本報告對 Gate A.3P 的判定
 
 - 1944：PARTIAL；有效且對部分 tile 勝過 1945，但透明缺值比例高。
 - 1945：USEFUL；本 POC 的 primary coverage 最穩定。
 - 1958：USEFUL FALLBACK；缺值回退有實際作用，但不能當 1949 primary。
 - Smart composite：PROMISING；已展示多年代與 BASE 分布，但仍需更大範圍、控制點與權利確認。
+- 覆蓋範圍、年度切換、source-year mask、actual Three.js DEM projection、Enhanced Ocean、Clouds、Cloud Shadows、Unified Sun、Atmosphere 與 P0/P1/P2/P3 browser evidence 已在 Gate A.3P 原型接通。
+- Gate A.3P 本輪停在此處；不進 Gate B。廈門仍是 EVIDENCE / GEOREGISTRATION RESEARCH，single-image GCP QA 尚未通過。

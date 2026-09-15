@@ -25,6 +25,36 @@ const shots = [
     note: 'P1 environment benchmark with T1 dawn and W2 cloud preset.',
   },
   {
+    name: 'A3P_OCEAN_BASELINE',
+    query: '?historical=H0&environment=P0&time=T0&weather=W0&camera=guningtou&debug=closed',
+    privacy: 'safe',
+    note: 'Ocean before: P0 baseline sea shell without enhanced environment response.',
+  },
+  {
+    name: 'A3P_OCEAN_ENHANCED',
+    query: '?historical=H0&environment=P1&time=T0&weather=W1&camera=guningtou&debug=closed',
+    privacy: 'safe',
+    note: 'Ocean after: P1 enhanced sea response with unified sun, motion and atmosphere.',
+  },
+  {
+    name: 'A3P_DAYLIGHT_T0',
+    query: '?historical=H0&environment=P1&time=T0&weather=W1&camera=guningtou&debug=closed',
+    privacy: 'safe',
+    note: 'Unified daylight T0 proof without aerial pixels.',
+  },
+  {
+    name: 'A3P_DAWN_T1',
+    query: '?historical=H0&environment=P1&time=T1&weather=W1&camera=guningtou&debug=closed',
+    privacy: 'safe',
+    note: 'Unified battlefield dawn T1 proof without aerial pixels.',
+  },
+  {
+    name: 'A3P_PERFORMANCE_DEBUG',
+    query: '?historical=H0&environment=P1&time=T0&weather=W1&camera=guningtou&debug=open',
+    privacy: 'safe',
+    note: 'P0/P1 performance readout: FPS, frame time, calls, triangles and readiness.',
+  },
+  {
     name: 'A3P_COVERAGE_MASK',
     query: '?historical=H0&environment=P0&coverage=on&camera=guningtou&debug=closed',
     privacy: 'safe',

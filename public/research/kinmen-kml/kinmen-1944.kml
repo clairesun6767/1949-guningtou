@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>Kinmen_1944 metadata mirror</name>
+    <GroundOverlay>
+      <name>金門舊航照影像(1944)</name>
+      <Icon><href>data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEaaa==</href></Icon>
+      <LatLonBox>
+        <north>24.5208965</north><south>24.3932995</south>
+        <east>118.4750534</east><west>118.1987492</west>
+      </LatLonBox>
+      <gx:MapTilePyramid>
+        <Link><href>https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_1944-png-{{z}}-{{x}}-{{y}}</href></Link>
+        <gx:minLevel>0</gx:minLevel><gx:maxLevel>19</gx:maxLevel>
+      </gx:MapTilePyramid>
+    </GroundOverlay>
+  </Document>
+</kml>

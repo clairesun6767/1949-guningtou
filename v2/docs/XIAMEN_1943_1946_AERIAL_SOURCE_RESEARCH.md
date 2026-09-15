@@ -10,6 +10,21 @@ XIAMEN：MAP ONLY / NO USABLE SOURCE YET
 
 不能用 modern satellite、現代 DEM 或網路上未驗證的 JPG 冒充 1943–1945 historical aerial。1946 HSIA-MEN 是可追蹤的歷史地圖候選，屬 Tier B cartographic reference，不是 Tier A aerial texture。
 
+## 0. Dataset truth state
+
+目前 UI 與 metadata 的唯一識別為：
+
+- ID：XIAMEN_WWII_AERIAL_UNVERIFIED_01
+- UI label：廈門二戰時期航照候選資料
+- claimedDate：1943-11-22（使用者提供的 claim，非驗證日期）
+- verifiedDate：null
+- dateStatus：DATE UNVERIFIED
+- literal provenance clues：53-8-12、53-8-20（保留字串，不自行解讀）
+- applicationMode：EVIDENCE / GEOREGISTRATION RESEARCH
+- rightsStatus：BLOCKED — RIGHTS UNCLEAR
+
+八張 JPEG 已從 Git repository 移除，僅保留在 root .local/aerial-poc/xiamen/。公開 repository 只保存 manifest metadata、SHA-256、dimensions、source registry、GCP workflow 與報告。
+
 ## 1. Official sources checked
 
 | Source | Observed evidence | Access／rights decision |
@@ -18,6 +33,8 @@ XIAMEN：MAP ONLY / NO USABLE SOURCE YET
 | 中研院 1946 candidate | Layer ID：Amoy_12500_1946；名稱：1946 HSIA-MEN [12500] | Tier B candidate；本 Gate 不下載、不綁定 renderer |
 | 中研院 Gulangyu candidate | Layer ID：Amoy_1938；名稱：MAP OF KULANGSU ISLAND AMOY；官方 metadata bounds 118.0514827–118.0734196E、24.4384177–24.4566086N | 1938 map reference，非 1943–1946 aerial |
 | NARA RG 373 JX | 官方說明：JX 約 1933–1945 的日軍 foreign aerial photography；overlay index 以 degree square 搜尋，overlay 上可找 flight／date／mission／spot | 只建立 research lead；尚未取得 24N118E 的 spot／frame／can identifier |
+| NHHC UA 25.01／Milton E. Miles Collection | Box 17／S-2 目錄列出 panoramic of Amoy & Kulangsu | 最接近 Amoy／Kulangsu 主題的 archival lead；尚未核對逐張 negative／print／frame 或再散布權 |
+| USAAF 14th Air Force／21st Photographic Reconnaissance Squadron | 公開中國戰區航照副本可用題註格式與中隊名稱反查 | 方法學 lead；尚未找到本八張的 exact flight／mission／frame／spot |
 | Academia Sinica JX research lead | 中研院研究文章說明 JX 典藏與索引碼、航跡圖與底片罐對應研究 | 可作 archival lead；不是本專案已取得的影幅或再散布授權 |
 
 官方頁面：
@@ -27,6 +44,8 @@ XIAMEN：MAP ONLY / NO USABLE SOURCE YET
 - <https://gis.sinica.edu.tw/showwmts/index.php?l=Amoy_10K_1938&s=southeast_coast>
 - <https://gis.sinica.edu.tw/showwmts/index.php?l=Amoy_1938&s=southeast_coast>
 - <https://www.archives.gov/research/cartographic/aerial-photography/rg-373-jx-foreign-aerial-photography>
+- <https://www.history.navy.mil/our-collections/photography/alphabetical---donations0/m/ua-25-01-radm-milton-e--miles-collection.html>
+- <https://www.hpcbristol.sjtu.edu.cn/visual/bi-s119>
 - <https://gis.rchss.sinica.edu.tw/GIArchive/archives/1841/>
 
 1946 layer 的官方清單項目已確認；其個別 metadata 頁在本次自動讀取時出現 cache miss，因此 bounds、preview、WMTS capabilities、實際解析度與下載權利不填猜測值，留待人工／官方回覆核對。
@@ -95,6 +114,34 @@ NARA 官方 RG 373 JX 流程要求先用 degree-square overlay index，再由 ov
 
 因此 NARA Identifiers 欄位必須填「NONE VERIFIED」，不能填入範例頁面上的其他 degree square、spot 或 can number。
 
+## 3A. Archival reverse-lookup status
+
+| 目標欄位 | NHHC UA 25.01 | NARA RG 373／24N118E | USAAF 14th／21st PRS |
+| --- | --- | --- | --- |
+| flight | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| mission | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| frame | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| spot | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| exposure | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| film can | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| negative／print number | NONE VERIFIED | NONE VERIFIED | NONE VERIFIED |
+| exact date | 目錄未列；不能由 claim 推回 | NONE VERIFIED | 公開副本未證明本批廈門影像 |
+
+NHHC 的 Box 17／S-2「panoramic of Amoy & Kulangsu」只能證明值得索取館藏清單；NARA 的 24N118E 只能證明搜尋入口；USAAF 公開頁只能提供反查題註的方法。三者目前都不足以把八張 JPEG 轉成 verified dataset。
+
+## 3B. Single-image GCP candidate workflow
+
+第一張實驗影像固定選 A-01：amoy-1943-11-22-set-a-01。候選只記錄影像 pixel coordinate 與觀察，不把 target longitude／latitude 填成已驗證點：
+
+- Xiamen coastline／水陸界線
+- harbor／港灣邊緣
+- major bay／海灣轉折
+- persistent landmark／大型固定構造物
+- road corridor／道路走廊
+- Gulangyu／islands：只列 B-03 的候選觀察，不作確認
+
+目前 verified target count 為 0，沒有 residual measurement；registration QA 為 BLOCKED。規則是至少 4 個已核對 reference targets、每個 residual 不大於 8 pixels 且分布足夠，才允許研究 mosaic；QA 通過前不做 mosaic、不做 terrain projection。參數與候選座標保存在 v2/config/xiamenGcpWorkflow.ts，UI 以 GCP CANDIDATE WORKFLOW 顯示。
+
 ## 4. Tier decision
 
 - Tier A：目前沒有已驗證的 Xiamen 1943–1945 aerial dataset。
@@ -106,4 +153,4 @@ NARA 官方 RG 373 JX 流程要求先用 degree-square overlay index，再由 ov
 
 繼續搜尋／申請廈門 aerial：YES。
 
-下一步應向 NARA／中研院提出具體詢問，要求 24N118E overlay 上的 flight、mission、frame／spot、exposure、film-can、digitization status、reproduction fee、high-resolution application 與 derivative／public-web rights。取得書面確認前，Xiamen 只顯示 source coverage／research state，不產生 historical texture。
+下一步應向 NHHC、NARA、USAAF／Air Force records 與中研院提出具體詢問，要求 flight、mission、frame／spot、exposure、film-can、negative／print number、digitization status、reproduction fee、high-resolution application 與 derivative／public-web rights。取得書面確認前，Xiamen 只顯示 source coverage／research state，不產生 historical texture。

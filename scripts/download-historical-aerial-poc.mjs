@@ -5,7 +5,7 @@ import sharp from 'sharp';
 
 const ROOT = process.cwd();
 const DEFAULT_KML_DIR = 'C:\\Users\\user\\Downloads';
-const DEFAULT_OUTPUT = path.join(ROOT, 'public', '.local', 'aerial-poc');
+const DEFAULT_OUTPUT = path.join(ROOT, '.local', 'aerial-poc');
 const AREA_BOUNDS = { west: 118.278, south: 24.438, east: 118.372, north: 24.52 };
 const MAX_TILES = 128;
 const MAX_BYTES = 50 * 1024 * 1024;

@@ -262,6 +262,9 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-xiamen-aerial-panel__preview { margin: 9px 0 0; border: 1px solid rgba(225, 220, 194, .16); background: rgba(7, 13, 13, .65); }
 .region-xiamen-aerial-panel__preview a { display: block; }
 .region-xiamen-aerial-panel__preview img { display: block; width: 100%; max-height: 235px; object-fit: contain; background: #0b1212; }
+.region-xiamen-aerial-panel__pixel-fallback { display: grid; place-items: center; min-height: 150px; padding: 24px 10px; background: repeating-linear-gradient(135deg, rgba(213, 184, 119, .045) 0 8px, rgba(7, 13, 13, .52) 8px 16px); color: var(--region-faint); text-align: center; }
+.region-xiamen-aerial-panel__pixel-fallback span { color: var(--region-brass); font-family: var(--region-mono); font-size: 7px; letter-spacing: .12em; }
+.region-xiamen-aerial-panel__pixel-fallback strong { margin-top: 7px; color: var(--region-ink); font-family: var(--region-serif); font-size: 18px; font-weight: 500; }
 .region-xiamen-aerial-panel__preview figcaption { display: flex; justify-content: space-between; gap: 7px; padding: 6px 7px; color: var(--region-faint); font-family: var(--region-mono); font-size: 7px; }
 .region-xiamen-aerial-panel__preview figcaption a { color: var(--region-brass); white-space: nowrap; }
 .region-xiamen-aerial-panel__thumbs { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin-top: 7px; }
@@ -269,7 +272,16 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-xiamen-aerial-panel__thumbs button:hover, .region-xiamen-aerial-panel__thumbs button:focus-visible { border-color: rgba(213, 184, 119, .65); outline: none; }
 .region-xiamen-aerial-panel__thumbs button.is-selected { border-color: var(--region-brass); background: rgba(213, 184, 119, .13); color: var(--region-brass); }
 .region-xiamen-aerial-panel__thumbs img { display: block; aspect-ratio: 3 / 4; width: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+.region-xiamen-aerial-panel__thumb-fallback { display: grid !important; place-items: center; aspect-ratio: 3 / 4; width: 100%; margin: 0 !important; background: rgba(213, 184, 119, .045); color: var(--region-faint); font-size: 13px !important; }
 .region-xiamen-aerial-panel__thumbs span { display: block; margin-top: 2px; font-family: var(--region-mono); font-size: 6px; line-height: 1.2; }
+.region-xiamen-aerial-panel__workflow { margin-top: 10px; border-top: 1px solid rgba(225, 220, 194, .12); padding-top: 9px; }
+.region-xiamen-aerial-panel__workflow > div { display: flex; justify-content: space-between; gap: 7px; }
+.region-xiamen-aerial-panel__workflow > div span { color: #8fb4a8; font-family: var(--region-mono); font-size: 7px; }
+.region-xiamen-aerial-panel__workflow > div strong { color: var(--region-brass); font-family: var(--region-mono); font-size: 7px; font-weight: 400; }
+.region-xiamen-aerial-panel__workflow p { margin: 6px 0 0; color: #c4a587; font-family: var(--region-mono); font-size: 7px; }
+.region-xiamen-aerial-panel__workflow ul { display: grid; gap: 3px; margin: 7px 0 0; padding: 0; list-style: none; color: var(--region-faint); font-size: 7px; }
+.region-xiamen-aerial-panel__workflow li::before { content: '＋'; margin-right: 4px; color: #8fb4a8; }
+.region-xiamen-aerial-panel__workflow small { margin-top: 7px; color: var(--region-faint); font-size: 7px; }
 .region-xiamen-aerial-panel > small { color: #c4a587; }
 .region-debug__metric-strip { margin-top: 8px; border-top: 1px solid var(--region-line); padding-top: 8px; color: var(--region-faint); font-family: var(--region-mono); font-size: 7px; letter-spacing: .04em; }
 
@@ -367,6 +379,7 @@ button { color: inherit; font: inherit; cursor: pointer; }
   .region-footer span:last-child { display: none; }
   .region-side-rail { padding: 22px 22px 28px; }
   .region-side-rail__body { font-size: 13px; }
+  .region-xiamen-aerial-panel__thumbs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .region-debug { right: 12px; bottom: 44px; left: 12px; width: auto; max-height: calc(100svh - 58px); }
   .region-debug-reopen { right: 12px; bottom: 44px; }
   .region-label strong { font-size: 9px; }

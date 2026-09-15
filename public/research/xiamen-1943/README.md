@@ -1,13 +1,22 @@
-# 廈門 1943-11-22 航照原型資料集
+# 廈門二戰時期航照候選資料集
 
-這八張 JPEG 是使用者提供並整理進本專案的研究原型資產，不是本次從 NHHC、NARA 或其他官方館藏取得的正式數位複本。
+本目錄只保留 metadata，不保留八張 JPEG 像素。八張使用者提供影像已移至本機 ignored 目錄：
+
+`.local/aerial-poc/xiamen/`
 
 ## 目前狀態
 
-- 宣稱日期：`1943-11-22`（使用者提供；尚未由原始館藏編號驗證）
-- 先前標註：第一批上傳時曾標為 1944，後續更正為 1943-11-22；兩項資訊保留於 manifest／報告中。
-- 空間狀態：未完成 GCP、正射校正、RMSE 或無縫拼接。
-- 原型用途：證據瀏覽、局部地標比對、後續館藏反查；不是地圖底圖或 heightmap。
-- 權利狀態：`BLOCKED — RIGHTS UNCLEAR`。公開 GitHub 版本僅代表目前研究原型，不代表取得原始館藏或再散布授權。
+- Dataset ID：`XIAMEN_WWII_AERIAL_UNVERIFIED_01`
+- 顯示名稱：廈門二戰時期航照候選資料
+- claimedDate：`1943-11-22`（使用者提供；尚未由原始館藏證明）
+- verifiedDate：`null`
+- 日期標籤：`DATE UNVERIFIED`
+- 影像字串 clue：`53-8-12`、`53-8-20`；只作 provenance clue，不自行解讀。
+- 空間狀態：未完成 GCP、正射校正、RMSE 或拼接。
+- 原型用途：`EVIDENCE / GEOREGISTRATION RESEARCH`。
+- 權利狀態：`BLOCKED — RIGHTS UNCLEAR`。
+- Git policy：不在 Git／GitHub 保存 pixels；GitHub 只保存 manifest、hash、尺寸、source registry、報告與 UI architecture。
 
-完整檔案清單、SHA-256、來源優先序與下一步查檔請見 [`v2/docs/XIAMEN_1943_AERIAL_POC_REPORT.md`](../../../v2/docs/XIAMEN_1943_AERIAL_POC_REPORT.md)。
+本機缺少 pixels 時，網站會顯示 metadata fallback，不會留下 broken image。
+
+完整清單、SHA-256、來源優先序與 GCP workflow 請見 [`v2/docs/XIAMEN_1943_AERIAL_POC_REPORT.md`](../../../v2/docs/XIAMEN_1943_AERIAL_POC_REPORT.md)。

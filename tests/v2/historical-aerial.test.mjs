@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
@@ -9,6 +10,7 @@ import {
 import {
   HISTORICAL_AERIAL_DATASETS,
   HISTORICAL_AERIAL_YEARS,
+  HISTORICAL_AERIAL_KML_PATHS,
   getHistoricalAerialDataset,
   validateHistoricalAerialRegistry,
 } from '../../.tmp/v2-tests/v2/config/historicalAerialRegistry.js';
@@ -78,6 +80,16 @@ test('KML parser ignores the 1×1 Icon as imagery and uses MapTilePyramid', () =
   assert.equal(isLikelyPlaceholderTile(new Uint8Array([0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 1, 0, 1, 0]), 'image/gif'), true);
 });
 
+test('tracked 1944/1945/1958 KML metadata mirrors parse through the same registry path', () => {
+  for (const year of [1944, 1945, 1958]) {
+    const path = HISTORICAL_AERIAL_KML_PATHS[year];
+    const dataset = HistoricalAerialKmlParser.parse(readFileSync(path, 'utf8'));
+    assert.equal(dataset.year, year);
+    assert.equal(dataset.coverageGeometry.coordinates[0].length, 5);
+    assert.match(dataset.tileTemplate, new RegExp(`Kinmen_${year}|Kinmen_aerialphoto_${year}`));
+  }
+});
+
 test('registry exposes all historical years, bounds and rights boundary', () => {
   assert.deepEqual(HISTORICAL_AERIAL_YEARS, [1944, 1945, 1958]);
   assert.equal(HISTORICAL_AERIAL_DATASETS.length, 3);
@@ -86,6 +98,11 @@ test('registry exposes all historical years, bounds and rights boundary', () => 
   assert.equal(getHistoricalAerialDataset(1945)?.historicalRole, 'PRIMARY');
   assert.equal(getHistoricalAerialDataset(1958)?.historicalRole, 'FALLBACK');
   assert.ok(HISTORICAL_AERIAL_DATASETS.every(dataset => dataset.rightsStatus === 'BLOCKED — RIGHTS UNCLEAR'));
+  assert.deepEqual(HISTORICAL_AERIAL_DATASETS.map(dataset => dataset.sourceKmlPath), [
+    HISTORICAL_AERIAL_KML_PATHS[1944],
+    HISTORICAL_AERIAL_KML_PATHS[1945],
+    HISTORICAL_AERIAL_KML_PATHS[1958],
+  ]);
 });
 
 test('coverage bounds contain and overlap according to KML LatLonBox', () => {

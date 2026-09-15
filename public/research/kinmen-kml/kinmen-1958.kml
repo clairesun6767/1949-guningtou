@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
+  <Document>
+    <name>Kinmen_aerialphoto_1958 metadata mirror</name>
+    <GroundOverlay>
+      <name>金門舊航照圖(1958.09.10)</name>
+      <Icon><href>data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEaaa==</href></Icon>
+      <LatLonBox>
+        <north>24.5542212</north><south>24.3789698</south>
+        <east>118.4924002</east><west>118.1973476</west>
+      </LatLonBox>
+      <gx:MapTilePyramid>
+        <Link><href>https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_aerialphoto_1958-png-{{z}}-{{x}}-{{y}}</href></Link>
+        <gx:minLevel>0</gx:minLevel><gx:maxLevel>19</gx:maxLevel>
+      </gx:MapTilePyramid>
+    </GroundOverlay>
+  </Document>
+</kml>

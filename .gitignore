@@ -13,6 +13,8 @@ tmp/
 # Gate A.3P local-only aerial evaluation; never publish pixels or derived textures.
 /.local/aerial-poc/
 /public/.local/aerial-poc/
+# Xiamen candidate pixels are always local-only; the public folder stores metadata only.
+/public/research/xiamen-1943/*.jpg
 
 # desktop attachment staging area; keep private source documents out of Git
 .hermes/
