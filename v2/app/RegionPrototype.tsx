@@ -26,6 +26,7 @@ import { REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../confi
 import { REGION_COMPOSITION_QUALITY } from '../config/region.js';
 import { RegionScene, type RegionDebugState, type RegionLoadingStage, type RegionSceneStats } from '../prototypes/region/RegionScene.js';
 import { chooseRegionTier } from '../prototypes/region/RegionPerformance.js';
+import XiamenHistoricalAerialPanel from './XiamenHistoricalAerialPanel.js';
 
 type AppStage = 'shell' | RegionLoadingStage;
 
@@ -713,6 +714,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             <p>目前僅確認 1938–1946 歷史地圖候選；尚無已驗證的 1943–45 航照 flight／frame／spot。</p>
             <small>候選：Amoy 10K 1938 · Amoy 12.5K 1946 · RG 373 JX</small>
           </div>
+          <XiamenHistoricalAerialPanel base={base} />
         </aside>
       </main>
 

@@ -255,6 +255,22 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-source-panel small { display: block; margin-top: 7px; color: #c4a587; font-size: 8px; line-height: 1.45; }
 .region-source-panel--research { border-color: rgba(143, 180, 168, .28); background: rgba(143, 180, 168, .045); }
 .region-source-panel--research span { color: #8fb4a8; }
+.region-xiamen-aerial-panel { border-color: rgba(213, 184, 119, .32); background: rgba(213, 184, 119, .045); }
+.region-xiamen-aerial-panel__heading { display: flex; justify-content: space-between; align-items: baseline; gap: 7px; }
+.region-xiamen-aerial-panel__heading span { color: var(--region-brass); }
+.region-xiamen-aerial-panel__heading strong { color: var(--region-ink); font-family: var(--region-mono); font-size: 8px; font-weight: 400; }
+.region-xiamen-aerial-panel__preview { margin: 9px 0 0; border: 1px solid rgba(225, 220, 194, .16); background: rgba(7, 13, 13, .65); }
+.region-xiamen-aerial-panel__preview a { display: block; }
+.region-xiamen-aerial-panel__preview img { display: block; width: 100%; max-height: 235px; object-fit: contain; background: #0b1212; }
+.region-xiamen-aerial-panel__preview figcaption { display: flex; justify-content: space-between; gap: 7px; padding: 6px 7px; color: var(--region-faint); font-family: var(--region-mono); font-size: 7px; }
+.region-xiamen-aerial-panel__preview figcaption a { color: var(--region-brass); white-space: nowrap; }
+.region-xiamen-aerial-panel__thumbs { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; margin-top: 7px; }
+.region-xiamen-aerial-panel__thumbs button { min-width: 0; border: 1px solid rgba(225, 220, 194, .12); padding: 2px; background: rgba(255, 255, 255, .025); color: var(--region-faint); cursor: pointer; }
+.region-xiamen-aerial-panel__thumbs button:hover, .region-xiamen-aerial-panel__thumbs button:focus-visible { border-color: rgba(213, 184, 119, .65); outline: none; }
+.region-xiamen-aerial-panel__thumbs button.is-selected { border-color: var(--region-brass); background: rgba(213, 184, 119, .13); color: var(--region-brass); }
+.region-xiamen-aerial-panel__thumbs img { display: block; aspect-ratio: 3 / 4; width: 100%; object-fit: cover; filter: grayscale(1) contrast(1.05); }
+.region-xiamen-aerial-panel__thumbs span { display: block; margin-top: 2px; font-family: var(--region-mono); font-size: 6px; line-height: 1.2; }
+.region-xiamen-aerial-panel > small { color: #c4a587; }
 .region-debug__metric-strip { margin-top: 8px; border-top: 1px solid var(--region-line); padding-top: 8px; color: var(--region-faint); font-family: var(--region-mono); font-size: 7px; letter-spacing: .04em; }
 
 .region-footer { position: relative; z-index: 12; display: flex; justify-content: space-between; min-height: 36px; border-top: 1px solid var(--region-border); padding: 0 32px; color: var(--region-faint); font-size: 7px; letter-spacing: .14em; align-items: center; }

@@ -16,6 +16,7 @@ tmp/
 
 # desktop attachment staging area; keep private source documents out of Git
 .hermes/
+.codex-remote-attachments/
 
 # dependencies
 node_modules/
