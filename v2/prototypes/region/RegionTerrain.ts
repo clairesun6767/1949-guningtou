@@ -1,5 +1,11 @@
 import * as THREE from 'three';
-import { REGION_CONFIG, type RegionVariantId } from '../../config/region.js';
+import {
+  REGION_CONFIG,
+  type RegionContourMode,
+  type RegionLightingMode,
+  type RegionTerrainQualityId,
+  type RegionVariantId,
+} from '../../config/region.js';
 import { lonLatToWorld } from '../../shared/geo.js';
 import type { RegionCoastlineAsset, RegionTerrainAsset } from '../../shared/regionDataProvider.js';
 
@@ -12,6 +18,11 @@ export interface RegionTerrainHandle {
   group: THREE.Group;
   mesh: THREE.Mesh;
   wireframe: THREE.LineSegments;
+  quality: RegionTerrainQualityId;
+  grid: string;
+  coastlineResolution: string;
+  sourceLabel: string;
+  assetPayloadBytes: number;
   triangles: number;
   vertices: number;
   textureEstimateBytes: number;
@@ -19,6 +30,11 @@ export interface RegionTerrainHandle {
   setTextureEnabled(enabled: boolean): void;
   setVariant(variant: RegionVariantId): void;
   setWireframe(enabled: boolean): void;
+  setVerticalExaggeration(verticalExaggeration: number): void;
+  setLightingMode(mode: RegionLightingMode): void;
+  setContourMode(mode: RegionContourMode): void;
+  setAoEnabled(enabled: boolean): void;
+  setCoastDebug(enabled: boolean): void;
   dispose(): void;
 }
 
@@ -67,11 +83,12 @@ function terrainColor(height: number, maxHeight: number, index: number) {
   return color;
 }
 
-function createGeometry(asset: RegionTerrainAsset, coastline: RegionCoastlineAsset) {
+function createGeometry(asset: RegionTerrainAsset, coastline: RegionCoastlineAsset, verticalExaggeration: number) {
   const { width, height } = asset.grid;
   const positions: number[] = [];
   const colors: number[] = [];
   const uvs: number[] = [];
+  const elevations: number[] = [];
   const indices: number[] = [];
   const rings = polygonRings(coastline);
 
@@ -80,8 +97,9 @@ function createGeometry(asset: RegionTerrainAsset, coastline: RegionCoastlineAss
     for (let column = 0; column < width; column += 1) {
       const longitude = asset.bounds.west + (column / (width - 1)) * (asset.bounds.east - asset.bounds.west);
       const sample = asset.heights[row * width + column] ?? 0;
-      const point = lonLatToWorld({ longitude, latitude }, Math.max(0, sample) * REGION_CONFIG.terrain.verticalExaggeration * REGION_CONFIG.worldUnitsPerMetre);
+      const point = lonLatToWorld({ longitude, latitude }, Math.max(0, sample) * verticalExaggeration * REGION_CONFIG.worldUnitsPerMetre);
       positions.push(point.x, point.y, point.z);
+      elevations.push(sample);
       const color = terrainColor(sample, asset.derivation.maxElevationMetres, row * width + column);
       colors.push(color.r, color.g, color.b);
       uvs.push(column / (width - 1), 1 - row / (height - 1));
@@ -113,15 +131,22 @@ function createGeometry(asset: RegionTerrainAsset, coastline: RegionCoastlineAss
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
   geometry.computeBoundingSphere();
-  return { geometry, triangles, vertices: positions.length / 3 };
+  return { geometry, triangles, vertices: positions.length / 3, elevations };
 }
 
 function variantIndex(variant: RegionVariantId) {
   return variant === 'cinematic' ? 1 : variant === 'historical' ? 2 : 0;
 }
 
-export function createRegionTerrain(asset: RegionTerrainAsset, coastline: RegionCoastlineAsset, textures: RegionTerrainTextures): RegionTerrainHandle {
-  const built = createGeometry(asset, coastline);
+export function createRegionTerrain(
+  asset: RegionTerrainAsset,
+  coastline: RegionCoastlineAsset,
+  textures: RegionTerrainTextures,
+  options: { verticalExaggeration?: number } = {},
+): RegionTerrainHandle {
+  const baseVerticalExaggeration = REGION_CONFIG.terrain.verticalExaggeration;
+  let verticalExaggeration = options.verticalExaggeration ?? baseVerticalExaggeration;
+  const built = createGeometry(asset, coastline, verticalExaggeration);
   const group = new THREE.Group();
   group.name = 'v2-region-terrain';
   const uniforms = {
@@ -129,7 +154,9 @@ export function createRegionTerrain(asset: RegionTerrainAsset, coastline: Region
     classificationB: { value: textures.classificationB },
     textureEnabled: { value: 1 },
     variant: { value: 0 },
-    maxElevation: { value: REGION_CONFIG.terrain.maxElevationWorld },
+    maxElevation: { value: REGION_CONFIG.terrain.maxElevationWorld * verticalExaggeration / baseVerticalExaggeration },
+    contourMode: { value: 1 },
+    aoEnabled: { value: 1 },
   };
   const material = new THREE.MeshStandardMaterial({
     vertexColors: true,
@@ -143,6 +170,8 @@ export function createRegionTerrain(asset: RegionTerrainAsset, coastline: Region
     shader.uniforms.regionTextureEnabled = uniforms.textureEnabled;
     shader.uniforms.regionVariant = uniforms.variant;
     shader.uniforms.regionMaxElevation = uniforms.maxElevation;
+    shader.uniforms.regionContourMode = uniforms.contourMode;
+    shader.uniforms.regionAoEnabled = uniforms.aoEnabled;
     shader.vertexShader = `uniform float regionMaxElevation; varying vec2 vRegionUv; varying float vRegionHeight;\n${shader.vertexShader}`
       .replace('#include <uv_vertex>', '#include <uv_vertex>\n    vRegionUv = uv;')
       .replace('#include <begin_vertex>', '#include <begin_vertex>\n    vRegionHeight = clamp(position.y / regionMaxElevation, 0.0, 1.0);');
@@ -153,6 +182,8 @@ export function createRegionTerrain(asset: RegionTerrainAsset, coastline: Region
       uniform sampler2D regionClassificationB;
       uniform float regionTextureEnabled;
       uniform float regionVariant;
+      uniform float regionContourMode;
+      uniform float regionAoEnabled;
       ${shader.fragmentShader}
     `.replace('#include <color_fragment>', `
       #include <color_fragment>
@@ -167,7 +198,9 @@ export function createRegionTerrain(asset: RegionTerrainAsset, coastline: Region
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.12, 0.88, 0.75), regionVariant * 0.22);
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.10, 1.04, 0.82), step(1.5, regionVariant) * 0.24);
       float contour = 1.0 - smoothstep(0.0, 0.07, abs(fract(vRegionHeight * 11.0) - 0.5));
-      diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.48, 0.46, 0.34), contour * 0.12);
+      float contourStrength = regionContourMode < 0.5 ? 0.0 : regionContourMode < 1.5 ? 0.12 : 0.24;
+      diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.48, 0.46, 0.34), contour * contourStrength);
+      diffuseColor.rgb *= mix(0.96, 1.0, regionAoEnabled);
     `);
   };
   material.customProgramCacheKey = () => 'v2-region-terrain-material-1';
@@ -190,6 +223,11 @@ export function createRegionTerrain(asset: RegionTerrainAsset, coastline: Region
     group,
     mesh,
     wireframe,
+    quality: 'A',
+    grid: `${asset.grid.width}×${asset.grid.height}`,
+    coastlineResolution: '196×100 grid mask / OSM polygon test',
+    sourceLabel: asset.source.title,
+    assetPayloadBytes: 86_295,
     triangles: built.triangles,
     vertices: built.vertices,
     textureEstimateBytes: 2 * 2048 * 1041 * 4,
@@ -207,6 +245,31 @@ export function createRegionTerrain(asset: RegionTerrainAsset, coastline: Region
     },
     setWireframe(enabled) {
       wireframe.visible = enabled;
+    },
+    setVerticalExaggeration(nextVerticalExaggeration) {
+      verticalExaggeration = nextVerticalExaggeration;
+      const position = built.geometry.getAttribute('position') as THREE.BufferAttribute;
+      for (let index = 0; index < built.elevations.length; index += 1) {
+        position.setY(index, Math.max(0, built.elevations[index]) * verticalExaggeration * REGION_CONFIG.worldUnitsPerMetre);
+      }
+      position.needsUpdate = true;
+      built.geometry.computeVertexNormals();
+      built.geometry.computeBoundingSphere();
+      uniforms.maxElevation.value = REGION_CONFIG.terrain.maxElevationWorld * verticalExaggeration / baseVerticalExaggeration;
+      wireframe.geometry.dispose();
+      wireframe.geometry = new THREE.WireframeGeometry(built.geometry);
+    },
+    setLightingMode(_mode) {
+      // Gate A keeps its existing lighting path; the relief switch is applied by RegionAtmosphere.
+    },
+    setContourMode(mode) {
+      uniforms.contourMode.value = mode === 'OFF' ? 0 : mode === 'STRONG' ? 2 : 1;
+    },
+    setAoEnabled(enabled) {
+      uniforms.aoEnabled.value = enabled ? 1 : 0;
+    },
+    setCoastDebug(_enabled) {
+      // Gate A remains the immutable grid-mask baseline; B/C own the coast debug view.
     },
     dispose() {
       built.geometry.dispose();

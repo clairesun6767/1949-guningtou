@@ -13,6 +13,8 @@
     "test:v2": "tsc -p tsconfig.v2-tests.json && node --test tests/v2/*.test.mjs",
     "build:classification-textures": "node scripts/build-cartographic-classification-textures.mjs",
     "build:terrain-coverage": "node scripts/build-local-terrain-coverage-mask.mjs",
+    "build:region-quality-terrain": "node scripts/build-region-quality-terrain-assets.mjs",
+    "benchmark:gate-a1": "node scripts/capture-gate-a1-benchmark.mjs",
     "typecheck": "astro check",
     "build:battle-data-tools": "tsc -p tsconfig.battle-replay.json",
     "validate:battle-data": "npm run build:battle-data-tools --silent && node scripts/validate-battle-data.mjs",

@@ -201,6 +201,16 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-debug__title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; color: var(--region-brass); font-size: 9px; }
 .region-debug__title button { border: 0; padding: 0 3px; background: transparent; color: var(--region-muted); font-size: 16px; line-height: .7; }
 .region-debug__readout { display: flex; justify-content: space-between; border-top: 1px solid var(--region-line); border-bottom: 1px solid var(--region-line); padding: 8px 0; color: var(--region-ink); font-size: 7px; }
+.region-debug__section { margin-top: 10px; border-top: 1px solid var(--region-line); padding-top: 9px; }
+.region-debug__section-label { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 6px; color: var(--region-brass); font-size: 7px; letter-spacing: .1em; }
+.region-debug__section-label small { color: var(--region-faint); font-size: 6px; letter-spacing: .04em; text-align: right; }
+.region-debug__choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.region-debug__choices--five { grid-template-columns: repeat(5, 1fr); }
+.region-debug__choices--three { grid-template-columns: repeat(3, 1fr); margin-top: 4px; }
+.region-debug__choices button { min-height: 24px; border: 1px solid rgba(225, 220, 194, .12); padding: 3px; background: rgba(255, 255, 255, .02); color: var(--region-faint); font-size: 7px; }
+.region-debug__choices button:hover,
+.region-debug__choices button.is-selected { border-color: rgba(213, 184, 119, .46); color: var(--region-brass); background: rgba(213, 184, 119, .1); }
+.region-debug__choices button small { display: block; margin-top: 2px; color: inherit; font-size: 5px; }
 .region-debug__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 10px; }
 .region-debug__grid button { display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(225, 220, 194, .12); padding: 6px; background: rgba(255, 255, 255, .02); color: var(--region-faint); font-size: 7px; text-align: left; }
 .region-debug__grid button.is-on { border-color: rgba(213, 184, 119, .46); color: var(--region-brass); background: rgba(213, 184, 119, .1); }

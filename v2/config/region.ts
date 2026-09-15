@@ -1,6 +1,9 @@
 export type RegionPresetId = 'hero' | 'xiamen' | 'kinmen' | 'guningtou';
 export type RegionPerformanceTier = 'HIGH' | 'MEDIUM' | 'LOW';
 export type RegionVariantId = 'neutral' | 'cinematic' | 'historical';
+export type RegionTerrainQualityId = 'A' | 'B' | 'C';
+export type RegionLightingMode = 'CURRENT' | 'RELIEF';
+export type RegionContourMode = 'OFF' | 'SUBTLE' | 'STRONG';
 
 export interface GeographicPoint {
   longitude: number;
@@ -105,6 +108,36 @@ export const REGION_CONFIG = {
     low: { maxPixelRatio: 1, antialias: false, shadows: false, oceanSegments: 12, fogDensity: 0.009 },
   } satisfies Record<Lowercase<RegionPerformanceTier>, RegionPerformanceSettings>,
 } as const;
+
+export const REGION_TERRAIN_QUALITY: Record<RegionTerrainQualityId, {
+  label: string;
+  description: string;
+  grid: string;
+  terrainAsset: string;
+  coastlineResolution: string;
+}> = {
+  A: {
+    label: 'A / BASELINE',
+    description: 'Gate A current regional grid',
+    grid: '196×100',
+    terrainAsset: 'terrain/kinmen-xiamen-regional.json',
+    coastlineResolution: '196×100 grid mask / OSM polygon test',
+  },
+  B: {
+    label: 'B / BALANCED',
+    description: 'Native-source sampled balanced target',
+    grid: '512×256',
+    terrainAsset: 'terrain/kinmen-xiamen-regional-quality-b.json',
+    coastlineResolution: '2048×1041 alpha mask / OSM vector',
+  },
+  C: {
+    label: 'C / QUALITY',
+    description: 'Native-source sampled quality target',
+    grid: '1024×512',
+    terrainAsset: 'terrain/kinmen-xiamen-regional-quality-c.json',
+    coastlineResolution: '2048×1041 alpha mask / OSM vector',
+  },
+};
 
 export const REGION_PERFORMANCE_TIERS: Record<RegionPerformanceTier, RegionPerformanceSettings> = {
   HIGH: REGION_CONFIG.performance.high,

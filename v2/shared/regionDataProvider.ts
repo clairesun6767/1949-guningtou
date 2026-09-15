@@ -1,3 +1,33 @@
+import type { RegionTerrainQualityId } from '../config/region.js';
+
+export interface RegionTerrainSource {
+  id: string;
+  title: string;
+  sourceUrl: string;
+  registryUrl: string;
+  attribution: string;
+  acquiredAt: string;
+  retrievedAt?: string;
+  downloadSha256?: string;
+  nativeGrid: string;
+  approximateNativeResolutionMetres: number;
+  temporalScope: string;
+}
+
+export interface RegionTerrainDerivation {
+  method: string;
+  minElevationMetres: number;
+  maxElevationMetres: number;
+  visualVerticalExaggerationAppliedAtRuntime: boolean;
+  runtimeLandMask: string;
+  landNeighbourRadius?: number;
+  seaConnectivityEdge?: string | null;
+  sourceGrid?: string;
+  approximateSourceResolutionMetres?: number;
+  sourceSampleInterpolation?: string;
+  coastlineResolution?: string;
+}
+
 export interface RegionTerrainAsset {
   schemaVersion: string;
   id: string;
@@ -5,26 +35,23 @@ export interface RegionTerrainAsset {
   bounds: { west: number; south: number; east: number; north: number };
   grid: { width: number; height: number };
   elevationUnit: 'metre';
-  source: {
-    id: string;
-    title: string;
-    sourceUrl: string;
-    registryUrl: string;
-    attribution: string;
-    acquiredAt: string;
-    nativeGrid: string;
-    approximateNativeResolutionMetres: number;
-    temporalScope: string;
-  };
-  derivation: {
-    method: string;
-    minElevationMetres: number;
-    maxElevationMetres: number;
-    visualVerticalExaggerationAppliedAtRuntime: boolean;
-    runtimeLandMask: string;
-  };
+  source: RegionTerrainSource;
+  derivation: RegionTerrainDerivation;
   heights: number[];
   land: number[];
+}
+
+export interface RegionQualityTerrainAsset {
+  schemaVersion: string;
+  id: string;
+  quality: Exclude<RegionTerrainQualityId, 'A'>;
+  coordinateSystem: 'EPSG:4326';
+  bounds: { west: number; south: number; east: number; north: number };
+  grid: { width: number; height: number };
+  elevationUnit: 'metre';
+  source: RegionTerrainSource;
+  derivation: RegionTerrainDerivation;
+  heights: number[];
 }
 
 export interface RegionGeoJsonFeature {
@@ -66,6 +93,8 @@ export interface RegionDataset {
   classification: RegionClassificationManifest;
   assets: {
     terrain: string;
+    terrainB: string;
+    terrainC: string;
     coastline: string;
     classificationA: string;
     classificationB: string;
@@ -74,6 +103,7 @@ export interface RegionDataset {
 
 export interface RegionDataProvider {
   load(): Promise<RegionDataset>;
+  loadQuality(quality: Exclude<RegionTerrainQualityId, 'A'>): Promise<RegionQualityTerrainAsset>;
 }
 
 function withBase(base: string, path: string) {
@@ -100,6 +130,23 @@ function validateTerrain(asset: RegionTerrainAsset) {
   }
 }
 
+function validateQualityTerrain(asset: RegionQualityTerrainAsset, expectedQuality: Exclude<RegionTerrainQualityId, 'A'>) {
+  const expectedSamples = asset.grid.width * asset.grid.height;
+  const expectedGrid = expectedQuality === 'B' ? [512, 256] : [1024, 512];
+  if (asset.quality !== expectedQuality || asset.coordinateSystem !== 'EPSG:4326') {
+    throw new Error(`Gate A.1 requires the isolated ${expectedQuality} EPSG:4326 terrain asset.`);
+  }
+  if (asset.grid.width !== expectedGrid[0] || asset.grid.height !== expectedGrid[1] || asset.heights.length !== expectedSamples) {
+    throw new Error(`${expectedQuality} terrain grid is incomplete: expected ${expectedGrid[0]}×${expectedGrid[1]} samples.`);
+  }
+  if (asset.bounds.west >= asset.bounds.east || asset.bounds.south >= asset.bounds.north) {
+    throw new Error(`${expectedQuality} terrain bounds are invalid.`);
+  }
+  if (!asset.derivation.method.includes('native') || !asset.derivation.method.includes('not an upsample of the 196x100')) {
+    throw new Error(`${expectedQuality} terrain must document direct native-source sampling rather than a Gate A upsample.`);
+  }
+}
+
 function validateCoastline(asset: RegionCoastlineAsset) {
   if (asset.type !== 'FeatureCollection' || asset.features.length === 0) {
     throw new Error('Regional coastline FeatureCollection is empty.');
@@ -111,6 +158,7 @@ function validateCoastline(asset: RegionCoastlineAsset) {
 
 export class HttpRegionDataProvider implements RegionDataProvider {
   private readonly root: string;
+  private readonly qualityCache = new Map<Exclude<RegionTerrainQualityId, 'A'>, RegionQualityTerrainAsset>();
 
   constructor(base = '') {
     this.root = base;
@@ -119,6 +167,8 @@ export class HttpRegionDataProvider implements RegionDataProvider {
   async load(): Promise<RegionDataset> {
     const assets = {
       terrain: withBase(this.root, 'terrain/kinmen-xiamen-regional.json'),
+      terrainB: withBase(this.root, 'terrain/kinmen-xiamen-regional-quality-b.json'),
+      terrainC: withBase(this.root, 'terrain/kinmen-xiamen-regional-quality-c.json'),
       coastline: withBase(this.root, 'map-data/regional-coastline.geojson'),
       classificationA: withBase(this.root, 'map-data/regional-classification-a.png'),
       classificationB: withBase(this.root, 'map-data/regional-classification-b.png'),
@@ -135,6 +185,17 @@ export class HttpRegionDataProvider implements RegionDataProvider {
     }
     return { terrain, coastline, classification, assets };
   }
+
+  async loadQuality(quality: Exclude<RegionTerrainQualityId, 'A'>): Promise<RegionQualityTerrainAsset> {
+    const cached = this.qualityCache.get(quality);
+    if (cached) return cached;
+    const assets = regionAssetPaths(this.root);
+    const url = quality === 'B' ? assets.terrainB : assets.terrainC;
+    const terrain = await getJson<RegionQualityTerrainAsset>(url);
+    validateQualityTerrain(terrain, quality);
+    this.qualityCache.set(quality, terrain);
+    return terrain;
+  }
 }
 
 export function createRegionDataProvider(base = ''): RegionDataProvider {
@@ -144,6 +205,8 @@ export function createRegionDataProvider(base = ''): RegionDataProvider {
 export function regionAssetPaths(base = '') {
   return {
     terrain: withBase(base, 'terrain/kinmen-xiamen-regional.json'),
+    terrainB: withBase(base, 'terrain/kinmen-xiamen-regional-quality-b.json'),
+    terrainC: withBase(base, 'terrain/kinmen-xiamen-regional-quality-c.json'),
     coastline: withBase(base, 'map-data/regional-coastline.geojson'),
     classificationA: withBase(base, 'map-data/regional-classification-a.png'),
     classificationB: withBase(base, 'map-data/regional-classification-b.png'),

@@ -1,5 +1,10 @@
 import * as THREE from 'three';
-import { REGION_VARIANTS, type RegionPerformanceTier, type RegionVariantId } from '../../config/region.js';
+import {
+  REGION_VARIANTS,
+  type RegionLightingMode,
+  type RegionPerformanceTier,
+  type RegionVariantId,
+} from '../../config/region.js';
 import { tierSettings } from './RegionPerformance.js';
 
 export interface RegionAtmosphereHandle {
@@ -8,6 +13,8 @@ export interface RegionAtmosphereHandle {
   setFogEnabled(enabled: boolean): void;
   setShadowsEnabled(enabled: boolean): void;
   setPostProcessingEnabled(enabled: boolean): void;
+  setLightingMode(mode: RegionLightingMode): void;
+  setAmbientOcclusionEnabled(enabled: boolean): void;
   dispose(): void;
 }
 
@@ -53,6 +60,7 @@ export function createRegionAtmosphere(scene: THREE.Scene, renderer: THREE.WebGL
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.04;
   let activeVariant = variant;
+  let lightingMode: RegionLightingMode = 'CURRENT';
 
   return {
     sun,
@@ -80,6 +88,20 @@ export function createRegionAtmosphere(scene: THREE.Scene, renderer: THREE.WebGL
     setPostProcessingEnabled(enabled) {
       renderer.toneMapping = enabled ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
       renderer.toneMappingExposure = enabled ? 1.04 : 1;
+    },
+    setLightingMode(mode) {
+      lightingMode = mode;
+      if (lightingMode === 'RELIEF') {
+        sun.position.set(-36, 54, 18);
+        sun.intensity = 3.45;
+      } else {
+        sun.position.set(-28, 42, 22);
+        sun.intensity = 3.1;
+      }
+      sun.shadow.camera.updateProjectionMatrix();
+    },
+    setAmbientOcclusionEnabled(enabled) {
+      ambient.intensity = enabled ? 0.36 : 0.18;
     },
     dispose() {
       if (scene.background instanceof THREE.Texture) scene.background.dispose();

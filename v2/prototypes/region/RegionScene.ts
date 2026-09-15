@@ -3,24 +3,38 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import {
   REGION_CONFIG,
+  type RegionContourMode,
+  type RegionLightingMode,
   type RegionPerformanceTier,
   type RegionPresetId,
+  type RegionTerrainQualityId,
   type RegionVariantId,
 } from '../../config/region.js';
-import { createRegionDataProvider, type RegionDataset } from '../../shared/regionDataProvider.js';
+import {
+  createRegionDataProvider,
+  type RegionDataProvider,
+  type RegionDataset,
+  type RegionQualityTerrainAsset,
+} from '../../shared/regionDataProvider.js';
 import { createRegionAtmosphere, type RegionAtmosphereHandle } from './RegionAtmosphere.js';
 import { RegionCamera, type RegionCameraConstraintSnapshot } from './RegionCamera.js';
 import { createRegionLabels, type RegionLabelsHandle } from './RegionLabels.js';
 import { createRegionOcean, type RegionOceanHandle } from './RegionOcean.js';
 import { RegionPerformanceMonitor, type RegionRenderStats, tierSettings } from './RegionPerformance.js';
-import { createRegionTerrain, sampleRegionTerrainHeight, type RegionTerrainHandle } from './RegionTerrain.js';
+import { createRegionQualityTerrain } from './RegionQualityTerrain.js';
+import {
+  createRegionTerrain,
+  sampleRegionTerrainHeight,
+  type RegionTerrainHandle,
+  type RegionTerrainTextures,
+} from './RegionTerrain.js';
 
 export type RegionLoadingStage = 'terrain' | 'material' | 'atmosphere' | 'labels' | 'ready';
 
 export const REGION_SCENE_CONTRACT = {
   id: REGION_CONFIG.id,
   stages: ['terrain', 'material', 'atmosphere', 'labels', 'ready'] as const,
-  requiredModules: ['RegionTerrain', 'RegionOcean', 'RegionAtmosphere', 'RegionCamera', 'RegionLabels', 'RegionControls', 'RegionPerformance', 'RegionDataProvider'] as const,
+  requiredModules: ['RegionTerrain', 'RegionQualityTerrain', 'RegionOcean', 'RegionAtmosphere', 'RegionCamera', 'RegionLabels', 'RegionControls', 'RegionPerformance', 'RegionDataProvider'] as const,
 };
 
 export interface RegionSceneOptions {
@@ -56,6 +70,15 @@ export interface RegionSceneStats extends RegionRenderStats {
   assetPayloadBytes: number;
   cameraConstraints: RegionCameraConstraintSnapshot;
   variant: RegionVariantId;
+  quality: RegionTerrainQualityId;
+  verticalExaggeration: number;
+  lightingMode: RegionLightingMode;
+  contourMode: RegionContourMode;
+  aoEnabled: boolean;
+  coastDebug: boolean;
+  coastlineResolution: string;
+  terrainSource: string;
+  gpuEstimateBytes: number;
 }
 
 function createNeutralTexture() {
@@ -92,8 +115,11 @@ export class RegionScene {
   private readonly controls: OrbitControls;
   private readonly cameraController: RegionCamera;
   private readonly performance: RegionPerformanceMonitor;
-  private readonly terrain: RegionTerrainHandle;
+  private terrain: RegionTerrainHandle;
   private readonly data: RegionDataset;
+  private readonly provider: RegionDataProvider;
+  private readonly qualityAssets = new Map<Exclude<RegionTerrainQualityId, 'A'>, RegionQualityTerrainAsset>();
+  private classificationTextures: RegionTerrainTextures;
   private ocean?: RegionOceanHandle;
   private atmosphere?: RegionAtmosphereHandle;
   private labels?: RegionLabelsHandle;
@@ -101,6 +127,13 @@ export class RegionScene {
   private destroyed = false;
   private stage: RegionLoadingStage = 'terrain';
   private variant: RegionVariantId;
+  private quality: RegionTerrainQualityId = 'A';
+  private verticalExaggeration: number = REGION_CONFIG.terrain.verticalExaggeration;
+  private lightingMode: RegionLightingMode = 'CURRENT';
+  private contourMode: RegionContourMode = 'SUBTLE';
+  private aoEnabled = true;
+  private coastDebug = false;
+  private qualityRequest = 0;
   private labelsVisible: boolean;
   private debugState: RegionDebugState = {
     wireframe: false,
@@ -118,7 +151,7 @@ export class RegionScene {
     options.onStage('terrain');
     const fallbackA = createNeutralTexture();
     const fallbackB = createNeutralTexture();
-    const scene = new RegionScene(options, data, fallbackA, fallbackB);
+    const scene = new RegionScene(options, provider, data, fallbackA, fallbackB);
     scene.start();
     const [classificationA, classificationB] = await Promise.all([
       loadMaskTexture(data.assets.classificationA, fallbackA),
@@ -139,11 +172,14 @@ export class RegionScene {
 
   private constructor(
     private readonly options: RegionSceneOptions,
+    provider: RegionDataProvider,
     data: RegionDataset,
     fallbackA: THREE.Texture,
     fallbackB: THREE.Texture,
   ) {
+    this.provider = provider;
     this.data = data;
+    this.classificationTextures = { classificationA: fallbackA, classificationB: fallbackB };
     this.variant = options.variant;
     this.labelsVisible = options.labelsVisible;
     this.performance = new RegionPerformanceMonitor(options.tier);
@@ -174,7 +210,9 @@ export class RegionScene {
       reducedMotion: options.reducedMotion,
       tier: options.tier,
     });
-    this.terrain = createRegionTerrain(data.terrain, data.coastline, { classificationA: fallbackA, classificationB: fallbackB });
+    this.terrain = createRegionTerrain(data.terrain, data.coastline, this.classificationTextures, {
+      verticalExaggeration: this.verticalExaggeration,
+    });
     this.scene.add(this.terrain.group);
     this.cameraController.reset();
     this.controls.addEventListener('start', options.onInteraction);
@@ -182,7 +220,8 @@ export class RegionScene {
   }
 
   private setClassificationTextures(classificationA: THREE.Texture, classificationB: THREE.Texture) {
-    this.terrain.setTextures({ classificationA, classificationB });
+    this.classificationTextures = { classificationA, classificationB };
+    this.terrain.setTextures(this.classificationTextures);
   }
 
   private attachEnvironment() {
@@ -190,7 +229,13 @@ export class RegionScene {
     this.atmosphere = createRegionAtmosphere(this.scene, this.renderer, this.options.tier, this.variant);
     this.scene.add(this.ocean.mesh);
     this.ocean.setVariant(this.variant);
+    this.ocean.setTerrainQuality(this.quality);
     this.terrain.setVariant(this.variant);
+    this.terrain.setLightingMode(this.lightingMode);
+    this.terrain.setContourMode(this.contourMode);
+    this.terrain.setAoEnabled(this.aoEnabled);
+    this.atmosphere.setLightingMode(this.lightingMode);
+    this.atmosphere.setAmbientOcclusionEnabled(this.aoEnabled);
   }
 
   private attachLabels() {
@@ -244,6 +289,72 @@ export class RegionScene {
     this.atmosphere?.setVariant(variant);
   }
 
+  async setTerrainQuality(quality: RegionTerrainQualityId) {
+    const request = ++this.qualityRequest;
+    if (quality === this.quality) return;
+    let nextTerrain: RegionTerrainHandle;
+    if (quality === 'A') {
+      nextTerrain = createRegionTerrain(this.data.terrain, this.data.coastline, this.classificationTextures, {
+        verticalExaggeration: this.verticalExaggeration,
+      });
+    } else {
+      let asset = this.qualityAssets.get(quality);
+      if (!asset) {
+        asset = await this.provider.loadQuality(quality);
+        if (request !== this.qualityRequest || this.destroyed) return;
+        this.qualityAssets.set(quality, asset);
+      }
+      nextTerrain = createRegionQualityTerrain(asset, this.data.coastline, this.classificationTextures, {
+        verticalExaggeration: this.verticalExaggeration,
+      });
+    }
+    if (request !== this.qualityRequest || this.destroyed) {
+      nextTerrain.dispose();
+      return;
+    }
+    nextTerrain.setTextureEnabled(this.debugState.texture);
+    nextTerrain.setVariant(this.variant);
+    nextTerrain.setWireframe(this.debugState.wireframe);
+    nextTerrain.setContourMode(this.contourMode);
+    nextTerrain.setAoEnabled(this.aoEnabled);
+    nextTerrain.setCoastDebug(this.coastDebug);
+    nextTerrain.setLightingMode(this.lightingMode);
+    const previous = this.terrain;
+    this.scene.remove(previous.group);
+    previous.dispose();
+    this.terrain = nextTerrain;
+    this.scene.add(this.terrain.group);
+    this.ocean?.setTerrainQuality(quality);
+    this.quality = quality;
+  }
+
+  setVerticalExaggeration(verticalExaggeration: number) {
+    this.verticalExaggeration = verticalExaggeration;
+    this.terrain.setVerticalExaggeration(verticalExaggeration);
+  }
+
+  setLightingMode(mode: RegionLightingMode) {
+    this.lightingMode = mode;
+    this.terrain.setLightingMode(mode);
+    this.atmosphere?.setLightingMode(mode);
+  }
+
+  setContourMode(mode: RegionContourMode) {
+    this.contourMode = mode;
+    this.terrain.setContourMode(mode);
+  }
+
+  setAmbientOcclusionEnabled(enabled: boolean) {
+    this.aoEnabled = enabled;
+    this.terrain.setAoEnabled(enabled);
+    this.atmosphere?.setAmbientOcclusionEnabled(enabled);
+  }
+
+  setCoastDebug(enabled: boolean) {
+    this.coastDebug = enabled;
+    this.terrain.setCoastDebug(enabled);
+  }
+
   setDebugState(next: Partial<RegionDebugState>) {
     this.debugState = { ...this.debugState, ...next };
     this.terrain.setWireframe(this.debugState.wireframe);
@@ -262,15 +373,26 @@ export class RegionScene {
 
   getStats(): RegionSceneStats {
     const base = this.performance.snapshot(this.renderer, this.camera, this.terrain.textureEstimateBytes);
+    const assetPayloadBytes = this.terrain.assetPayloadBytes + 66_868 + 31_127 + 14_160;
+    const gpuEstimateBytes = this.terrain.textureEstimateBytes + this.terrain.vertices * 56 + this.terrain.triangles * 3 * 4;
     return {
       ...base,
       stage: this.stage,
       regionVertices: this.terrain.vertices,
       regionTriangles: this.terrain.triangles,
-      regionGrid: `${this.data.terrain.grid.width}×${this.data.terrain.grid.height}`,
-      assetPayloadBytes: 86_295 + 66_868 + 31_127 + 14_160,
+      regionGrid: this.terrain.grid,
+      assetPayloadBytes,
       cameraConstraints: this.cameraController.snapshot(),
       variant: this.variant,
+      quality: this.quality,
+      verticalExaggeration: this.verticalExaggeration,
+      lightingMode: this.lightingMode,
+      contourMode: this.contourMode,
+      aoEnabled: this.aoEnabled,
+      coastDebug: this.coastDebug,
+      coastlineResolution: this.terrain.coastlineResolution,
+      terrainSource: this.terrain.sourceLabel,
+      gpuEstimateBytes,
     };
   }
 
