@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import {
+  REGION_COMPOSITION_FOG,
   REGION_CONFIG,
+  REGION_VARIANTS,
   type RegionLightingMode,
   type RegionTerrainQualityId,
   type RegionVariantId,
@@ -190,6 +192,7 @@ export function createRegionQualityTerrain(
   const maskSize = coastlineMaskSize(asset);
   const coastMask = createCoastMask(coastline, asset.bounds, maskSize);
   const built = createGeometry(asset, verticalExaggeration);
+  const compositionFogCenter = lonLatToWorld(REGION_COMPOSITION_FOG.center);
   const group = new THREE.Group();
   group.name = `v2-region-terrain-${quality.toLowerCase()}`;
   const uniforms = {
@@ -203,13 +206,21 @@ export function createRegionQualityTerrain(
     aoEnabled: { value: 1 },
     coastDebug: { value: 0 },
     lightingMode: { value: 1 },
+    compositionFogCenter: { value: new THREE.Vector2(compositionFogCenter.x, compositionFogCenter.z) },
+    compositionFogInnerRadius: { value: REGION_COMPOSITION_FOG.innerRadiusWorld },
+    compositionFogOuterRadius: { value: REGION_COMPOSITION_FOG.outerRadiusWorld },
+    compositionFogColor: { value: new THREE.Color(REGION_VARIANTS.neutral.fog) },
+    compositionFogColorMix: { value: isComposition ? REGION_COMPOSITION_FOG.colorMix : 0 },
+    compositionFogOpacity: { value: isComposition ? REGION_COMPOSITION_FOG.opacity : 0 },
   };
   const material = new THREE.MeshStandardMaterial({
     vertexColors: true,
     roughness: 0.9,
     metalness: 0.015,
     flatShading: false,
-    alphaTest: 0.48,
+    transparent: isComposition,
+    depthWrite: !isComposition,
+    alphaTest: isComposition ? 0 : 0.48,
   });
   material.onBeforeCompile = shader => {
     shader.uniforms.regionClassificationA = uniforms.classificationA;
@@ -222,6 +233,12 @@ export function createRegionQualityTerrain(
     shader.uniforms.regionAoEnabled = uniforms.aoEnabled;
     shader.uniforms.regionCoastDebug = uniforms.coastDebug;
     shader.uniforms.regionLightingMode = uniforms.lightingMode;
+    shader.uniforms.regionCompositionFogCenter = uniforms.compositionFogCenter;
+    shader.uniforms.regionCompositionFogInnerRadius = uniforms.compositionFogInnerRadius;
+    shader.uniforms.regionCompositionFogOuterRadius = uniforms.compositionFogOuterRadius;
+    shader.uniforms.regionCompositionFogColor = uniforms.compositionFogColor;
+    shader.uniforms.regionCompositionFogColorMix = uniforms.compositionFogColorMix;
+    shader.uniforms.regionCompositionFogOpacity = uniforms.compositionFogOpacity;
     shader.vertexShader = `
       uniform float regionMaxElevation;
       attribute float regionSlope;
@@ -232,6 +249,7 @@ export function createRegionQualityTerrain(
       varying float vRegionSlope;
       varying float vRegionAspect;
       varying float vRegionVariation;
+      varying vec2 vRegionPlanarPosition;
       ${shader.vertexShader}
     `
       .replace('#include <uv_vertex>', '#include <uv_vertex>\n    vRegionUv = uv;')
@@ -239,13 +257,15 @@ export function createRegionQualityTerrain(
     vRegionHeight = clamp(position.y / regionMaxElevation, 0.0, 1.0);
     vRegionSlope = regionSlope;
     vRegionAspect = regionAspect;
-    vRegionVariation = regionVariation;`);
+    vRegionVariation = regionVariation;
+    vRegionPlanarPosition = transformed.xz;`);
     shader.fragmentShader = `
       varying vec2 vRegionUv;
       varying float vRegionHeight;
       varying float vRegionSlope;
       varying float vRegionAspect;
       varying float vRegionVariation;
+      varying vec2 vRegionPlanarPosition;
       uniform sampler2D regionClassificationA;
       uniform sampler2D regionClassificationB;
       uniform sampler2D regionCoastMask;
@@ -255,6 +275,12 @@ export function createRegionQualityTerrain(
       uniform float regionAoEnabled;
       uniform float regionCoastDebug;
       uniform float regionLightingMode;
+      uniform vec2 regionCompositionFogCenter;
+      uniform float regionCompositionFogInnerRadius;
+      uniform float regionCompositionFogOuterRadius;
+      uniform vec3 regionCompositionFogColor;
+      uniform float regionCompositionFogColorMix;
+      uniform float regionCompositionFogOpacity;
       ${shader.fragmentShader}
     `
       .replace('#include <color_fragment>', `
@@ -280,6 +306,10 @@ export function createRegionQualityTerrain(
       diffuseColor.rgb *= mix(1.0, 0.965, regionAoEnabled * clamp(vRegionSlope + (1.0 - vRegionHeight) * 0.12, 0.0, 1.0));
       float coastEdge = 1.0 - smoothstep(0.48, 0.72, regionCoastValue);
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.16, 1.05, 0.84), coastEdge * 0.12);
+      float compositionFogDistance = distance(vRegionPlanarPosition, regionCompositionFogCenter);
+      float compositionFog = smoothstep(regionCompositionFogInnerRadius, regionCompositionFogOuterRadius, compositionFogDistance);
+      diffuseColor.rgb = mix(diffuseColor.rgb, regionCompositionFogColor, compositionFog * regionCompositionFogColorMix);
+      diffuseColor.a *= 1.0 - compositionFog * regionCompositionFogOpacity;
       if (regionCoastDebug > 0.5) diffuseColor.rgb = mix(vec3(0.08, 0.72, 0.62), diffuseColor.rgb, smoothstep(0.48, 0.68, regionCoastValue));
     `)
       .replace('#include <alphatest_fragment>', `
@@ -328,6 +358,7 @@ export function createRegionQualityTerrain(
     },
     setVariant(variant) {
       uniforms.variant.value = variantIndex(variant);
+      uniforms.compositionFogColor.value.set(REGION_VARIANTS[variant].fog);
     },
     setWireframe(enabled) {
       if (enabled && wireframe.geometry.getAttribute('position') === undefined) refreshWireframe();

@@ -42,6 +42,16 @@ export const REGION_COMPOSITION_BOUNDS = {
   north: 24.72,
 } satisfies GeographicBounds;
 
+// The radial composition field is centered between the Xiamen and Kinmen review targets.
+// Distances are local scene world units (1 unit = 1 km in the regional renderer).
+export const REGION_COMPOSITION_FOG = {
+  center: { longitude: 118.228, latitude: 24.47 } satisfies GeographicPoint,
+  innerRadiusWorld: 17,
+  outerRadiusWorld: 38,
+  colorMix: 0.84,
+  opacity: 0.94,
+} as const;
+
 export const REGION_CONFIG = {
   id: 'gate-a-kinmen-xiamen-strategic-terrain',
   coordinateSystem: 'EPSG:4326' as const,

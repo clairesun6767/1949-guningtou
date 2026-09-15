@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { REGION_COMPOSITION_BOUNDS, REGION_COMPOSITION_QUALITY, REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../../.tmp/v2-tests/v2/config/region.js';
+import { REGION_COMPOSITION_BOUNDS, REGION_COMPOSITION_FOG, REGION_COMPOSITION_QUALITY, REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../../.tmp/v2-tests/v2/config/region.js';
 import { clampRegionDistance, clampRegionPolarDegrees, clampRegionTarget, getRegionPreset, targetWithinRegionBounds } from '../../.tmp/v2-tests/v2/prototypes/region/RegionCamera.js';
 import { REGION_SCENE_CONTRACT } from '../../.tmp/v2-tests/v2/prototypes/region/RegionScene.js';
 import { HttpRegionDataProvider, regionAssetPaths } from '../../.tmp/v2-tests/v2/shared/regionDataProvider.js';
@@ -130,6 +130,21 @@ test('Gate A.2 composition assets use the selected strategic bounds and every re
     assert.equal(asset.derivation.coastlineWidth, 2048);
     assert.equal(asset.derivation.coastlineHeight, 1184);
   }
+});
+
+test('Gate A.2 radial composition fog is centered between Xiamen and Kinmen and fades the outer DEM crop', () => {
+  assert.ok(REGION_COMPOSITION_FOG.center.longitude > REGION_CONFIG.presets.xiamen.target.longitude);
+  assert.ok(REGION_COMPOSITION_FOG.center.longitude < REGION_CONFIG.presets.kinmen.target.longitude);
+  assert.ok(REGION_COMPOSITION_FOG.center.latitude > REGION_COMPOSITION_BOUNDS.south);
+  assert.ok(REGION_COMPOSITION_FOG.center.latitude < REGION_COMPOSITION_BOUNDS.north);
+  assert.ok(REGION_COMPOSITION_FOG.innerRadiusWorld < REGION_COMPOSITION_FOG.outerRadiusWorld);
+  assert.ok(REGION_COMPOSITION_FOG.opacity > 0.8);
+  const source = readFileSync('v2/prototypes/region/RegionQualityTerrain.ts', 'utf8');
+  assert.match(source, /compositionFogCenter/);
+  assert.match(source, /compositionFogDistance/);
+  assert.match(source, /diffuseColor\.a \*= 1\.0 - compositionFog/);
+  assert.match(source, /transparent: isComposition/);
+  assert.match(source, /depthWrite: !isComposition/);
 });
 
 test('quality provider validates B and C lazily and keeps source provenance', async () => {

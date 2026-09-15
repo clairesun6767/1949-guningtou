@@ -7,7 +7,7 @@
 - 分支：`feature/2.0-art-region-composition`
 - 基底：`feature/2.0-art-region-quality` / `6636285`
 - 原型：`http://localhost:4321/1949-guningtou/v2/region/`
-- 預設 review：A.2 composition / B / 1.5× / RELIEF
+- 預設 review：A.2 composition / B / 1.5× / RELIEF / radial fog 17–38 world units
 - 本 Gate 未進入 Gate B、Battlefield、Units、Routes、Timeline 或 Village。
 
 ## Previous Bounds
@@ -110,13 +110,15 @@ A.2 B 維持接近 A.1 B 的 geographic sample density（約 840 samples / longi
 
 shader 只保留低成本的 `sky / deep / shallow / fog / sun` tone、Fresnel edge response、`sunResponse`、low-frequency motion、subtle glint 與 haze；quality gate 只在 B/C 啟用增強反應。沒有加入 waves physics、SSR、水面反射 pipeline 或高頻 ocean geometry。
 
+區域海面視覺範圍以廈門與金門 review targets 的中點 `118.228, 24.470` 為圓心：半徑 17 world units 內維持清晰，17–38 逐步進入霧化，38 以外讓周邊陸地與海域退入背景霧色。這個徑向 field 以 A.2 quality terrain 的 fragment alpha／fog mix 實現，不新增 geometry 或 draw call。
+
 ## Background Strategy
 
-RegionOcean shell 每幀跟隨 camera position，配合既有 scene background、fog、directional light 與 atmosphere treatment，填滿所有 review 方向。瀏覽器實測已覆蓋 hero／wide、Xiamen、Kinmen、Guningtou、rotated wide，以及 rotate、zoom、pan、fly-to、reset；沒有看見 finite ocean edge。
+RegionOcean shell 每幀跟隨 camera position，配合既有 scene background、fog、directional light 與 atmosphere treatment，填滿所有 review 方向；A.2 terrain 再以圓心徑向 alpha／fog mix 柔化矩形 DEM 外圍。瀏覽器實測已覆蓋 hero／wide、Xiamen、Kinmen、Guningtou、rotated wide，以及 rotate、zoom、pan、fly-to、reset；沒有看見 finite ocean edge 或明顯陸地截斷。
 
 ## Land-Sea Separation
 
-terrain elevation 仍由 DEM height grid 提供；coastline 則是獨立的 OSM vector source，透過 2048×1184 alpha mask 與 polygon discard 保持陸地／海面切分，不把海面誤當成 terrain。composition classification 另以 2048×1184 masks 提供 agriculture、forest、settlement、beach、open-ground 語意色層；線性資料與建物仍保持 geometry boundary。
+terrain elevation 仍由 DEM height grid 提供；coastline 則是獨立的 OSM vector source，透過 2048×1184 alpha mask 與 polygon discard 保持陸地／海面切分，不把海面誤當成 terrain。A.2 B/C 的徑向 field 只在外圍降低 land fragment alpha 並混入 variant fog color，讓 land／sea 分離與中心島嶼可讀性保持不變。composition classification 另以 2048×1184 masks 提供 agriculture、forest、settlement、beach、open-ground 語意色層；線性資料與建物仍保持 geometry boundary。
 
 ## Camera Composition
 
@@ -138,9 +140,9 @@ terrain elevation 仍由 DEM height grid 提供；coastline 則是獨立的 OSM 
 | Review | FPS | Calls | Renderer TRI | Terrain VTX / TRI | Textures | GPU estimate | Payload | First 3D / Ready |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | A.1 B / 1.5× baseline | 60 | 4 | 522,566 | 131,072 / 260,610 | 9 | 35,206 KB | 410 KB | 約 320 / 328 ms |
-| A.2 B / 1.5× | 60 | 4 | 942,022 | 235,520 / 469,026 | 9 | 46,792 KB | 752 KB | 293 / 499 ms |
-| A.2 C / 1.5× | 60 | 4 | 3,764,230 | 942,080 / 1,880,130 | 9 | 101,969 KB | 2,518 KB | 315 / 545 ms |
-| A.2 B / 1.5× mobile viewport | 60 | 4 | 938,582 | 235,520 / 469,026 | 9 | 46,792 KB | 752 KB | 333 / 542 ms |
+| A.2 B / 1.5× | 60 | 4 | 942,022 | 235,520 / 469,026 | 9 | 46,792 KB | 752 KB | 275 / 481 ms |
+| A.2 C / 1.5× | 60 | 4 | 3,764,230 | 942,080 / 1,880,130 | 9 | 101,969 KB | 2,518 KB | 324 / 526 ms |
+| A.2 B / 1.5× mobile viewport | 60 | 4 | 938,582 | 235,520 / 469,026 | 9 | 46,792 KB | 752 KB | 333 / 465 ms |
 
 A.2 B payload 為 `605,462 + 110,412 + 38,703 + 15,228 = 769,805 B`；C payload 為 `2,414,211 + 110,412 + 38,703 + 15,228 = 2,578,554 B`。GPU estimate 是 runtime bookkeeping proxy，不等同 driver 實際 allocation。draw calls 維持 4，沒有因 A.2 增加；C 僅為 opt-in quality。
 
@@ -164,7 +166,7 @@ Before：A.1 使用較窄 bounds 與 finite plane，wide composition 的 mainlan
 2. OSM coastline 依 mean-high-water coastline ways；`mainland-crop` 是 selected bounds 的 coverage closure，不是 bounds 外完整海岸線的宣稱。
 3. 沒有 bathymetry、sea-floor relief、waves physics 或 SSR；sea space 是 atmospheric tone／haze／glint 層。
 4. A.2 C 約 102 MB GPU estimate、2.41 MB terrain JSON，保留為 desktop HIGH／close-up review，不作 mobile default。
-5. 極端地把 camera 移出 selected composition bounds 仍可能看到 crop coverage 的邊界；這不會出現有限 ocean plane edge，正常 review 由 camera constraints 與 presets 控制。
+5. 徑向霧化是 composition presentation treatment，不是新的物理海岸線或 bathymetry；若極端地把 camera／target 移出 selected composition bounds，仍可能看到 crop coverage 的邊界，正常 review 由 camera constraints 與 presets 控制。
 6. browser GPU estimate 與 triangle count 是 instrumentation proxy；不同顯示卡仍需人工 profiling。
 
 ## Verification
