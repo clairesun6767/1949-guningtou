@@ -1,5 +1,9 @@
 import * as THREE from 'three';
 import {
+  type HistoricalAerialMode,
+  HISTORICAL_ART_PALETTE,
+} from '../../config/historicalAerial.js';
+import {
   REGION_CONFIG,
   type RegionContourMode,
   type RegionLightingMode,
@@ -35,6 +39,9 @@ export interface RegionTerrainHandle {
   setContourMode(mode: RegionContourMode): void;
   setAoEnabled(enabled: boolean): void;
   setCoastDebug(enabled: boolean): void;
+  setHistoricalToneEnabled(enabled: boolean): void;
+  setHistoricalMode(mode: HistoricalAerialMode): void;
+  setAerialOpacity(opacity: number): void;
   dispose(): void;
 }
 
@@ -138,11 +145,20 @@ function variantIndex(variant: RegionVariantId) {
   return variant === 'cinematic' ? 1 : variant === 'historical' ? 2 : 0;
 }
 
+function historicalModeIndex(mode: HistoricalAerialMode) {
+  return mode === 'AERIAL' ? 1 : mode === 'AERIAL_RELIEF' ? 2 : 0;
+}
+
 export function createRegionTerrain(
   asset: RegionTerrainAsset,
   coastline: RegionCoastlineAsset,
   textures: RegionTerrainTextures,
-  options: { verticalExaggeration?: number } = {},
+  options: {
+    verticalExaggeration?: number;
+    historicalToneEnabled?: boolean;
+    historicalMode?: HistoricalAerialMode;
+    aerialOpacity?: number;
+  } = {},
 ): RegionTerrainHandle {
   const baseVerticalExaggeration = REGION_CONFIG.terrain.verticalExaggeration;
   let verticalExaggeration = options.verticalExaggeration ?? baseVerticalExaggeration;
@@ -157,6 +173,12 @@ export function createRegionTerrain(
     maxElevation: { value: REGION_CONFIG.terrain.maxElevationWorld * verticalExaggeration / baseVerticalExaggeration },
     contourMode: { value: 1 },
     aoEnabled: { value: 1 },
+    historicalTone: { value: options.historicalToneEnabled ? 1 : 0 },
+    historicalMode: { value: historicalModeIndex(options.historicalMode ?? 'OFF') },
+    aerialOpacity: { value: Math.min(100, Math.max(0, options.aerialOpacity ?? 0)) / 100 },
+    historicalLow: { value: new THREE.Color(HISTORICAL_ART_PALETTE.low) },
+    historicalMiddle: { value: new THREE.Color(HISTORICAL_ART_PALETTE.middle) },
+    historicalHigh: { value: new THREE.Color(HISTORICAL_ART_PALETTE.high) },
   };
   const material = new THREE.MeshStandardMaterial({
     vertexColors: true,
@@ -172,6 +194,12 @@ export function createRegionTerrain(
     shader.uniforms.regionMaxElevation = uniforms.maxElevation;
     shader.uniforms.regionContourMode = uniforms.contourMode;
     shader.uniforms.regionAoEnabled = uniforms.aoEnabled;
+    shader.uniforms.regionHistoricalTone = uniforms.historicalTone;
+    shader.uniforms.regionHistoricalMode = uniforms.historicalMode;
+    shader.uniforms.regionAerialOpacity = uniforms.aerialOpacity;
+    shader.uniforms.regionHistoricalLow = uniforms.historicalLow;
+    shader.uniforms.regionHistoricalMiddle = uniforms.historicalMiddle;
+    shader.uniforms.regionHistoricalHigh = uniforms.historicalHigh;
     shader.vertexShader = `uniform float regionMaxElevation; varying vec2 vRegionUv; varying float vRegionHeight;\n${shader.vertexShader}`
       .replace('#include <uv_vertex>', '#include <uv_vertex>\n    vRegionUv = uv;')
       .replace('#include <begin_vertex>', '#include <begin_vertex>\n    vRegionHeight = clamp(position.y / regionMaxElevation, 0.0, 1.0);');
@@ -184,6 +212,12 @@ export function createRegionTerrain(
       uniform float regionVariant;
       uniform float regionContourMode;
       uniform float regionAoEnabled;
+      uniform float regionHistoricalTone;
+      uniform float regionHistoricalMode;
+      uniform float regionAerialOpacity;
+      uniform vec3 regionHistoricalLow;
+      uniform vec3 regionHistoricalMiddle;
+      uniform vec3 regionHistoricalHigh;
       ${shader.fragmentShader}
     `.replace('#include <color_fragment>', `
       #include <color_fragment>
@@ -197,13 +231,25 @@ export function createRegionTerrain(
       diffuseColor.rgb *= 1.0 + masksEnabled * (vegetation + agriculture + settlement + beach);
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.12, 0.88, 0.75), regionVariant * 0.22);
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.10, 1.04, 0.82), step(1.5, regionVariant) * 0.24);
+      float historicalHeight = clamp(vRegionHeight, 0.0, 1.0);
+      vec3 historicalColor = historicalHeight < 0.56
+        ? mix(regionHistoricalLow, regionHistoricalMiddle, historicalHeight / 0.56)
+        : mix(regionHistoricalMiddle, regionHistoricalHigh, (historicalHeight - 0.56) / 0.44);
+      float archivalVariation = (vRegionVariation - 0.5) * 0.035;
+      historicalColor += vec3(archivalVariation, archivalVariation * 0.78, archivalVariation * 0.42);
+      float historicalReliefLift = step(1.5, regionHistoricalMode) * 0.035;
+      historicalColor *= 1.0 + historicalReliefLift;
+      diffuseColor.rgb = mix(diffuseColor.rgb, historicalColor, regionHistoricalTone * 0.88);
+      // The aerial slot remains deliberately empty while the source-rights gate is blocked.
+      float sourcePixelsAvailable = 0.0;
+      diffuseColor.rgb = mix(diffuseColor.rgb, historicalColor, sourcePixelsAvailable * regionAerialOpacity);
       float contour = 1.0 - smoothstep(0.0, 0.07, abs(fract(vRegionHeight * 11.0) - 0.5));
       float contourStrength = regionContourMode < 0.5 ? 0.0 : regionContourMode < 1.5 ? 0.12 : 0.24;
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.48, 0.46, 0.34), contour * contourStrength);
       diffuseColor.rgb *= mix(0.96, 1.0, regionAoEnabled);
     `);
   };
-  material.customProgramCacheKey = () => 'v2-region-terrain-material-1';
+  material.customProgramCacheKey = () => 'v2-region-terrain-material-2';
   const mesh = new THREE.Mesh(built.geometry, material);
   mesh.name = 'v2-region-terrain-mesh';
   mesh.castShadow = true;
@@ -270,6 +316,15 @@ export function createRegionTerrain(
     },
     setCoastDebug(_enabled) {
       // Gate A remains the immutable grid-mask baseline; B/C own the coast debug view.
+    },
+    setHistoricalToneEnabled(enabled) {
+      uniforms.historicalTone.value = enabled ? 1 : 0;
+    },
+    setHistoricalMode(mode) {
+      uniforms.historicalMode.value = historicalModeIndex(mode);
+    },
+    setAerialOpacity(opacity) {
+      uniforms.aerialOpacity.value = Math.min(100, Math.max(0, opacity)) / 100;
     },
     dispose() {
       built.geometry.dispose();

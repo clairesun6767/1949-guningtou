@@ -2,6 +2,10 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import {
+  HISTORICAL_AERIAL_CONFIG,
+  type HistoricalAerialMode,
+} from '../../config/historicalAerial.js';
+import {
   REGION_CONFIG,
   type RegionContourMode,
   type RegionLightingMode,
@@ -24,6 +28,7 @@ import { createRegionLabels, type RegionLabelsHandle } from './RegionLabels.js';
 import { createRegionOcean, type RegionOceanHandle } from './RegionOcean.js';
 import { RegionPerformanceMonitor, type RegionRenderStats, tierSettings } from './RegionPerformance.js';
 import { createRegionQualityTerrain } from './RegionQualityTerrain.js';
+import { HistoricalAerialLayer } from './HistoricalAerialLayer.js';
 import {
   createRegionTerrain,
   sampleRegionTerrainHeight,
@@ -38,7 +43,7 @@ const COMPOSITION_CLASSIFICATION_PAYLOAD_BYTES = 38_703 + 15_228;
 export const REGION_SCENE_CONTRACT = {
   id: REGION_CONFIG.id,
   stages: ['terrain', 'material', 'atmosphere', 'labels', 'ready'] as const,
-  requiredModules: ['RegionTerrain', 'RegionQualityTerrain', 'RegionOcean', 'RegionAtmosphere', 'RegionCamera', 'RegionLabels', 'RegionControls', 'RegionPerformance', 'RegionDataProvider'] as const,
+  requiredModules: ['RegionTerrain', 'RegionQualityTerrain', 'RegionOcean', 'RegionAtmosphere', 'RegionCamera', 'RegionLabels', 'RegionControls', 'RegionPerformance', 'RegionDataProvider', 'HistoricalAerialLayer', 'HistoricalAerialProvider'] as const,
 };
 
 export interface RegionSceneOptions {
@@ -58,6 +63,9 @@ export interface RegionSceneOptions {
   initialQuality?: RegionTerrainQualityId;
   initialVerticalExaggeration?: number;
   initialLightingMode?: RegionLightingMode;
+  initialHistoricalMode?: HistoricalAerialMode;
+  initialHistoricalToneEnabled?: boolean;
+  initialAerialOpacity?: number;
 }
 
 export interface RegionDebugState {
@@ -87,6 +95,15 @@ export interface RegionSceneStats extends RegionRenderStats {
   coastlineResolution: string;
   terrainSource: string;
   gpuEstimateBytes: number;
+  historicalMode: HistoricalAerialMode;
+  aerialOpacity: number;
+  aerialStatus: 'SOURCE REVIEW' | 'RIGHTS BLOCKED';
+  aerialYear: number;
+  aerialTextureResolution: string;
+  aerialPayloadBytes: number;
+  aerialBounds: string;
+  aerialAlignment: string;
+  coverageMaskDebug: boolean;
 }
 
 function createNeutralTexture() {
@@ -128,6 +145,7 @@ export class RegionScene {
   private readonly provider: RegionDataProvider;
   private readonly qualitySource: RegionTerrainQualitySource;
   private readonly qualityAssets = new Map<string, RegionQualityTerrainAsset>();
+  private readonly historicalAerial: HistoricalAerialLayer;
   private composition?: RegionCompositionDataset;
   private compositionPromise?: Promise<RegionCompositionDataset>;
   private coastlinePayloadBytes = 66_868;
@@ -143,6 +161,8 @@ export class RegionScene {
   private quality: RegionTerrainQualityId = 'A';
   private verticalExaggeration: number = REGION_CONFIG.terrain.verticalExaggeration;
   private lightingMode: RegionLightingMode = 'CURRENT';
+  private historicalMode: HistoricalAerialMode = HISTORICAL_AERIAL_CONFIG.defaultMode;
+  private historicalToneEnabled = false;
   private contourMode: RegionContourMode = 'SUBTLE';
   private aoEnabled = true;
   private coastDebug = false;
@@ -207,6 +227,14 @@ export class RegionScene {
     this.labelsVisible = options.labelsVisible;
     this.verticalExaggeration = options.initialVerticalExaggeration ?? REGION_CONFIG.terrain.verticalExaggeration;
     this.lightingMode = options.initialLightingMode ?? 'CURRENT';
+    this.historicalMode = options.initialHistoricalMode ?? HISTORICAL_AERIAL_CONFIG.defaultMode;
+    this.historicalToneEnabled = options.initialHistoricalToneEnabled ?? false;
+    this.historicalAerial = new HistoricalAerialLayer({
+      year: HISTORICAL_AERIAL_CONFIG.defaultYear,
+      mode: this.historicalMode,
+      opacity: options.initialAerialOpacity ?? HISTORICAL_AERIAL_CONFIG.defaultOpacity,
+      toneEnabled: this.historicalToneEnabled,
+    });
     this.performance = new RegionPerformanceMonitor(options.tier);
     const settings = tierSettings(options.tier);
     this.camera = new THREE.PerspectiveCamera(REGION_CONFIG.camera.fovDegrees, 1, REGION_CONFIG.camera.near, REGION_CONFIG.camera.far);
@@ -237,6 +265,9 @@ export class RegionScene {
     });
     this.terrain = createRegionTerrain(data.terrain, data.coastline, this.classificationTextures, {
       verticalExaggeration: this.verticalExaggeration,
+      historicalToneEnabled: this.historicalToneEnabled,
+      historicalMode: this.historicalMode,
+      aerialOpacity: this.historicalAerial.aerialOpacity,
     });
     this.scene.add(this.terrain.group);
     this.cameraController.reset();
@@ -327,6 +358,9 @@ export class RegionScene {
     if (quality === 'A') {
       nextTerrain = createRegionTerrain(this.data.terrain, this.data.coastline, this.classificationTextures, {
         verticalExaggeration: this.verticalExaggeration,
+        historicalToneEnabled: this.historicalToneEnabled,
+        historicalMode: this.historicalMode,
+        aerialOpacity: this.historicalAerial.aerialOpacity,
       });
     } else {
       if (this.qualitySource === 'composition') {
@@ -344,6 +378,9 @@ export class RegionScene {
       }
       nextTerrain = createRegionQualityTerrain(asset, nextCoastline, this.classificationTextures, {
         verticalExaggeration: this.verticalExaggeration,
+        historicalToneEnabled: this.historicalToneEnabled,
+        historicalMode: this.historicalMode,
+        aerialOpacity: this.historicalAerial.aerialOpacity,
       });
     }
     if (request !== this.qualityRequest || this.destroyed) {
@@ -357,6 +394,9 @@ export class RegionScene {
     nextTerrain.setAoEnabled(this.aoEnabled);
     nextTerrain.setCoastDebug(this.coastDebug);
     nextTerrain.setLightingMode(this.lightingMode);
+    nextTerrain.setHistoricalToneEnabled(this.historicalToneEnabled);
+    nextTerrain.setHistoricalMode(this.historicalMode);
+    nextTerrain.setAerialOpacity(this.historicalAerial.aerialOpacity);
     const previous = this.terrain;
     this.scene.remove(previous.group);
     previous.dispose();
@@ -401,6 +441,27 @@ export class RegionScene {
     this.terrain.setCoastDebug(enabled);
   }
 
+  setHistoricalMode(mode: HistoricalAerialMode) {
+    this.historicalMode = mode;
+    this.historicalAerial.setMode(mode);
+    this.terrain.setHistoricalMode(mode);
+  }
+
+  setHistoricalToneEnabled(enabled: boolean) {
+    this.historicalToneEnabled = enabled;
+    this.historicalAerial.setToneEnabled(enabled);
+    this.terrain.setHistoricalToneEnabled(enabled);
+  }
+
+  setAerialOpacity(opacity: number) {
+    this.historicalAerial.setOpacity(opacity);
+    this.terrain.setAerialOpacity(this.historicalAerial.aerialOpacity);
+  }
+
+  setCoverageMaskDebug(enabled: boolean) {
+    this.historicalAerial.setCoverageMaskDebug(enabled);
+  }
+
   setDebugState(next: Partial<RegionDebugState>) {
     this.debugState = { ...this.debugState, ...next };
     this.terrain.setWireframe(this.debugState.wireframe);
@@ -421,6 +482,7 @@ export class RegionScene {
     const base = this.performance.snapshot(this.renderer, this.camera, this.terrain.textureEstimateBytes);
     const assetPayloadBytes = this.terrain.assetPayloadBytes + this.coastlinePayloadBytes + this.classificationPayloadBytes;
     const gpuEstimateBytes = this.terrain.textureEstimateBytes + this.terrain.vertices * 56 + this.terrain.triangles * 3 * 4;
+    const aerial = this.historicalAerial.getStats();
     return {
       ...base,
       stage: this.stage,
@@ -439,6 +501,15 @@ export class RegionScene {
       coastlineResolution: this.terrain.coastlineResolution,
       terrainSource: this.terrain.sourceLabel,
       gpuEstimateBytes,
+      historicalMode: this.historicalMode,
+      aerialOpacity: aerial.opacity,
+      aerialStatus: aerial.status,
+      aerialYear: aerial.year,
+      aerialTextureResolution: aerial.textureResolution,
+      aerialPayloadBytes: aerial.payloadBytes,
+      aerialBounds: aerial.bounds,
+      aerialAlignment: aerial.alignment,
+      coverageMaskDebug: aerial.coverageMaskDebug,
     };
   }
 
@@ -453,6 +524,7 @@ export class RegionScene {
     this.ocean?.dispose();
     this.atmosphere?.dispose();
     this.terrain.dispose();
+    this.historicalAerial.dispose();
     this.renderer.dispose();
     this.renderer.domElement.remove();
     this.labelRenderer.domElement.remove();

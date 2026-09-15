@@ -51,14 +51,14 @@ export function createRegionAtmosphere(scene: THREE.Scene, renderer: THREE.WebGL
   sun.shadow.camera.bottom = -36;
   sun.shadow.camera.near = 0.1;
   sun.shadow.camera.far = 130;
-  const ambient = new THREE.AmbientLight('#73877b', 0.36);
+  const ambient = new THREE.AmbientLight('#819087', 0.5);
   ambient.name = 'v2-region-ambient';
   scene.add(hemisphere, sun, ambient);
   const sky = makeSkyTexture(variant);
   scene.background = sky;
   scene.fog = new THREE.FogExp2(REGION_VARIANTS[variant].fog, settings.fogDensity);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.04;
+  renderer.toneMappingExposure = 1.18;
   let activeVariant = variant;
   let lightingMode: RegionLightingMode = 'CURRENT';
 
@@ -87,7 +87,7 @@ export function createRegionAtmosphere(scene: THREE.Scene, renderer: THREE.WebGL
     },
     setPostProcessingEnabled(enabled) {
       renderer.toneMapping = enabled ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
-      renderer.toneMappingExposure = enabled ? 1.04 : 1;
+      renderer.toneMappingExposure = enabled ? 1.18 : 1;
     },
     setLightingMode(mode) {
       lightingMode = mode;
@@ -101,7 +101,7 @@ export function createRegionAtmosphere(scene: THREE.Scene, renderer: THREE.WebGL
       sun.shadow.camera.updateProjectionMatrix();
     },
     setAmbientOcclusionEnabled(enabled) {
-      ambient.intensity = enabled ? 0.36 : 0.18;
+      ambient.intensity = enabled ? 0.5 : 0.25;
     },
     dispose() {
       if (scene.background instanceof THREE.Texture) scene.background.dispose();

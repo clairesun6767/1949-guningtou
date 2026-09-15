@@ -195,7 +195,9 @@ export const REGION_PERFORMANCE_TIERS: Record<RegionPerformanceTier, RegionPerfo
 
 export const REGION_VARIANTS: Record<RegionVariantId, {
   label: string;
+  englishLabel: string;
   description: string;
+  englishDescription: string;
   skyTop: string;
   skyBottom: string;
   fog: string;
@@ -206,40 +208,46 @@ export const REGION_VARIANTS: Record<RegionVariantId, {
   oceanShallow: string;
 }> = {
   neutral: {
-    label: 'NEUTRAL STRATEGIC',
-    description: 'Clear daylight / geographic relationship',
-    skyTop: '#172528',
-    skyBottom: '#70837c',
-    fog: '#49605b',
+    label: '歷史日光',
+    englishLabel: 'HISTORICAL DAYLIGHT',
+    description: '明亮日照／金廈地理關係',
+    englishDescription: 'Clear strategic daylight',
+    skyTop: '#3b5053',
+    skyBottom: '#919f96',
+    fog: '#6a7973',
     sun: '#f2d7a2',
-    terrainTint: '#a6aa82',
+    terrainTint: '#aca483',
     terrainMix: 0.12,
-    oceanDeep: '#142f39',
-    oceanShallow: '#47716e',
+    oceanDeep: '#3a5962',
+    oceanShallow: '#789591',
   },
   cinematic: {
-    label: 'CINEMATIC DAWN',
-    description: 'Low sun / long shadow / atmospheric depth',
-    skyTop: '#211f2d',
-    skyBottom: '#bc8065',
-    fog: '#705754',
+    label: '戰地晨曦',
+    englishLabel: 'BATTLEFIELD DAWN',
+    description: '低角度日光／長陰影／空氣透視',
+    englishDescription: 'Low sun / long shadow / atmospheric depth',
+    skyTop: '#34333b',
+    skyBottom: '#b88970',
+    fog: '#76655d',
     sun: '#f3b56e',
     terrainTint: '#b57f65',
     terrainMix: 0.22,
-    oceanDeep: '#1d2b3e',
-    oceanShallow: '#7c665d',
+    oceanDeep: '#354650',
+    oceanShallow: '#8a7369',
   },
   historical: {
-    label: 'HISTORICAL HYBRID',
-    description: 'Terrain relief / map-paper warmth / restrained contrast',
-    skyTop: '#222b27',
-    skyBottom: '#9a9b7c',
-    fog: '#626954',
+    label: '航照檔案',
+    englishLabel: 'AERIAL ARCHIVE',
+    description: '航照色調／地形起伏／來源審查',
+    englishDescription: 'Archive tone / relief / source review',
+    skyTop: '#3b4642',
+    skyBottom: '#a9a184',
+    fog: '#77766a',
     sun: '#e7d39a',
     terrainTint: '#c4aa78',
     terrainMix: 0.3,
-    oceanDeep: '#23393a',
-    oceanShallow: '#667665',
+    oceanDeep: '#304b51',
+    oceanShallow: '#718a82',
   },
 };
 

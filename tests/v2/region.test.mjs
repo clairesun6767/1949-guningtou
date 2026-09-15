@@ -2,9 +2,12 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
+import { HISTORICAL_AERIAL_1945, HISTORICAL_AERIAL_CONFIG, HISTORICAL_AERIAL_MODES } from '../../.tmp/v2-tests/v2/config/historicalAerial.js';
 import { REGION_COMPOSITION_BOUNDS, REGION_COMPOSITION_FOG, REGION_COMPOSITION_QUALITY, REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../../.tmp/v2-tests/v2/config/region.js';
 import { clampRegionDistance, clampRegionPolarDegrees, clampRegionTarget, getRegionPreset, targetWithinRegionBounds } from '../../.tmp/v2-tests/v2/prototypes/region/RegionCamera.js';
+import { HistoricalAerialLayer } from '../../.tmp/v2-tests/v2/prototypes/region/HistoricalAerialLayer.js';
 import { REGION_SCENE_CONTRACT } from '../../.tmp/v2-tests/v2/prototypes/region/RegionScene.js';
+import { clampHistoricalAerialOpacity, createHistoricalAerialProvider, validateHistoricalSourceMetadata } from '../../.tmp/v2-tests/v2/shared/historicalAerialProvider.js';
 import { HttpRegionDataProvider, regionAssetPaths } from '../../.tmp/v2-tests/v2/shared/regionDataProvider.js';
 
 function collectCoordinatePoints(value, points = []) {
@@ -40,6 +43,63 @@ test('Region config declares the geographic relationship and three art variants'
   assert.equal(REGION_CONFIG.labels.find(label => label.id === 'dadeng')?.text, 'DADENG');
   assert.deepEqual(Object.keys(REGION_VARIANTS), ['neutral', 'cinematic', 'historical']);
   assert.equal(REGION_CONFIG.referenceEra, 'modern_reference');
+});
+
+test('Gate A.3 records the official 1945 source bounds and keeps rights blocked', () => {
+  assert.equal(HISTORICAL_AERIAL_1945.year, 1945);
+  assert.equal(HISTORICAL_AERIAL_1945.layerName, '金門舊航照影像(1945) / Kinmen_1945');
+  assert.deepEqual(HISTORICAL_AERIAL_1945.bounds, {
+    west: 118.2727648,
+    south: 24.3437997,
+    east: 118.4966956,
+    north: 24.5362935,
+  });
+  assert.equal(HISTORICAL_AERIAL_1945.rightsStatus, 'BLOCKED — RIGHTS UNCLEAR');
+  assert.equal(HISTORICAL_AERIAL_CONFIG.defaultMode, 'OFF');
+  assert.equal(validateHistoricalSourceMetadata(HISTORICAL_AERIAL_1945), true);
+  const audit = readFileSync('v2/docs/GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md', 'utf8');
+  for (const field of ['Provider', 'Dataset', 'Year', 'Layer Name', 'Service Type', 'Endpoint', 'CRS', 'Bounds', 'Resolution', 'Coverage', 'License', 'Attribution', 'Download Permission', 'Derivative Permission', 'Redistribution Permission', 'Runtime Usage Permission', 'GitHub Commit Permission', 'Known Restrictions', 'Recommended Integration', 'Verdict']) {
+    assert.match(audit, new RegExp(`\\| ${field} \\|`));
+  }
+  assert.match(audit, /BLOCKED — RIGHTS UNCLEAR/);
+});
+
+test('Gate A.3 provider and layer never request or expose aerial pixels before permission', async () => {
+  const provider = createHistoricalAerialProvider('remote');
+  assert.equal(provider.canUsePixels(), false);
+  const result = await provider.loadLayer(1945);
+  assert.equal(result.status, 'rights-blocked');
+  assert.equal(result.metadata.usageMode, 'remote');
+  assert.equal(result.metadata.year, 1945);
+  const layer = new HistoricalAerialLayer({ mode: 'AERIAL_RELIEF', opacity: 50 });
+  assert.equal(layer.historicalMode, 'AERIAL_RELIEF');
+  assert.equal(layer.aerialOpacity, 50);
+  assert.equal(layer.getStats().payloadBytes, 0);
+  assert.equal(layer.getStats().status, 'RIGHTS BLOCKED');
+  assert.match(readFileSync('v2/prototypes/region/HistoricalAerialLayer.ts', 'utf8'), /no Three texture or tile request/);
+});
+
+test('Gate A.3 clamps aerial opacity, preserves the year-aware modes, and keeps official coverage order', () => {
+  assert.equal(clampHistoricalAerialOpacity(-20), 0);
+  assert.equal(clampHistoricalAerialOpacity(26.4), 26);
+  assert.equal(clampHistoricalAerialOpacity(140), 100);
+  assert.equal(clampHistoricalAerialOpacity(Number.NaN), 0);
+  assert.deepEqual(HISTORICAL_AERIAL_MODES.map(item => item.id), ['OFF', 'AERIAL', 'AERIAL_RELIEF']);
+  const { west, south, east, north } = HISTORICAL_AERIAL_1945.bounds;
+  assert.ok(west < east && south < north);
+  assert.match(HISTORICAL_AERIAL_1945.crs, /EPSG:3857/);
+  assert.equal(HISTORICAL_AERIAL_1945.imageFormat, 'image/png');
+});
+
+test('Gate A.3 makes Traditional Chinese the primary review language and does not claim an aerial asset', () => {
+  const source = readFileSync('v2/app/RegionPrototype.tsx', 'utf8');
+  assert.match(source, /金門 <em>—<\/em> 廈門/);
+  assert.match(source, /一水之隔，兩岸對峙。/);
+  assert.match(source, /資料授權確認中/);
+  assert.match(source, /HISTORICAL AERIAL/);
+  assert.match(source, /航照不透明度/);
+  assert.doesNotMatch(source, /Kinmen_1945.*TextureLoader/);
+  assert.match(readFileSync('v2/docs/GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md', 'utf8'), /不下載、不快取、不提交 1945 航照像素/);
 });
 
 test('RegionDataProvider loads only the regional modern-reference boundary', async () => {
@@ -79,9 +139,11 @@ test('RegionDataProvider paths preserve the Astro base path', () => {
 test('basic RegionScene initialization contract is split by stage and module boundary', () => {
   assert.equal(typeof REGION_SCENE_CONTRACT.id, 'string');
   assert.deepEqual(REGION_SCENE_CONTRACT.stages, ['terrain', 'material', 'atmosphere', 'labels', 'ready']);
-  assert.equal(REGION_SCENE_CONTRACT.requiredModules.length, 9);
+  assert.equal(REGION_SCENE_CONTRACT.requiredModules.length, 11);
   assert.ok(REGION_SCENE_CONTRACT.requiredModules.includes('RegionDataProvider'));
   assert.ok(REGION_SCENE_CONTRACT.requiredModules.includes('RegionQualityTerrain'));
+  assert.ok(REGION_SCENE_CONTRACT.requiredModules.includes('HistoricalAerialLayer'));
+  assert.ok(REGION_SCENE_CONTRACT.requiredModules.includes('HistoricalAerialProvider'));
 });
 
 test('Gate A.1 declares traceable A/B/C quality targets without changing the A baseline', () => {

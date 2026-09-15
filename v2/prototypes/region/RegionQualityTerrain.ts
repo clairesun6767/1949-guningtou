@@ -1,5 +1,9 @@
 import * as THREE from 'three';
 import {
+  HISTORICAL_ART_PALETTE,
+  type HistoricalAerialMode,
+} from '../../config/historicalAerial.js';
+import {
   REGION_COMPOSITION_FOG,
   REGION_CONFIG,
   REGION_VARIANTS,
@@ -179,11 +183,20 @@ function variantIndex(variant: RegionVariantId) {
   return variant === 'cinematic' ? 1 : variant === 'historical' ? 2 : 0;
 }
 
+function historicalModeIndex(mode: HistoricalAerialMode) {
+  return mode === 'AERIAL' ? 1 : mode === 'AERIAL_RELIEF' ? 2 : 0;
+}
+
 export function createRegionQualityTerrain(
   asset: RegionQualityTerrainAsset,
   coastline: RegionCoastlineAsset,
   textures: RegionTerrainTextures,
-  options: { verticalExaggeration?: number } = {},
+  options: {
+    verticalExaggeration?: number;
+    historicalToneEnabled?: boolean;
+    historicalMode?: HistoricalAerialMode;
+    aerialOpacity?: number;
+  } = {},
 ): RegionTerrainHandle {
   const quality = asset.quality as QualityId;
   const isComposition = asset.id.includes('composition');
@@ -206,6 +219,12 @@ export function createRegionQualityTerrain(
     aoEnabled: { value: 1 },
     coastDebug: { value: 0 },
     lightingMode: { value: 1 },
+    historicalTone: { value: options.historicalToneEnabled ? 1 : 0 },
+    historicalMode: { value: historicalModeIndex(options.historicalMode ?? 'OFF') },
+    aerialOpacity: { value: Math.min(100, Math.max(0, options.aerialOpacity ?? 0)) / 100 },
+    historicalLow: { value: new THREE.Color(HISTORICAL_ART_PALETTE.low) },
+    historicalMiddle: { value: new THREE.Color(HISTORICAL_ART_PALETTE.middle) },
+    historicalHigh: { value: new THREE.Color(HISTORICAL_ART_PALETTE.high) },
     compositionFogCenter: { value: new THREE.Vector2(compositionFogCenter.x, compositionFogCenter.z) },
     compositionFogInnerRadius: { value: REGION_COMPOSITION_FOG.innerRadiusWorld },
     compositionFogOuterRadius: { value: REGION_COMPOSITION_FOG.outerRadiusWorld },
@@ -233,6 +252,12 @@ export function createRegionQualityTerrain(
     shader.uniforms.regionAoEnabled = uniforms.aoEnabled;
     shader.uniforms.regionCoastDebug = uniforms.coastDebug;
     shader.uniforms.regionLightingMode = uniforms.lightingMode;
+    shader.uniforms.regionHistoricalTone = uniforms.historicalTone;
+    shader.uniforms.regionHistoricalMode = uniforms.historicalMode;
+    shader.uniforms.regionAerialOpacity = uniforms.aerialOpacity;
+    shader.uniforms.regionHistoricalLow = uniforms.historicalLow;
+    shader.uniforms.regionHistoricalMiddle = uniforms.historicalMiddle;
+    shader.uniforms.regionHistoricalHigh = uniforms.historicalHigh;
     shader.uniforms.regionCompositionFogCenter = uniforms.compositionFogCenter;
     shader.uniforms.regionCompositionFogInnerRadius = uniforms.compositionFogInnerRadius;
     shader.uniforms.regionCompositionFogOuterRadius = uniforms.compositionFogOuterRadius;
@@ -275,6 +300,12 @@ export function createRegionQualityTerrain(
       uniform float regionAoEnabled;
       uniform float regionCoastDebug;
       uniform float regionLightingMode;
+      uniform float regionHistoricalTone;
+      uniform float regionHistoricalMode;
+      uniform float regionAerialOpacity;
+      uniform vec3 regionHistoricalLow;
+      uniform vec3 regionHistoricalMiddle;
+      uniform vec3 regionHistoricalHigh;
       uniform vec2 regionCompositionFogCenter;
       uniform float regionCompositionFogInnerRadius;
       uniform float regionCompositionFogOuterRadius;
@@ -300,6 +331,17 @@ export function createRegionQualityTerrain(
       diffuseColor.rgb *= 1.0 + regionTextureEnabled * (vegetation + agriculture + settlement + beach);
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.12, 0.88, 0.75), regionVariant * 0.22);
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(1.1, 1.04, 0.82), step(1.5, regionVariant) * 0.24);
+      float historicalHeight = clamp(vRegionHeight, 0.0, 1.0);
+      vec3 historicalColor = historicalHeight < 0.56
+        ? mix(regionHistoricalLow, regionHistoricalMiddle, historicalHeight / 0.56)
+        : mix(regionHistoricalMiddle, regionHistoricalHigh, (historicalHeight - 0.56) / 0.44);
+      float archivalVariation = (vRegionVariation - 0.5) * 0.035;
+      historicalColor += vec3(archivalVariation, archivalVariation * 0.78, archivalVariation * 0.42);
+      historicalColor *= 1.0 + step(1.5, regionHistoricalMode) * 0.035;
+      diffuseColor.rgb = mix(diffuseColor.rgb, historicalColor, regionHistoricalTone * 0.88);
+      // No source pixels are bound until the Sinica rights gate is cleared.
+      float sourcePixelsAvailable = 0.0;
+      diffuseColor.rgb = mix(diffuseColor.rgb, historicalColor, sourcePixelsAvailable * regionAerialOpacity);
       float contour = 1.0 - smoothstep(0.0, 0.07, abs(fract(vRegionHeight * 13.0) - 0.5));
       float contourStrength = regionContourMode < 0.5 ? 0.0 : regionContourMode < 1.5 ? 0.085 : 0.2;
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.46, 0.44, 0.31), contour * contourStrength);
@@ -318,7 +360,7 @@ export function createRegionQualityTerrain(
       #include <alphatest_fragment>
     `);
   };
-  material.customProgramCacheKey = () => 'v2-region-quality-terrain-material-1';
+  material.customProgramCacheKey = () => 'v2-region-quality-terrain-material-2';
   const mesh = new THREE.Mesh(built.geometry, material);
   mesh.name = `v2-region-terrain-${quality.toLowerCase()}-mesh`;
   mesh.castShadow = true;
@@ -388,6 +430,15 @@ export function createRegionQualityTerrain(
     },
     setCoastDebug(enabled) {
       uniforms.coastDebug.value = enabled ? 1 : 0;
+    },
+    setHistoricalToneEnabled(enabled) {
+      uniforms.historicalTone.value = enabled ? 1 : 0;
+    },
+    setHistoricalMode(mode) {
+      uniforms.historicalMode.value = historicalModeIndex(mode);
+    },
+    setAerialOpacity(opacity) {
+      uniforms.aerialOpacity.value = Math.min(100, Math.max(0, opacity)) / 100;
     },
     dispose() {
       built.geometry.dispose();
