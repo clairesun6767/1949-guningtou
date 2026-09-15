@@ -1,4 +1,21 @@
-import type { RegionTerrainQualityId } from '../config/region.js';
+import {
+  REGION_COMPOSITION_QUALITY,
+  REGION_TERRAIN_QUALITY,
+  type RegionTerrainQualityId,
+  type RegionTerrainQualitySource,
+} from '../config/region.js';
+
+export interface RegionTerrainSourceTile {
+  id: string;
+  sourceUrl: string;
+  sha256: string;
+  compressedBytes: number;
+  rawBytes: number;
+  nativeGrid: string;
+  approximateNativeResolutionMetres: number;
+  latitudeTile: number;
+  longitudeTile: number;
+}
 
 export interface RegionTerrainSource {
   id: string;
@@ -12,6 +29,7 @@ export interface RegionTerrainSource {
   nativeGrid: string;
   approximateNativeResolutionMetres: number;
   temporalScope: string;
+  tiles?: RegionTerrainSourceTile[];
 }
 
 export interface RegionTerrainDerivation {
@@ -26,6 +44,8 @@ export interface RegionTerrainDerivation {
   approximateSourceResolutionMetres?: number;
   sourceSampleInterpolation?: string;
   coastlineResolution?: string;
+  coastlineWidth?: number;
+  coastlineHeight?: number;
 }
 
 export interface RegionTerrainAsset {
@@ -77,7 +97,7 @@ export interface RegionCoastlineAsset {
 
 export interface RegionClassificationManifest {
   version: string;
-  scope: 'regional';
+  scope: 'regional' | 'regional-composition';
   coordinateSystem: 'EPSG:4326';
   bounds: { west: number; south: number; east: number; north: number };
   width: number;
@@ -95,6 +115,23 @@ export interface RegionDataset {
     terrain: string;
     terrainB: string;
     terrainC: string;
+    compositionTerrainB: string;
+    compositionTerrainC: string;
+    coastline: string;
+    compositionCoastline: string;
+    compositionClassificationA: string;
+    compositionClassificationB: string;
+    classificationA: string;
+    classificationB: string;
+  };
+}
+
+export interface RegionCompositionDataset {
+  coastline: RegionCoastlineAsset;
+  coastlinePayloadBytes: number;
+  assets: {
+    terrainB: string;
+    terrainC: string;
     coastline: string;
     classificationA: string;
     classificationB: string;
@@ -103,8 +140,11 @@ export interface RegionDataset {
 
 export interface RegionDataProvider {
   load(): Promise<RegionDataset>;
-  loadQuality(quality: Exclude<RegionTerrainQualityId, 'A'>): Promise<RegionQualityTerrainAsset>;
+  loadComposition(): Promise<RegionCompositionDataset>;
+  loadQuality(quality: Exclude<RegionTerrainQualityId, 'A'>, source?: RegionTerrainQualitySource): Promise<RegionQualityTerrainAsset>;
 }
+
+const COMPOSITION_COASTLINE_PAYLOAD_BYTES = 110_412;
 
 function withBase(base: string, path: string) {
   const normalizedBase = base.endsWith('/') ? base : `${base}/`;
@@ -130,9 +170,36 @@ function validateTerrain(asset: RegionTerrainAsset) {
   }
 }
 
-function validateQualityTerrain(asset: RegionQualityTerrainAsset, expectedQuality: Exclude<RegionTerrainQualityId, 'A'>) {
+function parseGrid(value: string) {
+  const match = /^(\d+)×(\d+)$/.exec(value);
+  if (!match) throw new Error('Terrain quality grid metadata is invalid.');
+  return [Number(match[1]), Number(match[2])] as const;
+}
+
+function sameBounds(left: RegionTerrainAsset['bounds'], right: RegionTerrainAsset['bounds']) {
+  return left.west === right.west && left.south === right.south && left.east === right.east && left.north === right.north;
+}
+
+function validateCompositionQuality(asset: RegionQualityTerrainAsset, expectedQuality: Exclude<RegionTerrainQualityId, 'A'>) {
+  if (!sameBounds(asset.bounds, REGION_COMPOSITION_QUALITY[expectedQuality].bounds)) {
+    throw new Error('Gate A.2 composition bounds do not match the selected regional composition.');
+  }
+  if (!asset.source.tiles || asset.source.tiles.length < 2) {
+    throw new Error('Gate A.2 composition terrain must retain every required HGT tile provenance.');
+  }
+  for (const tile of asset.source.tiles) {
+    if (!tile.id || !tile.sourceUrl || !/^[a-f0-9]{64}$/i.test(tile.sha256) || tile.nativeGrid !== '3601x3601') {
+      throw new Error('Gate A.2 composition terrain contains incomplete HGT tile provenance.');
+    }
+  }
+  if (!asset.derivation.method.includes('cross-tile')) {
+    throw new Error('Gate A.2 composition terrain must document cross-tile sampling.');
+  }
+}
+
+function validateQualityTerrain(asset: RegionQualityTerrainAsset, expectedQuality: Exclude<RegionTerrainQualityId, 'A'>, source: RegionTerrainQualitySource = 'benchmark') {
   const expectedSamples = asset.grid.width * asset.grid.height;
-  const expectedGrid = expectedQuality === 'B' ? [512, 256] : [1024, 512];
+  const expectedGrid = parseGrid(source === 'composition' ? REGION_COMPOSITION_QUALITY[expectedQuality].grid : REGION_TERRAIN_QUALITY[expectedQuality].grid);
   if (asset.quality !== expectedQuality || asset.coordinateSystem !== 'EPSG:4326') {
     throw new Error(`Gate A.1 requires the isolated ${expectedQuality} EPSG:4326 terrain asset.`);
   }
@@ -158,7 +225,7 @@ function validateCoastline(asset: RegionCoastlineAsset) {
 
 export class HttpRegionDataProvider implements RegionDataProvider {
   private readonly root: string;
-  private readonly qualityCache = new Map<Exclude<RegionTerrainQualityId, 'A'>, RegionQualityTerrainAsset>();
+  private readonly qualityCache = new Map<string, RegionQualityTerrainAsset>();
 
   constructor(base = '') {
     this.root = base;
@@ -169,7 +236,12 @@ export class HttpRegionDataProvider implements RegionDataProvider {
       terrain: withBase(this.root, 'terrain/kinmen-xiamen-regional.json'),
       terrainB: withBase(this.root, 'terrain/kinmen-xiamen-regional-quality-b.json'),
       terrainC: withBase(this.root, 'terrain/kinmen-xiamen-regional-quality-c.json'),
+      compositionTerrainB: withBase(this.root, REGION_COMPOSITION_QUALITY.B.terrainAsset),
+      compositionTerrainC: withBase(this.root, REGION_COMPOSITION_QUALITY.C.terrainAsset),
       coastline: withBase(this.root, 'map-data/regional-coastline.geojson'),
+      compositionCoastline: withBase(this.root, REGION_COMPOSITION_QUALITY.B.coastlineAsset),
+      compositionClassificationA: withBase(this.root, 'map-data/regional-composition-classification-a.png'),
+      compositionClassificationB: withBase(this.root, 'map-data/regional-composition-classification-b.png'),
       classificationA: withBase(this.root, 'map-data/regional-classification-a.png'),
       classificationB: withBase(this.root, 'map-data/regional-classification-b.png'),
     };
@@ -186,14 +258,38 @@ export class HttpRegionDataProvider implements RegionDataProvider {
     return { terrain, coastline, classification, assets };
   }
 
-  async loadQuality(quality: Exclude<RegionTerrainQualityId, 'A'>): Promise<RegionQualityTerrainAsset> {
-    const cached = this.qualityCache.get(quality);
+  async loadComposition(): Promise<RegionCompositionDataset> {
+    const assets = regionAssetPaths(this.root);
+    const coastline = await getJson<RegionCoastlineAsset>(assets.compositionCoastline);
+    validateCoastline(coastline);
+    return {
+      coastline,
+      coastlinePayloadBytes: COMPOSITION_COASTLINE_PAYLOAD_BYTES,
+      assets: {
+        terrainB: assets.compositionTerrainB,
+        terrainC: assets.compositionTerrainC,
+        coastline: assets.compositionCoastline,
+        classificationA: assets.compositionClassificationA,
+        classificationB: assets.compositionClassificationB,
+      },
+    };
+  }
+
+  async loadQuality(
+    quality: Exclude<RegionTerrainQualityId, 'A'>,
+    source: RegionTerrainQualitySource = 'benchmark',
+  ): Promise<RegionQualityTerrainAsset> {
+    const cacheKey = source + ':' + quality;
+    const cached = this.qualityCache.get(cacheKey);
     if (cached) return cached;
     const assets = regionAssetPaths(this.root);
-    const url = quality === 'B' ? assets.terrainB : assets.terrainC;
+    const url = source === 'composition'
+      ? quality === 'B' ? assets.compositionTerrainB : assets.compositionTerrainC
+      : quality === 'B' ? assets.terrainB : assets.terrainC;
     const terrain = await getJson<RegionQualityTerrainAsset>(url);
-    validateQualityTerrain(terrain, quality);
-    this.qualityCache.set(quality, terrain);
+    validateQualityTerrain(terrain, quality, source);
+    if (source === 'composition') validateCompositionQuality(terrain, quality);
+    this.qualityCache.set(cacheKey, terrain);
     return terrain;
   }
 }
@@ -207,7 +303,12 @@ export function regionAssetPaths(base = '') {
     terrain: withBase(base, 'terrain/kinmen-xiamen-regional.json'),
     terrainB: withBase(base, 'terrain/kinmen-xiamen-regional-quality-b.json'),
     terrainC: withBase(base, 'terrain/kinmen-xiamen-regional-quality-c.json'),
+    compositionTerrainB: withBase(base, REGION_COMPOSITION_QUALITY.B.terrainAsset),
+    compositionTerrainC: withBase(base, REGION_COMPOSITION_QUALITY.C.terrainAsset),
     coastline: withBase(base, 'map-data/regional-coastline.geojson'),
+    compositionCoastline: withBase(base, REGION_COMPOSITION_QUALITY.B.coastlineAsset),
+    compositionClassificationA: withBase(base, 'map-data/regional-composition-classification-a.png'),
+    compositionClassificationB: withBase(base, 'map-data/regional-composition-classification-b.png'),
     classificationA: withBase(base, 'map-data/regional-classification-a.png'),
     classificationB: withBase(base, 'map-data/regional-classification-b.png'),
   };

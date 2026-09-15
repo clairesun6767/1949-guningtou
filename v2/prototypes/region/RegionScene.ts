@@ -8,12 +8,14 @@ import {
   type RegionPerformanceTier,
   type RegionPresetId,
   type RegionTerrainQualityId,
+  type RegionTerrainQualitySource,
   type RegionVariantId,
 } from '../../config/region.js';
 import {
   createRegionDataProvider,
   type RegionDataProvider,
   type RegionDataset,
+  type RegionCompositionDataset,
   type RegionQualityTerrainAsset,
 } from '../../shared/regionDataProvider.js';
 import { createRegionAtmosphere, type RegionAtmosphereHandle } from './RegionAtmosphere.js';
@@ -30,6 +32,8 @@ import {
 } from './RegionTerrain.js';
 
 export type RegionLoadingStage = 'terrain' | 'material' | 'atmosphere' | 'labels' | 'ready';
+const BENCHMARK_CLASSIFICATION_PAYLOAD_BYTES = 31_127 + 14_160;
+const COMPOSITION_CLASSIFICATION_PAYLOAD_BYTES = 38_703 + 15_228;
 
 export const REGION_SCENE_CONTRACT = {
   id: REGION_CONFIG.id,
@@ -50,6 +54,10 @@ export interface RegionSceneOptions {
   onReady: () => void;
   onInteraction: () => void;
   onError: (error: unknown) => void;
+  qualitySource?: RegionTerrainQualitySource;
+  initialQuality?: RegionTerrainQualityId;
+  initialVerticalExaggeration?: number;
+  initialLightingMode?: RegionLightingMode;
 }
 
 export interface RegionDebugState {
@@ -118,7 +126,12 @@ export class RegionScene {
   private terrain: RegionTerrainHandle;
   private readonly data: RegionDataset;
   private readonly provider: RegionDataProvider;
-  private readonly qualityAssets = new Map<Exclude<RegionTerrainQualityId, 'A'>, RegionQualityTerrainAsset>();
+  private readonly qualitySource: RegionTerrainQualitySource;
+  private readonly qualityAssets = new Map<string, RegionQualityTerrainAsset>();
+  private composition?: RegionCompositionDataset;
+  private compositionPromise?: Promise<RegionCompositionDataset>;
+  private coastlinePayloadBytes = 66_868;
+  private classificationPayloadBytes = BENCHMARK_CLASSIFICATION_PAYLOAD_BYTES;
   private classificationTextures: RegionTerrainTextures;
   private ocean?: RegionOceanHandle;
   private atmosphere?: RegionAtmosphereHandle;
@@ -153,13 +166,19 @@ export class RegionScene {
     const fallbackB = createNeutralTexture();
     const scene = new RegionScene(options, provider, data, fallbackA, fallbackB);
     scene.start();
+    const classificationAssets = options.qualitySource === 'composition'
+      ? { classificationA: data.assets.compositionClassificationA, classificationB: data.assets.compositionClassificationB }
+      : { classificationA: data.assets.classificationA, classificationB: data.assets.classificationB };
     const [classificationA, classificationB] = await Promise.all([
-      loadMaskTexture(data.assets.classificationA, fallbackA),
-      loadMaskTexture(data.assets.classificationB, fallbackB),
+      loadMaskTexture(classificationAssets.classificationA, fallbackA),
+      loadMaskTexture(classificationAssets.classificationB, fallbackB),
     ]);
     scene.setClassificationTextures(classificationA, classificationB);
     options.onStage('material');
     scene.attachEnvironment();
+    if (options.initialQuality && options.initialQuality !== 'A') {
+      await scene.setTerrainQuality(options.initialQuality);
+    }
     options.onStage('atmosphere');
     scene.attachLabels();
     options.onStage('labels');
@@ -179,9 +198,15 @@ export class RegionScene {
   ) {
     this.provider = provider;
     this.data = data;
+    this.qualitySource = options.qualitySource ?? 'benchmark';
+    this.classificationPayloadBytes = this.qualitySource === 'composition'
+      ? COMPOSITION_CLASSIFICATION_PAYLOAD_BYTES
+      : BENCHMARK_CLASSIFICATION_PAYLOAD_BYTES;
     this.classificationTextures = { classificationA: fallbackA, classificationB: fallbackB };
     this.variant = options.variant;
     this.labelsVisible = options.labelsVisible;
+    this.verticalExaggeration = options.initialVerticalExaggeration ?? REGION_CONFIG.terrain.verticalExaggeration;
+    this.lightingMode = options.initialLightingMode ?? 'CURRENT';
     this.performance = new RegionPerformanceMonitor(options.tier);
     const settings = tierSettings(options.tier);
     this.camera = new THREE.PerspectiveCamera(REGION_CONFIG.camera.fovDegrees, 1, REGION_CONFIG.camera.near, REGION_CONFIG.camera.far);
@@ -251,7 +276,7 @@ export class RegionScene {
   private readonly tick = (now: number) => {
     if (this.destroyed) return;
     this.cameraController.update(now);
-    this.ocean?.tick(now);
+    this.ocean?.tick(now, this.camera.position);
     this.labels?.update(this.camera, this.labelsVisible && this.debugState.labels);
     this.renderer.render(this.scene, this.camera);
     this.labelRenderer.render(this.scene, this.camera);
@@ -282,6 +307,10 @@ export class RegionScene {
     this.cameraController.reset();
   }
 
+  setReviewRotation(degrees: number) {
+    this.cameraController.setReviewAzimuth(degrees);
+  }
+
   setVariant(variant: RegionVariantId) {
     this.variant = variant;
     this.terrain.setVariant(variant);
@@ -293,18 +322,27 @@ export class RegionScene {
     const request = ++this.qualityRequest;
     if (quality === this.quality) return;
     let nextTerrain: RegionTerrainHandle;
+    let nextCoastline = this.data.coastline;
+    let nextCoastlinePayloadBytes = 66_868;
     if (quality === 'A') {
       nextTerrain = createRegionTerrain(this.data.terrain, this.data.coastline, this.classificationTextures, {
         verticalExaggeration: this.verticalExaggeration,
       });
     } else {
-      let asset = this.qualityAssets.get(quality);
-      if (!asset) {
-        asset = await this.provider.loadQuality(quality);
+      if (this.qualitySource === 'composition') {
+        const composition = await this.loadComposition();
         if (request !== this.qualityRequest || this.destroyed) return;
-        this.qualityAssets.set(quality, asset);
+        nextCoastline = composition.coastline;
+        nextCoastlinePayloadBytes = composition.coastlinePayloadBytes;
       }
-      nextTerrain = createRegionQualityTerrain(asset, this.data.coastline, this.classificationTextures, {
+      const cacheKey = this.qualitySource + ':' + quality;
+      let asset = this.qualityAssets.get(cacheKey);
+      if (!asset) {
+        asset = await this.provider.loadQuality(quality, this.qualitySource);
+        if (request !== this.qualityRequest || this.destroyed) return;
+        this.qualityAssets.set(cacheKey, asset);
+      }
+      nextTerrain = createRegionQualityTerrain(asset, nextCoastline, this.classificationTextures, {
         verticalExaggeration: this.verticalExaggeration,
       });
     }
@@ -326,6 +364,14 @@ export class RegionScene {
     this.scene.add(this.terrain.group);
     this.ocean?.setTerrainQuality(quality);
     this.quality = quality;
+    this.coastlinePayloadBytes = nextCoastlinePayloadBytes;
+  }
+
+  private async loadComposition() {
+    if (this.composition) return this.composition;
+    this.compositionPromise ??= this.provider.loadComposition();
+    this.composition = await this.compositionPromise;
+    return this.composition;
   }
 
   setVerticalExaggeration(verticalExaggeration: number) {
@@ -373,7 +419,7 @@ export class RegionScene {
 
   getStats(): RegionSceneStats {
     const base = this.performance.snapshot(this.renderer, this.camera, this.terrain.textureEstimateBytes);
-    const assetPayloadBytes = this.terrain.assetPayloadBytes + 66_868 + 31_127 + 14_160;
+    const assetPayloadBytes = this.terrain.assetPayloadBytes + this.coastlinePayloadBytes + this.classificationPayloadBytes;
     const gpuEstimateBytes = this.terrain.textureEstimateBytes + this.terrain.vertices * 56 + this.terrain.triangles * 3 * 4;
     return {
       ...base,

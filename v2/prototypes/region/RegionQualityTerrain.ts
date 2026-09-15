@@ -12,9 +12,17 @@ import type { RegionTerrainHandle, RegionTerrainTextures } from './RegionTerrain
 type LonLat = [number, number];
 type QualityId = Exclude<RegionTerrainQualityId, 'A'>;
 
-const COAST_MASK_WIDTH = 2048;
-const COAST_MASK_HEIGHT = 1041;
+const DEFAULT_COAST_MASK_WIDTH = 2048;
+const DEFAULT_COAST_MASK_HEIGHT = 1041;
 const QUALITY_PAYLOAD_BYTES: Record<QualityId, number> = { B: 308_086, C: 1_227_710 };
+const COMPOSITION_PAYLOAD_BYTES: Record<QualityId, number> = { B: 605_462, C: 2_414_211 };
+
+function coastlineMaskSize(asset: RegionQualityTerrainAsset) {
+  return {
+    width: Math.max(1, Math.floor(asset.derivation.coastlineWidth ?? DEFAULT_COAST_MASK_WIDTH)),
+    height: Math.max(1, Math.floor(asset.derivation.coastlineHeight ?? DEFAULT_COAST_MASK_HEIGHT)),
+  };
+}
 
 function polygons(asset: RegionCoastlineAsset): LonLat[][][] {
   const result: LonLat[][][] = [];
@@ -28,10 +36,14 @@ function polygons(asset: RegionCoastlineAsset): LonLat[][][] {
   return result.filter(polygon => polygon.some(ring => ring.length >= 3));
 }
 
-function createCoastMask(coastline: RegionCoastlineAsset, bounds: RegionQualityTerrainAsset['bounds']) {
+function createCoastMask(
+  coastline: RegionCoastlineAsset,
+  bounds: RegionQualityTerrainAsset['bounds'],
+  maskSize: { width: number; height: number },
+) {
   const canvas = document.createElement('canvas');
-  canvas.width = COAST_MASK_WIDTH;
-  canvas.height = COAST_MASK_HEIGHT;
+  canvas.width = maskSize.width;
+  canvas.height = maskSize.height;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Canvas 2D is unavailable for the Gate A.1 coastline mask.');
   context.fillStyle = '#000';
@@ -172,10 +184,11 @@ export function createRegionQualityTerrain(
   options: { verticalExaggeration?: number } = {},
 ): RegionTerrainHandle {
   const quality = asset.quality as QualityId;
-  const baseVerticalExaggeration = REGION_CONFIG.terrain.verticalExaggeration;
+  const isComposition = asset.id.includes('composition');
   let verticalExaggeration = options.verticalExaggeration ?? 1.5;
   let lightingMode: RegionLightingMode = 'RELIEF';
-  const coastMask = createCoastMask(coastline, asset.bounds);
+  const maskSize = coastlineMaskSize(asset);
+  const coastMask = createCoastMask(coastline, asset.bounds, maskSize);
   const built = createGeometry(asset, verticalExaggeration);
   const group = new THREE.Group();
   group.name = `v2-region-terrain-${quality.toLowerCase()}`;
@@ -185,7 +198,7 @@ export function createRegionQualityTerrain(
     coastMask: { value: coastMask },
     textureEnabled: { value: 1 },
     variant: { value: 0 },
-    maxElevation: { value: REGION_CONFIG.terrain.maxElevationWorld * verticalExaggeration / baseVerticalExaggeration },
+    maxElevation: { value: asset.derivation.maxElevationMetres * verticalExaggeration * REGION_CONFIG.worldUnitsPerMetre },
     contourMode: { value: 1 },
     aoEnabled: { value: 1 },
     coastDebug: { value: 0 },
@@ -300,12 +313,12 @@ export function createRegionQualityTerrain(
     wireframe,
     quality,
     grid: `${asset.grid.width}×${asset.grid.height}`,
-    coastlineResolution: `${COAST_MASK_WIDTH}×${COAST_MASK_HEIGHT} alpha mask / ${coastline.features.reduce((count, feature) => count + coordinatePointCount(feature.geometry.coordinates), 0).toLocaleString()} OSM vector points`,
+    coastlineResolution: maskSize.width + '×' + maskSize.height + ' alpha mask / ' + coastline.features.reduce((count, feature) => count + coordinatePointCount(feature.geometry.coordinates), 0).toLocaleString() + ' OSM vector points',
     sourceLabel: asset.source.title,
-    assetPayloadBytes: QUALITY_PAYLOAD_BYTES[quality],
+    assetPayloadBytes: isComposition ? COMPOSITION_PAYLOAD_BYTES[quality] : QUALITY_PAYLOAD_BYTES[quality],
     triangles: built.triangles,
     vertices: built.vertices,
-    textureEstimateBytes: 3 * COAST_MASK_WIDTH * COAST_MASK_HEIGHT * 4,
+    textureEstimateBytes: 3 * maskSize.width * maskSize.height * 4,
     setTextures(nextTextures) {
       uniforms.classificationA.value = nextTextures.classificationA;
       uniforms.classificationB.value = nextTextures.classificationB;
@@ -329,7 +342,7 @@ export function createRegionQualityTerrain(
       position.needsUpdate = true;
       built.geometry.computeVertexNormals();
       built.geometry.computeBoundingSphere();
-      uniforms.maxElevation.value = REGION_CONFIG.terrain.maxElevationWorld * verticalExaggeration / baseVerticalExaggeration;
+      uniforms.maxElevation.value = asset.derivation.maxElevationMetres * verticalExaggeration * REGION_CONFIG.worldUnitsPerMetre;
       if (wireframe.visible) refreshWireframe();
     },
     setLightingMode(mode) {

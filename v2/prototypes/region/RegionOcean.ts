@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import {
-  REGION_CONFIG,
   REGION_VARIANTS,
   type RegionPerformanceTier,
   type RegionTerrainQualityId,
@@ -13,7 +12,7 @@ export interface RegionOceanHandle {
   setVisible(visible: boolean): void;
   setVariant(variant: RegionVariantId): void;
   setTerrainQuality(quality: RegionTerrainQualityId): void;
-  tick(now: number): void;
+  tick(now: number, cameraPosition?: THREE.Vector3): void;
   dispose(): void;
 }
 
@@ -24,67 +23,73 @@ function colorValue(hex: string) {
 export function createRegionOcean(tier: RegionPerformanceTier): RegionOceanHandle {
   const settings = tierSettings(tier);
   const segments = settings.oceanSegments;
-  const geometry = new THREE.PlaneGeometry(160, 112, segments, Math.max(8, Math.round(segments * 0.65)));
+  const geometry = new THREE.SphereGeometry(150, Math.max(24, segments * 2), Math.max(12, segments));
   const uniforms = {
     time: { value: 0 },
     deep: { value: colorValue(REGION_VARIANTS.neutral.oceanDeep) },
     shallow: { value: colorValue(REGION_VARIANTS.neutral.oceanShallow) },
+    skyTop: { value: colorValue(REGION_VARIANTS.neutral.skyTop) },
+    skyBottom: { value: colorValue(REGION_VARIANTS.neutral.skyBottom) },
+    fogColor: { value: colorValue(REGION_VARIANTS.neutral.fog) },
+    sunColor: { value: colorValue(REGION_VARIANTS.neutral.sun) },
     qualityMode: { value: 0 },
     sunDirection: { value: new THREE.Vector3(-0.42, 0.86, 0.28).normalize() },
   };
   const material = new THREE.ShaderMaterial({
     uniforms,
     transparent: false,
-    depthWrite: true,
-    side: THREE.DoubleSide,
+    depthWrite: false,
+    depthTest: false,
+    side: THREE.BackSide,
+    toneMapped: false,
     vertexShader: `
-      uniform float time;
-      uniform vec3 sunDirection;
-      varying vec2 vOceanUv;
-      varying float vWave;
-      varying float vOceanFresnel;
-      varying float vOceanSunResponse;
+      varying vec3 vAtmosphereDirection;
       void main() {
-        vOceanUv = uv;
-        vec3 transformed = position;
-        float wave = sin(position.x * 0.19 + time * 0.00075) * 0.025
-          + cos(position.y * 0.27 - time * 0.00055) * 0.018
-          + sin((position.x + position.y) * 0.08 + time * 0.00035) * 0.012;
-        transformed.z += wave;
-        vWave = wave;
-        vec4 worldPosition = modelMatrix * vec4(transformed, 1.0);
-        vec3 worldNormal = normalize(mat3(modelMatrix) * vec3(0.0, 0.0, 1.0));
-        vec3 viewDirection = normalize(cameraPosition - worldPosition.xyz);
-        vOceanFresnel = pow(1.0 - max(dot(worldNormal, viewDirection), 0.0), 3.0);
-        vOceanSunResponse = pow(max(dot(reflect(-sunDirection, worldNormal), viewDirection), 0.0), 28.0);
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+        vAtmosphereDirection = normalize(position);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
       }
     `,
     fragmentShader: `
+      uniform float time;
       uniform vec3 deep;
       uniform vec3 shallow;
-      uniform float time;
+      uniform vec3 skyTop;
+      uniform vec3 skyBottom;
+      uniform vec3 fogColor;
+      uniform vec3 sunColor;
+      uniform vec3 sunDirection;
       uniform float qualityMode;
-      varying vec2 vOceanUv;
-      varying float vWave;
-      varying float vOceanFresnel;
-      varying float vOceanSunResponse;
+      varying vec3 vAtmosphereDirection;
       void main() {
-        float depth = smoothstep(0.0, 1.0, 1.0 - vOceanUv.y);
-        vec3 base = mix(shallow, deep, depth * 0.83 + 0.08);
-        float bands = sin(vOceanUv.x * 46.0 + time * 0.00045 + vOceanUv.y * 11.0) * 0.5 + 0.5;
-        float glint = pow(max(0.0, bands), 16.0) * 0.07;
-        float variation = sin(vOceanUv.x * 12.0) * cos(vOceanUv.y * 17.0) * 0.018;
-        float qualitySurface = qualityMode * (vOceanFresnel * 0.035 + vOceanSunResponse * 0.045);
-        gl_FragColor = vec4(base + vec3(glint + variation + qualitySurface) + vWave * 0.22, 1.0);
+        vec3 direction = normalize(vAtmosphereDirection);
+        float seaBlend = smoothstep(-0.14, 0.14, direction.y);
+        float seaDepth = smoothstep(-0.96, 0.06, direction.y);
+        vec3 sea = mix(deep, shallow, seaDepth);
+        float skyHeight = smoothstep(-0.03, 0.92, direction.y);
+        vec3 sky = mix(skyBottom, skyTop, pow(skyHeight, 0.78));
+        vec3 color = mix(sea, sky, seaBlend);
+        float horizonHaze = 1.0 - smoothstep(0.02, 0.46, abs(direction.y));
+        color = mix(color, fogColor, horizonHaze * 0.24);
+
+        float lowFrequencyMotion = sin(direction.x * 17.0 + time * 0.00017)
+          * cos(direction.z * 13.0 - time * 0.00013) * 0.014;
+        vec3 seaNormal = vec3(0.0, 1.0, 0.0);
+        vec3 toViewer = normalize(-direction);
+        float fresnel = pow(1.0 - max(dot(seaNormal, toViewer), 0.0), 3.0);
+        float sunResponse = pow(max(dot(reflect(-sunDirection, seaNormal), toViewer), 0.0), 30.0);
+        float sunGlow = pow(max(dot(direction, sunDirection), 0.0), 96.0);
+        float oceanWeight = 1.0 - smoothstep(-0.02, 0.2, direction.y);
+        color += oceanWeight * vec3(lowFrequencyMotion + fresnel * 0.025 + sunResponse * 0.045);
+        color += sunColor * sunGlow * 0.028;
+        color = mix(color, fogColor, horizonHaze * qualityMode * 0.08);
+        gl_FragColor = vec4(color, 1.0);
       }
     `,
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.name = `v2-region-ocean-${tier.toLowerCase()}`;
-  mesh.rotation.x = -Math.PI / 2;
-  mesh.position.y = REGION_CONFIG.terrain.seaLevelWorld;
-  mesh.receiveShadow = true;
+  mesh.name = `v2-region-atmospheric-sea-shell-${tier.toLowerCase()}`;
+  mesh.frustumCulled = false;
+  mesh.renderOrder = -100;
   return {
     mesh,
     setVisible(visible) {
@@ -94,12 +99,17 @@ export function createRegionOcean(tier: RegionPerformanceTier): RegionOceanHandl
       const palette = REGION_VARIANTS[variant];
       uniforms.deep.value.copy(colorValue(palette.oceanDeep));
       uniforms.shallow.value.copy(colorValue(palette.oceanShallow));
+      uniforms.skyTop.value.copy(colorValue(palette.skyTop));
+      uniforms.skyBottom.value.copy(colorValue(palette.skyBottom));
+      uniforms.fogColor.value.copy(colorValue(palette.fog));
+      uniforms.sunColor.value.copy(colorValue(palette.sun));
     },
     setTerrainQuality(quality) {
       uniforms.qualityMode.value = quality === 'A' ? 0 : 1;
     },
-    tick(now) {
+    tick(now, cameraPosition) {
       uniforms.time.value = now;
+      if (cameraPosition) mesh.position.copy(cameraPosition);
     },
     dispose() {
       geometry.dispose();

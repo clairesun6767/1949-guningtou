@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../../.tmp/v2-tests/v2/config/region.js';
+import { REGION_COMPOSITION_BOUNDS, REGION_COMPOSITION_QUALITY, REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../../.tmp/v2-tests/v2/config/region.js';
 import { clampRegionDistance, clampRegionPolarDegrees, clampRegionTarget, getRegionPreset, targetWithinRegionBounds } from '../../.tmp/v2-tests/v2/prototypes/region/RegionCamera.js';
 import { REGION_SCENE_CONTRACT } from '../../.tmp/v2-tests/v2/prototypes/region/RegionScene.js';
 import { HttpRegionDataProvider, regionAssetPaths } from '../../.tmp/v2-tests/v2/shared/regionDataProvider.js';
@@ -36,7 +36,8 @@ test('camera constraints keep Region View inside the visitor field geometry', ()
 test('Region config declares the geographic relationship and three art variants', () => {
   assert.ok(REGION_CONFIG.camera.targetBounds.west < REGION_CONFIG.presets.xiamen.target.longitude);
   assert.ok(REGION_CONFIG.presets.xiamen.target.longitude < REGION_CONFIG.presets.kinmen.target.longitude);
-  assert.equal(REGION_CONFIG.labels.length, 4);
+  assert.ok(REGION_CONFIG.labels.length >= 5);
+  assert.equal(REGION_CONFIG.labels.find(label => label.id === 'dadeng')?.text, 'DADENG');
   assert.deepEqual(Object.keys(REGION_VARIANTS), ['neutral', 'cinematic', 'historical']);
   assert.equal(REGION_CONFIG.referenceEra, 'modern_reference');
 });
@@ -70,6 +71,9 @@ test('RegionDataProvider paths preserve the Astro base path', () => {
   assert.equal(paths.classificationB, '/1949-guningtou/map-data/regional-classification-b.png');
   assert.equal(paths.terrainB, '/1949-guningtou/terrain/kinmen-xiamen-regional-quality-b.json');
   assert.equal(paths.terrainC, '/1949-guningtou/terrain/kinmen-xiamen-regional-quality-c.json');
+  assert.equal(paths.compositionTerrainB, '/1949-guningtou/terrain/kinmen-xiamen-regional-composition-quality-b.json');
+  assert.equal(paths.compositionTerrainC, '/1949-guningtou/terrain/kinmen-xiamen-regional-composition-quality-c.json');
+  assert.equal(paths.compositionCoastline, '/1949-guningtou/map-data/regional-composition-coastline.geojson');
 });
 
 test('basic RegionScene initialization contract is split by stage and module boundary', () => {
@@ -97,12 +101,34 @@ test('B/C assets are native-source sampled grids with complete payloads', () => 
   for (const [quality, item] of Object.entries(expected)) {
     const asset = JSON.parse(readFileSync(item.file, 'utf8'));
     assert.equal(asset.quality, quality);
+    assert.equal(REGION_TERRAIN_QUALITY[quality].grid, item.width + '×' + item.height);
     assert.deepEqual(asset.grid, { width: item.width, height: item.height });
     assert.equal(asset.heights.length, item.width * item.height);
     assert.equal(asset.source.nativeGrid, '3601x3601');
     assert.match(asset.derivation.method, /direct bilinear sampling from the native/);
     assert.match(asset.derivation.method, /not an upsample of the 196x100/);
     assert.equal(asset.derivation.visualVerticalExaggerationAppliedAtRuntime, true);
+  }
+});
+
+test('Gate A.2 composition assets use the selected strategic bounds and every required HGT tile', () => {
+  const expected = {
+    B: { file: 'public/terrain/kinmen-xiamen-regional-composition-quality-b.json', width: 640, height: 368 },
+    C: { file: 'public/terrain/kinmen-xiamen-regional-composition-quality-c.json', width: 1280, height: 736 },
+  };
+  for (const [quality, item] of Object.entries(expected)) {
+    const asset = JSON.parse(readFileSync(item.file, 'utf8'));
+    assert.equal(asset.quality, quality);
+    assert.equal(REGION_COMPOSITION_QUALITY[quality].grid, item.width + '×' + item.height);
+    assert.deepEqual(asset.bounds, REGION_COMPOSITION_BOUNDS);
+    assert.deepEqual(asset.grid, { width: item.width, height: item.height });
+    assert.equal(asset.heights.length, item.width * item.height);
+    assert.deepEqual(asset.source.tiles.map(tile => tile.id), ['N24E117', 'N24E118']);
+    assert.ok(asset.source.tiles.every(tile => /^[a-f0-9]{64}$/i.test(tile.sha256)));
+    assert.ok(asset.source.tiles.every(tile => tile.nativeGrid === '3601x3601'));
+    assert.match(asset.derivation.method, /cross-tile bilinear sampling/);
+    assert.equal(asset.derivation.coastlineWidth, 2048);
+    assert.equal(asset.derivation.coastlineHeight, 1184);
   }
 });
 
@@ -133,6 +159,35 @@ test('quality provider validates B and C lazily and keeps source provenance', as
   }
 });
 
+test('composition provider keeps composition coastline and multi-HGT provenance separate from A.1 benchmark assets', async () => {
+  const compositionB = JSON.parse(readFileSync('public/terrain/kinmen-xiamen-regional-composition-quality-b.json', 'utf8'));
+  const compositionCoastline = JSON.parse(readFileSync('public/map-data/regional-composition-coastline.geojson', 'utf8'));
+  const previousFetch = globalThis.fetch;
+  const requested = [];
+  globalThis.fetch = async url => {
+    const value = String(url);
+    requested.push(value);
+    const payload = value.includes('composition-quality-b')
+      ? compositionB
+      : value.includes('composition-coastline')
+        ? compositionCoastline
+        : compositionB;
+    return new Response(JSON.stringify(payload), { status: 200, headers: { 'content-type': 'application/json' } });
+  };
+  try {
+    const provider = new HttpRegionDataProvider('/1949-guningtou/');
+    const terrain = await provider.loadQuality('B', 'composition');
+    const composition = await provider.loadComposition();
+    assert.deepEqual(terrain.bounds, REGION_COMPOSITION_BOUNDS);
+    assert.equal(composition.coastline.features.length, 33);
+    assert.equal(composition.coastlinePayloadBytes, 110_412);
+    assert.ok(requested.some(value => value.endsWith('kinmen-xiamen-regional-composition-quality-b.json')));
+    assert.ok(requested.some(value => value.endsWith('regional-composition-coastline.geojson')));
+  } finally {
+    globalThis.fetch = previousFetch;
+  }
+});
+
 test('quality grids preserve fixed geographic bounds for camera consistency', () => {
   const baseline = JSON.parse(readFileSync('public/terrain/kinmen-xiamen-regional.json', 'utf8'));
   for (const file of ['public/terrain/kinmen-xiamen-regional-quality-b.json', 'public/terrain/kinmen-xiamen-regional-quality-c.json']) {
@@ -158,6 +213,15 @@ test('coastline validation keeps the independent OSM vector source inside the re
   )));
 });
 
+test('A.2 coastline coverage records the expanded OSM bounds and mainland crop feature', () => {
+  const coastline = JSON.parse(readFileSync('public/map-data/regional-composition-coastline.geojson', 'utf8'));
+  assert.equal(coastline.features.length, 33);
+  assert.deepEqual(coastline.metadata.bounds, [117.84, 24.28, 118.6, 24.72]);
+  assert.equal(coastline.metadata.source.license, 'Open Database License (ODbL) 1.0');
+  assert.equal(coastline.metadata.source.acquired, '2026-09-15');
+  assert.ok(coastline.features.some(feature => feature.properties.category === 'mainland-crop'));
+});
+
 test('quality switching disposes the replaced terrain and retains one camera/listener lifecycle', () => {
   const sceneSource = readFileSync('v2/prototypes/region/RegionScene.ts', 'utf8');
   assert.match(sceneSource, /this\.scene\.remove\(previous\.group\)/);
@@ -176,7 +240,21 @@ test('vertical exaggeration remains a render-time transform and ocean quality re
   assert.match(terrainSource, /setVerticalExaggeration\(/);
   assert.match(qualityTerrainSource, /setVerticalExaggeration\(nextVerticalExaggeration\)/);
   assert.match(qualityTerrainSource, /visualVerticalExaggerationAppliedAtRuntime|verticalExaggeration/);
-  assert.match(oceanSource, /vOceanFresnel/);
-  assert.match(oceanSource, /vOceanSunResponse/);
+  assert.doesNotMatch(oceanSource, /PlaneGeometry/);
+  assert.match(oceanSource, /SphereGeometry/);
+  assert.match(oceanSource, /atmospheric-sea-shell/);
+  assert.match(oceanSource, /depthWrite: false/);
+  assert.match(oceanSource, /lowFrequencyMotion/);
+  assert.match(oceanSource, /sunResponse/);
   assert.match(oceanSource, /quality === 'A' \? 0 : 1/);
+});
+
+test('Multi-HGT builder derives required tiles and cross-tile bilinear samples without clamping the requested bounds', () => {
+  const builderSource = readFileSync('scripts/build-region-quality-terrain-assets.mjs', 'utf8');
+  assert.match(builderSource, /Math\.floor\(bounds\.south\)/);
+  assert.match(builderSource, /Math\.floor\(bounds\.west\)/);
+  assert.match(builderSource, /bilinearHgt/);
+  assert.match(builderSource, /sourceTiles/);
+  assert.match(builderSource, /sha256/);
+  assert.match(builderSource, /cross-tile bilinear sampling/);
 });

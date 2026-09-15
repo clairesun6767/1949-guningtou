@@ -3,13 +3,24 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
-const ACQUISITION_DATE = '2026-08-23';
-const OVERPASS_ENDPOINT = 'https://overpass-api.de/api/interpreter';
+const ACQUISITION_DATE = process.env.REGION_CARTOGRAPHY_ACQUIRED_AT || '2026-08-23';
+const OVERPASS_ENDPOINT = process.env.REGION_OVERPASS_ENDPOINT || 'https://overpass-api.de/api/interpreter';
 const OUTPUT_DIR = new URL('../public/map-data/', import.meta.url);
 const CACHE_DIR = join(tmpdir(), 'battlefield-os-cartography-v05');
 
-const REGIONAL = { name: 'regional', south: 24.30, west: 117.95, north: 24.70, east: 118.60 };
+function parseRegionalBounds() {
+  const value = process.env.REGION_REGIONAL_BOUNDS;
+  if (!value) return { name: 'regional', south: 24.30, west: 117.95, north: 24.70, east: 118.60 };
+  const parts = value.split(',').map(Number);
+  if (parts.length !== 4 || parts.some(item => !Number.isFinite(item))) throw new Error('REGION_REGIONAL_BOUNDS must be west,south,east,north.');
+  const [west, south, east, north] = parts;
+  if (west >= east || south >= north) throw new Error('REGION_REGIONAL_BOUNDS is invalid.');
+  return { name: 'regional', south, west, north, east };
+}
+
+const REGIONAL = parseRegionalBounds();
 const LOCAL = { name: 'guningtou', south: 24.44, west: 118.285, north: 24.50, east: 118.37 };
+const REGIONAL_OUTPUT_PREFIX = process.env.REGION_REGIONAL_OUTPUT_PREFIX || 'regional';
 
 const SOURCE = {
   name: 'OpenStreetMap contributors',
@@ -38,7 +49,8 @@ ${bounds.name === 'guningtou' ? `way["building"]${box};` : ''}
 
 async function fetchWithCache(bounds, refresh) {
   await mkdir(CACHE_DIR, { recursive: true });
-  const cachePath = join(CACHE_DIR, `${bounds.name}-${ACQUISITION_DATE}.json`);
+  const cacheKey = [bounds.name, bounds.west, bounds.south, bounds.east, bounds.north, ACQUISITION_DATE].join('-').replaceAll('.', '_');
+  const cachePath = join(CACHE_DIR, `${cacheKey}.json`);
   if (!refresh) {
     try {
       return JSON.parse(await readFile(cachePath, 'utf8'));
@@ -218,6 +230,65 @@ function featureProperties(element, layer, category) {
   };
 }
 
+function signedRingArea(ring) {
+  let area = 0;
+  for (let index = 0; index < ring.length - 1; index += 1) {
+    area += ring[index][0] * ring[index + 1][1] - ring[index + 1][0] * ring[index][1];
+  }
+  return area / 2;
+}
+
+function boundaryPosition(point, bounds) {
+  const epsilon = 0.00001;
+  const width = bounds.east - bounds.west;
+  const height = bounds.north - bounds.south;
+  if (Math.abs(point[1] - bounds.south) <= epsilon) return Math.max(0, Math.min(width, point[0] - bounds.west));
+  if (Math.abs(point[0] - bounds.east) <= epsilon) return width + Math.max(0, Math.min(height, point[1] - bounds.south));
+  if (Math.abs(point[1] - bounds.north) <= epsilon) return width + height + Math.max(0, Math.min(width, bounds.east - point[0]));
+  if (Math.abs(point[0] - bounds.west) <= epsilon) return width + height + width + Math.max(0, Math.min(height, bounds.north - point[1]));
+  return null;
+}
+
+function boundaryPoint(distance, bounds) {
+  const width = bounds.east - bounds.west;
+  const height = bounds.north - bounds.south;
+  const perimeter = 2 * (width + height);
+  const value = ((distance % perimeter) + perimeter) % perimeter;
+  if (value <= width) return [bounds.west + value, bounds.south];
+  if (value <= width + height) return [bounds.east, bounds.south + value - width];
+  if (value <= 2 * width + height) return [bounds.east - value + width + height, bounds.north];
+  return [bounds.west, bounds.north - value + 2 * width + height];
+}
+
+function boundaryRoute(from, to, bounds, direction) {
+  const fromPosition = boundaryPosition(from, bounds);
+  const toPosition = boundaryPosition(to, bounds);
+  if (fromPosition === null || toPosition === null) return [];
+  const perimeter = 2 * ((bounds.east - bounds.west) + (bounds.north - bounds.south));
+  let target = toPosition;
+  if (direction > 0 && target <= fromPosition) target += perimeter;
+  if (direction < 0 && target >= fromPosition) target -= perimeter;
+  const cornerPositions = [0, bounds.east - bounds.west, (bounds.east - bounds.west) + (bounds.north - bounds.south), 2 * (bounds.east - bounds.west) + (bounds.north - bounds.south)];
+  const points = [from];
+  for (let turn = -2; turn <= 2; turn += 1) {
+    for (const corner of cornerPositions) {
+      const candidate = corner + turn * perimeter;
+      if (direction > 0 && candidate > fromPosition && candidate < target) points.push(boundaryPoint(candidate, bounds));
+      if (direction < 0 && candidate < fromPosition && candidate > target) points.push(boundaryPoint(candidate, bounds));
+    }
+  }
+  points.push(to);
+  return points;
+}
+
+function closeOpenCoastline(chain, bounds) {
+  const start = chain[0];
+  const end = chain.at(-1);
+  const clockwise = [...chain, ...boundaryRoute(end, start, bounds, 1).slice(1)];
+  const counterClockwise = [...chain, ...boundaryRoute(end, start, bounds, -1).slice(1)];
+  return signedRingArea(clockwise) >= 0 ? clockwise : counterClockwise;
+}
+
 function buildCoastline(elements, bounds) {
   const coastLines = elements
     .filter(element => element.type === 'way' && element.tags?.natural === 'coastline' && element.geometry)
@@ -236,6 +307,23 @@ function buildCoastline(elements, bounds) {
         properties: { id: `osm-coast-${features.length + 1}`, layer: 'coastline', category: 'land', referenceEra: 'modern_reference', source: SOURCE.name, license: 'ODbL-1.0' },
         geometry: { type: 'Polygon', coordinates: [simplified] },
       });
+    }
+    if (process.env.REGION_INCLUDE_OPEN_COASTLINE === '1') {
+      const openChains = stitch(coastLines)
+        .filter(chain => !samePoint(chain[0], chain.at(-1)))
+        .flatMap(chain => clipLine(chain, bounds))
+        .filter(chain => chain.length > 2 && boundaryPosition(chain[0], bounds) !== null && boundaryPosition(chain.at(-1), bounds) !== null);
+      for (const chain of openChains) {
+        const ring = closeOpenCoastline(chain, bounds);
+        if (ring.length < 4 || Math.abs(signedRingArea(ring)) < 0.000003) continue;
+        const simplified = simplify(ring.slice(0, -1), tolerance);
+        simplified.push(simplified[0]);
+        features.push({
+          type: 'Feature',
+          properties: { id: 'osm-coast-open-' + (features.length + 1), layer: 'coastline', category: 'mainland-crop', referenceEra: 'modern_reference', source: SOURCE.name, license: 'ODbL-1.0' },
+          geometry: { type: 'Polygon', coordinates: [simplified] },
+        });
+      }
     }
   } else {
     const clippedChains = stitch(coastLines.flatMap(line => clipLine(line, bounds)))
@@ -334,9 +422,9 @@ async function main() {
     fetchWithCache(LOCAL, refresh),
   ]);
   const results = [];
-  results.push(await writeAsset('regional-coastline.geojson', buildCoastline(regional.elements, REGIONAL)));
+  results.push(await writeAsset(`${REGIONAL_OUTPUT_PREFIX}-coastline.geojson`, buildCoastline(regional.elements, REGIONAL)));
   results.push(await writeAsset('guningtou-coastline.geojson', buildCoastline(local.elements, LOCAL)));
-  results.push(await writeAsset('regional-cartography.geojson', buildCartography(regional.elements, REGIONAL)));
+  results.push(await writeAsset(`${REGIONAL_OUTPUT_PREFIX}-cartography.geojson`, buildCartography(regional.elements, REGIONAL)));
   results.push(await writeAsset('guningtou-cartography.geojson', buildCartography(local.elements, LOCAL)));
   for (const result of results) {
     console.log(`${result.name}: ${result.features} features, ${result.raw.toLocaleString()} B raw, ${result.gzip.toLocaleString()} B gzip`);

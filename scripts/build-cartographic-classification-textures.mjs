@@ -78,12 +78,11 @@ function paintCategory(pixels, features, bounds, width, height, channel) {
   }
 }
 
-function build(scope, terrainName, cartographyName) {
+function build(scope, terrainName, cartographyName, width = 2048, heightOverride) {
   const terrain = JSON.parse(fs.readFileSync(path.join(root, 'public', 'terrain', terrainName), 'utf8'));
   const cartography = JSON.parse(fs.readFileSync(path.join(outputDirectory, cartographyName), 'utf8'));
-  const width = 2048;
   const aspect = (terrain.bounds.north - terrain.bounds.south) / (terrain.bounds.east - terrain.bounds.west);
-  const height = Math.max(1024, Math.round(width * aspect));
+  const height = heightOverride ?? Math.max(1024, Math.round(width * aspect));
   const maskA = Buffer.alloc(width * height * 4);
   const maskB = Buffer.alloc(width * height * 4);
   for (let index = 3; index < maskA.length; index += 4) {
@@ -112,4 +111,9 @@ const outputs = [
   build('regional', 'kinmen-xiamen-regional.json', 'regional-cartography.geojson'),
   build('guningtou', 'guningtou-local.json', 'guningtou-cartography.geojson'),
 ];
+const compositionTerrain = 'kinmen-xiamen-regional-composition-quality-b.json';
+const compositionCartography = 'regional-composition-cartography.geojson';
+if (fs.existsSync(path.join(root, 'public', 'terrain', compositionTerrain)) && fs.existsSync(path.join(outputDirectory, compositionCartography))) {
+  outputs.push(build('regional-composition', compositionTerrain, compositionCartography, 2048, 1184));
+}
 console.log(JSON.stringify({ status: 'ok', outputs }, null, 2));

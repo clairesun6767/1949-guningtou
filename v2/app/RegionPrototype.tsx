@@ -8,6 +8,7 @@ import type {
   RegionVariantId,
 } from '../config/region.js';
 import { REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../config/region.js';
+import { REGION_COMPOSITION_QUALITY } from '../config/region.js';
 import { RegionScene, type RegionDebugState, type RegionLoadingStage, type RegionSceneStats } from '../prototypes/region/RegionScene.js';
 import { chooseRegionTier } from '../prototypes/region/RegionPerformance.js';
 
@@ -19,7 +20,7 @@ const STAGE_COPY: Record<AppStage, { label: string; detail: string; progress: nu
   material: { label: 'TERRAIN MATERIAL', detail: 'Applying cartographic classification masks', progress: 58 },
   atmosphere: { label: 'OCEAN / ATMOSPHERE', detail: 'Bringing the Strait into relief', progress: 78 },
   labels: { label: 'GEOGRAPHIC LABELS', detail: 'Balancing scale-aware place names', progress: 92 },
-  ready: { label: 'GATE A READY', detail: 'Cinematic Strategic Terrain', progress: 100 },
+  ready: { label: 'GATE A.2 READY', detail: 'Regional Composition / Infinite Ocean', progress: 100 },
 };
 
 const DEFAULT_DEBUG: RegionDebugState = {
@@ -61,6 +62,8 @@ function deviceProfile() {
 }
 
 export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Props) {
+  const benchmarkMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('benchmark');
+  const compositionMode = !benchmarkMode;
   const [profile, setProfile] = useState({ mobile: false, reducedMotion: false, tier: 'HIGH' as RegionPerformanceTier });
   const [profileReady, setProfileReady] = useState(false);
   const sceneMountRef = useRef<HTMLDivElement>(null);
@@ -71,9 +74,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   const [error, setError] = useState<string | null>(null);
   const [preset, setPreset] = useState<RegionPresetId>('hero');
   const [variant, setVariant] = useState<RegionVariantId>('neutral');
-  const [terrainQuality, setTerrainQuality] = useState<RegionTerrainQualityId>('A');
-  const [verticalExaggeration, setVerticalExaggeration] = useState<number>(REGION_CONFIG.terrain.verticalExaggeration);
-  const [lightingMode, setLightingMode] = useState<RegionLightingMode>('CURRENT');
+  const [terrainQuality, setTerrainQuality] = useState<RegionTerrainQualityId>('B');
+  const [verticalExaggeration, setVerticalExaggeration] = useState<number>(1.5);
+  const [lightingMode, setLightingMode] = useState<RegionLightingMode>('RELIEF');
   const [contourMode, setContourMode] = useState<RegionContourMode>('SUBTLE');
   const [aoEnabled, setAoEnabled] = useState(true);
   const [coastDebug, setCoastDebug] = useState(false);
@@ -93,6 +96,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     const params = new URLSearchParams(window.location.search);
     const shot = params.get('shot');
     const benchmark = params.get('benchmark');
+    const composition = params.get('composition');
     const requestedPreset = params.get('camera');
     const requestedVariant = params.get('variant');
     const requestedQuality = params.get('quality')?.toUpperCase();
@@ -116,9 +120,17 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
       'c-kinmen': { preset: 'kinmen', variant: 'cinematic', quality: 'C', vertical: 1.5, lighting: 'RELIEF' },
       'c-guningtou': { preset: 'guningtou', variant: 'historical', quality: 'C', vertical: 1.5, lighting: 'RELIEF' },
     };
+    const compositionConfigs: Record<string, ReviewConfiguration> = {
+      'a2-wide': { preset: 'hero', variant: 'neutral', quality: 'B', vertical: 1.5, lighting: 'RELIEF' },
+      'a2-xiamen': { preset: 'xiamen', variant: 'neutral', quality: 'B', vertical: 1.5, lighting: 'RELIEF' },
+      'a2-kinmen': { preset: 'kinmen', variant: 'neutral', quality: 'B', vertical: 1.5, lighting: 'RELIEF' },
+      'a2-guningtou': { preset: 'guningtou', variant: 'historical', quality: 'B', vertical: 1.5, lighting: 'RELIEF' },
+      'a2-rotated-wide': { preset: 'hero', variant: 'neutral', quality: 'B', vertical: 1.5, lighting: 'RELIEF' },
+    };
     const shotConfig = shot ? shotConfigs[shot] : undefined;
     const benchmarkConfig = benchmark ? benchmarkConfigs[benchmark] : undefined;
-    const queryConfig = benchmarkConfig ?? shotConfig;
+    const compositionConfig = composition ? compositionConfigs[composition] : undefined;
+    const queryConfig = benchmarkConfig ?? compositionConfig ?? shotConfig;
     if (queryConfig || params.get('debug') === 'closed') setDebugOpen(false);
     if (params.get('debug') === 'open') setDebugOpen(true);
     const presetIds: RegionPresetId[] = ['hero', 'xiamen', 'kinmen', 'guningtou'];
@@ -146,6 +158,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     }
     if (nextQuality) void chooseTerrainQuality(nextQuality, nextVertical ?? undefined, nextLighting ?? undefined);
     else if (nextVertical) chooseVertical(nextVertical);
+    if (composition === 'a2-rotated-wide') {
+      window.setTimeout(() => sceneRef.current?.setReviewRotation(58), 1_250);
+    }
     return undefined;
   }, [status]);
 
@@ -167,6 +182,10 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           tier: profile.tier,
           variant,
           labelsVisible: true,
+          qualitySource: benchmarkMode ? 'benchmark' : 'composition',
+          initialQuality: benchmarkMode ? 'A' : 'B',
+          initialVerticalExaggeration: benchmarkMode ? REGION_CONFIG.terrain.verticalExaggeration : 1.5,
+          initialLightingMode: benchmarkMode ? 'CURRENT' : 'RELIEF',
           onStage: nextStage => {
             if (!disposed) setStage(nextStage);
           },
@@ -298,6 +317,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   const statsText = stats
     ? `${Math.round(stats.fps || 0)} FPS · ${stats.calls} CALLS · ${stats.triangles.toLocaleString()} TRI`
     : 'MEASURING RENDER';
+  const qualityConfig = terrainQuality === 'A' || !compositionMode ? REGION_TERRAIN_QUALITY[terrainQuality] : REGION_COMPOSITION_QUALITY[terrainQuality];
 
   return (
     <div className="region-app">
@@ -312,7 +332,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           <i />
           <span>REGION</span>
           <i />
-          <strong>GATE A.1</strong>
+          <strong>GATE A.2</strong>
         </div>
         <div className="region-topbar__status">
           <span className={`region-status-dot region-status-dot--${status}`} />
@@ -400,10 +420,10 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           <div className="region-debug__title"><strong>DEV / ART REVIEW</strong><button type="button" onClick={() => setDebugOpen(false)}>×</button></div>
           <div className="region-debug__readout"><span>{statsText}</span><span>{profile.tier} TIER · {terrainQuality} / {verticalExaggeration.toFixed(2)}×</span></div>
           <div className="region-debug__section">
-            <div className="region-debug__section-label"><span>TERRAIN QUALITY</span><small>{REGION_TERRAIN_QUALITY[terrainQuality].description}</small></div>
+            <div className="region-debug__section-label"><span>TERRAIN QUALITY</span><small>{qualityConfig.description}</small></div>
             <div className="region-debug__choices">
               {QUALITY_OPTIONS.map(id => (
-                <button type="button" className={terrainQuality === id ? 'is-selected' : ''} onClick={() => void chooseTerrainQuality(id)} key={id}>{id}<small>{REGION_TERRAIN_QUALITY[id].grid}</small></button>
+                <button type="button" className={terrainQuality === id ? 'is-selected' : ''} onClick={() => void chooseTerrainQuality(id)} key={id}>{id}<small>{id === 'A' || !compositionMode ? REGION_TERRAIN_QUALITY[id].grid : REGION_COMPOSITION_QUALITY[id].grid}</small></button>
               ))}
             </div>
           </div>
@@ -439,7 +459,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
       )}
       {import.meta.env.DEV && !debugOpen && <button type="button" className="region-debug-reopen" onClick={() => setDebugOpen(true)}>QA</button>}
 
-      <footer className="region-footer"><span>GATE A.1 / TERRAIN QUALITY BENCHMARK</span><span>NO BATTLEFIELD DATA LOADED</span><span>1949 — 2.0 PROTOTYPE</span></footer>
+      <footer className="region-footer"><span>GATE A.2 / REGIONAL COMPOSITION</span><span>NO BATTLEFIELD DATA LOADED</span><span>1949 — 2.0 PROTOTYPE</span></footer>
     </div>
   );
 }

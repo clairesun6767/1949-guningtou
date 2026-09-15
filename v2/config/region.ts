@@ -2,6 +2,7 @@ export type RegionPresetId = 'hero' | 'xiamen' | 'kinmen' | 'guningtou';
 export type RegionPerformanceTier = 'HIGH' | 'MEDIUM' | 'LOW';
 export type RegionVariantId = 'neutral' | 'cinematic' | 'historical';
 export type RegionTerrainQualityId = 'A' | 'B' | 'C';
+export type RegionTerrainQualitySource = 'benchmark' | 'composition';
 export type RegionLightingMode = 'CURRENT' | 'RELIEF';
 export type RegionContourMode = 'OFF' | 'SUBTLE' | 'STRONG';
 
@@ -34,6 +35,13 @@ export interface RegionPerformanceSettings {
   fogDensity: number;
 }
 
+export const REGION_COMPOSITION_BOUNDS = {
+  west: 117.84,
+  south: 24.28,
+  east: 118.60,
+  north: 24.72,
+} satisfies GeographicBounds;
+
 export const REGION_CONFIG = {
   id: 'gate-a-kinmen-xiamen-strategic-terrain',
   coordinateSystem: 'EPSG:4326' as const,
@@ -56,18 +64,18 @@ export const REGION_CONFIG = {
     minPolarDegrees: 28,
     maxPolarDegrees: 76,
     targetBounds: {
-      west: 117.99,
-      south: 24.35,
-      east: 118.53,
-      north: 24.63,
+      west: 117.86,
+      south: 24.29,
+      east: 118.58,
+      north: 24.71,
     } satisfies GeographicBounds,
   },
   presets: {
     hero: {
       label: 'STRATEGIC WIDE',
       shortLabel: 'WIDE',
-      target: { longitude: 118.245, latitude: 24.49 },
-      distance: 50,
+      target: { longitude: 118.21, latitude: 24.49 },
+      distance: 56,
       azimuthDegrees: 322,
       polarDegrees: 48,
     },
@@ -101,6 +109,7 @@ export const REGION_CONFIG = {
     { id: 'kinmen', text: 'KINMEN', chinese: '金門', point: { longitude: 118.35, latitude: 24.45 }, kind: 'major', minDistance: 13.5, maxDistance: 66, offset: 'east' },
     { id: 'lieyu', text: 'LIEYU', chinese: '烈嶼', point: { longitude: 118.24, latitude: 24.425 }, kind: 'minor', minDistance: 8, maxDistance: 35, offset: 'south' },
     { id: 'guningtou', text: 'GUNINGTOU', chinese: '古寧頭', point: { longitude: 118.318, latitude: 24.478 }, kind: 'focus', minDistance: 7, maxDistance: 28, offset: 'north' },
+    { id: 'dadeng', text: 'DADENG', chinese: '大嶝', point: { longitude: 118.335, latitude: 24.549 }, kind: 'minor', minDistance: 15, maxDistance: 42, offset: 'north' },
   ] as const,
   performance: {
     high: { maxPixelRatio: 1.55, antialias: true, shadows: true, oceanSegments: 32, fogDensity: 0.0065 },
@@ -136,6 +145,35 @@ export const REGION_TERRAIN_QUALITY: Record<RegionTerrainQualityId, {
     grid: '1024×512',
     terrainAsset: 'terrain/kinmen-xiamen-regional-quality-c.json',
     coastlineResolution: '2048×1041 alpha mask / OSM vector',
+  },
+};
+
+export const REGION_COMPOSITION_QUALITY: Record<Exclude<RegionTerrainQualityId, 'A'>, {
+  label: string;
+  description: string;
+  grid: string;
+  terrainAsset: string;
+  coastlineAsset: string;
+  coastlineResolution: string;
+  bounds: GeographicBounds;
+}> = {
+  B: {
+    label: 'B / BALANCED / A.2',
+    description: 'Strategic composition balanced target',
+    grid: '640×368',
+    terrainAsset: 'terrain/kinmen-xiamen-regional-composition-quality-b.json',
+    coastlineAsset: 'map-data/regional-composition-coastline.geojson',
+    coastlineResolution: '2048×1184 alpha mask / OSM vector + mainland crop',
+    bounds: REGION_COMPOSITION_BOUNDS,
+  },
+  C: {
+    label: 'C / QUALITY / A.2',
+    description: 'Strategic composition quality target',
+    grid: '1280×736',
+    terrainAsset: 'terrain/kinmen-xiamen-regional-composition-quality-c.json',
+    coastlineAsset: 'map-data/regional-composition-coastline.geojson',
+    coastlineResolution: '2048×1184 alpha mask / OSM vector + mainland crop',
+    bounds: REGION_COMPOSITION_BOUNDS,
   },
 };
 
