@@ -1,0 +1,292 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+import {
+  REGION_CONFIG,
+  type RegionPerformanceTier,
+  type RegionPresetId,
+  type RegionVariantId,
+} from '../../config/region.js';
+import { createRegionDataProvider, type RegionDataset } from '../../shared/regionDataProvider.js';
+import { createRegionAtmosphere, type RegionAtmosphereHandle } from './RegionAtmosphere.js';
+import { RegionCamera, type RegionCameraConstraintSnapshot } from './RegionCamera.js';
+import { createRegionLabels, type RegionLabelsHandle } from './RegionLabels.js';
+import { createRegionOcean, type RegionOceanHandle } from './RegionOcean.js';
+import { RegionPerformanceMonitor, type RegionRenderStats, tierSettings } from './RegionPerformance.js';
+import { createRegionTerrain, sampleRegionTerrainHeight, type RegionTerrainHandle } from './RegionTerrain.js';
+
+export type RegionLoadingStage = 'terrain' | 'material' | 'atmosphere' | 'labels' | 'ready';
+
+export const REGION_SCENE_CONTRACT = {
+  id: REGION_CONFIG.id,
+  stages: ['terrain', 'material', 'atmosphere', 'labels', 'ready'] as const,
+  requiredModules: ['RegionTerrain', 'RegionOcean', 'RegionAtmosphere', 'RegionCamera', 'RegionLabels', 'RegionControls', 'RegionPerformance', 'RegionDataProvider'] as const,
+};
+
+export interface RegionSceneOptions {
+  container: HTMLElement;
+  labelContainer: HTMLElement;
+  base: string;
+  mobile: boolean;
+  reducedMotion: boolean;
+  tier: RegionPerformanceTier;
+  variant: RegionVariantId;
+  labelsVisible: boolean;
+  onStage: (stage: RegionLoadingStage) => void;
+  onReady: () => void;
+  onInteraction: () => void;
+  onError: (error: unknown) => void;
+}
+
+export interface RegionDebugState {
+  wireframe: boolean;
+  texture: boolean;
+  ocean: boolean;
+  fog: boolean;
+  shadow: boolean;
+  postProcessing: boolean;
+  labels: boolean;
+}
+
+export interface RegionSceneStats extends RegionRenderStats {
+  stage: RegionLoadingStage;
+  regionVertices: number;
+  regionTriangles: number;
+  regionGrid: string;
+  assetPayloadBytes: number;
+  cameraConstraints: RegionCameraConstraintSnapshot;
+  variant: RegionVariantId;
+}
+
+function createNeutralTexture() {
+  const data = new Uint8Array([128, 128, 128, 255]);
+  const texture = new THREE.DataTexture(data, 1, 1, THREE.RGBAFormat);
+  texture.colorSpace = THREE.NoColorSpace;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+async function loadMaskTexture(url: string, fallback: THREE.Texture) {
+  try {
+    const texture = await new THREE.TextureLoader().loadAsync(url);
+    texture.colorSpace = THREE.NoColorSpace;
+    texture.flipY = true;
+    texture.wrapS = THREE.ClampToEdgeWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.generateMipmaps = false;
+    texture.needsUpdate = true;
+    return texture;
+  } catch (error) {
+    console.warn('Gate A classification texture fallback:', error);
+    return fallback;
+  }
+}
+
+export class RegionScene {
+  private readonly scene = new THREE.Scene();
+  private readonly camera: THREE.PerspectiveCamera;
+  private readonly renderer: THREE.WebGLRenderer;
+  private readonly labelRenderer = new CSS2DRenderer();
+  private readonly controls: OrbitControls;
+  private readonly cameraController: RegionCamera;
+  private readonly performance: RegionPerformanceMonitor;
+  private readonly terrain: RegionTerrainHandle;
+  private readonly data: RegionDataset;
+  private ocean?: RegionOceanHandle;
+  private atmosphere?: RegionAtmosphereHandle;
+  private labels?: RegionLabelsHandle;
+  private animationFrame = 0;
+  private destroyed = false;
+  private stage: RegionLoadingStage = 'terrain';
+  private variant: RegionVariantId;
+  private labelsVisible: boolean;
+  private debugState: RegionDebugState = {
+    wireframe: false,
+    texture: true,
+    ocean: true,
+    fog: true,
+    shadow: true,
+    postProcessing: true,
+    labels: true,
+  };
+
+  static async create(options: RegionSceneOptions) {
+    const provider = createRegionDataProvider(options.base);
+    const data = await provider.load();
+    options.onStage('terrain');
+    const fallbackA = createNeutralTexture();
+    const fallbackB = createNeutralTexture();
+    const scene = new RegionScene(options, data, fallbackA, fallbackB);
+    scene.start();
+    const [classificationA, classificationB] = await Promise.all([
+      loadMaskTexture(data.assets.classificationA, fallbackA),
+      loadMaskTexture(data.assets.classificationB, fallbackB),
+    ]);
+    scene.setClassificationTextures(classificationA, classificationB);
+    options.onStage('material');
+    scene.attachEnvironment();
+    options.onStage('atmosphere');
+    scene.attachLabels();
+    options.onStage('labels');
+    scene.stage = 'ready';
+    scene.performance.markGateReady();
+    options.onStage('ready');
+    options.onReady();
+    return scene;
+  }
+
+  private constructor(
+    private readonly options: RegionSceneOptions,
+    data: RegionDataset,
+    fallbackA: THREE.Texture,
+    fallbackB: THREE.Texture,
+  ) {
+    this.data = data;
+    this.variant = options.variant;
+    this.labelsVisible = options.labelsVisible;
+    this.performance = new RegionPerformanceMonitor(options.tier);
+    const settings = tierSettings(options.tier);
+    this.camera = new THREE.PerspectiveCamera(REGION_CONFIG.camera.fovDegrees, 1, REGION_CONFIG.camera.near, REGION_CONFIG.camera.far);
+    this.camera.position.set(0, 25, 24);
+    this.camera.userData.regionTarget = new THREE.Vector3(0, 0, 0);
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: settings.antialias,
+      alpha: false,
+      powerPreference: options.mobile ? 'default' : 'high-performance',
+      preserveDrawingBuffer: import.meta.env.DEV,
+    });
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, settings.maxPixelRatio));
+    this.renderer.shadowMap.enabled = settings.shadows;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.domElement.className = 'region-scene__canvas';
+    this.renderer.domElement.setAttribute('aria-label', 'Three.js Cinematic Strategic Terrain');
+    this.renderer.domElement.dataset.controls = 'drag-rotate middle-drag-pan wheel-zoom pinch-zoom';
+    options.container.appendChild(this.renderer.domElement);
+
+    this.labelRenderer.domElement.className = 'region-scene__label-canvas';
+    options.labelContainer.appendChild(this.labelRenderer.domElement);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.cameraController = new RegionCamera(this.camera, this.controls, {
+      mobile: options.mobile,
+      reducedMotion: options.reducedMotion,
+      tier: options.tier,
+    });
+    this.terrain = createRegionTerrain(data.terrain, data.coastline, { classificationA: fallbackA, classificationB: fallbackB });
+    this.scene.add(this.terrain.group);
+    this.cameraController.reset();
+    this.controls.addEventListener('start', options.onInteraction);
+    this.renderer.domElement.addEventListener('webglcontextlost', this.handleContextLost);
+  }
+
+  private setClassificationTextures(classificationA: THREE.Texture, classificationB: THREE.Texture) {
+    this.terrain.setTextures({ classificationA, classificationB });
+  }
+
+  private attachEnvironment() {
+    this.ocean = createRegionOcean(this.options.tier);
+    this.atmosphere = createRegionAtmosphere(this.scene, this.renderer, this.options.tier, this.variant);
+    this.scene.add(this.ocean.mesh);
+    this.ocean.setVariant(this.variant);
+    this.terrain.setVariant(this.variant);
+  }
+
+  private attachLabels() {
+    this.labels = createRegionLabels(this.labelRenderer, (longitude, latitude) => sampleRegionTerrainHeight(this.data.terrain, longitude, latitude));
+    this.scene.add(this.labels.group);
+    this.labels.update(this.camera, this.labelsVisible && this.debugState.labels);
+  }
+
+  private start() {
+    this.animationFrame = requestAnimationFrame(this.tick);
+  }
+
+  private readonly tick = (now: number) => {
+    if (this.destroyed) return;
+    this.cameraController.update(now);
+    this.ocean?.tick(now);
+    this.labels?.update(this.camera, this.labelsVisible && this.debugState.labels);
+    this.renderer.render(this.scene, this.camera);
+    this.labelRenderer.render(this.scene, this.camera);
+    this.performance.markFirstMeaningful3d();
+    this.performance.sample(now);
+    this.animationFrame = requestAnimationFrame(this.tick);
+  };
+
+  private readonly handleContextLost = (event: Event) => {
+    event.preventDefault();
+    this.options.onError(new Error('Three.js WebGL context lost in Gate A Region prototype.'));
+  };
+
+  resize() {
+    const width = Math.max(1, this.options.container.clientWidth);
+    const height = Math.max(1, this.options.container.clientHeight);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height, false);
+    this.labelRenderer.setSize(width, height);
+  }
+
+  flyTo(preset: RegionPresetId) {
+    this.cameraController.flyTo(preset);
+  }
+
+  reset() {
+    this.cameraController.reset();
+  }
+
+  setVariant(variant: RegionVariantId) {
+    this.variant = variant;
+    this.terrain.setVariant(variant);
+    this.ocean?.setVariant(variant);
+    this.atmosphere?.setVariant(variant);
+  }
+
+  setDebugState(next: Partial<RegionDebugState>) {
+    this.debugState = { ...this.debugState, ...next };
+    this.terrain.setWireframe(this.debugState.wireframe);
+    this.terrain.setTextureEnabled(this.debugState.texture);
+    this.ocean?.setVisible(this.debugState.ocean);
+    this.atmosphere?.setFogEnabled(this.debugState.fog);
+    this.atmosphere?.setShadowsEnabled(this.debugState.shadow);
+    this.atmosphere?.setPostProcessingEnabled(this.debugState.postProcessing);
+    this.labelsVisible = this.debugState.labels;
+  }
+
+  setLabelsVisible(visible: boolean) {
+    this.labelsVisible = visible;
+    this.debugState.labels = visible;
+  }
+
+  getStats(): RegionSceneStats {
+    const base = this.performance.snapshot(this.renderer, this.camera, this.terrain.textureEstimateBytes);
+    return {
+      ...base,
+      stage: this.stage,
+      regionVertices: this.terrain.vertices,
+      regionTriangles: this.terrain.triangles,
+      regionGrid: `${this.data.terrain.grid.width}×${this.data.terrain.grid.height}`,
+      assetPayloadBytes: 86_295 + 66_868 + 31_127 + 14_160,
+      cameraConstraints: this.cameraController.snapshot(),
+      variant: this.variant,
+    };
+  }
+
+  dispose() {
+    if (this.destroyed) return;
+    this.destroyed = true;
+    cancelAnimationFrame(this.animationFrame);
+    this.controls.removeEventListener('start', this.options.onInteraction);
+    this.renderer.domElement.removeEventListener('webglcontextlost', this.handleContextLost);
+    this.controls.dispose();
+    this.labels?.dispose();
+    this.ocean?.dispose();
+    this.atmosphere?.dispose();
+    this.terrain.dispose();
+    this.renderer.dispose();
+    this.renderer.domElement.remove();
+    this.labelRenderer.domElement.remove();
+  }
+}

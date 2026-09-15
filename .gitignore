@@ -1,5 +1,6 @@
 # build output
 dist/
+.tmp/
 .astro/
 
 # local caches and generated tooling state

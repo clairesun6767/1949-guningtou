@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "outDir": ".tmp/v2-tests",
+    "rootDir": "."
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "v2/config/**/*.ts",
+    "v2/shared/**/*.ts",
+    "v2/prototypes/region/**/*.ts"
+  ]
+}
