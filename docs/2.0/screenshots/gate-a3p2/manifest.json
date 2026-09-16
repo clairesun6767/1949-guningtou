@@ -1,0 +1,75 @@
+{
+  "generatedAt": "2026-09-16T01:43:03.153Z",
+  "browser": "Chrome headless actual page output",
+  "camera": "ART_REVIEW_KINMEN_XIAMEN_01",
+  "viewport": "1920×1080",
+  "deterministicSeed": "shader constants / no random runtime input",
+  "gate": "GATE A.3P.2 — READY FOR GEOREFERENCE REVIEW",
+  "privacy": "safe screenshots only; local-only screenshots remain ignored",
+  "screenshots": [
+    {
+      "name": "GEO_01_TILE_FOOTPRINT",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&aerialDebug=tile&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "安全 metadata-only tile footprint：XYZ z/x/y、tile bounds、year labels；未載入航照 pixels。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_01_TILE_FOOTPRINT.png",
+      "bytes": 1509289
+    },
+    {
+      "name": "GEO_COVERAGE",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&coverage=on&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "安全 KML declared coverage outline；未載入航照 pixels。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_COVERAGE.png",
+      "bytes": 1473492
+    },
+    {
+      "name": "GEO_P0",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "note": "安全 P0 baseline performance。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_P0.png",
+      "bytes": 1491981
+    },
+    {
+      "name": "GEO_P1",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "note": "安全 P1 enhanced environment performance。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_P1.png",
+      "bytes": 1615989
+    },
+    {
+      "name": "GEO_OCEAN_BEFORE",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "安全 Ocean before／P0 baseline。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_OCEAN_BEFORE.png",
+      "bytes": 1473008
+    },
+    {
+      "name": "GEO_OCEAN_AFTER",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "安全 Ocean after／P1 enhanced environment。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_OCEAN_AFTER.png",
+      "bytes": 1599969
+    },
+    {
+      "name": "GEO_DAYLIGHT_T0",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "安全 unified daylight T0。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_DAYLIGHT_T0.png",
+      "bytes": 1600527
+    },
+    {
+      "name": "GEO_DAWN_T1",
+      "query": "?historical=H0&environment=P1&time=T1&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "安全 battlefield dawn T1。",
+      "path": "docs/2.0/screenshots/gate-a3p2/GEO_DAWN_T1.png",
+      "bytes": 1620419
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import type { GeographicBounds } from './region.js';
 export type HistoricalAerialMode = 'OFF' | 'AERIAL' | 'AERIAL_RELIEF';
 export type HistoricalAerialProviderMode = 'disabled' | 'local' | 'remote';
 export type HistoricalAerialRightsStatus = 'BLOCKED — RIGHTS UNCLEAR' | 'APPROVED';
-export type HistoricalAerialAlignmentStatus = 'SOURCE REVIEW' | 'EXPERIMENTAL ALIGNMENT' | 'VERIFIED';
+export type HistoricalAerialAlignmentStatus = 'SOURCE REVIEW' | 'TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED' | 'VERIFIED';
 
 export interface HistoricalSourceMetadata {
   provider: string;

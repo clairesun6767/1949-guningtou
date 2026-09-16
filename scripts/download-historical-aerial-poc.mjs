@@ -183,6 +183,49 @@ function tileRangeBounds(minX, maxX, minY, maxY, z) {
   return { west, south, east, north };
 }
 
+function tileRangeFromTiles(tiles) {
+  if (!tiles.length) return undefined;
+  return {
+    z: tiles[0].z,
+    minX: Math.min(...tiles.map(tile => tile.x)),
+    maxX: Math.max(...tiles.map(tile => tile.x)),
+    minY: Math.min(...tiles.map(tile => tile.y)),
+    maxY: Math.max(...tiles.map(tile => tile.y)),
+  };
+}
+
+function closeEnough(left, right) {
+  return Math.abs(left - right) <= 1e-10;
+}
+
+function boundsMatch(left, right) {
+  return closeEnough(left.west, right.west)
+    && closeEnough(left.south, right.south)
+    && closeEnough(left.east, right.east)
+    && closeEnough(left.north, right.north);
+}
+
+function smartCompositeUsesCommonGeographicGrid(mosaics) {
+  if (!mosaics.length) return false;
+  const first = mosaics[0];
+  return mosaics.every(mosaic => {
+    const expectedWidth = (mosaic.tileRange.maxX - mosaic.tileRange.minX + 1) * mosaic.tileSize;
+    const expectedHeight = (mosaic.tileRange.maxY - mosaic.tileRange.minY + 1) * mosaic.tileSize;
+    const expectedBounds = tileRangeBounds(
+      mosaic.tileRange.minX,
+      mosaic.tileRange.maxX,
+      mosaic.tileRange.minY,
+      mosaic.tileRange.maxY,
+      mosaic.tileRange.z,
+    );
+    return mosaic.tileRange.z === first.tileRange.z
+      && mosaic.tileSize === first.tileSize
+      && mosaic.width === expectedWidth
+      && mosaic.height === expectedHeight
+      && boundsMatch(mosaic.bounds, expectedBounds);
+  });
+}
+
 async function readKmlDatasets(kmlDir) {
   const datasets = [];
   for (const [yearText, filename] of Object.entries(KML_FILES)) {
@@ -198,6 +241,7 @@ async function downloadDataset(dataset, bounds, zoom, output, state) {
   const requestBounds = { west: Math.max(bounds.west, dataset.bounds.west), south: Math.max(bounds.south, dataset.bounds.south), east: Math.min(bounds.east, dataset.bounds.east), north: Math.min(bounds.north, dataset.bounds.north) };
   if (!intersects(requestBounds, dataset.bounds)) return { dataset, tiles: [], status: 'NO OVERLAP' };
   const requestedTiles = enumerateTiles(requestBounds, zoom);
+  const requestedTileRange = tileRangeFromTiles(requestedTiles);
   const datasetDir = path.join(output, String(dataset.year));
   const tileRecords = [];
   let bytes = 0;
@@ -225,7 +269,7 @@ async function downloadDataset(dataset, bounds, zoom, output, state) {
     tileRecords.push({ ...tile, url, status: 'READY', bytes: buffer.byteLength, width: decoded.info.width, height: decoded.info.height, quality, localPath: path.relative(ROOT, tilePath).replaceAll('\\', '/') });
   }
   const ready = tileRecords.filter(record => record.status === 'READY');
-  if (!ready.length) return { dataset, tiles: tileRecords, status: 'NO VALID PIXELS', bytes };
+  if (!ready.length) return { dataset, tiles: tileRecords, status: 'NO VALID PIXELS', bytes, requestedTileRange };
   const minX = Math.min(...ready.map(tile => tile.x));
   const maxX = Math.max(...ready.map(tile => tile.x));
   const minY = Math.min(...ready.map(tile => tile.y));
@@ -237,16 +281,61 @@ async function downloadDataset(dataset, bounds, zoom, output, state) {
     const buffer = await readFile(path.join(ROOT, record.localPath));
     composites.push({ input: buffer, left: (record.x - minX) * TILE_SIZE, top: (record.y - minY) * TILE_SIZE });
   }
+  const actualTileRange = { z: zoom, minX, maxX, minY, maxY };
+  const actualMosaicBounds = tileRangeBounds(minX, maxX, minY, maxY, zoom);
   const mosaicPath = path.join(datasetDir, `mosaic-z${zoom}.png`);
   await sharp({ create: { width, height, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).composite(composites).png().toFile(mosaicPath);
   const mosaicRaw = await sharp(mosaicPath).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
   const quality = qualityFromRaw(mosaicRaw.data, mosaicRaw.info.width, mosaicRaw.info.height, mosaicRaw.info.channels);
-  return { dataset, tiles: tileRecords, status: 'READY', bytes, mosaic: { localPath: path.relative(ROOT, mosaicPath).replaceAll('\\', '/'), url: `/1949-guningtou/.local/aerial-poc/${dataset.year}/mosaic-z${zoom}.png`, width, height, bounds: tileRangeBounds(minX, maxX, minY, maxY, zoom), bytes: (await stat(mosaicPath)).size }, quality, tileRange: { z: zoom, minX, maxX, minY, maxY } };
+  const validMask = Buffer.alloc(width * height);
+  for (let index = 0; index < width * height; index += 1) validMask[index] = (mosaicRaw.data[index * mosaicRaw.info.channels + 3] ?? 0) > 8 ? 255 : 0;
+  const validMaskPath = path.join(datasetDir, `valid-mask-z${zoom}.png`);
+  await sharp(validMask, { raw: { width, height, channels: 1 } }).png().toFile(validMaskPath);
+  const validPixelMask = {
+    localPath: path.relative(ROOT, validMaskPath).replaceAll('\\', '/'),
+    url: `/1949-guningtou/.local/aerial-poc/${dataset.year}/valid-mask-z${zoom}.png`,
+    width,
+    height,
+    bytes: (await stat(validMaskPath)).size,
+    encoding: 'alpha>8',
+  };
+  return {
+    dataset,
+    tiles: tileRecords,
+    status: 'READY',
+    bytes,
+    requestedTileRange,
+    actualMosaicBounds,
+    validPixelMask,
+    mosaic: {
+      localPath: path.relative(ROOT, mosaicPath).replaceAll('\\', '/'),
+      url: `/1949-guningtou/.local/aerial-poc/${dataset.year}/mosaic-z${zoom}.png`,
+      width,
+      height,
+      bounds: actualMosaicBounds,
+      actualMosaicBounds,
+      tileRange: actualTileRange,
+      validPixelMask,
+      bytes: (await stat(mosaicPath)).size,
+    },
+    quality,
+    tileRange: actualTileRange,
+  };
 }
 
 async function makeSmartComposite(results, output, zoom) {
   const ready = results.filter(result => result.mosaic && result.tileRange);
   if (!ready.length) return { status: 'NO VALID PIXELS' };
+  const sourceGrids = ready.map(result => ({
+    tileRange: result.tileRange,
+    bounds: result.actualMosaicBounds ?? result.mosaic.bounds,
+    width: result.mosaic.width,
+    height: result.mosaic.height,
+    tileSize: TILE_SIZE,
+  }));
+  if (!smartCompositeUsesCommonGeographicGrid(sourceGrids)) {
+    throw new Error('SMART COMPOSITE GRID MISMATCH: reproject/resample source mosaics to one XYZ geographic grid before compositing.');
+  }
   const minX = Math.min(...ready.map(result => result.tileRange.minX));
   const maxX = Math.max(...ready.map(result => result.tileRange.maxX));
   const minY = Math.min(...ready.map(result => result.tileRange.minY));
@@ -311,12 +400,15 @@ async function makeSmartComposite(results, output, zoom) {
   await sharp(outputRaw, { raw: { width, height, channels: 4 } }).png().toFile(smartPath);
   await sharp(sourceMask, { raw: { width, height, channels: 4 } }).png().toFile(maskPath);
   const total = width * height;
+  const compositeMosaicBounds = tileRangeBounds(minX, maxX, minY, maxY, zoom);
   return {
     status: 'READY',
     url: `/1949-guningtou/.local/aerial-poc/smart/smart-composite-z${zoom}.png`,
     sourceMaskUrl: `/1949-guningtou/.local/aerial-poc/smart/source-mask-z${zoom}.png`,
     width, height,
-    bounds: tileRangeBounds(minX, maxX, minY, maxY, zoom),
+    bounds: compositeMosaicBounds,
+    compositeMosaicBounds,
+    tileRange: { z: zoom, minX, maxX, minY, maxY },
     distribution: Object.fromEntries(Object.entries(counts).map(([key, value]) => [key, Number(((value / Math.max(1, total)) * 100).toFixed(2))])),
     bytes: (await stat(smartPath)).size,
     selectionGranularity: 'tile',
@@ -366,6 +458,9 @@ async function main() {
       bytes: result.bytes ?? 0,
       tileCount: result.tiles.length,
       readyTileCount: result.tiles.filter(tile => tile.status === 'READY').length,
+      requestedTileRange: result.requestedTileRange,
+      actualMosaicBounds: result.actualMosaicBounds,
+      validPixelMask: result.validPixelMask,
       tileRange: result.tileRange,
       mosaic: result.mosaic,
       qualityMetadata: result.quality ?? { normalizedScore: 0, confidence: 'unmeasured', validPixelRatio: 0, alphaValidRatio: 0 },

@@ -4,6 +4,7 @@ import {
   type HistoricalAerialDataset,
   type HistoricalAerialYear,
 } from '../shared/historicalAerialDataset.js';
+import type { GeographicBounds } from './region.js';
 
 export type { HistoricalAerialYear } from '../shared/historicalAerialDataset.js';
 
@@ -56,6 +57,21 @@ export const HISTORICAL_AERIAL_DATASET_REGISTRY = new Map(
 );
 
 export const HISTORICAL_AERIAL_YEARS: readonly HistoricalAerialYear[] = [1944, 1945, 1958];
+
+/**
+ * Authoritative local Gate A.3P POC request footprint. The tile range is
+ * derived from this geographic request at runtime; it is not a visual offset.
+ */
+export const HISTORICAL_AERIAL_POC_REQUEST = {
+  areaBounds: {
+    west: 118.278,
+    south: 24.438,
+    east: 118.372,
+    north: 24.52,
+  } satisfies GeographicBounds,
+  zoom: 12,
+  coordinateOrder: 'XYZ' as const,
+};
 
 export const HISTORICAL_AERIAL_SOURCE_REGISTRY = HISTORICAL_AERIAL_DATASETS.map(dataset => ({
   id: dataset.id,

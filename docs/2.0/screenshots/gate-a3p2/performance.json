@@ -1,0 +1,106 @@
+{
+  "generatedAt": "2026-09-16T01:43:42.948Z",
+  "browser": "Chrome headless=new with wall-clock requestAnimationFrame sampling",
+  "camera": "ART_REVIEW_KINMEN_XIAMEN_01",
+  "viewport": "1920×1080",
+  "sampleFrames": 150,
+  "privacy": "safe metadata plus local-only performance metadata; no aerial pixels are written",
+  "results": [
+    {
+      "name": "P0",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "viewport": {
+        "innerWidth": 1902,
+        "innerHeight": 928,
+        "devicePixelRatio": 1
+      },
+      "canvas": {
+        "width": 1610,
+        "height": 824,
+        "cssWidth": 1610,
+        "cssHeight": 824
+      },
+      "frames": 150,
+      "elapsedMs": 2487.899999976158,
+      "averageFrameMs": 16.666206896551728,
+      "p95FrameMs": 16.800000000000182,
+      "fps": 60.001655218074966,
+      "metric": "CPU frame 16.7 ms · GPU frame —（WebGL 未暴露）",
+      "stats": "品質 B · 網格 640×368235,520 頂點 · 469,026 三角 · DRAW 4材質 9 · GPU 約 46792 KB · 載荷 752 KB海岸 2048×1184 alpha mask / 4,516 OSM vector points來源 Mapzen Terrain Tiles / SRTM multi-HGT regional source鏡頭 117.957, 24.193 → 118.210, 24.490 · 距離 56.0垂直 1.50× · 光影 CURRENT · 等高線 SUBTLE航照 RIGHTS BLOCKED · 年代 1945 · 年份 1944 + 1945 · 透明度 0%選擇 smart · 分布 1944 — · 1945 — · 1958 — · BASE 100%航照解析度 未載入／本機 POC · tiles 0 · bytes 0航照範圍 118.27276–118.49670E / 24.34380–24.53629N對齊 SOURCE REVIEW · payload 0 B環境 P0／T0／W0 · 雲影 OFF日光 -0.48,0.81,0.35 · 雲 0% · 環境 ready 6ms3D 465ms · READY 808ms",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti (0x00002C05) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "name": "P1",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "viewport": {
+        "innerWidth": 1902,
+        "innerHeight": 928,
+        "devicePixelRatio": 1
+      },
+      "canvas": {
+        "width": 1610,
+        "height": 824,
+        "cssWidth": 1610,
+        "cssHeight": 824
+      },
+      "frames": 150,
+      "elapsedMs": 2492.899999976158,
+      "averageFrameMs": 16.66551724137931,
+      "p95FrameMs": 16.899999999999636,
+      "fps": 60.00413821642872,
+      "metric": "CPU frame 16.7 ms · GPU frame —（WebGL 未暴露）",
+      "stats": "品質 B · 網格 640×368235,520 頂點 · 469,026 三角 · DRAW 5材質 9 · GPU 約 46792 KB · 載荷 752 KB海岸 2048×1184 alpha mask / 4,516 OSM vector points來源 Mapzen Terrain Tiles / SRTM multi-HGT regional source鏡頭 117.957, 24.193 → 118.210, 24.490 · 距離 56.0垂直 1.50× · 光影 CURRENT · 等高線 SUBTLE航照 RIGHTS BLOCKED · 年代 1945 · 年份 1944 + 1945 · 透明度 0%選擇 smart · 分布 1944 — · 1945 — · 1958 — · BASE 100%航照解析度 未載入／本機 POC · tiles 0 · bytes 0航照範圍 118.27276–118.49670E / 24.34380–24.53629N對齊 SOURCE REVIEW · payload 0 B環境 P1／T0／W1 · 雲影 ON日光 -0.48,0.81,0.35 · 雲 42% · 環境 ready 5ms3D 489ms · READY 917ms",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti (0x00002C05) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "name": "P2",
+      "query": "?historical=H6&aerial=local&environment=P2&time=T2&weather=W0&opacity=65&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "local-only",
+      "viewport": {
+        "innerWidth": 1902,
+        "innerHeight": 928,
+        "devicePixelRatio": 1
+      },
+      "canvas": {
+        "width": 1610,
+        "height": 824,
+        "cssWidth": 1610,
+        "cssHeight": 824
+      },
+      "frames": 150,
+      "elapsedMs": 2483.600000023842,
+      "averageFrameMs": 16.666206896551728,
+      "p95FrameMs": 16.899999999999636,
+      "fps": 60.001655218074966,
+      "metric": "CPU frame 16.7 ms · GPU frame —（WebGL 未暴露）",
+      "stats": "品質 B · 網格 640×368235,520 頂點 · 469,026 三角 · DRAW 4材質 10 · GPU 約 46792 KB · 載荷 752 KB海岸 2048×1184 alpha mask / 4,516 OSM vector points來源 Mapzen Terrain Tiles / SRTM multi-HGT regional source鏡頭 117.957, 24.193 → 118.210, 24.490 · 距離 56.0垂直 1.50× · 光影 RELIEF · 等高線 SUBTLE航照 LOCAL READY / RIGHTS REVIEW · 年代 1945 · 年份 1944 + 1945 · 透明度 65%選擇 smart · 分布 1944 13.21% · 1945 52.99% · 1958 11.01% · BASE 22.79%航照解析度 512×512 · tiles 12 · bytes 650525航照範圍 118.21289–118.38867E / 24.36711–24.52713N對齊 TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED · payload 309194 B環境 P2／T2／W0 · 雲影 OFF日光 -0.34,0.86,0.38 · 雲 0% · 環境 ready 5ms3D 432ms · READY 916ms",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti (0x00002C05) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "name": "P3",
+      "query": "?historical=H7&aerial=local&environment=P3&time=T0&weather=W1&opacity=65&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "local-only",
+      "viewport": {
+        "innerWidth": 1902,
+        "innerHeight": 928,
+        "devicePixelRatio": 1
+      },
+      "canvas": {
+        "width": 1610,
+        "height": 824,
+        "cssWidth": 1610,
+        "cssHeight": 824
+      },
+      "frames": 150,
+      "elapsedMs": 2490.7999999523163,
+      "averageFrameMs": 16.666896551724136,
+      "p95FrameMs": 16.800000000000182,
+      "fps": 59.99917242520794,
+      "metric": "CPU frame 16.7 ms · GPU frame —（WebGL 未暴露）",
+      "stats": "品質 B · 網格 640×368235,520 頂點 · 469,026 三角 · DRAW 5材質 10 · GPU 約 46792 KB · 載荷 752 KB海岸 2048×1184 alpha mask / 4,516 OSM vector points來源 Mapzen Terrain Tiles / SRTM multi-HGT regional source鏡頭 117.957, 24.193 → 118.210, 24.490 · 距離 56.0垂直 1.50× · 光影 RELIEF · 等高線 SUBTLE航照 LOCAL READY / RIGHTS REVIEW · 年代 1945 · 年份 1944 + 1945 · 透明度 65%選擇 smart · 分布 1944 13.21% · 1945 52.99% · 1958 11.01% · BASE 22.79%航照解析度 512×512 · tiles 12 · bytes 650525航照範圍 118.21289–118.38867E / 24.36711–24.52713N對齊 TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED · payload 309194 B環境 P3／T0／W1 · 雲影 ON日光 -0.48,0.81,0.35 · 雲 42% · 環境 ready 6ms3D 448ms · READY 930ms",
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Ti (0x00002C05) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ]
+}

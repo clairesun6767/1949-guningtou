@@ -6,7 +6,7 @@ import { spawn } from 'node:child_process';
 const chrome = process.env.CHROME_PATH ?? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const root = path.resolve('.');
 const baseUrl = 'http://localhost:4321/1949-guningtou/v2/region/';
-const outputPath = path.resolve('docs/2.0/screenshots/gate-a3p1/performance.json');
+const outputPath = path.resolve(process.env.GATE_A3P2_OUTPUT ?? 'docs/2.0/screenshots/gate-a3p1/performance.json');
 const port = 9223;
 const reviewCamera = 'camera=art-review-kinmen-xiamen-01';
 const shots = [

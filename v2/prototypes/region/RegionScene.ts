@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+import { CSS2DObject, CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 import {
   HISTORICAL_AERIAL_CONFIG,
   type HistoricalAerialMode,
@@ -14,7 +14,7 @@ import type {
 } from '../../config/environment.js';
 import type { HistoricalAerialYear } from '../../shared/historicalAerialDataset.js';
 import type { HistoricalAerialSelectionMode } from '../../shared/historicalAerialSelection.js';
-import { HISTORICAL_AERIAL_DATASETS } from '../../config/historicalAerialRegistry.js';
+import { HISTORICAL_AERIAL_DATASETS, HISTORICAL_AERIAL_POC_REQUEST } from '../../config/historicalAerialRegistry.js';
 import {
   REGION_CONFIG,
   type RegionContourMode,
@@ -33,6 +33,7 @@ import {
   type RegionQualityTerrainAsset,
 } from '../../shared/regionDataProvider.js';
 import { lonLatToWorld } from '../../shared/geo.js';
+import { enumerateHistoricalAerialTiles, tileBounds } from '../../shared/historicalAerialTiles.js';
 import type { RegionAtmosphereHandle } from './RegionAtmosphere.js';
 import { RegionCamera, type RegionCameraConstraintSnapshot } from './RegionCamera.js';
 import { createRegionLabels, type RegionLabelsHandle } from './RegionLabels.js';
@@ -51,6 +52,58 @@ import {
 export type RegionLoadingStage = 'terrain' | 'material' | 'atmosphere' | 'labels' | 'ready';
 const BENCHMARK_CLASSIFICATION_PAYLOAD_BYTES = 31_127 + 14_160;
 const COMPOSITION_CLASSIFICATION_PAYLOAD_BYTES = 38_703 + 15_228;
+const AERIAL_TILE_DEBUG_LIFT = 0.54;
+
+function createAerialTileDebugGroup() {
+  const group = new THREE.Group();
+  group.name = 'v2-region-aerial-tile-debug';
+  const tiles = enumerateHistoricalAerialTiles(
+    HISTORICAL_AERIAL_POC_REQUEST.areaBounds,
+    HISTORICAL_AERIAL_POC_REQUEST.zoom,
+    HISTORICAL_AERIAL_POC_REQUEST.coordinateOrder,
+  );
+  const colors = new Map<number, string>([[1944, '#c49754'], [1945, '#68a496'], [1958, '#ab75b1']]);
+  HISTORICAL_AERIAL_DATASETS.forEach((dataset, yearIndex) => {
+    const yearGroup = new THREE.Group();
+    yearGroup.name = `v2-region-aerial-tile-debug-${dataset.year}`;
+    const color = colors.get(dataset.year) ?? '#d5b877';
+    tiles.forEach(tile => {
+      const bounds = tileBounds(tile, HISTORICAL_AERIAL_POC_REQUEST.coordinateOrder);
+      const points = [
+        { longitude: bounds.west, latitude: bounds.north },
+        { longitude: bounds.east, latitude: bounds.north },
+        { longitude: bounds.east, latitude: bounds.south },
+        { longitude: bounds.west, latitude: bounds.south },
+      ].map(point => {
+        const world = lonLatToWorld(point, AERIAL_TILE_DEBUG_LIFT + yearIndex * 0.018);
+        return new THREE.Vector3(world.x, world.y, world.z);
+      });
+      const line = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(points),
+        new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.92, depthTest: false }),
+      );
+      line.name = `${dataset.year}-z${tile.z}-x${tile.x}-y${tile.y}`;
+      line.renderOrder = 20 + yearIndex;
+      yearGroup.add(line);
+
+      const label = document.createElement('div');
+      label.className = 'region-aerial-tile-debug-label';
+      label.style.borderColor = color;
+      label.innerHTML = `<strong>${dataset.year} · XYZ ${tile.z}/${tile.x}/${tile.y}</strong><small>${bounds.west.toFixed(5)}–${bounds.east.toFixed(5)}E<br>${bounds.south.toFixed(5)}–${bounds.north.toFixed(5)}N</small>`;
+      label.dataset.tile = `${dataset.year}/${tile.z}/${tile.x}/${tile.y}`;
+      const center = lonLatToWorld({
+        longitude: (bounds.west + bounds.east) / 2,
+        latitude: (bounds.south + bounds.north) / 2,
+      }, AERIAL_TILE_DEBUG_LIFT + 0.055 + yearIndex * 0.085);
+      const labelObject = new CSS2DObject(label);
+      labelObject.position.set(center.x, center.y, center.z);
+      labelObject.renderOrder = 30 + yearIndex;
+      yearGroup.add(labelObject);
+    });
+    group.add(yearGroup);
+  });
+  return group;
+}
 
 export const REGION_SCENE_CONTRACT = {
   id: REGION_CONFIG.id,
@@ -88,6 +141,7 @@ export interface RegionSceneOptions {
   initialAerialSelectionMode?: HistoricalAerialSelectionMode;
   initialAerialYears?: HistoricalAerialYear[];
   allowLocalAerialPoc?: boolean;
+  aerialTileDebug?: boolean;
   fixedCamera?: boolean;
 }
 
@@ -169,6 +223,7 @@ async function loadMaskTexture(url: string, fallback: THREE.Texture) {
 export class RegionScene {
   private readonly scene = new THREE.Scene();
   private readonly coverageGroup = new THREE.Group();
+  private readonly aerialTileDebugGroup: THREE.Group;
   private readonly camera: THREE.PerspectiveCamera;
   private readonly renderer: THREE.WebGLRenderer;
   private readonly labelRenderer = new CSS2DRenderer();
@@ -343,6 +398,9 @@ export class RegionScene {
       this.coverageGroup.add(line);
     }
     this.scene.add(this.coverageGroup);
+    this.aerialTileDebugGroup = createAerialTileDebugGroup();
+    this.aerialTileDebugGroup.visible = Boolean(options.aerialTileDebug);
+    this.scene.add(this.aerialTileDebugGroup);
     this.cameraController.reset();
     this.controls.addEventListener('start', options.onInteraction);
     this.renderer.domElement.addEventListener('webglcontextlost', this.handleContextLost);
@@ -582,6 +640,10 @@ export class RegionScene {
     this.coverageGroup.visible = enabled;
   }
 
+  setAerialTileDebug(enabled: boolean) {
+    this.aerialTileDebugGroup.visible = enabled;
+  }
+
   setHistoricalYear(year: HistoricalAerialYear) {
     this.historicalAerial.setYear(year);
     void this.loadLocalAerial();
@@ -770,6 +832,14 @@ export class RegionScene {
       }
     });
     this.scene.remove(this.coverageGroup);
+    this.aerialTileDebugGroup.traverse(object => {
+      if (object instanceof THREE.Line) {
+        object.geometry.dispose();
+        (object.material as THREE.Material).dispose();
+      }
+      if (object instanceof CSS2DObject) object.element.remove();
+    });
+    this.scene.remove(this.aerialTileDebugGroup);
     this.terrain.dispose();
     this.historicalAerial.dispose();
     this.renderer.dispose();

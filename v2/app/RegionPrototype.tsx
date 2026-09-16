@@ -75,6 +75,7 @@ interface RegionQueryState {
   benchmarkMode: boolean;
   compositionMode: boolean;
   historicalReviewMode: boolean;
+  aerialTileDebug: boolean;
 }
 
 function readRegionQueryState(search = ''): RegionQueryState {
@@ -88,6 +89,7 @@ function readRegionQueryState(search = ''): RegionQueryState {
     : localAerialPoc ? 65 : 0;
   const queryYear = Number(params.get('year'));
   const benchmarkMode = params.has('benchmark');
+  const aerialTileDebug = params.get('aerialDebug')?.toLowerCase() === 'tile';
 
   return {
     localAerialPoc,
@@ -102,6 +104,7 @@ function readRegionQueryState(search = ''): RegionQueryState {
     benchmarkMode,
     compositionMode: !benchmarkMode,
     historicalReviewMode: !benchmarkMode && !params.has('composition'),
+    aerialTileDebug,
   };
 }
 
@@ -146,6 +149,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     benchmarkMode,
     compositionMode,
     historicalReviewMode,
+    aerialTileDebug,
   } = queryState;
   const [profile, setProfile] = useState({ mobile: false, reducedMotion: false, tier: 'HIGH' as RegionPerformanceTier });
   const [profileReady, setProfileReady] = useState(false);
@@ -225,6 +229,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     const requestedEnvironmentWeather = firstQueryValue(params.get('weather')?.toUpperCase(), ENVIRONMENT_WEATHER_OPTIONS, queryEnvironmentWeather);
     const requestedSelectionMode = firstQueryValue(params.get('mode')?.toLowerCase(), HISTORICAL_SELECTION_OPTIONS, querySelectionMode);
     const requestedCoverage = params.get('coverage')?.toLowerCase() === 'on';
+    const requestedAerialTileDebug = params.get('aerialDebug')?.toLowerCase() === 'tile';
     const disabledEnvironmentFeatures = (params.get('disable') ?? '')
       .split(',')
       .map(value => value.trim() as keyof EnvironmentDebugState)
@@ -303,6 +308,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     sceneRef.current?.setEnvironmentWeather(requestedEnvironmentWeather);
     sceneRef.current?.setHistoricalSelectionMode(requestedSelectionMode);
     sceneRef.current?.setCoverageMaskDebug(requestedCoverage);
+    sceneRef.current?.setAerialTileDebug(requestedAerialTileDebug);
     sceneRef.current?.setHistoricalYear(queryAerialYear);
     if (localAerialPoc || params.has('opacity')) {
       setAerialOpacity(queryInitialAerialOpacity);
@@ -386,6 +392,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           initialAerialSelectionMode: historicalSelectionMode,
           initialAerialYears: aerialYears,
           allowLocalAerialPoc: localAerialPoc,
+          aerialTileDebug,
           fixedCamera: fixedArtReviewCamera,
           onStage: nextStage => {
             if (!disposed) setStage(nextStage);

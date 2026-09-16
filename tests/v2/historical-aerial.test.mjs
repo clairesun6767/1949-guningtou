@@ -33,6 +33,13 @@ import {
   tileYForOrder,
   validateHistoricalAerialTileRequest,
 } from '../../.tmp/v2-tests/v2/shared/historicalAerialTiles.js';
+import {
+  geographicToAerialUV,
+  outsideBoundsReturnsBase,
+  smartCompositeUsesCommonGeographicGrid,
+  tileRangeToBounds,
+  tileXYZToLonLat,
+} from '../../.tmp/v2-tests/v2/shared/historicalAerialGeoreference.js';
 import { HistoricalAerialLayer } from '../../.tmp/v2-tests/v2/prototypes/region/HistoricalAerialLayer.js';
 
 const PLACEHOLDER_ICON = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEaaa==';
@@ -200,10 +207,62 @@ test('download budget stays sequential, bounded and low-resolution for the Gunin
   assert.equal(HISTORICAL_AERIAL_DOWNLOAD_BUDGET.maxBytesTotal, 50 * 1024 * 1024);
 });
 
+test('tileXYZToLonLat and tileRangeToBounds derive the authoritative z12 POC footprint', () => {
+  const northWest = tileXYZToLonLat(3393, 1760, 12);
+  const southEast = tileXYZToLonLat(3395, 1762, 12);
+  assert.deepEqual(northWest, { longitude: 118.212890625, latitude: 24.5271348225978 });
+  assert.deepEqual(southEast, { longitude: 118.388671875, latitude: 24.367113562651262 });
+  assert.deepEqual(tileRangeToBounds({ z: 12, minX: 3393, maxX: 3394, minY: 1760, maxY: 1761 }), {
+    west: 118.212890625,
+    south: 24.367113562651262,
+    east: 118.388671875,
+    north: 24.5271348225978,
+  });
+  const guningtou = { longitude: 118.318, latitude: 24.478 };
+  assert.equal(guningtou.longitude >= 118.212890625 && guningtou.longitude <= 118.388671875, true);
+  assert.equal(guningtou.latitude >= 24.367113562651262 && guningtou.latitude <= 24.5271348225978, true);
+});
+
+test('geographicToAerialUV keeps northMapsToV0/southMapsToV1/westMapsToU0/eastMapsToU1', () => {
+  const bounds = { west: 118.212890625, south: 24.367113562651262, east: 118.388671875, north: 24.5271348225978 };
+  const centerLongitude = (bounds.west + bounds.east) / 2;
+  const centerLatitude = (bounds.south + bounds.north) / 2;
+  assert.deepEqual(geographicToAerialUV({ longitude: centerLongitude, latitude: bounds.north }, bounds), { u: 0.5, v: 0, inBounds: true });
+  assert.deepEqual(geographicToAerialUV({ longitude: centerLongitude, latitude: bounds.south }, bounds), { u: 0.5, v: 1, inBounds: true });
+  assert.deepEqual(geographicToAerialUV({ longitude: bounds.west, latitude: centerLatitude }, bounds), { u: 0, v: 0.5, inBounds: true });
+  assert.deepEqual(geographicToAerialUV({ longitude: bounds.east, latitude: centerLatitude }, bounds), { u: 1, v: 0.5, inBounds: true });
+  const guningtou = geographicToAerialUV({ longitude: 118.318, latitude: 24.478 }, bounds);
+  assert.equal(guningtou.inBounds, true);
+  assert.ok(Math.abs(guningtou.u - 0.5979555555555433) < 1e-12);
+  assert.ok(Math.abs(guningtou.v - 0.30705184182536305) < 1e-12);
+});
+
+test('outsideBoundsReturnsBase prevents ClampToEdge from extending aerial pixels', () => {
+  const bounds = tileRangeToBounds({ z: 12, minX: 3393, maxX: 3394, minY: 1760, maxY: 1761 });
+  assert.equal(outsideBoundsReturnsBase({ longitude: 118.105, latitude: 24.49 }, bounds), true);
+  assert.equal(outsideBoundsReturnsBase({ longitude: 118.318, latitude: 24.478 }, bounds), false);
+});
+
+test('smartCompositeUsesCommonGeographicGrid validates footprints before compositing', () => {
+  const fullRange = { z: 12, minX: 3393, maxX: 3394, minY: 1760, maxY: 1761 };
+  const partialRange = { z: 12, minX: 3394, maxX: 3394, minY: 1760, maxY: 1761 };
+  const grid = range => ({
+    tileRange: range,
+    bounds: tileRangeToBounds(range),
+    width: (range.maxX - range.minX + 1) * 256,
+    height: (range.maxY - range.minY + 1) * 256,
+    tileSize: 256,
+  });
+  assert.equal(smartCompositeUsesCommonGeographicGrid([grid(fullRange), grid(partialRange)]), true);
+  assert.equal(smartCompositeUsesCommonGeographicGrid([{ ...grid(fullRange), width: 512, height: 256 }, grid(partialRange)]), false);
+  assert.equal(smartCompositeUsesCommonGeographicGrid([{ ...grid(fullRange), tileRange: { ...fullRange, z: 11 } }]), false);
+});
+
 test('production layer remains rights-blocked and coverage toggle is observable without pixels', () => {
   const layer = new HistoricalAerialLayer({ year: 1945, mode: 'AERIAL', opacity: 65 });
   assert.equal(layer.getStats().status, 'RIGHTS BLOCKED');
   assert.equal(layer.getStats().payloadBytes, 0);
+  assert.equal(layer.getStats().alignment, 'SOURCE REVIEW');
   layer.setCoverageMaskDebug(true);
   assert.equal(layer.getStats().coverageMaskDebug, true);
   layer.setSelectionMode('comparison');

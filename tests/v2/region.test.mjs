@@ -326,6 +326,28 @@ test('vertical exaggeration remains a render-time transform and ocean quality re
   assert.match(oceanSource, /quality === 'A' \? 0 : 1/);
 });
 
+test('Gate A.3P.2 keeps aerial sampling geographic, out-of-bounds safe and tile-debug traceable', () => {
+  const terrainSource = readFileSync('v2/prototypes/region/RegionTerrain.ts', 'utf8');
+  const qualityTerrainSource = readFileSync('v2/prototypes/region/RegionQualityTerrain.ts', 'utf8');
+  const aerialLayerSource = readFileSync('v2/prototypes/region/HistoricalAerialLayer.ts', 'utf8');
+  const sceneSource = readFileSync('v2/prototypes/region/RegionScene.ts', 'utf8');
+  for (const source of [terrainSource, qualityTerrainSource]) {
+    assert.match(source, /regionTerrainGeoBounds/);
+    assert.match(source, /regionAerialGeoBounds/);
+    assert.match(source, /\(terrainLongitude - regionAerialGeoBounds\.x\) \/ aerialSpan\.x/);
+    assert.match(source, /\(regionAerialGeoBounds\.w - terrainLatitude\) \/ aerialSpan\.y/);
+    assert.match(source, /aerialInBounds/);
+    assert.match(source, /if \(regionAerialAvailable > 0\.5 && aerialInBounds > 0\.5\) aerialSample = texture2D/);
+    assert.doesNotMatch(source, /aerialUvBoundsFor/);
+  }
+  assert.match(aerialLayerSource, /texture\.flipY = false/);
+  assert.match(aerialLayerSource, /TILE-BOUND ALIGNED \/ NOT VERIFIED ORTHORECTIFIED/);
+  assert.match(sceneSource, /HISTORICAL_AERIAL_POC_REQUEST/);
+  assert.match(sceneSource, /AERIAL_TILE_DEBUG_LIFT/);
+  assert.match(sceneSource, /tileBounds\(tile, HISTORICAL_AERIAL_POC_REQUEST\.coordinateOrder\)/);
+  assert.match(sceneSource, /XYZ \$\{tile\.z\}\/\$\{tile\.x\}\/\$\{tile\.y\}/);
+});
+
 test('Multi-HGT builder derives required tiles and cross-tile bilinear samples without clamping the requested bounds', () => {
   const builderSource = readFileSync('scripts/build-region-quality-terrain-assets.mjs', 'utf8');
   assert.match(builderSource, /Math\.floor\(bounds\.south\)/);

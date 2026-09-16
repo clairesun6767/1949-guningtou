@@ -1,5 +1,18 @@
 import type { GeographicBounds } from '../config/region.js';
 import type { HistoricalAerialCoordinateOrder, HistoricalAerialDataset } from './historicalAerialDataset.js';
+import {
+  tileRangeToBounds,
+} from './historicalAerialGeoreference.js';
+
+export {
+  geographicBoundsEqual,
+  geographicToAerialUV,
+  outsideBoundsReturnsBase,
+  smartCompositeUsesCommonGeographicGrid,
+  tileRangeToBounds,
+  tileXYZToLonLat,
+} from './historicalAerialGeoreference.js';
+export type { HistoricalAerialMosaicGrid, HistoricalAerialTileRange } from './historicalAerialGeoreference.js';
 
 export interface HistoricalAerialTileCoordinate {
   z: number;
@@ -50,11 +63,8 @@ export function tileYForOrder(xyzY: number, z: number, order: HistoricalAerialCo
 export function tileBounds(tile: Pick<HistoricalAerialTileCoordinate, 'z' | 'x' | 'y'>, order: HistoricalAerialCoordinateOrder = 'XYZ'): HistoricalAerialTileBounds {
   const scale = 2 ** tile.z;
   const xyzY = order === 'TMS' ? scale - 1 - tile.y : tile.y;
-  const west = (tile.x / scale) * 360 - 180;
-  const east = ((tile.x + 1) / scale) * 360 - 180;
-  const north = (Math.atan(Math.sinh(Math.PI * (1 - (2 * xyzY) / scale))) * 180) / Math.PI;
-  const south = (Math.atan(Math.sinh(Math.PI * (1 - (2 * (xyzY + 1)) / scale))) * 180) / Math.PI;
-  return { z: tile.z, x: tile.x, y: tile.y, west, south, east, north };
+  const bounds = tileRangeToBounds({ z: tile.z, minX: tile.x, maxX: tile.x, minY: xyzY, maxY: xyzY });
+  return { z: tile.z, x: tile.x, y: tile.y, ...bounds };
 }
 
 export function enumerateHistoricalAerialTiles(bounds: GeographicBounds, z: number, order: HistoricalAerialCoordinateOrder = 'XYZ') {

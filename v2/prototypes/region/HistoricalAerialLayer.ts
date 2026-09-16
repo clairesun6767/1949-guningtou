@@ -7,7 +7,8 @@ import {
 } from '../../config/historicalAerial.js';
 import { getHistoricalAerialDataset, HISTORICAL_AERIAL_DATASETS } from '../../config/historicalAerialRegistry.js';
 import { clampHistoricalAerialOpacity, createHistoricalAerialProvider } from '../../shared/historicalAerialProvider.js';
-import type { HistoricalAerialDataset, HistoricalAerialYear } from '../../shared/historicalAerialDataset.js';
+import type { ActualMosaicExtent, DeclaredDatasetExtent, HistoricalAerialDataset, HistoricalAerialYear } from '../../shared/historicalAerialDataset.js';
+import type { HistoricalAerialTileRange } from '../../shared/historicalAerialGeoreference.js';
 import type { HistoricalAerialSelectionMode, HistoricalAerialSourceYear } from '../../shared/historicalAerialSelection.js';
 import type { RegionAerialBinding } from './RegionTerrain.js';
 
@@ -16,7 +17,18 @@ export type HistoricalAerialLayerStatus = 'SOURCE REVIEW' | 'RIGHTS BLOCKED' | '
 export interface HistoricalAerialManifestDataset {
   id: string;
   year: HistoricalAerialYear;
-  bounds: HistoricalAerialDataset['bounds'];
+  /** Declared KML LatLonBox; never use this as the raster sample extent. */
+  bounds: DeclaredDatasetExtent;
+  requestedTileRange?: HistoricalAerialTileRange;
+  actualMosaicBounds?: ActualMosaicExtent;
+  validPixelMask?: {
+    url?: string;
+    localPath?: string;
+    width: number;
+    height: number;
+    bytes?: number;
+    encoding: 'alpha>8';
+  };
   status: string;
   rightsStatus?: string;
   tileCount?: number;
@@ -24,7 +36,11 @@ export interface HistoricalAerialManifestDataset {
   qualityMetadata?: Partial<HistoricalAerialDataset['qualityMetadata']>;
   mosaic?: {
     url: string;
-    bounds: HistoricalAerialDataset['bounds'];
+    /** Actual XYZ tile footprint used to build this image. */
+    bounds: ActualMosaicExtent;
+    actualMosaicBounds?: ActualMosaicExtent;
+    tileRange?: HistoricalAerialTileRange;
+    validPixelMask?: HistoricalAerialManifestDataset['validPixelMask'];
     width: number;
     height: number;
     bytes: number;
@@ -40,7 +56,9 @@ export interface HistoricalAerialManifest {
     status: string;
     url?: string;
     sourceMaskUrl?: string;
-    bounds?: HistoricalAerialDataset['bounds'];
+    bounds?: ActualMosaicExtent;
+    compositeMosaicBounds?: ActualMosaicExtent;
+    tileRange?: HistoricalAerialTileRange;
     width?: number;
     height?: number;
     bytes?: number;
@@ -221,6 +239,7 @@ export class HistoricalAerialLayer {
     if (!url) throw new Error('Local aerial POC has no valid mosaic for the selected mode.');
     const texture = await new THREE.TextureLoader().loadAsync(url);
     texture.colorSpace = THREE.SRGBColorSpace;
+    // Mosaic row 0 is XYZ north. With flipY=false, shader v=0 samples row 0.
     texture.flipY = false;
     texture.wrapS = THREE.ClampToEdgeWrapping;
     texture.wrapT = THREE.ClampToEdgeWrapping;
@@ -243,13 +262,25 @@ export class HistoricalAerialLayer {
 
   private boundsForManifest(manifest: HistoricalAerialManifest) {
     const hasBothPrimaryYears = this.enabledYears.includes(1944) && this.enabledYears.includes(1945);
-    if ((this.selectionMode === 'smart' || this.selectionMode === 'distribution') && hasBothPrimaryYears) return manifest.smartComposite?.bounds ?? null;
-    return manifestDataset(manifest, this.year)?.mosaic?.bounds ?? getHistoricalAerialDataset(this.year)?.bounds ?? null;
+    if ((this.selectionMode === 'smart' || this.selectionMode === 'distribution') && hasBothPrimaryYears) {
+      return manifest.smartComposite?.compositeMosaicBounds ?? manifest.smartComposite?.bounds ?? null;
+    }
+    const dataset = manifestDataset(manifest, this.year);
+    return dataset?.actualMosaicBounds ?? dataset?.mosaic?.actualMosaicBounds ?? dataset?.mosaic?.bounds ?? getHistoricalAerialDataset(this.year)?.bounds ?? null;
   }
 
   getTextureBinding(): RegionAerialBinding | null {
     if (!this.texture || !this.activeBounds) return null;
-    return { texture: this.texture, bounds: this.activeBounds, available: true };
+    const activeDataset = manifestDataset(this.manifest, this.year);
+    const smart = this.manifest?.smartComposite;
+    return {
+      texture: this.texture,
+      bounds: this.activeBounds,
+      declaredBounds: activeDataset?.bounds,
+      actualMosaicBounds: smart?.compositeMosaicBounds ?? activeDataset?.actualMosaicBounds ?? activeDataset?.mosaic?.actualMosaicBounds,
+      requestedTileRange: smart?.tileRange ?? activeDataset?.requestedTileRange ?? activeDataset?.mosaic?.tileRange,
+      available: true,
+    };
   }
 
   getStats(): HistoricalAerialLayerStats {
@@ -271,7 +302,7 @@ export class HistoricalAerialLayer {
         ? `${smartComposite.width}×${smartComposite.height}`
         : activeDataset?.mosaic ? `${activeDataset.mosaic.width}×${activeDataset.mosaic.height}` : '未載入／本機 POC',
       payloadBytes: smartComposite?.bytes ?? activeDataset?.mosaic?.bytes ?? 0,
-      alignment: this.texture ? 'EXPERIMENTAL ALIGNMENT' : 'SOURCE REVIEW',
+      alignment: this.texture ? 'TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED' : 'SOURCE REVIEW',
       bounds: formatBounds(this.activeBounds ?? dataset.bounds),
       coverageMaskDebug: this.coverageMaskDebug,
       selectionMode: this.selectionMode,

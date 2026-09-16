@@ -6,6 +6,8 @@ export type HistoricalAerialRightsStatus = 'BLOCKED — RIGHTS UNCLEAR' | 'LOCAL
 export type HistoricalAerialUsageStatus = 'not-verified' | 'local-poc' | 'production-approved';
 export type HistoricalAerialHistoricalRole = 'PRIMARY' | 'FALLBACK' | 'REFERENCE';
 export type HistoricalAerialCoordinateOrder = 'XYZ' | 'TMS' | 'UNKNOWN';
+export type DeclaredDatasetExtent = GeographicBounds;
+export type ActualMosaicExtent = GeographicBounds;
 
 export interface HistoricalAerialSourceReference {
   provider: string;
@@ -39,7 +41,8 @@ export interface HistoricalAerialDataset {
   name: string;
   year: HistoricalAerialYear;
   date: string;
-  bounds: GeographicBounds;
+  /** Declared KML LatLonBox. It is not the pixel/mosaic footprint. */
+  bounds: DeclaredDatasetExtent;
   coverageGeometry: HistoricalAerialCoverageGeometry;
   tileTemplate: string;
   minLevel: number;
