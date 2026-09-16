@@ -152,3 +152,27 @@ Chrome headless actual page output 已於 2026-09-15 重新擷取：
 ## 8. Gate boundary
 
 本次停在 Gate A.3P，不進 Gate B。下一次涉及廈門的合法進展必須先完成 archival reverse lookup 或取得可書面確認的使用權，再以 A-01 的 single-image registration QA 驗證；QA 通過後才可評估 mosaic／terrain projection。
+
+## 9. Gate A.3P.1 visual review impact
+
+本輪 Gate A.3P.1 只對既有瀏覽器 art-review frame 做視覺 tuning，不把廈門八張影像提升為 verified dataset，也沒有將其接入 mosaic／terrain projection。廈門資料在本機仍維持：
+
+- ID：`XIAMEN_WWII_AERIAL_UNVERIFIED_01`
+- UI：`廈門二戰時期航照候選資料`／`DATE UNVERIFIED`
+- claimedDate：`1943-11-22` 僅為 metadata claim；verifiedDate 仍為 null
+- `53-8-12`／`53-8-20` 只保留為影像文字 provenance clue，不自行解讀
+- rights：local-only；public GitHub 不含 pixels 或 derived texture
+
+本輪 local-only `SOURCE_MAP` 與 aerial review screenshots 只用 Kinmen local POC，不能被解讀為 Xiamen registration evidence。GCP candidate workflow 仍為 A-01 single-image、verified target count 0、QA BLOCKED。
+
+## 9. Gate A.3P.1 visual review impact
+
+本輪 Gate A.3P.1 只對既有瀏覽器 art-review frame 做視覺 tuning，不把廈門八張影像提升為 verified dataset，也沒有將其接入 mosaic／terrain projection。廈門資料在本機仍維持：
+
+- ID：`XIAMEN_WWII_AERIAL_UNVERIFIED_01`
+- UI：`廈門二戰時期航照候選資料`／`DATE UNVERIFIED`
+- claimedDate：`1943-11-22` 僅為 metadata claim；verifiedDate 仍為 null
+- `53-8-12`／`53-8-20` 只保留為影像文字 provenance clue，不自行解讀
+- rights：local-only；public GitHub 不含 pixels 或 derived texture
+
+本輪 local-only `SOURCE_MAP` 與 aerial review screenshots 只用 Kinmen local POC，不能被解讀為 Xiamen registration evidence。GCP candidate workflow 仍為 A-01 single-image、verified target count 0、QA BLOCKED。

@@ -88,6 +88,7 @@ export interface RegionSceneOptions {
   initialAerialSelectionMode?: HistoricalAerialSelectionMode;
   initialAerialYears?: HistoricalAerialYear[];
   allowLocalAerialPoc?: boolean;
+  fixedCamera?: boolean;
 }
 
 export interface RegionDebugState {
@@ -309,6 +310,7 @@ export class RegionScene {
       mobile: options.mobile,
       reducedMotion: options.reducedMotion,
       tier: options.tier,
+      fixedCamera: options.fixedCamera,
     });
     this.terrain = createRegionTerrain(data.terrain, data.coastline, this.classificationTextures, {
       verticalExaggeration: this.verticalExaggeration,

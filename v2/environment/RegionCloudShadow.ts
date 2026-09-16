@@ -31,12 +31,45 @@ float regionEnvFbm(vec2 point) {
   return value;
 }
 
+float regionEnvFbm2(vec2 point) {
+  float value = 0.0;
+  float amplitude = 0.5;
+  for (int octave = 0; octave < 2; octave += 1) {
+    value += regionEnvNoise(point) * amplitude;
+    point = point * 2.03 + vec2(17.0, -11.0);
+    amplitude *= 0.5;
+  }
+  return value;
+}
+
 float regionEnvCloudDensity(vec2 point, float coverage) {
-  float macro = regionEnvFbm(point * 0.42 + vec2(7.2, -3.4));
-  float detail = regionEnvFbm(point * 1.35 + vec2(-2.5, 4.1));
-  float field = macro * 0.74 + detail * 0.26;
-  float threshold = mix(0.72, 0.34, clamp(coverage, 0.0, 1.0));
-  return smoothstep(threshold - 0.16, threshold + 0.08, field);
+  // The macro field establishes kilometre-scale cloud bodies, while the
+  // medium field cuts visible pockets into each body. Keeping both fields
+  // deterministic lets terrain, ocean and the cloud card share the same
+  // low-contrast shadow language without a shadow-map allocation.
+  float macro = regionEnvFbm(point * 0.72 + vec2(7.2, -3.4));
+  float medium = regionEnvFbm(point * 1.62 + vec2(-2.5, 4.1));
+  float fine = regionEnvFbm(point * 3.18 + vec2(3.6, 1.7));
+  // The FBM range is intentionally compressed toward the middle; these
+  // thresholds map W1/W2 to roughly 20–35% / 45–65% visible coverage.
+  float threshold = mix(0.57, 0.47, clamp(coverage, 0.0, 1.0));
+  float body = smoothstep(threshold - 0.065, threshold + 0.075, macro);
+  float breakup = smoothstep(0.30, 0.72, medium);
+  float pockets = smoothstep(0.36, 0.70, fine);
+  float shapedBody = body * mix(0.34, 1.0, breakup);
+  return clamp(shapedBody * mix(0.76, 1.08, pockets), 0.0, 1.0);
+}
+
+float regionEnvCloudShadowDensity(vec2 point, float coverage) {
+  // Terrain receives a cheaper two-octave proxy. The visible cloud layer
+  // keeps the full macro/medium/fine FBM; shadows only need a soft, broad
+  // correspondence and should not consume a full shadow-map budget.
+  float macro = regionEnvFbm2(point * 0.72 + vec2(7.2, -3.4));
+  float medium = regionEnvFbm2(point * 1.34 + vec2(-2.5, 4.1));
+  float threshold = mix(0.57, 0.47, clamp(coverage, 0.0, 1.0));
+  float body = smoothstep(threshold - 0.11, threshold + 0.10, macro);
+  float breakup = smoothstep(0.28, 0.76, medium);
+  return clamp(body * mix(0.48, 0.92, breakup), 0.0, 1.0);
 }
 `;
 
@@ -99,4 +132,3 @@ export function createCloudShadowState(input: {
     windSpeed: Math.max(0, Number.isFinite(input.windSpeed) ? input.windSpeed ?? 0 : 0),
   };
 }
-

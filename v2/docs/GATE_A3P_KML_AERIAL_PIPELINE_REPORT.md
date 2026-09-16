@@ -165,3 +165,23 @@ KML／WMTS 公開可讀不等於取得 pixel redistribution permission。本次 
 - Smart composite：PROMISING；已展示多年代與 BASE 分布，但仍需更大範圍、控制點與權利確認。
 - 覆蓋範圍、年度切換、source-year mask、actual Three.js DEM projection、Enhanced Ocean、Clouds、Cloud Shadows、Unified Sun、Atmosphere 與 P0/P1/P2/P3 browser evidence 已在 Gate A.3P 原型接通。
 - Gate A.3P 本輪停在此處；不進 Gate B。廈門仍是 EVIDENCE / GEOREGISTRATION RESEARCH，single-image GCP QA 尚未通過。
+
+## 11. Gate A.3P.1 fixed-camera art review binding
+
+2026-09-16 完成既有 A3P pipeline 的 local visual tuning，不新增資料產品，也不改變 KML／registry 的 provenance 結論：
+
+- fixed camera：`ART_REVIEW_KINMEN_XIAMEN_01`，query alias `camera=art-review-kinmen-xiamen-01`。
+- 1944／1945／1958 KML registry、coverage outline、source-year mask、year switching 與 1944／1945 Smart Composite 仍由既有 pipeline 提供；1958 只作 missing-data fallback。
+- browser review 另驗證 Enhanced Ocean、Cloud、Cloud Shadow、Unified Sun、Atmosphere 以及 P0/P1/P2/P3；A3P.1 截圖分為 GitHub-safe 與 `.local`。
+- safe screenshots：`docs/2.0/screenshots/gate-a3p1/`；aerial pixels／source map／opacity／relief matrix：`.local/aerial-poc/screenshots/gate-a3p1/`。
+- 本輪沒有把 Xiamen 八張影像接入 Kinmen terrain projection；Xiamen 仍停在 single-image GCP candidate workflow。
+
+## 11. Gate A.3P.1 fixed-camera art review binding
+
+2026-09-16 完成既有 A3P pipeline 的 local visual tuning，不新增資料產品，也不改變 KML／registry 的 provenance 結論：
+
+- fixed camera：`ART_REVIEW_KINMEN_XIAMEN_01`，query alias `camera=art-review-kinmen-xiamen-01`。
+- 1944／1945／1958 KML registry、coverage outline、source-year mask、year switching 與 1944／1945 Smart Composite 仍由既有 pipeline 提供；1958 只作 missing-data fallback。
+- browser review 另驗證 Enhanced Ocean、Cloud、Cloud Shadow、Unified Sun、Atmosphere 以及 P0/P1/P2/P3；A3P.1 截圖分為 GitHub-safe 與 `.local`。
+- safe screenshots：`docs/2.0/screenshots/gate-a3p1/`；aerial pixels／source map／opacity／relief matrix：`.local/aerial-poc/screenshots/gate-a3p1/`。
+- 本輪沒有把 Xiamen 八張影像接入 Kinmen terrain projection；Xiamen 仍停在 single-image GCP candidate workflow。

@@ -20,7 +20,7 @@ function cloudResolution(tier: RegionPerformanceTier) {
 
 export function createRegionClouds(tier: RegionPerformanceTier): RegionCloudsHandle {
   const settings = tierSettings(tier);
-  const geometry = new THREE.PlaneGeometry(190, 190, cloudResolution(tier), cloudResolution(tier));
+  const geometry = new THREE.PlaneGeometry(240, 240, cloudResolution(tier), cloudResolution(tier));
   geometry.rotateX(-Math.PI / 2);
   const uniforms = {
     time: { value: 0 },
@@ -30,6 +30,7 @@ export function createRegionClouds(tier: RegionPerformanceTier): RegionCloudsHan
     windDirection: { value: new THREE.Vector2(0.86, 0.5) },
     windSpeed: { value: 0.42 },
     sunColor: { value: new THREE.Color('#f0d7a0') },
+    sunDirection: { value: new THREE.Vector3(-0.42, 0.86, 0.28).normalize() },
     skyColor: { value: new THREE.Color('#a7aaa0') },
     atmosphereDensity: { value: 0.007 },
   };
@@ -55,20 +56,28 @@ export function createRegionClouds(tier: RegionPerformanceTier): RegionCloudsHan
       uniform vec2 windDirection;
       uniform float windSpeed;
       uniform vec3 sunColor;
+      uniform vec3 sunDirection;
       uniform vec3 skyColor;
       uniform float atmosphereDensity;
       varying vec3 vCloudWorldPosition;
       ${REGION_CLOUD_DENSITY_GLSL}
       void main() {
         vec2 wind = windDirection * time * windSpeed * 0.00008;
-        vec2 fieldPoint = vCloudWorldPosition.xz * 0.026 + wind;
+        // 1 world unit is approximately 1 km in the regional renderer. The
+        // larger field scale keeps masses legible from the strategic camera.
+        vec2 fieldPoint = vCloudWorldPosition.xz * 0.055 + wind;
         float density = regionEnvCloudDensity(fieldPoint, coverage);
-        float edge = 1.0 - smoothstep(66.0, 96.0, length(vCloudWorldPosition.xz));
-        float thin = regionEnvNoise(fieldPoint * 0.38 + vec2(4.0, -8.0));
-        float alpha = density * opacity * edge * mix(0.72, 1.08, thin);
-        if (alpha < 0.012) discard;
-        vec3 cloudColor = mix(skyColor, sunColor, 0.26 + density * 0.18);
-        cloudColor = mix(cloudColor, vec3(0.82, 0.85, 0.82), atmosphereDensity * 18.0);
+        float largeMass = smoothstep(0.16, 0.82, regionEnvFbm(fieldPoint * 0.38 + vec2(-5.0, 2.0)));
+        float mediumBreakup = smoothstep(0.24, 0.78, regionEnvFbm(fieldPoint * 1.46 + vec2(4.0, -8.0)));
+        float edge = 1.0 - smoothstep(142.0, 182.0, length(vCloudWorldPosition.xz));
+        float body = density * mix(0.46, 1.06, mediumBreakup) * mix(0.82, 1.12, largeMass);
+        float alpha = clamp(body * opacity * 1.52 * edge, 0.0, 0.78);
+        if (alpha < 0.015) discard;
+        float lightFacing = clamp(0.58 + sunDirection.y * 0.16 + density * 0.22 + largeMass * 0.08, 0.0, 1.0);
+        vec3 shadowTint = mix(skyColor * 0.52, sunColor * 0.48, 0.18);
+        vec3 highlightTint = mix(vec3(0.68, 0.72, 0.69), vec3(0.92, 0.9, 0.83), 0.34);
+        vec3 cloudColor = mix(shadowTint, highlightTint, lightFacing);
+        cloudColor = mix(cloudColor, vec3(0.82, 0.85, 0.82), atmosphereDensity * 11.0);
         gl_FragColor = vec4(cloudColor, alpha);
       }
     `,
@@ -90,6 +99,7 @@ export function createRegionClouds(tier: RegionPerformanceTier): RegionCloudsHan
       uniforms.windDirection.value.set(state.windDirection.x, state.windDirection.y);
       uniforms.windSpeed.value = state.windSpeed;
       uniforms.sunColor.value.set(state.sunColor);
+      uniforms.sunDirection.value.set(state.sunDirection.x, state.sunDirection.y, state.sunDirection.z).normalize();
       uniforms.atmosphereDensity.value = state.atmosphereDensity;
       mesh.position.y = state.cloudAltitude;
     },

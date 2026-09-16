@@ -1,0 +1,130 @@
+{
+  "generatedAt": "2026-09-16T00:56:34.358Z",
+  "browser": "Chrome headless actual page output",
+  "camera": "ART_REVIEW_KINMEN_XIAMEN_01",
+  "viewport": "1920×1080",
+  "deterministicSeed": "shader constants / no random runtime input",
+  "privacy": "safe screenshots only; local-only screenshots remain ignored",
+  "screenshots": [
+    {
+      "name": "A01_BASE",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "BASE：現代 DEM／P0／W0，固定 ART_REVIEW_KINMEN_XIAMEN_01。",
+      "path": "docs/2.0/screenshots/gate-a3p1/A01_BASE.png",
+      "bytes": 1473362
+    },
+    {
+      "name": "A03_OCEAN",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Ocean before：P0 baseline sea shell。",
+      "path": "docs/2.0/screenshots/gate-a3p1/A03_OCEAN.png",
+      "bytes": 1473017
+    },
+    {
+      "name": "OCEAN_ENHANCED",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Ocean after：P1 enhanced sea shell／coastal depth proxy。",
+      "path": "docs/2.0/screenshots/gate-a3p1/OCEAN_ENHANCED.png",
+      "bytes": 1512212
+    },
+    {
+      "name": "A04_CLOUD",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&disable=cloudShadows&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Cloud after：P1／W1，關閉 cloud shadow 以隔離雲層形狀。",
+      "path": "docs/2.0/screenshots/gate-a3p1/A04_CLOUD.png",
+      "bytes": 1600711
+    },
+    {
+      "name": "A05_CLOUD_SHADOW",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Cloud shadow：P1／W1，雲層與低對比投影同步。",
+      "path": "docs/2.0/screenshots/gate-a3p1/A05_CLOUD_SHADOW.png",
+      "bytes": 1600763
+    },
+    {
+      "name": "DAYLIGHT_T0",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Historical Daylight／P1／W1 art review。",
+      "path": "docs/2.0/screenshots/gate-a3p1/DAYLIGHT_T0.png",
+      "bytes": 1600389
+    },
+    {
+      "name": "DAWN_T1",
+      "query": "?historical=H0&environment=P1&time=T1&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Battlefield Dawn／P1／W1 art review。",
+      "path": "docs/2.0/screenshots/gate-a3p1/DAWN_T1.png",
+      "bytes": 1620102
+    },
+    {
+      "name": "OCEAN_SHALLOW_DEEP",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "固定鏡位海面深度分層：SHALLOW／INTERMEDIATE／DEEP coastal proxy。",
+      "path": "docs/2.0/screenshots/gate-a3p1/OCEAN_SHALLOW_DEEP.png",
+      "bytes": 1511896
+    },
+    {
+      "name": "CLOUD_W0",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "W0 clear：雲覆蓋 0%。",
+      "path": "docs/2.0/screenshots/gate-a3p1/CLOUD_W0.png",
+      "bytes": 1511871
+    },
+    {
+      "name": "CLOUD_W1",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "W1 light cloud：目標視覺覆蓋約 20–35%。",
+      "path": "docs/2.0/screenshots/gate-a3p1/CLOUD_W1.png",
+      "bytes": 1600231
+    },
+    {
+      "name": "CLOUD_W2",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W2&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "W2 broken cloud：目標視覺覆蓋約 45–65%。",
+      "path": "docs/2.0/screenshots/gate-a3p1/CLOUD_W2.png",
+      "bytes": 1612574
+    },
+    {
+      "name": "COVERAGE",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&coverage=on&camera=art-review-kinmen-xiamen-01&debug=closed",
+      "privacy": "safe",
+      "note": "Coverage outline：公開安全的範圍界線檢視。",
+      "path": "docs/2.0/screenshots/gate-a3p1/COVERAGE.png",
+      "bytes": 1473638
+    },
+    {
+      "name": "PERFORMANCE_FULL_DAY",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "note": "P1 full-day performance readout：FPS／frame time／draw／triangles／ready。",
+      "path": "docs/2.0/screenshots/gate-a3p1/PERFORMANCE_FULL_DAY.png",
+      "bytes": 1616033
+    },
+    {
+      "name": "PERF_P0",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "note": "P0 performance readout。",
+      "path": "docs/2.0/screenshots/gate-a3p1/PERF_P0.png",
+      "bytes": 1491913
+    },
+    {
+      "name": "PERF_P1",
+      "query": "?historical=H0&environment=P1&time=T0&weather=W1&camera=art-review-kinmen-xiamen-01&debug=open",
+      "privacy": "safe",
+      "note": "P1 performance readout。",
+      "path": "docs/2.0/screenshots/gate-a3p1/PERF_P1.png",
+      "bytes": 1615893
+    }
+  ]
+}

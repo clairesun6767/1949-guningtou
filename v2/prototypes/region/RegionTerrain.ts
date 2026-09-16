@@ -313,11 +313,14 @@ export function createRegionTerrain(
         float coverageLine = 1.0 - smoothstep(0.0, 0.035, abs(aerialEdge));
         diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.88, 0.48, 0.24), coverageLine);
       }
-      vec2 cloudPoint = vRegionPlanarPosition + regionCloudShadowOffset
-        + regionCloudShadowWindDirection * regionCloudShadowTime * regionCloudShadowWindSpeed * 0.00008;
-      float cloudDensity = regionEnvCloudDensity(cloudPoint * 0.026, regionCloudShadowCoverage);
-      float cloudDarkening = regionCloudShadowEnabled * cloudDensity * regionCloudShadowStrength;
-      diffuseColor.rgb *= 1.0 - cloudDarkening * 0.38;
+      float cloudDarkening = 0.0;
+      if (regionCloudShadowEnabled > 0.5 && regionCloudShadowStrength > 0.001) {
+        vec2 cloudPoint = vRegionPlanarPosition + regionCloudShadowOffset
+          + regionCloudShadowWindDirection * regionCloudShadowTime * regionCloudShadowWindSpeed * 0.00008;
+        cloudDarkening = regionEnvCloudShadowDensity(cloudPoint * 0.055, regionCloudShadowCoverage)
+          * regionCloudShadowStrength;
+      }
+      diffuseColor.rgb *= 1.0 - cloudDarkening * 0.9;
       float contour = 1.0 - smoothstep(0.0, 0.07, abs(fract(vRegionHeight * 11.0) - 0.5));
       float contourStrength = regionContourMode < 0.5 ? 0.0 : regionContourMode < 1.5 ? 0.12 : 0.24;
       diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * vec3(0.48, 0.46, 0.34), contour * contourStrength);

@@ -253,6 +253,7 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-source-panel strong { min-width: 0; color: var(--region-ink); font-family: var(--region-mono); font-size: 8px; font-weight: 400; overflow-wrap: anywhere; }
 .region-source-panel p { margin: 7px 0 0; color: var(--region-muted); font-size: 8px; line-height: 1.55; }
 .region-source-panel small { display: block; margin-top: 7px; color: #c4a587; font-size: 8px; line-height: 1.45; }
+.region-source-panel .region-visual-disclosure { color: var(--region-brass); letter-spacing: .08em; }
 .region-source-panel--research { border-color: rgba(143, 180, 168, .28); background: rgba(143, 180, 168, .045); }
 .region-source-panel--research span { color: #8fb4a8; }
 .region-xiamen-aerial-panel { border-color: rgba(213, 184, 119, .32); background: rgba(213, 184, 119, .045); }
@@ -325,6 +326,7 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-debug__range-label { display: flex; justify-content: space-between; margin-top: 10px; color: var(--region-muted); }
 .region-debug__range-label output { color: var(--region-brass); }
 .region-debug__range { display: block; width: 100%; margin: 8px 0 4px; accent-color: var(--region-brass); }
+.region-environment-disclosure { margin: 8px 0 0; color: #c4a587; font-size: 7px; line-height: 1.45; letter-spacing: .04em; }
 .region-debug__opacity-steps { margin-top: 5px; }
 .region-debug__coverage { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-top: 6px; border: 1px solid rgba(225, 220, 194, .12); padding: 6px; background: rgba(255, 255, 255, .02); color: var(--region-faint); font-size: 7px; text-align: left; }
 .region-debug__coverage.is-on { border-color: rgba(213, 184, 119, .46); color: var(--region-brass); background: rgba(213, 184, 119, .1); }
@@ -333,6 +335,12 @@ button { color: inherit; font: inherit; cursor: pointer; }
 .region-debug__blocked { margin: 9px 0 0; border-left: 2px solid var(--region-oxide); padding-left: 8px; color: #c4a587; font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; font-size: 10px; line-height: 1.55; letter-spacing: 0; }
 .region-debug__stats { margin-top: 10px; border-top: 1px solid var(--region-line); padding-top: 10px; color: var(--region-faint); font-size: 7px; line-height: 1.75; }
 .region-debug-reopen { position: fixed; z-index: 30; right: 18px; bottom: 48px; border: 1px solid rgba(213, 184, 119, .4); padding: 8px 10px; background: rgba(10, 17, 17, .88); color: var(--region-brass); font-size: 8px; }
+
+@media (min-width: 981px) {
+  .region-main { height: calc(100svh - 104px); min-height: 0; }
+  .region-viewport { height: 100%; min-height: 0; }
+  .region-side-rail { height: 100%; min-height: 0; overflow-y: auto; }
+}
 
 @media (max-width: 980px) {
   .region-main { grid-template-columns: 1fr; }

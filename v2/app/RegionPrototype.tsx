@@ -56,6 +56,7 @@ const ENVIRONMENT_MODE_OPTIONS: EnvironmentBenchmarkMode[] = ['P0', 'P1', 'P2', 
 const ENVIRONMENT_TIME_OPTIONS: EnvironmentTimePreset[] = ['T0', 'T1', 'T2'];
 const ENVIRONMENT_WEATHER_OPTIONS: EnvironmentWeather[] = ['W0', 'W1', 'W2'];
 const HISTORICAL_SELECTION_OPTIONS: HistoricalAerialSelectionMode[] = ['smart', 'single', 'comparison', 'distribution'];
+const ENVIRONMENT_DEBUG_KEYS: Array<keyof EnvironmentDebugState> = ['ocean', 'coastalDepth', 'oceanMotion', 'sunGlint', 'clouds', 'cloudShadows', 'atmosphere', 'fog', 'shadow', 'postProcessing'];
 
 function firstQueryValue<T extends string>(value: string | null | undefined, values: readonly T[], fallback: T) {
   return value && values.includes(value as T) ? value as T : fallback;
@@ -63,6 +64,8 @@ function firstQueryValue<T extends string>(value: string | null | undefined, val
 
 interface RegionQueryState {
   localAerialPoc: boolean;
+  fixedArtReviewCamera: boolean;
+  initialAerialOpacity: number;
   historicalBenchmark: HistoricalBenchmarkMode;
   environmentMode: EnvironmentBenchmarkMode;
   environmentTime: EnvironmentTimePreset;
@@ -77,12 +80,19 @@ interface RegionQueryState {
 function readRegionQueryState(search = ''): RegionQueryState {
   const params = new URLSearchParams(search);
   const localAerialPoc = params.get('aerial') === 'local';
-  const historicalBenchmark = firstQueryValue(params.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, localAerialPoc ? 'H4' : 'H0');
+  const fixedArtReviewCamera = params.get('camera')?.toLowerCase() === 'art-review-kinmen-xiamen-01';
+  const historicalBenchmark = firstQueryValue(params.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, localAerialPoc ? 'H7' : 'H0');
+  const requestedOpacity = Number(params.get('opacity'));
+  const initialAerialOpacity = Number.isFinite(requestedOpacity) && requestedOpacity >= 0 && requestedOpacity <= 100
+    ? Math.round(requestedOpacity)
+    : localAerialPoc ? 65 : 0;
   const queryYear = Number(params.get('year'));
   const benchmarkMode = params.has('benchmark');
 
   return {
     localAerialPoc,
+    fixedArtReviewCamera,
+    initialAerialOpacity,
     historicalBenchmark,
     environmentMode: firstQueryValue(params.get('environment')?.toUpperCase(), ENVIRONMENT_MODE_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].environmentMode),
     environmentTime: firstQueryValue(params.get('time')?.toUpperCase(), ENVIRONMENT_TIME_OPTIONS, 'T0'),
@@ -125,6 +135,8 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   const [queryState, setQueryState] = useState<RegionQueryState>(() => readRegionQueryState());
   const {
     localAerialPoc,
+    fixedArtReviewCamera,
+    initialAerialOpacity: queryInitialAerialOpacity,
     historicalBenchmark: queryHistoricalBenchmark,
     environmentMode: queryEnvironmentMode,
     environmentTime: queryEnvironmentTime,
@@ -147,9 +159,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   const [variant, setVariant] = useState<RegionVariantId>('neutral');
   const [terrainQuality, setTerrainQuality] = useState<RegionTerrainQualityId>('B');
   const [verticalExaggeration, setVerticalExaggeration] = useState<number>(1.5);
-  const [lightingMode, setLightingMode] = useState<RegionLightingMode>('CURRENT');
+  const [lightingMode, setLightingMode] = useState<RegionLightingMode>(queryHistoricalBenchmark === 'H6' || queryHistoricalBenchmark === 'H7' ? 'RELIEF' : 'CURRENT');
   const [historicalMode, setHistoricalMode] = useState<HistoricalAerialMode>(ENVIRONMENT_HISTORICAL_MODES[queryHistoricalBenchmark].aerialMode);
-  const [aerialOpacity, setAerialOpacity] = useState(localAerialPoc ? 65 : 0);
+  const [aerialOpacity, setAerialOpacity] = useState(queryInitialAerialOpacity);
   const [historicalBenchmarkMode, setHistoricalBenchmarkMode] = useState<HistoricalBenchmarkMode>(queryHistoricalBenchmark);
   const [environmentMode, setEnvironmentMode] = useState<EnvironmentBenchmarkMode>(queryEnvironmentMode);
   const [environmentTime, setEnvironmentTime] = useState<EnvironmentTimePreset>(queryEnvironmentTime);
@@ -183,7 +195,15 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   useEffect(() => {
     const nextQueryState = readRegionQueryState(window.location.search);
     setQueryState(nextQueryState);
-    setAerialOpacity(nextQueryState.localAerialPoc ? 65 : 0);
+    setAerialOpacity(nextQueryState.initialAerialOpacity);
+    setHistoricalBenchmarkMode(nextQueryState.historicalBenchmark);
+    setEnvironmentMode(nextQueryState.environmentMode);
+    setEnvironmentTime(nextQueryState.environmentTime);
+    setEnvironmentWeather(nextQueryState.environmentWeather);
+    setHistoricalSelectionMode(nextQueryState.selectionMode);
+    setAerialYear(nextQueryState.aerialYear);
+    setHistoricalMode(ENVIRONMENT_HISTORICAL_MODES[nextQueryState.historicalBenchmark].aerialMode);
+    setLightingMode(nextQueryState.historicalBenchmark === 'H6' || nextQueryState.historicalBenchmark === 'H7' ? 'RELIEF' : 'CURRENT');
     setProfile(deviceProfile());
     setProfileReady(true);
   }, []);
@@ -205,6 +225,10 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     const requestedEnvironmentWeather = firstQueryValue(params.get('weather')?.toUpperCase(), ENVIRONMENT_WEATHER_OPTIONS, queryEnvironmentWeather);
     const requestedSelectionMode = firstQueryValue(params.get('mode')?.toLowerCase(), HISTORICAL_SELECTION_OPTIONS, querySelectionMode);
     const requestedCoverage = params.get('coverage')?.toLowerCase() === 'on';
+    const disabledEnvironmentFeatures = (params.get('disable') ?? '')
+      .split(',')
+      .map(value => value.trim() as keyof EnvironmentDebugState)
+      .filter(value => ENVIRONMENT_DEBUG_KEYS.includes(value));
     const shotConfigs: Record<string, ReviewConfiguration> = {
       wide: { preset: 'hero', variant: 'neutral', quality: 'A', vertical: REGION_CONFIG.terrain.verticalExaggeration, lighting: 'CURRENT', historicalMode: 'OFF' },
       kinmen: { preset: 'kinmen', variant: 'cinematic', quality: 'A', vertical: REGION_CONFIG.terrain.verticalExaggeration, lighting: 'CURRENT', historicalMode: 'OFF' },
@@ -250,7 +274,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     if (params.get('debug') === 'open') setDebugOpen(true);
     const presetIds: RegionPresetId[] = ['hero', 'xiamen', 'kinmen', 'guningtou'];
     const variantIds: RegionVariantId[] = ['neutral', 'cinematic', 'historical'];
-    const nextPreset = presetIds.includes(requestedPreset as RegionPresetId)
+    const nextPreset = fixedArtReviewCamera
+      ? 'hero'
+      : presetIds.includes(requestedPreset as RegionPresetId)
       ? requestedPreset as RegionPresetId
       : queryConfig?.preset ?? null;
     const nextVariant = variantIds.includes(requestedVariant as RegionVariantId)
@@ -278,6 +304,15 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     sceneRef.current?.setHistoricalSelectionMode(requestedSelectionMode);
     sceneRef.current?.setCoverageMaskDebug(requestedCoverage);
     sceneRef.current?.setHistoricalYear(queryAerialYear);
+    if (localAerialPoc || params.has('opacity')) {
+      setAerialOpacity(queryInitialAerialOpacity);
+      sceneRef.current?.setAerialOpacity(queryInitialAerialOpacity);
+    }
+    if (disabledEnvironmentFeatures.length) {
+      const nextEnvironmentDebug = Object.fromEntries(disabledEnvironmentFeatures.map(key => [key, false])) as Partial<EnvironmentDebugState>;
+      setEnvironmentDebug(current => ({ ...current, ...nextEnvironmentDebug }));
+      sceneRef.current?.setEnvironmentDebug(nextEnvironmentDebug);
+    }
     if (historicalBenchmarkConfig && (historical?.match(/^H[0-7]$/i) || localAerialPoc || params.has('environment'))) {
       setHistoricalMode(historicalBenchmarkConfig.aerialMode);
       sceneRef.current?.setHistoricalMode(historicalBenchmarkConfig.aerialMode);
@@ -338,7 +373,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           qualitySource: benchmarkMode ? 'benchmark' : 'composition',
           initialQuality: benchmarkMode ? 'A' : 'B',
           initialVerticalExaggeration: benchmarkMode ? REGION_CONFIG.terrain.verticalExaggeration : 1.5,
-          initialLightingMode: 'CURRENT',
+          initialLightingMode: historicalMode === 'AERIAL_RELIEF' ? 'RELIEF' : 'CURRENT',
           initialHistoricalMode: historicalMode,
           initialHistoricalToneEnabled: historicalReviewMode,
           initialAerialOpacity: aerialOpacity,
@@ -351,6 +386,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           initialAerialSelectionMode: historicalSelectionMode,
           initialAerialYears: aerialYears,
           allowLocalAerialPoc: localAerialPoc,
+          fixedCamera: fixedArtReviewCamera,
           onStage: nextStage => {
             if (!disposed) setStage(nextStage);
           },
@@ -633,19 +669,19 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             <p className="region-hero-copy__english">KINMEN — XIAMEN</p>
             <p className="region-hero-copy__lede">一水之隔，兩岸對峙。<br />從金廈海域，重新理解古寧頭戰場的地理尺度。</p>
             <div className="region-hero-copy__rule" />
-            <p className="region-hero-copy__caption">歷史地形原型／1945 航照來源審查<br /><span>REALTIME BROWSER PROTOTYPE · MODERN ELEVATION REFERENCE</span></p>
+            <p className="region-hero-copy__caption">歷史地形原型／{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE／LOCAL REVIEW' : '航照來源審查'}<br /><span>REALTIME BROWSER PROTOTYPE · MODERN ELEVATION REFERENCE</span></p>
           </div>
 
           <div className="region-source-callout">
-            <span>1945 航照影像</span>
+            <span>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : `${aerialYear} 航照影像`}</span>
             <strong>資料授權確認中</strong>
             <small>中央研究院人社中心／地理資訊科學研究專題中心</small>
           </div>
 
           <div className="region-viewport__source-card">
-            <span>{stats?.aerialYear ?? aerialYear} 航空照片／低解析 POC</span>
-            <strong>歷史影像來源審查</strong>
-            <small>中央研究院人社中心／地理資訊科學研究專題中心<br />MODERN DEM 保留；航照像素僅供本機檢視</small>
+            <span>{localAerialPoc && historicalSelectionMode === 'smart' ? '1944＋1945／SMART COMPOSITE' : `${stats?.aerialYear ?? aerialYear} 航空照片／低解析 POC`}</span>
+            <strong>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : '歷史影像來源審查'}</strong>
+            <small>{localAerialPoc && historicalSelectionMode === 'smart' ? '非單一年代史料；1944／1945 primary，1958 僅作 fallback' : '中央研究院人社中心／地理資訊科學研究專題中心'}<br />MODERN DEM 保留；航照像素僅供本機檢視</small>
           </div>
 
           <div className="region-compass" aria-hidden="true">
@@ -743,8 +779,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             <div><i className="is-battle" /><span>戰役資料<small>尚未載入</small></span></div>
           </div>
           <div className="region-source-panel">
-            <div><span>歷史來源／SOURCE</span><strong>{historicalSelectionMode === 'smart' ? '44＋45 PRIMARY／58 FALLBACK' : `${aerialYear}／LOCAL POC`}</strong></div>
-            <p>中央研究院人社中心／地理資訊科學研究專題中心<br />KML MapTilePyramid · PNG · EPSG:3857</p>
+            <div><span>歷史來源／SOURCE</span><strong>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : historicalSelectionMode === 'smart' ? 'SMART／SOURCE REVIEW' : `${aerialYear}／LOCAL POC`}</strong></div>
+            <p>{historicalSelectionMode === 'smart' ? '44＋45 PRIMARY／58 FALLBACK' : `${aerialYear} 單年度來源`}<br />中央研究院人社中心／地理資訊科學研究專題中心<br />KML MapTilePyramid · PNG · EPSG:3857</p>
+            {localAerialPoc && historicalSelectionMode === 'smart' && <small className="region-visual-disclosure">VISUAL COMPOSITE／非單一年代史料</small>}
             <small>{localAerialPoc ? '本機 POC：像素不公開；權利狀態仍為確認中' : '權利狀態：資料授權確認中／不請求像素'}</small>
           </div>
           <div className="region-source-panel region-source-panel--research">
@@ -818,8 +855,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
               {ENVIRONMENT_WEATHER_OPTIONS.map(id => <button type="button" className={environmentWeather === id ? 'is-selected' : ''} onClick={() => chooseEnvironmentWeather(id)} key={id}>{id}<small>{id === 'W0' ? '晴朗' : id === 'W1' ? '薄雲' : '多雲'}</small></button>)}
             </div>
             <div className="region-debug__grid">
-              {(['ocean', 'coastalDepth', 'oceanMotion', 'sunGlint', 'clouds', 'cloudShadows', 'atmosphere'] as Array<keyof EnvironmentDebugState>).map(key => <button type="button" className={environmentDebug[key] ? 'is-on' : ''} onClick={() => toggleEnvironmentFeature(key)} key={key}>{key === 'ocean' ? '海面' : key === 'coastalDepth' ? '海岸深度' : key === 'oceanMotion' ? '海面動態' : key === 'sunGlint' ? '日光閃爍' : key === 'clouds' ? '雲' : key === 'cloudShadows' ? '雲影' : '大氣'}<i /></button>)}
+              {(['ocean', 'coastalDepth', 'oceanMotion', 'sunGlint', 'clouds', 'cloudShadows', 'atmosphere'] as Array<keyof EnvironmentDebugState>).map(key => <button type="button" className={environmentDebug[key] ? 'is-on' : ''} onClick={() => toggleEnvironmentFeature(key)} key={key}>{key === 'ocean' ? '海面' : key === 'coastalDepth' ? '海岸深度代理' : key === 'oceanMotion' ? '海面動態' : key === 'sunGlint' ? '日光閃爍' : key === 'clouds' ? '雲' : key === 'cloudShadows' ? '雲影' : '大氣'}<i /></button>)}
             </div>
+            <p className="region-environment-disclosure">ART-DIRECTION COASTAL DEPTH PROXY／SHALLOW · INTERMEDIATE · DEEP／非真實測深</p>
             <div className="region-debug__range-label"><span>雲覆蓋</span><output>{Math.round(cloudControls.coverage * 100)}%</output></div>
             <input className="region-debug__range" type="range" min="0" max="100" value={Math.round(cloudControls.coverage * 100)} onChange={event => chooseCloudControl('coverage', Number(event.currentTarget.value) / 100)} aria-label="雲覆蓋" />
             <div className="region-debug__range-label"><span>雲影強度</span><output>{Math.round(cloudControls.shadowStrength * 100)}%</output></div>

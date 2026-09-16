@@ -125,3 +125,33 @@ http://localhost:4321/1949-guningtou/v2/region/?historical=H4&aerial=local&envir
 - Atmosphere：KEEP
 - Unified Sun：BENCHMARKED／PARTIAL ART SIGN-OFF
 - P0/P1/P2/P3：actual browser benchmark 已完成；P2/P3 的 aerial pixels 只在 local-only route，仍受 rights 與正射校正限制。
+
+## 11. Gate A.3P.1 local visual tuning
+
+2026-09-16 以固定 `ART_REVIEW_KINMEN_XIAMEN_01` 完成同鏡位視覺調校與 Chrome wall-clock rAF benchmark：
+
+| Profile | FPS | CPU frame | p95 | DRAW | READY |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| P0 | 60.0 | 16.7 ms | 16.8 ms | 4 | 770 ms |
+| P1 | 60.0 | 16.7 ms | 16.8 ms | 5 | 781 ms |
+| P2 | 60.0 | 16.7 ms | 16.8 ms | 4 | 859 ms |
+| P3 | 60.0 | 16.7 ms | 16.8 ms | 5 | 891 ms |
+
+本輪的 visible cloud 使用 deterministic macro／medium／fine FBM；terrain cloud shadow 使用 enabled guard 加低頻 two-octave proxy，避免 W0／P0 為關閉狀態時仍計算完整雲影。Ocean 新增 intermediate palette 與 coastal distance proxy，並在 UI 揭露 `ART-DIRECTION COASTAL DEPTH PROXY`。完整參數、before／after、截圖與限制見 `v2/docs/GATE_A3P1_VISUAL_TUNING_REPORT.md`。
+
+狀態：`GATE A.3P.1 — READY FOR ART REVIEW`。不進 Gate B。
+
+## 11. Gate A.3P.1 local visual tuning
+
+2026-09-16 以固定 `ART_REVIEW_KINMEN_XIAMEN_01` 完成同鏡位視覺調校與 Chrome wall-clock rAF benchmark：
+
+| Profile | FPS | CPU frame | p95 | DRAW | READY |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| P0 | 60.0 | 16.7 ms | 16.8 ms | 4 | 785 ms |
+| P1 | 60.0 | 16.7 ms | 16.8 ms | 5 | 813 ms |
+| P2 | 60.0 | 16.7 ms | 16.9 ms | 4 | 916 ms |
+| P3 | 60.0 | 16.7 ms | 16.8 ms | 5 | 886 ms |
+
+本輪的 visible cloud 使用 deterministic macro／medium／fine FBM；terrain cloud shadow 使用 enabled guard 加低頻 two-octave proxy，避免 W0／P0 為關閉狀態時仍計算完整雲影。Ocean 新增 intermediate palette 與 coastal distance proxy，並在 UI 揭露 `ART-DIRECTION COASTAL DEPTH PROXY`。完整參數、before／after、截圖與限制見 `v2/docs/GATE_A3P1_VISUAL_TUNING_REPORT.md`。
+
+狀態：`GATE A.3P.1 — READY FOR ART REVIEW`。不進 Gate B。

@@ -20,6 +20,7 @@ export interface RegionCameraOptions {
   mobile: boolean;
   reducedMotion: boolean;
   tier: RegionPerformanceTier;
+  fixedCamera?: boolean;
 }
 
 export function clampRegionDistance(distance: number, mobile = false) {
@@ -92,7 +93,7 @@ export class RegionCamera {
       target.y + vertical,
       target.z + Math.cos(azimuth) * horizontal,
     );
-    this.controls.autoRotate = id === 'hero' && !this.options.reducedMotion;
+    this.controls.autoRotate = id === 'hero' && !this.options.reducedMotion && !this.options.fixedCamera;
     const tween: CameraTween = {
       startedAt: performance.now(),
       duration: this.options.reducedMotion ? 0 : 900,

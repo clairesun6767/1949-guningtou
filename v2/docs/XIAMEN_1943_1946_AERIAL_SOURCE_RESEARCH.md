@@ -154,3 +154,9 @@ NHHC 的 Box 17／S-2「panoramic of Amoy & Kulangsu」只能證明值得索取�
 繼續搜尋／申請廈門 aerial：YES。
 
 下一步應向 NHHC、NARA、USAAF／Air Force records 與中研院提出具體詢問，要求 flight、mission、frame／spot、exposure、film-can、negative／print number、digitization status、reproduction fee、high-resolution application 與 derivative／public-web rights。取得書面確認前，Xiamen 只顯示 source coverage／research state，不產生 historical texture。
+
+## 6. Gate A.3P.1 boundary confirmation
+
+2026-09-16 的 Gate A.3P.1 browser art review 沿用本研究的 rights boundary：NHHC UA 25.01、NARA RG 373／24N118E、USAAF 14th Air Force／21st PRS 仍沒有補足 flight、mission、frame、spot、exposure、film can、negative／print number 或 exact date 的 verified chain。故本輪不改寫日期、不把八張 JPEG 轉為 public historical dataset。
+
+廈門影像只允許在 `.local/aerial-poc/xiamen/` 作 EVIDENCE／GEOREGISTRATION RESEARCH；下一步仍是 A-01 single-image GCP candidate review，必須先以至少四個可核對 reference target、residual ≤ 8 pixels 的 QA 規則通過，才可研究 mosaic。Gate A.3P.1 的安全瀏覽器截圖與報告不含這些像素。
