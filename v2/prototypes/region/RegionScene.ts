@@ -14,7 +14,13 @@ import type {
 } from '../../config/environment.js';
 import type { HistoricalAerialYear } from '../../shared/historicalAerialDataset.js';
 import type { HistoricalAerialSelectionMode } from '../../shared/historicalAerialSelection.js';
-import { HISTORICAL_AERIAL_DATASETS, HISTORICAL_AERIAL_POC_REQUEST } from '../../config/historicalAerialRegistry.js';
+import {
+  GUNINGTOU_GEO_REVIEW_LANDMARKS,
+  HISTORICAL_AERIAL_DATASETS,
+  HISTORICAL_AERIAL_POC_REQUEST,
+  guningtouHigherZoomTileRange,
+  type GuningtouHigherZoom,
+} from '../../config/historicalAerialRegistry.js';
 import {
   REGION_CONFIG,
   type RegionContourMode,
@@ -33,7 +39,11 @@ import {
   type RegionQualityTerrainAsset,
 } from '../../shared/regionDataProvider.js';
 import { lonLatToWorld } from '../../shared/geo.js';
-import { enumerateHistoricalAerialTiles, tileBounds } from '../../shared/historicalAerialTiles.js';
+import {
+  enumerateHistoricalAerialTileRange,
+  enumerateHistoricalAerialTiles,
+  tileBounds,
+} from '../../shared/historicalAerialTiles.js';
 import type { RegionAtmosphereHandle } from './RegionAtmosphere.js';
 import { RegionCamera, type RegionCameraConstraintSnapshot } from './RegionCamera.js';
 import { createRegionLabels, type RegionLabelsHandle } from './RegionLabels.js';
@@ -105,6 +115,75 @@ function createAerialTileDebugGroup() {
   return group;
 }
 
+function createGuningtouHigherZoomTileDebugGroup(zoom: GuningtouHigherZoom) {
+  const group = new THREE.Group();
+  group.name = 'v2-region-guningtou-higher-zoom-tile-debug';
+  const range = guningtouHigherZoomTileRange(zoom);
+  const tiles = enumerateHistoricalAerialTileRange(range, 'XYZ');
+  const colors = new Map<number, string>([[1944, '#c49754'], [1945, '#68a496'], [1958, '#ab75b1']]);
+
+  HISTORICAL_AERIAL_DATASETS.forEach((dataset, yearIndex) => {
+    const yearGroup = new THREE.Group();
+    yearGroup.name = 'v2-region-guningtou-higher-zoom-tile-debug-' + dataset.year;
+    const color = colors.get(dataset.year) ?? '#d5b877';
+    tiles.forEach(tile => {
+      const bounds = tileBounds(tile, 'XYZ');
+      const points = [
+        { longitude: bounds.west, latitude: bounds.north },
+        { longitude: bounds.east, latitude: bounds.north },
+        { longitude: bounds.east, latitude: bounds.south },
+        { longitude: bounds.west, latitude: bounds.south },
+      ].map(point => {
+        const world = lonLatToWorld(point, AERIAL_TILE_DEBUG_LIFT + yearIndex * 0.018);
+        return new THREE.Vector3(world.x, world.y, world.z);
+      });
+      const line = new THREE.LineLoop(
+        new THREE.BufferGeometry().setFromPoints(points),
+        new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.96, depthTest: false }),
+      );
+      line.name = String(dataset.year) + '-z' + tile.z + '-x' + tile.x + '-y' + tile.y;
+      line.renderOrder = 20 + yearIndex;
+      yearGroup.add(line);
+
+      const label = document.createElement('div');
+      label.className = 'region-aerial-tile-debug-label region-aerial-tile-debug-label--higher-zoom';
+      label.style.borderColor = color;
+      label.innerHTML = '<strong>' + dataset.year + ' · XYZ ' + tile.z + '/' + tile.x + '/' + tile.y + '</strong><small>'
+        + bounds.west.toFixed(6) + '–' + bounds.east.toFixed(6) + 'E<br>'
+        + bounds.south.toFixed(6) + '–' + bounds.north.toFixed(6) + 'N</small>';
+      label.dataset.tile = dataset.year + '/' + tile.z + '/' + tile.x + '/' + tile.y;
+      const center = lonLatToWorld({
+        longitude: (bounds.west + bounds.east) / 2,
+        latitude: (bounds.south + bounds.north) / 2,
+      }, AERIAL_TILE_DEBUG_LIFT + 0.055 + yearIndex * 0.085);
+      const labelObject = new CSS2DObject(label);
+      labelObject.position.set(center.x, center.y, center.z);
+      labelObject.renderOrder = 30 + yearIndex;
+      yearGroup.add(labelObject);
+    });
+    group.add(yearGroup);
+  });
+
+  const landmarkGroup = new THREE.Group();
+  landmarkGroup.name = 'v2-region-guningtou-review-landmarks';
+  for (const landmark of GUNINGTOU_GEO_REVIEW_LANDMARKS) {
+    const label = document.createElement('div');
+    label.className = 'region-aerial-landmark-debug-label';
+    label.innerHTML = '<strong>' + landmark.label + '</strong><small>' + landmark.englishLabel + '<br>' + landmark.coordinateStatus + '</small>';
+    label.dataset.landmark = landmark.id;
+    const world = lonLatToWorld({
+      longitude: landmark.longitude,
+      latitude: landmark.latitude,
+    }, AERIAL_TILE_DEBUG_LIFT + 0.78);
+    const labelObject = new CSS2DObject(label);
+    labelObject.position.set(world.x, world.y, world.z);
+    labelObject.renderOrder = 50;
+    landmarkGroup.add(labelObject);
+  }
+  group.add(landmarkGroup);
+  return group;
+}
+
 export const REGION_SCENE_CONTRACT = {
   id: REGION_CONFIG.id,
   stages: ['terrain', 'material', 'atmosphere', 'labels', 'ready'] as const,
@@ -142,7 +221,9 @@ export interface RegionSceneOptions {
   initialAerialYears?: HistoricalAerialYear[];
   allowLocalAerialPoc?: boolean;
   aerialTileDebug?: boolean;
+  aerialZoom?: GuningtouHigherZoom;
   fixedCamera?: boolean;
+  initialCameraPreset?: RegionPresetId;
 }
 
 export interface RegionDebugState {
@@ -337,6 +418,7 @@ export class RegionScene {
       providerMode: options.allowLocalAerialPoc ? 'local' : 'disabled',
       localBaseUrl: options.base,
       allowLocalPixels: options.allowLocalAerialPoc,
+      aerialZoom: options.aerialZoom,
     });
     this.performance = new RegionPerformanceMonitor(options.tier);
     const settings = tierSettings(options.tier);
@@ -398,10 +480,13 @@ export class RegionScene {
       this.coverageGroup.add(line);
     }
     this.scene.add(this.coverageGroup);
-    this.aerialTileDebugGroup = createAerialTileDebugGroup();
+    this.aerialTileDebugGroup = options.aerialZoom
+      ? createGuningtouHigherZoomTileDebugGroup(options.aerialZoom)
+      : createAerialTileDebugGroup();
     this.aerialTileDebugGroup.visible = Boolean(options.aerialTileDebug);
     this.scene.add(this.aerialTileDebugGroup);
     this.cameraController.reset();
+    if (options.initialCameraPreset) this.cameraController.flyTo(options.initialCameraPreset);
     this.controls.addEventListener('start', options.onInteraction);
     this.renderer.domElement.addEventListener('webglcontextlost', this.handleContextLost);
   }

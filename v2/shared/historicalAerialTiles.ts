@@ -79,6 +79,51 @@ export function enumerateHistoricalAerialTiles(bounds: GeographicBounds, z: numb
   return tiles;
 }
 
+/**
+ * Enumerate an already-resolved XYZ tile range without re-running geographic
+ * floor() at the east/south edge. This is used by small local review grids
+ * whose bounds are deliberately the exact union of the requested tiles.
+ */
+export function enumerateHistoricalAerialTileRange(
+  range: { z: number; minX: number; maxX: number; minY: number; maxY: number },
+  order: HistoricalAerialCoordinateOrder = 'XYZ',
+) {
+  const tiles: HistoricalAerialTileCoordinate[] = [];
+  for (let x = range.minX; x <= range.maxX; x += 1) {
+    for (let xyzY = range.minY; xyzY <= range.maxY; xyzY += 1) {
+      tiles.push({ z: range.z, x, xyzY, y: tileYForOrder(xyzY, range.z, order) });
+    }
+  }
+  return tiles;
+}
+
+/**
+ * Resolve a compact, deterministic tile window around a geographic point.
+ * An even-sized window keeps the point in the south/east half so the target
+ * remains inside the returned footprint while the request stays bounded.
+ */
+export function tileRangeAroundLonLat(
+  longitude: number,
+  latitude: number,
+  z: number,
+  columns = 2,
+  rows = 2,
+) {
+  const center = lonLatToXyzTile(longitude, latitude, z);
+  const width = Math.max(1, Math.floor(columns));
+  const height = Math.max(1, Math.floor(rows));
+  const scale = 2 ** center.z;
+  const minX = Math.max(0, Math.min(scale - width, center.x - Math.floor(width / 2)));
+  const minY = Math.max(0, Math.min(scale - height, center.y - Math.floor(height / 2)));
+  return {
+    z: center.z,
+    minX,
+    maxX: Math.min(scale - 1, minX + width - 1),
+    minY,
+    maxY: Math.min(scale - 1, minY + height - 1),
+  };
+}
+
 export function expandHistoricalAerialTileTemplate(template: string, tile: HistoricalAerialTileCoordinate) {
   return template
     .replace(/\{\{z\}\}/g, String(tile.z))

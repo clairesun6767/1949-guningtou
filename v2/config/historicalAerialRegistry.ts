@@ -4,7 +4,12 @@ import {
   type HistoricalAerialDataset,
   type HistoricalAerialYear,
 } from '../shared/historicalAerialDataset.js';
-import type { GeographicBounds } from './region.js';
+import { tileRangeAroundLonLat } from '../shared/historicalAerialTiles.js';
+import { tileRangeToBounds, type HistoricalAerialTileRange } from '../shared/historicalAerialGeoreference.js';
+import {
+  REGION_CONFIG,
+  type GeographicBounds,
+} from './region.js';
 
 export type { HistoricalAerialYear } from '../shared/historicalAerialDataset.js';
 
@@ -72,6 +77,83 @@ export const HISTORICAL_AERIAL_POC_REQUEST = {
   zoom: 12,
   coordinateOrder: 'XYZ' as const,
 };
+
+/**
+ * Gate A.3P.2b is intentionally a separate, compact review request. It uses
+ * the existing Guningtou preset target so the higher-zoom grid is tied to
+ * current geographic data, not a hand-moved visual anchor.
+ */
+export const GUNINGTOU_GEO_REVIEW_CAMERA = 'GEO_REVIEW_GUNINGTOU_01' as const;
+export const GUNINGTOU_GEOREFERENCE_TARGET = REGION_CONFIG.presets.guningtou.target;
+export const GUNINGTOU_HIGHER_ZOOMS = [15, 16, 17] as const;
+export type GuningtouHigherZoom = typeof GUNINGTOU_HIGHER_ZOOMS[number];
+
+export function guningtouHigherZoomTileRange(zoom: GuningtouHigherZoom): HistoricalAerialTileRange {
+  return tileRangeAroundLonLat(
+    GUNINGTOU_GEOREFERENCE_TARGET.longitude,
+    GUNINGTOU_GEOREFERENCE_TARGET.latitude,
+    zoom,
+    2,
+    2,
+  );
+}
+
+export function guningtouHigherZoomBounds(zoom: GuningtouHigherZoom) {
+  return tileRangeToBounds(guningtouHigherZoomTileRange(zoom));
+}
+
+/**
+ * Review landmarks are existing modern/reference candidates, not historical
+ * GCPs. Their precision is kept explicit so the screen can show the right
+ * places without implying that the aerial source is orthorectified.
+ */
+export const GUNINGTOU_GEO_REVIEW_LANDMARKS = [
+  {
+    id: 'guningtou',
+    label: '古寧頭',
+    englishLabel: 'GUNINGTOU',
+    longitude: GUNINGTOU_GEOREFERENCE_TARGET.longitude,
+    latitude: GUNINGTOU_GEOREFERENCE_TARGET.latitude,
+    provenance: 'REGION_CONFIG.presets.guningtou',
+    coordinateStatus: 'modern review target',
+  },
+  {
+    id: 'beishan',
+    label: '北山',
+    englishLabel: 'BEISHAN',
+    longitude: 118.31120658183592,
+    latitude: 24.47935230569504,
+    provenance: 'data/battles/guningtou-1949/locations.geojson · LOC-GUN-0006',
+    coordinateStatus: 'probable modern reference',
+  },
+  {
+    id: 'nanshan',
+    label: '南山',
+    englishLabel: 'NANSHAN',
+    longitude: 118.30743595990603,
+    latitude: 24.47855303214236,
+    provenance: 'data/battles/guningtou-1949/locations.geojson · LOC-GUN-0005',
+    coordinateStatus: 'probable modern reference',
+  },
+  {
+    id: 'lincuo',
+    label: '林厝',
+    englishLabel: 'LINCUO',
+    longitude: 118.313,
+    latitude: 24.475,
+    provenance: 'data/poi.json · POI-0007',
+    coordinateStatus: 'partial / approximate source POI',
+  },
+  {
+    id: 'north-coast',
+    label: '北側海岸',
+    englishLabel: 'NORTH COAST',
+    longitude: 118.31186,
+    latitude: 24.4901,
+    provenance: 'public/map-data/guningtou-coastline.geojson · modern mean-high-water coastline',
+    coordinateStatus: 'modern coastline reference',
+  },
+] as const;
 
 export const HISTORICAL_AERIAL_SOURCE_REGISTRY = HISTORICAL_AERIAL_DATASETS.map(dataset => ({
   id: dataset.id,

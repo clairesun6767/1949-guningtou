@@ -19,6 +19,8 @@
     "benchmark:gate-a3": "node scripts/capture-gate-a3-historical.mjs",
     "benchmark:gate-a3p": "node scripts/capture-gate-a3p-environment.mjs",
     "benchmark:gate-a3p2-georef": "node scripts/benchmark-gate-a3p2-georef.mjs",
+    "poc:download:guningtou-high-zoom": "node scripts/download-guningtou-higher-zoom-poc.mjs",
+    "benchmark:gate-a3p2b": "node scripts/capture-gate-a3p2b-guningtou.mjs",
     "typecheck": "astro check",
     "build:battle-data-tools": "tsc -p tsconfig.battle-replay.json",
     "validate:battle-data": "npm run build:battle-data-tools --silent && node scripts/validate-battle-data.mjs",

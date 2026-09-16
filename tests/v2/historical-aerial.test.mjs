@@ -11,6 +11,11 @@ import {
   HISTORICAL_AERIAL_DATASETS,
   HISTORICAL_AERIAL_YEARS,
   HISTORICAL_AERIAL_KML_PATHS,
+  GUNINGTOU_GEOREFERENCE_TARGET,
+  GUNINGTOU_GEO_REVIEW_CAMERA,
+  GUNINGTOU_HIGHER_ZOOMS,
+  guningtouHigherZoomBounds,
+  guningtouHigherZoomTileRange,
   getHistoricalAerialDataset,
   validateHistoricalAerialRegistry,
 } from '../../.tmp/v2-tests/v2/config/historicalAerialRegistry.js';
@@ -25,11 +30,13 @@ import {
 import {
   HISTORICAL_AERIAL_DOWNLOAD_BUDGET,
   enumerateHistoricalAerialTiles,
+  enumerateHistoricalAerialTileRange,
   estimateTileBudget,
   expandHistoricalAerialTileTemplate,
   isLikelyPlaceholderTile,
   lonLatToXyzTile,
   tileBounds,
+  tileRangeAroundLonLat,
   tileYForOrder,
   validateHistoricalAerialTileRequest,
 } from '../../.tmp/v2-tests/v2/shared/historicalAerialTiles.js';
@@ -205,6 +212,25 @@ test('download budget stays sequential, bounded and low-resolution for the Gunin
   assert.equal(HISTORICAL_AERIAL_DOWNLOAD_BUDGET.maxConcurrency, 1);
   assert.equal(HISTORICAL_AERIAL_DOWNLOAD_BUDGET.maxTilesTotal, 128);
   assert.equal(HISTORICAL_AERIAL_DOWNLOAD_BUDGET.maxBytesTotal, 50 * 1024 * 1024);
+});
+
+test('Gate A.3P.2b resolves a compact higher-zoom Guningtou grid', () => {
+  assert.deepEqual(GUNINGTOU_HIGHER_ZOOMS, [15, 16, 17]);
+  assert.equal(GUNINGTOU_GEO_REVIEW_CAMERA, 'GEO_REVIEW_GUNINGTOU_01');
+  assert.deepEqual(GUNINGTOU_GEOREFERENCE_TARGET, { longitude: 118.318, latitude: 24.478 });
+  for (const zoom of GUNINGTOU_HIGHER_ZOOMS) {
+    const range = guningtouHigherZoomTileRange(zoom);
+    const tiles = enumerateHistoricalAerialTileRange(range);
+    const bounds = guningtouHigherZoomBounds(zoom);
+    assert.equal(range.z, zoom);
+    assert.equal(tiles.length, 4);
+    assert.ok(tiles.length <= 16);
+    assert.ok(bounds.west < GUNINGTOU_GEOREFERENCE_TARGET.longitude);
+    assert.ok(bounds.east > GUNINGTOU_GEOREFERENCE_TARGET.longitude);
+    assert.ok(bounds.south < GUNINGTOU_GEOREFERENCE_TARGET.latitude);
+    assert.ok(bounds.north > GUNINGTOU_GEOREFERENCE_TARGET.latitude);
+    assert.deepEqual(tileRangeAroundLonLat(118.318, 24.478, zoom, 2, 2), range);
+  }
 });
 
 test('tileXYZToLonLat and tileRangeToBounds derive the authoritative z12 POC footprint', () => {

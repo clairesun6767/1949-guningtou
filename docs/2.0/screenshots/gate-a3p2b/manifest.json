@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-09-16T02:51:06.005Z",
+  "gate": "A.3P.2b",
+  "camera": "GEO_REVIEW_GUNINGTOU_01",
+  "privacy": "safe metadata screenshot only; no aerial pixels",
+  "screenshots": [
+    {
+      "name": "GUNINGTOU_TILE_GRID_Z17",
+      "query": "?historical=H0&environment=P0&time=T0&weather=W0&aerialZoom=17&aerialDebug=tile&camera=geo_review_guningtou_01&debug=closed",
+      "privacy": "safe",
+      "note": "Metadata-only higher-zoom XYZ grid. No local aerial asset is requested.",
+      "path": "docs/2.0/screenshots/gate-a3p2b/GUNINGTOU_TILE_GRID_Z17.png",
+      "bytes": 1403556
+    }
+  ]
+}

@@ -20,7 +20,13 @@ import {
   type EnvironmentWeather,
   type HistoricalBenchmarkMode,
 } from '../config/environment.js';
-import { HISTORICAL_AERIAL_YEARS, type HistoricalAerialYear } from '../config/historicalAerialRegistry.js';
+import {
+  GUNINGTOU_GEO_REVIEW_CAMERA,
+  HISTORICAL_AERIAL_YEARS,
+  GUNINGTOU_HIGHER_ZOOMS,
+  type GuningtouHigherZoom,
+  type HistoricalAerialYear,
+} from '../config/historicalAerialRegistry.js';
 import type { HistoricalAerialSelectionMode } from '../shared/historicalAerialSelection.js';
 import { REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../config/region.js';
 import { REGION_COMPOSITION_QUALITY } from '../config/region.js';
@@ -62,9 +68,18 @@ function firstQueryValue<T extends string>(value: string | null | undefined, val
   return value && values.includes(value as T) ? value as T : fallback;
 }
 
+function readHigherZoom(value: string | null): GuningtouHigherZoom | undefined {
+  const zoom = Number(value);
+  return GUNINGTOU_HIGHER_ZOOMS.includes(zoom as GuningtouHigherZoom)
+    ? zoom as GuningtouHigherZoom
+    : undefined;
+}
+
 interface RegionQueryState {
   localAerialPoc: boolean;
   fixedArtReviewCamera: boolean;
+  georeferenceReviewCamera: boolean;
+  aerialZoom?: GuningtouHigherZoom;
   initialAerialOpacity: number;
   historicalBenchmark: HistoricalBenchmarkMode;
   environmentMode: EnvironmentBenchmarkMode;
@@ -81,7 +96,9 @@ interface RegionQueryState {
 function readRegionQueryState(search = ''): RegionQueryState {
   const params = new URLSearchParams(search);
   const localAerialPoc = params.get('aerial') === 'local';
-  const fixedArtReviewCamera = params.get('camera')?.toLowerCase() === 'art-review-kinmen-xiamen-01';
+  const requestedCamera = params.get('camera')?.toLowerCase();
+  const georeferenceReviewCamera = requestedCamera === GUNINGTOU_GEO_REVIEW_CAMERA.toLowerCase();
+  const fixedArtReviewCamera = requestedCamera === 'art-review-kinmen-xiamen-01' || georeferenceReviewCamera;
   const historicalBenchmark = firstQueryValue(params.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, localAerialPoc ? 'H7' : 'H0');
   const requestedOpacity = Number(params.get('opacity'));
   const initialAerialOpacity = Number.isFinite(requestedOpacity) && requestedOpacity >= 0 && requestedOpacity <= 100
@@ -94,6 +111,8 @@ function readRegionQueryState(search = ''): RegionQueryState {
   return {
     localAerialPoc,
     fixedArtReviewCamera,
+    georeferenceReviewCamera,
+    aerialZoom: readHigherZoom(params.get('aerialZoom')),
     initialAerialOpacity,
     historicalBenchmark,
     environmentMode: firstQueryValue(params.get('environment')?.toUpperCase(), ENVIRONMENT_MODE_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].environmentMode),
@@ -135,10 +154,14 @@ function deviceProfile() {
 }
 
 export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Props) {
-  const [queryState, setQueryState] = useState<RegionQueryState>(() => readRegionQueryState());
+  const [queryState, setQueryState] = useState<RegionQueryState>(() => readRegionQueryState(
+    typeof window === 'undefined' ? '' : window.location.search,
+  ));
   const {
     localAerialPoc,
     fixedArtReviewCamera,
+    georeferenceReviewCamera,
+    aerialZoom,
     initialAerialOpacity: queryInitialAerialOpacity,
     historicalBenchmark: queryHistoricalBenchmark,
     environmentMode: queryEnvironmentMode,
@@ -223,6 +246,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     const requestedVariant = params.get('variant');
     const requestedQuality = params.get('quality')?.toUpperCase();
     const requestedVertical = Number(params.get('vertical'));
+    const requestedCameraId = requestedPreset?.toLowerCase();
+    const requestedGeoReviewCamera = requestedCameraId === GUNINGTOU_GEO_REVIEW_CAMERA.toLowerCase();
+    const requestedFixedCamera = requestedCameraId === 'art-review-kinmen-xiamen-01' || requestedGeoReviewCamera;
     const requestedHistoricalBenchmark = firstQueryValue(params.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, queryHistoricalBenchmark);
     const requestedEnvironmentMode = firstQueryValue(params.get('environment')?.toUpperCase(), ENVIRONMENT_MODE_OPTIONS, queryEnvironmentMode);
     const requestedEnvironmentTime = firstQueryValue(params.get('time')?.toUpperCase(), ENVIRONMENT_TIME_OPTIONS, queryEnvironmentTime);
@@ -279,8 +305,8 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     if (params.get('debug') === 'open') setDebugOpen(true);
     const presetIds: RegionPresetId[] = ['hero', 'xiamen', 'kinmen', 'guningtou'];
     const variantIds: RegionVariantId[] = ['neutral', 'cinematic', 'historical'];
-    const nextPreset = fixedArtReviewCamera
-      ? 'hero'
+    const nextPreset = requestedFixedCamera
+      ? requestedGeoReviewCamera ? 'guningtou' : 'hero'
       : presetIds.includes(requestedPreset as RegionPresetId)
       ? requestedPreset as RegionPresetId
       : queryConfig?.preset ?? null;
@@ -367,6 +393,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     const handleResize = () => scene?.resize();
     const initialize = async () => {
       try {
+        const urlQueryState = readRegionQueryState(typeof window === 'undefined' ? '' : window.location.search);
         scene = await RegionScene.create({
           container: mount,
           labelContainer: labelMount,
@@ -393,7 +420,9 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           initialAerialYears: aerialYears,
           allowLocalAerialPoc: localAerialPoc,
           aerialTileDebug,
-          fixedCamera: fixedArtReviewCamera,
+          aerialZoom,
+          fixedCamera: fixedArtReviewCamera || urlQueryState.fixedArtReviewCamera,
+          initialCameraPreset: georeferenceReviewCamera ? 'guningtou' : fixedArtReviewCamera ? 'hero' : undefined,
           onStage: nextStage => {
             if (!disposed) setStage(nextStage);
           },

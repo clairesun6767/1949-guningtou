@@ -5,7 +5,11 @@ import {
   type HistoricalAerialMode,
   type HistoricalSourceMetadata,
 } from '../../config/historicalAerial.js';
-import { getHistoricalAerialDataset, HISTORICAL_AERIAL_DATASETS } from '../../config/historicalAerialRegistry.js';
+import {
+  getHistoricalAerialDataset,
+  HISTORICAL_AERIAL_DATASETS,
+  type GuningtouHigherZoom,
+} from '../../config/historicalAerialRegistry.js';
 import { clampHistoricalAerialOpacity, createHistoricalAerialProvider } from '../../shared/historicalAerialProvider.js';
 import type { ActualMosaicExtent, DeclaredDatasetExtent, HistoricalAerialDataset, HistoricalAerialYear } from '../../shared/historicalAerialDataset.js';
 import type { HistoricalAerialTileRange } from '../../shared/historicalAerialGeoreference.js';
@@ -73,6 +77,43 @@ export interface HistoricalAerialManifest {
   };
 }
 
+export interface HistoricalAerialHigherZoomManifest {
+  schemaVersion: number;
+  localOnly: boolean;
+  rightsStatus: string;
+  target: {
+    longitude: number;
+    latitude: number;
+  };
+  request: {
+    zooms: number[];
+    maxTilesPerZoom: number;
+    coordinateOrder: 'XYZ';
+    tileWindow: string;
+  };
+  zooms: Record<string, {
+    zoom: number;
+    tileRange: HistoricalAerialTileRange;
+    bounds: ActualMosaicExtent;
+    tileCount: number;
+    tileGeographicSize?: {
+      longitudeDegrees: number;
+      latitudeDegrees: number;
+    };
+    datasets: HistoricalAerialManifestDataset[];
+    totals?: {
+      requestedTiles?: number;
+      downloadedBytes?: number;
+      withinBudget?: boolean;
+    };
+  }>;
+  totals?: {
+    requestedTiles?: number;
+    downloadedBytes?: number;
+    withinBudget?: boolean;
+  };
+}
+
 export interface HistoricalAerialLayerStats {
   year: HistoricalAerialYear;
   years: string;
@@ -102,6 +143,8 @@ export interface HistoricalAerialLayerOptions {
   providerMode?: 'disabled' | 'local';
   localBaseUrl?: string;
   allowLocalPixels?: boolean;
+  /** Gate A.3P.2b only: read one compact Guningtou higher-zoom manifest. */
+  aerialZoom?: GuningtouHigherZoom;
 }
 
 function isDevBuild() {
@@ -138,6 +181,7 @@ export class HistoricalAerialLayer {
   private textureReadyMs: number | null = null;
   private localBaseUrl: string;
   private allowLocalPixels: boolean;
+  private readonly aerialZoom?: GuningtouHigherZoom;
   private loadPromise: Promise<boolean> | null = null;
 
   constructor(options: HistoricalAerialLayerOptions = {}) {
@@ -150,6 +194,7 @@ export class HistoricalAerialLayer {
     this.enabledYears = [...new Set(options.enabledYears ?? [1944, 1945])].filter(year => year === 1944 || year === 1945 || year === 1958);
     this.localBaseUrl = options.localBaseUrl ?? '/1949-guningtou/';
     this.allowLocalPixels = Boolean(options.allowLocalPixels && options.providerMode === 'local');
+    this.aerialZoom = options.aerialZoom;
   }
 
   get historicalMode() {
@@ -231,9 +276,13 @@ export class HistoricalAerialLayer {
 
   private async loadLocalPocInternal(baseUrl: string) {
     const startedAt = performance.now();
-    const response = await fetch(`${baseUrl.replace(/\/?$/, '/')}.local/aerial-poc/manifest.json`);
-    if (!response.ok) throw new Error(`Local aerial POC manifest unavailable (${response.status}).`);
-    const manifest = await response.json() as HistoricalAerialManifest;
+    const manifestPath = this.aerialZoom
+      ? 'guningtou-higher-zoom-manifest.json'
+      : 'manifest.json';
+    const response = await fetch(baseUrl.replace(/\/?$/, '/') + '.local/aerial-poc/' + manifestPath);
+    if (!response.ok) throw new Error('Local aerial POC manifest unavailable (' + response.status + ').');
+    const sourceManifest = await response.json() as HistoricalAerialManifest | HistoricalAerialHigherZoomManifest;
+    const manifest = this.manifestForRequestedZoom(sourceManifest);
     if (!manifest.localOnly || manifest.rightsStatus === 'APPROVED') throw new Error('Local aerial POC manifest failed the rights boundary.');
     const url = this.textureUrlForManifest(manifest);
     if (!url) throw new Error('Local aerial POC has no valid mosaic for the selected mode.');
@@ -254,13 +303,31 @@ export class HistoricalAerialLayer {
     return true;
   }
 
+  private manifestForRequestedZoom(sourceManifest: HistoricalAerialManifest | HistoricalAerialHigherZoomManifest): HistoricalAerialManifest {
+    if (!this.aerialZoom) return sourceManifest as HistoricalAerialManifest;
+    const selected = (sourceManifest as HistoricalAerialHigherZoomManifest).zooms?.[String(this.aerialZoom)];
+    if (!selected) throw new Error('Higher-zoom Guningtou manifest has no z' + this.aerialZoom + ' entry.');
+    return {
+      schemaVersion: sourceManifest.schemaVersion,
+      localOnly: sourceManifest.localOnly,
+      rightsStatus: sourceManifest.rightsStatus,
+      datasets: selected.datasets,
+      totals: selected.totals ?? sourceManifest.totals,
+    };
+  }
+
   private textureUrlForManifest(manifest: HistoricalAerialManifest) {
+    if (this.aerialZoom) return manifestDataset(manifest, this.year)?.mosaic?.url;
     const hasBothPrimaryYears = this.enabledYears.includes(1944) && this.enabledYears.includes(1945);
     if ((this.selectionMode === 'smart' || this.selectionMode === 'distribution') && hasBothPrimaryYears) return manifest.smartComposite?.url;
     return manifestDataset(manifest, this.year)?.mosaic?.url;
   }
 
   private boundsForManifest(manifest: HistoricalAerialManifest) {
+    if (this.aerialZoom) {
+      const dataset = manifestDataset(manifest, this.year);
+      return dataset?.actualMosaicBounds ?? dataset?.mosaic?.actualMosaicBounds ?? dataset?.mosaic?.bounds ?? null;
+    }
     const hasBothPrimaryYears = this.enabledYears.includes(1944) && this.enabledYears.includes(1945);
     if ((this.selectionMode === 'smart' || this.selectionMode === 'distribution') && hasBothPrimaryYears) {
       return manifest.smartComposite?.compositeMosaicBounds ?? manifest.smartComposite?.bounds ?? null;
@@ -288,7 +355,9 @@ export class HistoricalAerialLayer {
     const dataset = getHistoricalAerialDataset(this.year) ?? HISTORICAL_AERIAL_DATASETS[1];
     const distribution = this.manifest?.smartComposite?.distribution;
     const hasBothPrimaryYears = this.enabledYears.includes(1944) && this.enabledYears.includes(1945);
-    const usingSmartComposite = (this.selectionMode === 'smart' || this.selectionMode === 'distribution') && hasBothPrimaryYears;
+    const usingSmartComposite = !this.aerialZoom
+      && (this.selectionMode === 'smart' || this.selectionMode === 'distribution')
+      && hasBothPrimaryYears;
     const smartComposite = usingSmartComposite ? this.manifest?.smartComposite : undefined;
     const sourceDistribution = distribution
       ? `1944 ${distribution[1944] ?? 0}% · 1945 ${distribution[1945] ?? 0}% · 1958 ${distribution[1958] ?? 0}% · BASE ${distribution.BASE ?? 0}%`
