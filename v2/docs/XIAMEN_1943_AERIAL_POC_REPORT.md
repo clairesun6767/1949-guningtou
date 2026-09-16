@@ -1,6 +1,6 @@
 # 廈門二戰時期航照候選資料 — Single-image registration POC
 
-> 報告日期：2026-09-15（Asia/Taipei）
+> 報告日期：2026-09-16（Asia/Taipei）
 > 專案：1949 古寧頭 2.0 — Gate A.3P
 > Git 分支：feature/2.0-art-region-environment-poc
 
@@ -98,7 +98,19 @@ Registration QA 規則：
 
 目前 verified target count=0、residuals 為空、qaStatus=NOT PASSED、mosaicAllowed=false、terrainProjectionAllowed=false。參數與 workflow 位於 v2/config/xiamenGcpWorkflow.ts；UI 以 GCP CANDIDATE WORKFLOW／A-01 SINGLE IMAGE／BLOCKED 顯示。
 
-## 5. Gate A.3P 主原型已完成的相關部分
+## 5. 現代衛星圖單張對照嘗試（A-01）
+
+2026-09-16 以 Google Maps 衛星圖作為**只讀視覺參考**，在約 24.45N／118.07E、zoom 13–14 檢視廈門港、鼓浪嶼、港灣邊緣與現代海岸線；沒有下載、保存、重散布或寫入 GitHub 的 Google pixels。
+
+目前可提出的辨識線索：
+
+- A-01 的海岸水陸界線、港灣邊緣與大型水域轉折，和現代廈門港的整體空間關係具有可比性。
+- 鼓浪嶼／周邊島嶼與城市海岸仍缺乏一對一、同方向、同尺度的確認；A-01 的拍攝方向、旋轉、透視與航照框幅尚未由原始館藏資料固定。
+- 圖內圓圈、箭頭、題註與水印不能當作地理控制點；現代衛星圖上的道路與建物變遷也不能直接假設為 1943 年同一物件。
+
+因此這次對照仍是 candidate reconnaissance，不足以形成 4 個已核對的 target lon/lat，也沒有 residual measurement。結論維持：`verified target count=0`、`qaStatus=NOT PASSED`、`mosaicAllowed=false`、`terrainProjectionAllowed=false`。本輪不生成 Xiamen mosaic、不套入 Three.js terrain；待取得原始 flight／frame／spot 或可書面核對的 reference targets 後，再重做 A-01 registration QA。
+
+## 6. Gate A.3P 主原型已完成的相關部分
 
 廈門影像沒有進入主地圖，但本輪 Gate A.3P 其餘 pipeline 已接通：
 
@@ -111,7 +123,7 @@ Registration QA 規則：
 
 詳細管線見 GATE_A3P_KML_AERIAL_PIPELINE_REPORT.md；環境與性能見 GATE_A3P_ENVIRONMENT_BENCHMARK_REPORT.md。
 
-## 6. 實際 browser evidence 與 privacy
+## 7. 實際 browser evidence 與 privacy
 
 Chrome headless actual page output 已於 2026-09-15 重新擷取：
 
@@ -141,31 +153,19 @@ Chrome headless actual page output 已於 2026-09-15 重新擷取：
 
 上述 local screenshots 不含廈門八張 JPEG；廈門 rights-unclear pixels 只存在 .local/aerial-poc/xiamen/，不進任何 GitHub screenshot。
 
-## 7. QA 結果
+## 8. QA 結果
 
-- npm.cmd run test:v2：40／40 passed。
+- npm.cmd run test:v2：46／46 passed。
 - npm.cmd run build：280 pages built。
 - clean Astro dev browser QA：無 hydration、broken image、404 或 failed-to-fetch log。
 - LOCAL Smart Composite debug：60 FPS、CPU frame 約 16.7 ms、5 calls、469,026 triangles、512×512、12 tiles、650,525 bytes；source distribution 為 1944 13.21%、1945 52.99%、1958 11.01%、BASE 22.79%。
 - GCP registration QA：BLOCKED，尚未通過。
 
-## 8. Gate boundary
+## 9. Gate boundary
 
 本次停在 Gate A.3P，不進 Gate B。下一次涉及廈門的合法進展必須先完成 archival reverse lookup 或取得可書面確認的使用權，再以 A-01 的 single-image registration QA 驗證；QA 通過後才可評估 mosaic／terrain projection。
 
-## 9. Gate A.3P.1 visual review impact
-
-本輪 Gate A.3P.1 只對既有瀏覽器 art-review frame 做視覺 tuning，不把廈門八張影像提升為 verified dataset，也沒有將其接入 mosaic／terrain projection。廈門資料在本機仍維持：
-
-- ID：`XIAMEN_WWII_AERIAL_UNVERIFIED_01`
-- UI：`廈門二戰時期航照候選資料`／`DATE UNVERIFIED`
-- claimedDate：`1943-11-22` 僅為 metadata claim；verifiedDate 仍為 null
-- `53-8-12`／`53-8-20` 只保留為影像文字 provenance clue，不自行解讀
-- rights：local-only；public GitHub 不含 pixels 或 derived texture
-
-本輪 local-only `SOURCE_MAP` 與 aerial review screenshots 只用 Kinmen local POC，不能被解讀為 Xiamen registration evidence。GCP candidate workflow 仍為 A-01 single-image、verified target count 0、QA BLOCKED。
-
-## 9. Gate A.3P.1 visual review impact
+## 10. Gate A.3P.1 visual review impact
 
 本輪 Gate A.3P.1 只對既有瀏覽器 art-review frame 做視覺 tuning，不把廈門八張影像提升為 verified dataset，也沒有將其接入 mosaic／terrain projection。廈門資料在本機仍維持：
 

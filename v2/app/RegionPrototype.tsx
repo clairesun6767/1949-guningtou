@@ -28,7 +28,7 @@ import {
   type HistoricalAerialYear,
 } from '../config/historicalAerialRegistry.js';
 import type { HistoricalAerialSelectionMode } from '../shared/historicalAerialSelection.js';
-import { REGION_CONFIG, REGION_TERRAIN_QUALITY, REGION_VARIANTS } from '../config/region.js';
+import { REGION_CONFIG, REGION_TERRAIN_QUALITY } from '../config/region.js';
 import { REGION_COMPOSITION_QUALITY } from '../config/region.js';
 import { RegionScene, type RegionDebugState, type RegionLoadingStage, type RegionSceneStats } from '../prototypes/region/RegionScene.js';
 import { chooseRegionTier } from '../prototypes/region/RegionPerformance.js';
@@ -75,6 +75,14 @@ function readHigherZoom(value: string | null): GuningtouHigherZoom | undefined {
     : undefined;
 }
 
+function aerialYearsForSelection(mode: HistoricalAerialSelectionMode, year: HistoricalAerialYear) {
+  return mode === 'smart' || mode === 'distribution' ? [1944, 1945] as HistoricalAerialYear[] : [year];
+}
+
+function localHistoricalMosaicUrl(base: string, year: HistoricalAerialYear) {
+  return `${base.replace(/\/?$/, '/')}.local/aerial-poc/${year}/mosaic-z12.png`;
+}
+
 interface RegionQueryState {
   localAerialPoc: boolean;
   fixedArtReviewCamera: boolean;
@@ -100,6 +108,8 @@ function readRegionQueryState(search = ''): RegionQueryState {
   const georeferenceReviewCamera = requestedCamera === GUNINGTOU_GEO_REVIEW_CAMERA.toLowerCase();
   const fixedArtReviewCamera = requestedCamera === 'art-review-kinmen-xiamen-01' || georeferenceReviewCamera;
   const historicalBenchmark = firstQueryValue(params.get('historical')?.toUpperCase(), HISTORICAL_BENCHMARK_OPTIONS, localAerialPoc ? 'H7' : 'H0');
+  const requestedEnvironment = params.get('environment')?.toUpperCase();
+  const localHistoricalReview = localAerialPoc && historicalBenchmark !== 'H0' && !requestedEnvironment;
   const requestedOpacity = Number(params.get('opacity'));
   const initialAerialOpacity = Number.isFinite(requestedOpacity) && requestedOpacity >= 0 && requestedOpacity <= 100
     ? Math.round(requestedOpacity)
@@ -115,7 +125,7 @@ function readRegionQueryState(search = ''): RegionQueryState {
     aerialZoom: readHigherZoom(params.get('aerialZoom')),
     initialAerialOpacity,
     historicalBenchmark,
-    environmentMode: firstQueryValue(params.get('environment')?.toUpperCase(), ENVIRONMENT_MODE_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].environmentMode),
+    environmentMode: firstQueryValue(requestedEnvironment, ENVIRONMENT_MODE_OPTIONS, localHistoricalReview ? 'P3' : ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].environmentMode),
     environmentTime: firstQueryValue(params.get('time')?.toUpperCase(), ENVIRONMENT_TIME_OPTIONS, 'T0'),
     environmentWeather: firstQueryValue(params.get('weather')?.toUpperCase(), ENVIRONMENT_WEATHER_OPTIONS, 'W1'),
     selectionMode: firstQueryValue(params.get('mode')?.toLowerCase(), HISTORICAL_SELECTION_OPTIONS, ENVIRONMENT_HISTORICAL_MODES[historicalBenchmark].selectionMode ?? 'smart'),
@@ -138,6 +148,7 @@ interface ReviewConfiguration {
 
 interface Props {
   base?: string;
+  initialSearch?: string;
 }
 
 function deviceProfile() {
@@ -153,9 +164,9 @@ function deviceProfile() {
   return { mobile, reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches, tier };
 }
 
-export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Props) {
+export default function RegionPrototype({ base = import.meta.env.BASE_URL, initialSearch = '' }: Props) {
   const [queryState, setQueryState] = useState<RegionQueryState>(() => readRegionQueryState(
-    typeof window === 'undefined' ? '' : window.location.search,
+    initialSearch,
   ));
   const {
     localAerialPoc,
@@ -195,7 +206,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
   const [environmentWeather, setEnvironmentWeather] = useState<EnvironmentWeather>(queryEnvironmentWeather);
   const [historicalSelectionMode, setHistoricalSelectionMode] = useState<HistoricalAerialSelectionMode>(querySelectionMode);
   const [aerialYear, setAerialYear] = useState<HistoricalAerialYear>(queryAerialYear);
-  const [aerialYears, setAerialYears] = useState<HistoricalAerialYear[]>([1944, 1945]);
+  const [aerialYears, setAerialYears] = useState<HistoricalAerialYear[]>(aerialYearsForSelection(querySelectionMode, queryAerialYear));
   const [coverageMaskDebug, setCoverageMaskDebug] = useState(false);
   const [contourMode, setContourMode] = useState<RegionContourMode>('SUBTLE');
   const [aoEnabled, setAoEnabled] = useState(true);
@@ -327,12 +338,15 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     setEnvironmentTime(requestedEnvironmentTime);
     setEnvironmentWeather(requestedEnvironmentWeather);
     setHistoricalSelectionMode(requestedSelectionMode);
+    const requestedAerialYears = aerialYearsForSelection(requestedSelectionMode, queryAerialYear);
+    setAerialYears(requestedAerialYears);
     setCoverageMaskDebug(requestedCoverage);
     setAerialYear(queryAerialYear);
     sceneRef.current?.setEnvironmentBenchmarkMode(requestedEnvironmentMode);
     sceneRef.current?.setEnvironmentTime(requestedEnvironmentTime);
     sceneRef.current?.setEnvironmentWeather(requestedEnvironmentWeather);
     sceneRef.current?.setHistoricalSelectionMode(requestedSelectionMode);
+    sceneRef.current?.setHistoricalYears(requestedAerialYears);
     sceneRef.current?.setCoverageMaskDebug(requestedCoverage);
     sceneRef.current?.setAerialTileDebug(requestedAerialTileDebug);
     sceneRef.current?.setHistoricalYear(queryAerialYear);
@@ -348,11 +362,16 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     if (historicalBenchmarkConfig && (historical?.match(/^H[0-7]$/i) || localAerialPoc || params.has('environment'))) {
       setHistoricalMode(historicalBenchmarkConfig.aerialMode);
       sceneRef.current?.setHistoricalMode(historicalBenchmarkConfig.aerialMode);
+      const effectiveSelectionMode = historicalBenchmarkConfig.selectionMode ?? requestedSelectionMode;
+      const effectiveYear = historicalBenchmarkConfig.year ?? queryAerialYear;
+      const effectiveAerialYears = aerialYearsForSelection(effectiveSelectionMode, effectiveYear);
+      setAerialYears(effectiveAerialYears);
+      sceneRef.current?.setHistoricalYears(effectiveAerialYears);
       if (historicalBenchmarkConfig.year) {
         setAerialYear(historicalBenchmarkConfig.year);
         sceneRef.current?.setHistoricalYear(historicalBenchmarkConfig.year);
       }
-      if (!params.has('environment') && historicalBenchmarkConfig.environmentMode !== requestedEnvironmentMode) {
+      if (!params.has('environment') && !localAerialPoc && historicalBenchmarkConfig.environmentMode !== requestedEnvironmentMode) {
         setEnvironmentMode(historicalBenchmarkConfig.environmentMode);
         sceneRef.current?.setEnvironmentBenchmarkMode(historicalBenchmarkConfig.environmentMode);
       }
@@ -511,11 +530,16 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
 
   function chooseHistoricalBenchmark(nextMode: HistoricalBenchmarkMode) {
     const preset = ENVIRONMENT_HISTORICAL_MODES[nextMode];
+    const nextSelectionMode = preset.selectionMode ?? historicalSelectionMode;
+    const nextYear = preset.year ?? aerialYear;
+    const nextAerialYears = aerialYearsForSelection(nextSelectionMode, nextYear);
     setHistoricalBenchmarkMode(nextMode);
     setEnvironmentMode(preset.environmentMode);
     setHistoricalMode(preset.aerialMode);
+    setAerialYears(nextAerialYears);
     sceneRef.current?.setEnvironmentBenchmarkMode(preset.environmentMode);
     sceneRef.current?.setHistoricalMode(preset.aerialMode);
+    sceneRef.current?.setHistoricalYears(nextAerialYears);
     if (preset.selectionMode) {
       setHistoricalSelectionMode(preset.selectionMode);
       sceneRef.current?.setHistoricalSelectionMode(preset.selectionMode);
@@ -550,7 +574,10 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
 
   function chooseHistoricalSelectionMode(nextMode: HistoricalAerialSelectionMode) {
     setHistoricalSelectionMode(nextMode);
+    const nextAerialYears = aerialYearsForSelection(nextMode, aerialYear);
+    setAerialYears(nextAerialYears);
     sceneRef.current?.setHistoricalSelectionMode(nextMode);
+    sceneRef.current?.setHistoricalYears(nextAerialYears);
     refreshStats();
   }
 
@@ -564,22 +591,16 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
     const benchmark = nextYear === 1944 ? 'H1' : nextYear === 1945 ? 'H2' : 'H3';
     setHistoricalBenchmarkMode(benchmark);
     setHistoricalMode('AERIAL');
-    setEnvironmentMode('P2');
+    setEnvironmentMode('P3');
+    setEnvironmentTime('T0');
     setHistoricalSelectionMode('single');
+    setAerialYears([nextYear]);
     chooseAerialYear(nextYear);
     sceneRef.current?.setHistoricalMode('AERIAL');
-    sceneRef.current?.setEnvironmentBenchmarkMode('P2');
+    sceneRef.current?.setEnvironmentBenchmarkMode('P3');
+    sceneRef.current?.setEnvironmentTime('T0');
     sceneRef.current?.setHistoricalSelectionMode('single');
-  }
-
-  function toggleAerialYear(nextYear: HistoricalAerialYear) {
-    setAerialYears(current => {
-      const next = current.includes(nextYear) ? current.filter(year => year !== nextYear) : [...current, nextYear];
-      const normalized = next.length ? next : [nextYear];
-      sceneRef.current?.setHistoricalYears(normalized);
-      refreshStats();
-      return normalized;
-    });
+    sceneRef.current?.setHistoricalYears([nextYear]);
   }
 
   function toggleEnvironmentFeature(key: keyof EnvironmentDebugState) {
@@ -705,19 +726,12 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             <p className="region-hero-copy__english">KINMEN — XIAMEN</p>
             <p className="region-hero-copy__lede">一水之隔，兩岸對峙。<br />從金廈海域，重新理解古寧頭戰場的地理尺度。</p>
             <div className="region-hero-copy__rule" />
-            <p className="region-hero-copy__caption">歷史地形原型／{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE／LOCAL REVIEW' : '航照來源審查'}<br /><span>REALTIME BROWSER PROTOTYPE · MODERN ELEVATION REFERENCE</span></p>
+            <p className="region-hero-copy__caption">歷史地形原型／{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE／LOCAL REVIEW' : '歷史航照檢視'}<br /><span>REALTIME BROWSER PROTOTYPE · MODERN ELEVATION REFERENCE</span></p>
           </div>
 
-          <div className="region-source-callout">
-            <span>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : `${aerialYear} 航照影像`}</span>
-            <strong>資料授權確認中</strong>
-            <small>中央研究院人社中心／地理資訊科學研究專題中心</small>
-          </div>
-
-          <div className="region-viewport__source-card">
-            <span>{localAerialPoc && historicalSelectionMode === 'smart' ? '1944＋1945／SMART COMPOSITE' : `${stats?.aerialYear ?? aerialYear} 航空照片／低解析 POC`}</span>
-            <strong>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : '歷史影像來源審查'}</strong>
-            <small>{localAerialPoc && historicalSelectionMode === 'smart' ? '非單一年代史料；1944／1945 primary，1958 僅作 fallback' : '中央研究院人社中心／地理資訊科學研究專題中心'}<br />MODERN DEM 保留；航照像素僅供本機檢視</small>
+          <div className="region-viewport__source-note" role="note">
+            <span>資料界線／DATA BOUNDARY</span>
+            <small>{localAerialPoc ? '歷史航照為本機 POC，僅供視覺檢視；像素不進 GitHub，權利狀態未確認。' : '未開啟本機航照像素；現代 DEM 與海岸線僅作地理參考。'}</small>
           </div>
 
           <div className="region-compass" aria-hidden="true">
@@ -766,18 +780,18 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
           <p className="region-side-rail__body">第一道藝術關卡不是近距離地圖，而是廈門、金門、烈嶼與戰役起點海岸之間的距離。</p>
           <div className="region-side-rail__line" />
           <section className="region-history-panel" aria-label="歷史航照圖層控制">
-            <div className="region-variant-picker__label"><span>歷史圖層</span><small>HISTORICAL AERIAL／資料層</small></div>
+            <div className="region-history-panel__label"><span>歷史圖層</span><small>HISTORICAL AERIAL／資料層</small></div>
             <div className="region-history-cards">
               {HISTORICAL_AERIAL_YEARS.map(year => (
-                <button type="button" className={`region-history-card ${aerialYears.includes(year) ? 'is-selected' : ''}`} onClick={() => chooseSingleAerialYear(year)} key={year}>
-                  <span className={`region-history-card__thumb region-history-card__thumb--${year}`} aria-hidden="true"><i /></span>
+                <button type="button" className={`region-history-card ${aerialYear === year ? 'is-selected' : ''}`} onClick={() => chooseSingleAerialYear(year)} aria-pressed={aerialYear === year} key={year}>
+                  <span className={`region-history-card__thumb region-history-card__thumb--${year}`} aria-hidden="true">
+                    {localAerialPoc && import.meta.env.DEV && <img src={localHistoricalMosaicUrl(base, year)} alt="" loading="lazy" onError={event => { event.currentTarget.hidden = true; }} />}
+                    <i />
+                  </span>
                   <span className="region-history-card__copy"><strong>{year} 航照</strong><small>{year === 1958 ? '後期 fallback／LOCAL POC' : '歷史航空影像／LOCAL POC'}</small></span>
                   <i className="region-history-card__check" />
                 </button>
               ))}
-            </div>
-            <div className="region-history-year-toggles" aria-label="可用歷史年度">
-              {HISTORICAL_AERIAL_YEARS.map(year => <button type="button" className={aerialYears.includes(year) ? 'is-on' : ''} onClick={() => toggleAerialYear(year)} key={year}>{year}<i /></button>)}
             </div>
             <div className="region-history-inline">
               <button type="button" className={historicalMode !== 'OFF' ? 'is-on' : ''} onClick={() => chooseHistoricalMode(historicalMode === 'OFF' ? 'AERIAL' : 'OFF')}>航照 ON／OFF <i /></button>
@@ -797,16 +811,6 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             )}
             <p className="region-history-note">1944＋1945 PRIMARY／1958 僅作缺值 fallback<br />TILE-BOUND ALIGNED／NOT VERIFIED ORTHORECTIFIED</p>
           </section>
-          <div className="region-variant-picker">
-            <div className="region-variant-picker__label"><span>光影模式</span><small>LIGHTING STUDIES／選擇模式</small></div>
-            {(Object.entries(REGION_VARIANTS) as Array<[RegionVariantId, typeof REGION_VARIANTS[RegionVariantId]]>).map(([id, item], index) => (
-              <button type="button" className={variant === id ? 'is-selected' : ''} onClick={() => chooseVariant(id)} key={id}>
-                <span className="region-variant-picker__index">{String.fromCharCode(65 + index)}</span>
-                <span><strong>{item.label}<em>{item.englishLabel}</em></strong><small>{item.description}<br />{item.englishDescription}</small></span>
-                <i />
-              </button>
-            ))}
-          </div>
           <div className="region-side-rail__foot"><span>資料界線／DATA BOUNDARY</span><strong>現代地形參考 × 歷史航照</strong><small>DEM 高程／現代海岸線／1944・1945・1958</small></div>
           <div className="region-data-legend">
             <div><i className="is-terrain" /><span>地形高程<small>現代參考</small></span></div>
@@ -818,7 +822,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             <div><span>歷史來源／SOURCE</span><strong>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : historicalSelectionMode === 'smart' ? 'SMART／SOURCE REVIEW' : `${aerialYear}／LOCAL POC`}</strong></div>
             <p>{historicalSelectionMode === 'smart' ? '44＋45 PRIMARY／58 FALLBACK' : `${aerialYear} 單年度來源`}<br />中央研究院人社中心／地理資訊科學研究專題中心<br />KML MapTilePyramid · PNG · EPSG:3857</p>
             {localAerialPoc && historicalSelectionMode === 'smart' && <small className="region-visual-disclosure">VISUAL COMPOSITE／非單一年代史料</small>}
-            <small>{localAerialPoc ? '本機 POC：像素不公開；權利狀態仍為確認中' : '權利狀態：資料授權確認中／不請求像素'}</small>
+            <small>{localAerialPoc ? 'LOCAL ONLY：像素僅限本機視覺檢視；權利狀態未確認' : '未開啟 local POC：不請求航照像素'}</small>
           </div>
           <div className="region-source-panel region-source-panel--research">
             <div><span>廈門研究／XIAMEN</span><strong>MAP ONLY／NO AERIAL</strong></div>
@@ -910,7 +914,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL }: Pro
             <button type="button" className={coastDebug ? 'is-on' : ''} onClick={toggleCoastDebug}>海岸 {coastDebug ? '除錯' : '正常'}<i /></button>
           </div>
           {stats && <div className="region-debug__metric-strip">CPU frame {stats.frameTimeMs.toFixed(1)} ms · GPU frame —（WebGL 未暴露）</div>}
-          {stats && <div className="region-debug__stats">品質 {stats.quality} · 網格 {stats.regionGrid}<br />{stats.regionVertices.toLocaleString()} 頂點 · {stats.regionTriangles.toLocaleString()} 三角 · DRAW {stats.calls}<br />材質 {stats.textures} · GPU 約 {Math.round(stats.gpuEstimateBytes / 1024)} KB · 載荷 {Math.round(stats.assetPayloadBytes / 1024)} KB<br />海岸 {stats.coastlineResolution}<br />來源 {stats.terrainSource}<br />鏡頭 {stats.cameraPosition} → {stats.cameraTarget} · 距離 {stats.cameraConstraints.distance.toFixed(1)}<br />垂直 {stats.verticalExaggeration.toFixed(2)}× · 光影 {stats.lightingMode} · 等高線 {stats.contourMode}<br />航照 {stats.aerialStatus} · 年代 {stats.aerialYear} · 年份 {stats.aerialYears} · 透明度 {stats.aerialOpacity}%<br />選擇 {stats.aerialSelectionMode} · 分布 {stats.aerialSourceDistribution}<br />航照解析度 {stats.aerialTextureResolution} · tiles {stats.aerialTileCount} · bytes {stats.aerialDownloadedBytes}<br />航照範圍 {stats.aerialBounds}<br />對齊 {stats.aerialAlignment} · payload {stats.aerialPayloadBytes} B<br />環境 {stats.environmentMode}／{stats.environmentTime}／{stats.environmentWeather} · 雲影 {stats.environment.cloudShadowEnabled ? 'ON' : 'OFF'}<br />日光 {stats.environment.sunDirection} · 雲 {Math.round(stats.environment.cloudCoverage * 100)}% · 環境 ready {stats.environment.environmentReadyMs?.toFixed(0) ?? '—'}ms<br />3D {stats.firstMeaningful3dMs?.toFixed(0) ?? '—'}ms · READY {stats.gateReadyMs?.toFixed(0) ?? '—'}ms</div>}
+          {stats && <div className="region-debug__stats">品質 {stats.quality} · 網格 {stats.regionGrid}<br />{stats.regionVertices.toLocaleString()} 頂點 · {stats.regionTriangles.toLocaleString()} 三角 · DRAW {stats.calls}<br />材質 {stats.textures} · GPU 約 {Math.round(stats.gpuEstimateBytes / 1024)} KB · 載荷 {Math.round(stats.assetPayloadBytes / 1024)} KB<br />海岸 {stats.coastlineResolution}<br />來源 {stats.terrainSource}<br />鏡頭 {stats.cameraPosition} → {stats.cameraTarget} · 距離 {stats.cameraConstraints.distance.toFixed(1)}<br />垂直 {stats.verticalExaggeration.toFixed(2)}× · 光影 {stats.lightingMode} · 等高線 {stats.contourMode}<br />航照 {stats.aerialStatus} · 年代 {stats.aerialYear} · 年份 {stats.aerialYears} · 透明度 {stats.aerialOpacity}%<br />選擇 {stats.aerialSelectionMode} · 分布 {stats.aerialSourceDistribution}<br />航照解析度 {stats.aerialTextureResolution} · tiles {stats.aerialTileCount} · bytes {stats.aerialDownloadedBytes}<br />航照範圍 {stats.aerialBounds}<br />對齊 {stats.aerialAlignment} · payload {stats.aerialPayloadBytes} B<br />環境 {stats.environmentMode}／{stats.environmentTime}／{stats.environmentWeather} · 雲層 {stats.environment.cloudsVisible ? 'ON' : 'OFF'} · 雲影 {stats.environment.cloudShadowEnabled ? 'ON' : 'OFF'}<br />雲層位置 {stats.environment.cloudLayerPosition}<br />日光 {stats.environment.sunDirection} · 雲 {Math.round(stats.environment.cloudCoverage * 100)}% · 環境 ready {stats.environment.environmentReadyMs?.toFixed(0) ?? '—'}ms<br />3D {stats.firstMeaningful3dMs?.toFixed(0) ?? '—'}ms · READY {stats.gateReadyMs?.toFixed(0) ?? '—'}ms</div>}
         </aside>
       )}
       {import.meta.env.DEV && !debugOpen && <button type="button" className="region-debug-reopen" onClick={() => setDebugOpen(true)}>QA</button>}

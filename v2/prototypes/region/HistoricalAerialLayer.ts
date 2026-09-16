@@ -176,8 +176,12 @@ export class HistoricalAerialLayer {
   private coverageMaskDebug = false;
   private disposed = false;
   private texture: THREE.Texture | null = null;
+  private contextTexture: THREE.Texture | null = null;
   private manifest: HistoricalAerialManifest | null = null;
   private activeBounds: HistoricalAerialDataset['bounds'] | null = null;
+  private contextBounds: ActualMosaicExtent | null = null;
+  private contextPayloadBytes = 0;
+  private contextDownloadedBytes = 0;
   private textureReadyMs: number | null = null;
   private localBaseUrl: string;
   private allowLocalPixels: boolean;
@@ -279,13 +283,63 @@ export class HistoricalAerialLayer {
     const manifestPath = this.aerialZoom
       ? 'guningtou-higher-zoom-manifest.json'
       : 'manifest.json';
-    const response = await fetch(baseUrl.replace(/\/?$/, '/') + '.local/aerial-poc/' + manifestPath);
-    if (!response.ok) throw new Error('Local aerial POC manifest unavailable (' + response.status + ').');
-    const sourceManifest = await response.json() as HistoricalAerialManifest | HistoricalAerialHigherZoomManifest;
+    const sourceManifest = await this.fetchManifest(baseUrl, manifestPath);
     const manifest = this.manifestForRequestedZoom(sourceManifest);
     if (!manifest.localOnly || manifest.rightsStatus === 'APPROVED') throw new Error('Local aerial POC manifest failed the rights boundary.');
     const url = this.textureUrlForManifest(manifest);
     if (!url) throw new Error('Local aerial POC has no valid mosaic for the selected mode.');
+    const texture = await this.loadTexture(url);
+
+    let contextTexture: THREE.Texture | null = null;
+    let contextBounds: ActualMosaicExtent | null = null;
+    let contextPayloadBytes = 0;
+    let contextDownloadedBytes = 0;
+    if (this.aerialZoom) {
+      try {
+        const contextManifest = await this.fetchManifest(baseUrl, 'manifest.json') as HistoricalAerialManifest;
+        if (!contextManifest.localOnly || contextManifest.rightsStatus === 'APPROVED') {
+          throw new Error('Base local aerial POC manifest failed the rights boundary.');
+        }
+        const contextDataset = manifestDataset(contextManifest, this.year);
+        const contextUrl = contextDataset?.mosaic?.url;
+        contextBounds = contextDataset?.actualMosaicBounds
+          ?? contextDataset?.mosaic?.actualMosaicBounds
+          ?? contextDataset?.mosaic?.bounds
+          ?? null;
+        if (contextUrl && contextBounds) {
+          contextTexture = await this.loadTexture(contextUrl);
+          contextPayloadBytes = contextDataset.mosaic?.bytes ?? 0;
+          contextDownloadedBytes = contextDataset.mosaic?.bytes ?? 0;
+        }
+      } catch (error) {
+        console.warn('Gate A.3P higher-zoom context unavailable; keeping detail mosaic only:', error);
+        contextTexture = null;
+        contextBounds = null;
+        contextPayloadBytes = 0;
+        contextDownloadedBytes = 0;
+      }
+    }
+
+    this.texture?.dispose();
+    this.contextTexture?.dispose();
+    this.texture = texture;
+    this.contextTexture = contextTexture;
+    this.manifest = manifest;
+    this.activeBounds = this.boundsForManifest(manifest);
+    this.contextBounds = contextBounds;
+    this.contextPayloadBytes = contextPayloadBytes;
+    this.contextDownloadedBytes = contextDownloadedBytes;
+    this.textureReadyMs = performance.now() - startedAt;
+    return true;
+  }
+
+  private async fetchManifest(baseUrl: string, manifestPath: string) {
+    const response = await fetch(baseUrl.replace(/\/?$/, '/') + '.local/aerial-poc/' + manifestPath);
+    if (!response.ok) throw new Error('Local aerial POC manifest unavailable (' + response.status + ').');
+    return await response.json() as HistoricalAerialManifest | HistoricalAerialHigherZoomManifest;
+  }
+
+  private async loadTexture(url: string) {
     const texture = await new THREE.TextureLoader().loadAsync(url);
     texture.colorSpace = THREE.SRGBColorSpace;
     // Mosaic row 0 is XYZ north. With flipY=false, shader v=0 samples row 0.
@@ -295,12 +349,7 @@ export class HistoricalAerialLayer {
     texture.minFilter = THREE.LinearMipmapLinearFilter;
     texture.magFilter = THREE.LinearFilter;
     texture.needsUpdate = true;
-    this.texture?.dispose();
-    this.texture = texture;
-    this.manifest = manifest;
-    this.activeBounds = this.boundsForManifest(manifest);
-    this.textureReadyMs = performance.now() - startedAt;
-    return true;
+    return texture;
   }
 
   private manifestForRequestedZoom(sourceManifest: HistoricalAerialManifest | HistoricalAerialHigherZoomManifest): HistoricalAerialManifest {
@@ -343,6 +392,8 @@ export class HistoricalAerialLayer {
     return {
       texture: this.texture,
       bounds: this.activeBounds,
+      contextTexture: this.contextTexture ?? undefined,
+      contextBounds: this.contextBounds ?? undefined,
       declaredBounds: activeDataset?.bounds,
       actualMosaicBounds: smart?.compositeMosaicBounds ?? activeDataset?.actualMosaicBounds ?? activeDataset?.mosaic?.actualMosaicBounds,
       requestedTileRange: smart?.tileRange ?? activeDataset?.requestedTileRange ?? activeDataset?.mosaic?.tileRange,
@@ -369,8 +420,10 @@ export class HistoricalAerialLayer {
       opacity: this.opacity,
       textureResolution: smartComposite?.width && smartComposite.height
         ? `${smartComposite.width}×${smartComposite.height}`
-        : activeDataset?.mosaic ? `${activeDataset.mosaic.width}×${activeDataset.mosaic.height}` : '未載入／本機 POC',
-      payloadBytes: smartComposite?.bytes ?? activeDataset?.mosaic?.bytes ?? 0,
+        : activeDataset?.mosaic
+        ? String(activeDataset.mosaic.width) + '×' + String(activeDataset.mosaic.height) + (this.contextTexture ? ' + z12 context' : '')
+        : '未載入／本機 POC',
+      payloadBytes: (smartComposite?.bytes ?? activeDataset?.mosaic?.bytes ?? 0) + this.contextPayloadBytes,
       alignment: this.texture ? 'TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED' : 'SOURCE REVIEW',
       bounds: formatBounds(this.activeBounds ?? dataset.bounds),
       coverageMaskDebug: this.coverageMaskDebug,
@@ -380,7 +433,7 @@ export class HistoricalAerialLayer {
       tileCount: usingSmartComposite
         ? this.manifest?.datasets.reduce((total, item) => total + (item.readyTileCount ?? item.tileCount ?? 0), 0) ?? 0
         : activeDataset?.readyTileCount ?? activeDataset?.tileCount ?? 0,
-      downloadedBytes: this.manifest?.totals?.downloadedBytes ?? 0,
+      downloadedBytes: (this.manifest?.totals?.downloadedBytes ?? 0) + this.contextDownloadedBytes,
       rightsStatus: this.manifest?.rightsStatus ?? 'BLOCKED — RIGHTS UNCLEAR',
       textureReadyMs: this.textureReadyMs,
     };
@@ -389,7 +442,12 @@ export class HistoricalAerialLayer {
   dispose() {
     this.disposed = true;
     this.texture?.dispose();
+    this.contextTexture?.dispose();
     this.texture = null;
+    this.contextTexture = null;
+    this.contextBounds = null;
+    this.contextPayloadBytes = 0;
+    this.contextDownloadedBytes = 0;
   }
 
   private assertActive() {

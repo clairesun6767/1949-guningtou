@@ -16,6 +16,6 @@ const title = '1949 2.0 — Cinematic Strategic Terrain';
     <title>{title}</title>
   </head>
   <body>
-    <RegionPrototype client:load />
+    <RegionPrototype client:load initialSearch={Astro.url.search} />
   </body>
 </html>

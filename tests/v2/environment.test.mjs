@@ -66,11 +66,14 @@ test('cloud density is deterministic and cloud shadow projection is finite at da
   assert.ok(shadow.offset.x !== 0 || shadow.offset.y !== 0);
 });
 
-test('LOW cloud tier stays cheap and world-space while ocean keeps sphere fallback', () => {
+test('LOW cloud tier stays cheap and camera-visible while ocean keeps sphere fallback', () => {
   const clouds = createRegionClouds('LOW');
   const initialPosition = clouds.mesh.position.clone();
   clouds.tick(8_000, new THREE.Vector3(80, 10, -80));
-  assert.deepEqual(clouds.mesh.position.toArray(), initialPosition.toArray());
+  assert.equal(clouds.mesh.geometry.type, 'PlaneGeometry');
+  assert.equal(clouds.mesh.geometry.parameters.widthSegments, 8);
+  assert.deepEqual(clouds.mesh.position.toArray(), [80, 3.5, -80]);
+  assert.notDeepEqual(clouds.mesh.position.toArray(), initialPosition.toArray());
   clouds.dispose();
 
   const ocean = createRegionOcean('LOW');

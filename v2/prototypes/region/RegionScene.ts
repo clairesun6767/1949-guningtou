@@ -854,6 +854,7 @@ export class RegionScene {
       weather: this.environmentWeather,
       enabled: false,
       cloudsVisible: false,
+      cloudLayerPosition: '—',
       cloudShadowEnabled: false,
       cloudCoverage: 0,
       cloudShadowStrength: 0,

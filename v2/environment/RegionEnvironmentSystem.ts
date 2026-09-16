@@ -36,6 +36,7 @@ export interface RegionEnvironmentStats {
   weather: EnvironmentWeather;
   enabled: boolean;
   cloudsVisible: boolean;
+  cloudLayerPosition: string;
   cloudShadowEnabled: boolean;
   cloudCoverage: number;
   cloudShadowStrength: number;
@@ -80,7 +81,10 @@ export function createRegionEnvironmentSystem(options: RegionEnvironmentSystemOp
   const clouds = createRegionClouds(options.tier);
   options.scene.add(ocean.mesh, clouds.mesh);
   const startedAt = performance.now();
-  const cloudsAllowed = options.tier !== 'LOW';
+  // LOW tier already uses the smallest cloud field (8×8 subdivisions). Keep
+  // that lightweight layer visible so the historical-daylight composition does
+  // not lose its atmospheric cue merely because the browser reports a low tier.
+  const cloudsAllowed = true;
   let shadowState = createCloudShadowState({
     enabled: state.enabled && state.debug.cloudShadows,
     coverage: state.cloudCoverage,
@@ -170,6 +174,7 @@ export function createRegionEnvironmentSystem(options: RegionEnvironmentSystemOp
         weather: state.weather,
         enabled: state.enabled,
         cloudsVisible: clouds.mesh.visible,
+        cloudLayerPosition: `${clouds.mesh.position.x.toFixed(1)},${clouds.mesh.position.y.toFixed(1)},${clouds.mesh.position.z.toFixed(1)}`,
         cloudShadowEnabled: shadowState.enabled,
         cloudCoverage: state.cloudCoverage,
         cloudShadowStrength: state.cloudShadowStrength,

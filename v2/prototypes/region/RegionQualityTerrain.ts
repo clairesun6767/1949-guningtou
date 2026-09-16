@@ -228,9 +228,12 @@ export function createRegionQualityTerrain(
     historicalMiddle: { value: new THREE.Color(HISTORICAL_ART_PALETTE.middle) },
     historicalHigh: { value: new THREE.Color(HISTORICAL_ART_PALETTE.high) },
     historicalAerialTexture: { value: textures.classificationA },
+    historicalAerialContextTexture: { value: textures.classificationA },
     terrainGeoBounds: { value: new THREE.Vector4(asset.bounds.west, asset.bounds.south, asset.bounds.east, asset.bounds.north) },
     aerialGeoBounds: { value: new THREE.Vector4(asset.bounds.west, asset.bounds.south, asset.bounds.east, asset.bounds.north) },
+    aerialContextGeoBounds: { value: new THREE.Vector4(asset.bounds.west, asset.bounds.south, asset.bounds.east, asset.bounds.north) },
     aerialAvailable: { value: 0 },
+    aerialContextAvailable: { value: 0 },
     coverageMaskDebug: { value: 0 },
     cloudShadowEnabled: { value: 0 },
     cloudShadowCoverage: { value: 0 },
@@ -273,9 +276,12 @@ export function createRegionQualityTerrain(
     shader.uniforms.regionHistoricalMiddle = uniforms.historicalMiddle;
     shader.uniforms.regionHistoricalHigh = uniforms.historicalHigh;
     shader.uniforms.regionHistoricalAerialTexture = uniforms.historicalAerialTexture;
+    shader.uniforms.regionHistoricalAerialContextTexture = uniforms.historicalAerialContextTexture;
     shader.uniforms.regionTerrainGeoBounds = uniforms.terrainGeoBounds;
     shader.uniforms.regionAerialGeoBounds = uniforms.aerialGeoBounds;
+    shader.uniforms.regionAerialContextGeoBounds = uniforms.aerialContextGeoBounds;
     shader.uniforms.regionAerialAvailable = uniforms.aerialAvailable;
+    shader.uniforms.regionAerialContextAvailable = uniforms.aerialContextAvailable;
     shader.uniforms.regionCoverageMaskDebug = uniforms.coverageMaskDebug;
     shader.uniforms.regionCloudShadowEnabled = uniforms.cloudShadowEnabled;
     shader.uniforms.regionCloudShadowCoverage = uniforms.cloudShadowCoverage;
@@ -333,9 +339,12 @@ export function createRegionQualityTerrain(
       uniform vec3 regionHistoricalMiddle;
       uniform vec3 regionHistoricalHigh;
       uniform sampler2D regionHistoricalAerialTexture;
+      uniform sampler2D regionHistoricalAerialContextTexture;
       uniform vec4 regionTerrainGeoBounds;
       uniform vec4 regionAerialGeoBounds;
+      uniform vec4 regionAerialContextGeoBounds;
       uniform float regionAerialAvailable;
+      uniform float regionAerialContextAvailable;
       uniform float regionCoverageMaskDebug;
       uniform float regionCloudShadowEnabled;
       uniform float regionCloudShadowCoverage;
@@ -388,14 +397,32 @@ export function createRegionQualityTerrain(
       float aerialEdge = min(min(aerialUv.x, 1.0 - aerialUv.x), min(aerialUv.y, 1.0 - aerialUv.y));
       float aerialInBounds = step(0.0, aerialUv.x) * step(aerialUv.x, 1.0) * step(0.0, aerialUv.y) * step(aerialUv.y, 1.0);
       float aerialCoverage = aerialInBounds * smoothstep(0.0, 0.065, aerialEdge);
+      vec2 contextSpan = max(regionAerialContextGeoBounds.zw - regionAerialContextGeoBounds.xy, vec2(0.0001));
+      vec2 contextUv = vec2(
+        (terrainLongitude - regionAerialContextGeoBounds.x) / contextSpan.x,
+        (regionAerialContextGeoBounds.w - terrainLatitude) / contextSpan.y
+      );
+      float contextEdge = min(min(contextUv.x, 1.0 - contextUv.x), min(contextUv.y, 1.0 - contextUv.y));
+      float contextInBounds = step(0.0, contextUv.x) * step(contextUv.x, 1.0) * step(0.0, contextUv.y) * step(contextUv.y, 1.0);
+      float contextCoverage = contextInBounds * smoothstep(0.0, 0.035, contextEdge);
+      vec4 contextSample = vec4(0.0);
+      if (regionAerialContextAvailable > 0.5 && contextInBounds > 0.5) contextSample = texture2D(regionHistoricalAerialContextTexture, contextUv);
       vec4 aerialSample = vec4(0.0);
       if (regionAerialAvailable > 0.5 && aerialInBounds > 0.5) aerialSample = texture2D(regionHistoricalAerialTexture, aerialUv);
-      vec3 aerialColor = mix(historicalColor, aerialSample.rgb, aerialSample.a);
-      float sourcePixelsAvailable = regionAerialAvailable;
+      vec3 aerialColor = mix(historicalColor, contextSample.rgb, contextSample.a);
+      aerialColor = mix(aerialColor, aerialSample.rgb, aerialSample.a);
+      float sourcePixelsAvailable = max(
+        regionAerialAvailable * aerialSample.a,
+        regionAerialContextAvailable * contextSample.a
+      );
+      aerialCoverage = max(contextCoverage, aerialCoverage);
       vec3 aerialPresentation = mix(aerialColor, mix(aerialColor, historicalColor, 0.18), step(1.5, regionHistoricalMode));
       diffuseColor.rgb = mix(diffuseColor.rgb, aerialPresentation, sourcePixelsAvailable * regionAerialOpacity * aerialCoverage);
       if (regionCoverageMaskDebug > 0.5) {
-        float coverageLine = 1.0 - smoothstep(0.0, 0.035, abs(aerialEdge));
+        float coverageLine = max(
+          1.0 - smoothstep(0.0, 0.035, abs(aerialEdge)),
+          1.0 - smoothstep(0.0, 0.035, abs(contextEdge))
+        );
         diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.88, 0.48, 0.24), coverageLine);
       }
       float cloudDarkening = 0.0;
@@ -424,7 +451,7 @@ export function createRegionQualityTerrain(
       #include <alphatest_fragment>
     `);
   };
-  material.customProgramCacheKey = () => 'v2-region-quality-terrain-material-4-georef';
+  material.customProgramCacheKey = () => 'v2-region-quality-terrain-material-5-context-georef';
   const mesh = new THREE.Mesh(built.geometry, material);
   mesh.name = `v2-region-terrain-${quality.toLowerCase()}-mesh`;
   mesh.castShadow = true;
@@ -506,12 +533,20 @@ export function createRegionQualityTerrain(
     },
     setAerialTexture(binding: RegionAerialBinding | null) {
       uniforms.historicalAerialTexture.value = binding?.texture ?? textures.classificationA;
+      uniforms.historicalAerialContextTexture.value = binding?.contextTexture ?? textures.classificationA;
       uniforms.aerialAvailable.value = binding?.available ? 1 : 0;
+      uniforms.aerialContextAvailable.value = binding?.contextTexture && binding?.contextBounds ? 1 : 0;
       uniforms.aerialGeoBounds.value.set(
         binding?.bounds.west ?? asset.bounds.west,
         binding?.bounds.south ?? asset.bounds.south,
         binding?.bounds.east ?? asset.bounds.east,
         binding?.bounds.north ?? asset.bounds.north,
+      );
+      uniforms.aerialContextGeoBounds.value.set(
+        binding?.contextBounds?.west ?? asset.bounds.west,
+        binding?.contextBounds?.south ?? asset.bounds.south,
+        binding?.contextBounds?.east ?? asset.bounds.east,
+        binding?.contextBounds?.north ?? asset.bounds.north,
       );
     },
     setCoverageMaskDebug(enabled) {

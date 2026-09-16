@@ -29,7 +29,7 @@
 | Runtime Usage Permission | 公開 WMTS 讀取端點在技術上可連線，但 runtime 讀取／快取／公開展示的權利範圍未由官方頁面明確授權；暫不啟用。 |
 | GitHub Commit Permission | 未確認；本分支不提交 1945 航照像素、tile cache、拼接圖或由其產生的材質。 |
 | Known Restrictions | 非經允許不得作為商業使用；高解析照片需依官方文件提出專案申請。舊指定 URL 目前回傳系統錯誤頁，實際可核查的服務入口為上述 `gis.sinica.edu.tw/kinmen/` 與 WMTS capabilities。 |
-| Recommended Integration | 先保留 year-aware `HistoricalAerialLayer`／provider 介面，狀態固定為 rights-blocked；UI 顯示 `1945 航照 — 資料授權確認中`。取得書面授權後，才依官方 bounds／CRS 進行小範圍對齊與 runtime / local adapter 實作。 |
+| Recommended Integration | 先保留 year-aware `HistoricalAerialLayer`／provider 介面，狀態固定為 rights-blocked；UI 以底部 `DATA BOUNDARY` 文字標示 local-only／權利未確認。取得書面授權後，才依官方 bounds／CRS 進行小範圍對齊與 runtime / local adapter 實作。 |
 | Verdict | **BLOCKED — RIGHTS UNCLEAR** |
 
 ## 來源證據

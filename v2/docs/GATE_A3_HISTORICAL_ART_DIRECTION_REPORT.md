@@ -42,7 +42,7 @@ A.3 default 以現代 DEM 為幾何來源，採較明亮、低綠色主導的檔
 
 ## Traditional Chinese UI
 
-主要介面改為繁體中文：區域、金廈地理關係、戰略地形、進入古寧頭戰場、進入探索、光影模式、選擇模式、資料界線、現代地形參考、地形高程、海岸線、1945 航照與戰役資料均以中文優先；English 僅作 secondary technical label。
+主要介面改為繁體中文：區域、金廈地理關係、戰略地形、進入古寧頭戰場、進入探索、選擇模式、資料界線、現代地形參考、地形高程、海岸線、歷史航照與戰役資料均以中文優先；English 僅作 secondary technical label。一般瀏覽不再顯示光影模式選單，預設為歷史日光；光影控制僅保留在開發除錯面板。
 
 主標題改為「金門 — 廈門」，次標 `KINMEN — XIAMEN`；文案為：
 
@@ -63,7 +63,7 @@ A.3 default 以現代 DEM 為幾何來源，採較明亮、低綠色主導的檔
 | AERIAL | 1945 航照 | `SOURCE REVIEW`；無航照像素 |
 | AERIAL_RELIEF | 航照 × 地形 | `SOURCE REVIEW`；保留 relief lighting；無航照像素 |
 
-畫面固定顯示「1945 航照影像／資料授權確認中」與來源 attribution。這是權利阻擋的合法佔位，不是航照 preview。
+畫面底部以「資料界線／DATA BOUNDARY」文字標示歷史航照為 local-only POC、像素不進 GitHub、權利狀態未確認；不再以阻擋瀏覽的來源審查對話框佔據地圖。
 
 ## Ocean / Background
 

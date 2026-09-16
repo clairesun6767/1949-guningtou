@@ -66,12 +66,15 @@ export const HISTORICAL_AERIAL_YEARS: readonly HistoricalAerialYear[] = [1944, 1
 /**
  * Authoritative local Gate A.3P POC request footprint. The tile range is
  * derived from this geographic request at runtime; it is not a visual offset.
+ * The east edge intentionally includes one additional z12 tile column so a
+ * Guningtou higher-zoom review keeps a same-year context across the eastern
+ * Kinmen peninsula instead of revealing the modern DEM fallback mid-island.
  */
 export const HISTORICAL_AERIAL_POC_REQUEST = {
   areaBounds: {
     west: 118.278,
     south: 24.438,
-    east: 118.372,
+    east: 118.475,
     north: 24.52,
   } satisfies GeographicBounds,
   zoom: 12,

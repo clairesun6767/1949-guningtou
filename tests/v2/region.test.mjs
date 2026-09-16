@@ -95,7 +95,12 @@ test('Gate A.3 makes Traditional Chinese the primary review language and does no
   const source = readFileSync('v2/app/RegionPrototype.tsx', 'utf8');
   assert.match(source, /金門 <em>—<\/em> 廈門/);
   assert.match(source, /一水之隔，兩岸對峙。/);
-  assert.match(source, /資料授權確認中/);
+  assert.match(source, /region-viewport__source-note/);
+  assert.doesNotMatch(source, /資料授權確認中/);
+  assert.doesNotMatch(source, /歷史影像來源審查/);
+  assert.match(source, /localHistoricalMosaicUrl/);
+  assert.doesNotMatch(source, /region-history-year-toggles/);
+  assert.doesNotMatch(source, /region-variant-picker/);
   assert.match(source, /HISTORICAL AERIAL/);
   assert.match(source, /航照不透明度/);
   assert.doesNotMatch(source, /Kinmen_1945.*TextureLoader/);

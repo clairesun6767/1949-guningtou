@@ -205,9 +205,9 @@ test('tile conversion supports XYZ and TMS without zoom or Y ambiguity', () => {
 });
 
 test('download budget stays sequential, bounded and low-resolution for the Guningtou POC', () => {
-  const bounds = { west: 118.278, south: 24.438, east: 118.372, north: 24.52 };
+  const bounds = { west: 118.278, south: 24.438, east: 118.475, north: 24.52 };
   const budget = estimateTileBudget(HISTORICAL_AERIAL_DATASETS, bounds, HISTORICAL_AERIAL_DOWNLOAD_BUDGET.preferredZoom);
-  assert.equal(budget.totalTiles, 12);
+  assert.equal(budget.totalTiles, 18);
   assert.equal(budget.withinBudget, true);
   assert.equal(HISTORICAL_AERIAL_DOWNLOAD_BUDGET.maxConcurrency, 1);
   assert.equal(HISTORICAL_AERIAL_DOWNLOAD_BUDGET.maxTilesTotal, 128);
@@ -235,17 +235,17 @@ test('Gate A.3P.2b resolves a compact higher-zoom Guningtou grid', () => {
 
 test('tileXYZToLonLat and tileRangeToBounds derive the authoritative z12 POC footprint', () => {
   const northWest = tileXYZToLonLat(3393, 1760, 12);
-  const southEast = tileXYZToLonLat(3395, 1762, 12);
+  const southEast = tileXYZToLonLat(3396, 1762, 12);
   assert.deepEqual(northWest, { longitude: 118.212890625, latitude: 24.5271348225978 });
-  assert.deepEqual(southEast, { longitude: 118.388671875, latitude: 24.367113562651262 });
-  assert.deepEqual(tileRangeToBounds({ z: 12, minX: 3393, maxX: 3394, minY: 1760, maxY: 1761 }), {
+  assert.deepEqual(southEast, { longitude: 118.4765625, latitude: 24.367113562651262 });
+  assert.deepEqual(tileRangeToBounds({ z: 12, minX: 3393, maxX: 3395, minY: 1760, maxY: 1761 }), {
     west: 118.212890625,
     south: 24.367113562651262,
-    east: 118.388671875,
+    east: 118.4765625,
     north: 24.5271348225978,
   });
   const guningtou = { longitude: 118.318, latitude: 24.478 };
-  assert.equal(guningtou.longitude >= 118.212890625 && guningtou.longitude <= 118.388671875, true);
+  assert.equal(guningtou.longitude >= 118.212890625 && guningtou.longitude <= 118.4765625, true);
   assert.equal(guningtou.latitude >= 24.367113562651262 && guningtou.latitude <= 24.5271348225978, true);
 });
 

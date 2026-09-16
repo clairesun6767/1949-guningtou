@@ -1,6 +1,6 @@
 # Gate A.3P — KML 歷史航照管線報告
 
-審查日期：2026-09-15（Asia/Taipei）
+審查日期：2026-09-16（Asia/Taipei）
 
 本報告記錄 1944、1945、1958 三份使用者提供 KML 的實際解析、低量本機 POC、品質分析與 smart source mask。POC 僅供本機評估；航照像素、拼接圖與含受限像素的畫面放在 root .local/aerial-poc/ 並被 .gitignore 排除；GitHub 只保留 KML metadata、程式、測試、報告與安全截圖。
 
@@ -9,7 +9,7 @@
 - 三份 KML 均已在使用者 Downloads 找到，並由同一個 HistoricalAerialKmlParser 解析。
 - KML 的 GroundOverlay/Icon 是 1×1 GIF 佔位圖；實際 tile 入口取自 gx:MapTilePyramid／Link，不把 Icon 當航照。
 - 1944、1945 都登記為 PRIMARY；1958 登記為 FALLBACK，即使 1958 的區域性 sharpness 較高，也不得覆寫仍有效的 1944／1945 historical information。
-- 古寧頭優先 POC 在 z12 只請求 12 張 tile，總下載 650,525 bytes，低於 128 tiles／50 MB 上限。
+- 古寧頭優先 POC 在 z12 請求 18 張 tile，總下載 1,112,970 bytes，低於 128 tiles／50 MB 上限；context 向東擴充一個 tile column，涵蓋古寧頭至東半島的本機 review 範圍。
 - 實際來源是不規則、透明缺值的歷史掃描 tile；目前只達 TILE-BOUND ALIGNED，沒有可靠 control points，因此標示 NOT VERIFIED ORTHORECTIFIED。
 
 ## 1. 實際 KML 輸入與共用 parser
@@ -61,7 +61,7 @@ Parser 的選擇順序是：
 
 - west 118.278
 - south 24.438
-- east 118.372
+- east 118.475
 - north 24.52
 
 此範圍落在三個 KML bounds 內；這只代表有候選 coverage，不代表每個像素都有有效航照。
@@ -81,31 +81,31 @@ Parser 的選擇順序是：
 
 | 年代 | 狀態 | requested tiles | ready tiles | 原始下載 bytes | mosaic |
 | --- | --- | ---: | ---: | ---: | --- |
-| 1944 | READY | 4 | 4 | 183,943 | 512×512 |
-| 1945 | READY | 4 | 4 | 217,721 | 512×512 |
-| 1958 | READY | 4 | 4 | 248,861 | 512×512 |
-| 合計 | withinBudget=true | 12 | 12 | 650,525 | smart 512×512 |
+| 1944 | READY | 6 | 6 | 281,616 | 768×512 |
+| 1945 | READY | 6 | 6 | 425,118 | 768×512 |
+| 1958 | READY | 6 | 6 | 406,236 | 768×512 |
+| 合計 | withinBudget=true | 18 | 18 | 1,112,970 | smart 768×512 |
 
-三年代的 tile range 都是 z12、x 3393–3394、y 1760–1761。Smart composite 使用 tile-level primary ordering，再逐像素處理透明缺值；1958 只在兩個 primary 都沒有有效像素時使用，剩餘位置標為 BASE。
+三年代的 tile range 都是 z12、x 3393–3395、y 1760–1761。Smart composite 使用 tile-level primary ordering，再逐像素處理透明缺值；1958 只在兩個 primary 都沒有有效像素時使用，剩餘位置標為 BASE。這次東半島補欄位是同一個 XYZ geographic grid 的 context 擴充，不是影像平移、旋轉或拉伸。
 
 ## 5. 品質分析
 
-品質訊號包含 sharpness、contrast、entropy、alpha-valid ratio、information density 與 valid-pixel ratio。各訊號先限制在 0–1，再對本次 dataset set 的 raw score 做 min-max normalization；本次 raw score 範圍為 0.349544–0.640933。
+品質訊號包含 sharpness、contrast、entropy、alpha-valid ratio、information density 與 valid-pixel ratio。各訊號先限制在 0–1，再對本次 dataset set 的 raw score 做 min-max normalization；本次 raw score 範圍為 0.134873–0.730398。
 
 | 年代 | normalized score | sharpness | contrast | entropy | alpha valid | information density | valid pixels |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1944 | 0.27115 | 0.15568 | 0.42594 | 0.87841 | 0.30573 | 0.64681 | 0.30573 |
-| 1945 | 0.41800 | 0.10257 | 0.47447 | 0.88837 | 0.53115 | 0.66749 | 0.53115 |
-| 1958 | 0.55152 | 0.36785 | 0.35715 | 0.73791 | 0.65319 | 0.54315 | 0.65319 |
+| 1944 | 0.51795 | 0.16799 | 0.45857 | 0.89431 | 0.30358 | 0.66613 | 0.30358 |
+| 1945 | 0.64699 | 0.14928 | 0.50211 | 0.91167 | 0.64400 | 0.68964 | 0.64400 |
+| 1958 | 0.69727 | 0.42724 | 0.38624 | 0.78378 | 0.67186 | 0.57902 | 0.67186 |
 
-本表是這次 4-tile 古寧頭 POC 的量測，不是整島品質結論。1958 的 sharpness 與 valid-pixel ratio 較高，但 historical date 較晚，所以仍固定為 fallback。
+本表是這次 6-tile／年度 context POC 的量測，不是整島品質結論。1958 的 sharpness 與 valid-pixel ratio 較高，但 historical date 較晚，所以仍固定為 fallback。
 
 ## 6. 1944／1945 primary 選擇
 
-四個共同 tile 的 normalized tile score 比較：
+六個共同 tile 的 normalized tile score 比較：
 
 - 1944 優於 1945：z12／x3393／y1761。
-- 1945 優於 1944：z12／x3393／y1760、x3394／y1760、x3394／y1761。
+- 1945 優於 1944：z12／x3393／y1760、x3394／y1760、x3394／y1761、x3395／y1760、x3395／y1761。
 - 1958 在這個小樣本的 sharpness 較高，但不參與 primary overwrite。
 
 因此 renderer 使用 quality-aware primary selection，而不是固定「1945 永遠覆蓋 1944」。在透明缺值位置才進入 1958 fallback，再退回現代 DEM base。
@@ -116,13 +116,13 @@ smart-composite-z12.png 與 source-mask-z12.png 都只存在 .local/aerial-poc/�
 
 | source | 實際像素比例 |
 | --- | ---: |
-| 1944 | 13.21% |
-| 1945 | 52.99% |
-| 1958 fallback | 11.01% |
-| Historical Base／現代 DEM | 22.79% |
+| 1944 | 8.81% |
+| 1945 | 64.32% |
+| 1958 fallback | 7.41% |
+| Historical Base／現代 DEM | 19.46% |
 | Xiamen historical source | 0%（本 Gate 尚無已驗證來源） |
 
-這個比例只適用於本次 512×512 古寧頭 POC mosaic；不可外推為金門全域比例。
+這個比例只適用於本次 768×512 古寧頭／東半島 context mosaic；不可外推為金門全域比例。
 
 ## 8. Three.js 投影與 truth boundary
 
@@ -133,6 +133,17 @@ smart-composite-z12.png 與 source-mask-z12.png 都只存在 .local/aerial-poc/�
 TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED
 
 原因是本 POC 尚未提供可重現的地面控制點、RMSE 或可靠的航照外方位參數。不能把 tile bounds 誤寫成完美正射校正。
+
+## 8A. 官方圖層預覽交叉核對
+
+2026-09-16 以中央研究院人社中心官方圖層預覽交叉核對：
+
+- [Kinmen_1944 官方預覽](https://gis.sinica.edu.tw/showwmts/index.php?s=kinmen&l=Kinmen_1944)
+- [Kinmen_1945 官方預覽](https://gis.sinica.edu.tw/showwmts/index.php?s=kinmen&l=Kinmen_1945)
+
+官方預覽在現代底圖上同樣呈現多個旋轉的航照片 footprint、互相重疊的照片邊界與透明缺值；本機從相同 MapTilePyramid z/x/y endpoint 建出的 mosaic 保留了這個資料事實。故目前畫面中的「缺圖」是來源 alpha／coverage 缺值，「重疊」是來源航照片尚未完成正射校正與 seamline mosaic 的結果，不是 Three.js 重複載入同一張圖片。
+
+若要求無缺口、無重疊的金門全島歷史底圖，必須另取得已正射校正的 full-island orthomosaic，或先完成每張航照的 GCP、外方位與 seamline mosaic；不能用目前 KML 的 declared bounds、現代 DEM 或人工 UV offset 假造這個結果。
 
 ## 9. Rights 與提交邊界
 

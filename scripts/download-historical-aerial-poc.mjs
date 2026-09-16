@@ -6,7 +6,10 @@ import sharp from 'sharp';
 const ROOT = process.cwd();
 const DEFAULT_KML_DIR = 'C:\\Users\\user\\Downloads';
 const DEFAULT_OUTPUT = path.join(ROOT, '.local', 'aerial-poc');
-const AREA_BOUNDS = { west: 118.278, south: 24.438, east: 118.372, north: 24.52 };
+// Keep the low-zoom context compact, but include the eastern Kinmen peninsula
+// so a higher-zoom Guningtou review does not fall back to modern DEM halfway
+// across the island. This still resolves to only 3 x 2 tiles per year at z12.
+const AREA_BOUNDS = { west: 118.278, south: 24.438, east: 118.475, north: 24.52 };
 const MAX_TILES = 128;
 const MAX_BYTES = 50 * 1024 * 1024;
 const TILE_SIZE = 256;
@@ -438,7 +441,7 @@ async function main() {
       minRawScore: qualityNormalization.minScore,
       maxRawScore: qualityNormalization.maxScore,
     },
-    area: { id: 'GUNINGTOU_PRIORITY', bounds: AREA_BOUNDS, label: '古寧頭優先／低中解析評估範圍' },
+    area: { id: 'GUNINGTOU_PRIORITY_WITH_EAST_CONTEXT', bounds: AREA_BOUNDS, label: '古寧頭優先／東半島 context／低中解析評估範圍' },
     request: { zoom, maxTiles: MAX_TILES, maxBytes: MAX_BYTES, coordinateOrder: 'XYZ', requestPolicy: `sequential / ${REQUEST_DELAY_MS}ms minimum delay / one request at a time` },
     datasets: results.map(result => ({
       id: result.dataset.id,

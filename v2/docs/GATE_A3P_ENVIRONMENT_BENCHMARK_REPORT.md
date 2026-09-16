@@ -58,7 +58,7 @@ Ocean 使用 radius 150 的 SphereGeometry BackSide shell，depthWrite=false、d
 
 Cloud layer 使用固定 world-space 190×190 plane，coverage 由 large-scale FBM／noise 控制，不跟著 camera position 平移。Timestep 由 renderer clock 驅動，5–10 秒可觀察到慢速 wind motion；W0 會完全隱藏。
 
-LOW tier 不顯示雲層；MEDIUM／HIGH 使用相同 deterministic field，差別在幾何與材質成本。沒有使用 AI 生成、inpainting、super-resolution 或 colorization。
+LOW tier 使用 8×8 雲層；MEDIUM／HIGH 使用相同 deterministic field，差別在幾何與材質成本。近景鏡頭會依相機高度放置雲層，避免雲平面落在相機背後。沒有使用 AI 生成、inpainting、super-resolution 或 colorization。
 
 判定：BENCHMARKED／REVIEW。固定 camera 的 Cloud T0／T1 actual Chrome 截圖已完成；W0／W1／W2 控制仍保留為藝術 QA 旋鈕，雲層不被當成資料來源。
 

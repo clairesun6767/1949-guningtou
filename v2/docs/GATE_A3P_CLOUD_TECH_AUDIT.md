@@ -21,7 +21,7 @@
 - world-space fixed plane，camera rotate／pan 不會讓雲貼在螢幕上。
 - windDirection 與 windSpeed 由 EnvironmentState 統一控制。
 - W0／W1／W2 只調整 coverage、opacity、shadow strength。
-- LOW tier 不顯示 cloud plane；避免 mobile 把 cloud 當成硬性成本。
+- LOW tier 使用 8×8 cloud plane；保留最低成本的可見大氣提示，避免近距離古寧頭鏡頭因整層隱藏而失去雲層。雲平面會依相機高度調整到鏡頭前方，並使用透明疊加避免被地形深度吞掉。
 
 ## 3. Cloud shadow strategy
 
