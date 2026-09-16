@@ -731,7 +731,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL, initi
 
           <div className="region-viewport__source-note" role="note">
             <span>資料界線／DATA BOUNDARY</span>
-            <small>{localAerialPoc ? '歷史航照為本機 POC，僅供視覺檢視；像素不進 GitHub，權利狀態未確認。' : '未開啟本機航照像素；現代 DEM 與海岸線僅作地理參考。'}</small>
+            <small>{localAerialPoc ? '歷史航照為已授權低解析度 POC；GitHub 僅提供 z12 衍生 mosaic，原始／高解析度未納入。' : '未開啟授權航照像素；現代 DEM 與海岸線僅作地理參考。'}</small>
           </div>
 
           <div className="region-compass" aria-hidden="true">
@@ -785,10 +785,10 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL, initi
               {HISTORICAL_AERIAL_YEARS.map(year => (
                 <button type="button" className={`region-history-card ${aerialYear === year ? 'is-selected' : ''}`} onClick={() => chooseSingleAerialYear(year)} aria-pressed={aerialYear === year} key={year}>
                   <span className={`region-history-card__thumb region-history-card__thumb--${year}`} aria-hidden="true">
-                    {localAerialPoc && import.meta.env.DEV && <img src={localHistoricalMosaicUrl(base, year)} alt="" loading="lazy" onError={event => { event.currentTarget.hidden = true; }} />}
+                    {localAerialPoc && <img src={localHistoricalMosaicUrl(base, year)} alt="" loading="lazy" onError={event => { event.currentTarget.hidden = true; }} />}
                     <i />
                   </span>
-                  <span className="region-history-card__copy"><strong>{year} 航照</strong><small>{year === 1958 ? '後期 fallback／LOCAL POC' : '歷史航空影像／LOCAL POC'}</small></span>
+                  <span className="region-history-card__copy"><strong>{year} 航照</strong><small>{year === 1958 ? '後期 fallback／LOW-RES POC' : '歷史航空影像／LOW-RES POC'}</small></span>
                   <i className="region-history-card__check" />
                 </button>
               ))}
@@ -819,10 +819,10 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL, initi
             <div><i className="is-battle" /><span>戰役資料<small>尚未載入</small></span></div>
           </div>
           <div className="region-source-panel">
-            <div><span>歷史來源／SOURCE</span><strong>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : historicalSelectionMode === 'smart' ? 'SMART／SOURCE REVIEW' : `${aerialYear}／LOCAL POC`}</strong></div>
+            <div><span>歷史來源／SOURCE</span><strong>{localAerialPoc && historicalSelectionMode === 'smart' ? 'VISUAL COMPOSITE' : historicalSelectionMode === 'smart' ? 'SMART／SOURCE REVIEW' : `${aerialYear}／PUBLIC LOW-RES`}</strong></div>
             <p>{historicalSelectionMode === 'smart' ? '44＋45 PRIMARY／58 FALLBACK' : `${aerialYear} 單年度來源`}<br />中央研究院人社中心／地理資訊科學研究專題中心<br />KML MapTilePyramid · PNG · EPSG:3857</p>
             {localAerialPoc && historicalSelectionMode === 'smart' && <small className="region-visual-disclosure">VISUAL COMPOSITE／非單一年代史料</small>}
-            <small>{localAerialPoc ? 'LOCAL ONLY：像素僅限本機視覺檢視；權利狀態未確認' : '未開啟 local POC：不請求航照像素'}</small>
+            <small>{localAerialPoc ? 'PUBLIC LOW-RES：已取得本專案 GitHub 公開授權；僅提供 z12 衍生 mosaic' : '未開啟授權航照：不請求航照像素'}</small>
           </div>
           <div className="region-source-panel region-source-panel--research">
             <div><span>廈門研究／XIAMEN</span><strong>MAP ONLY／NO AERIAL</strong></div>
@@ -863,7 +863,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL, initi
             </div>
           </div>
           <div className="region-debug__section region-debug__historical">
-            <div className="region-debug__section-label"><span>歷史影像層 <small>HISTORICAL AERIAL</small></span><small>{localAerialPoc ? 'LOCAL POC／RIGHTS REVIEW' : 'SOURCE REVIEW／NO PIXELS'}</small></div>
+            <div className="region-debug__section-label"><span>歷史影像層 <small>HISTORICAL AERIAL</small></span><small>{localAerialPoc ? 'PUBLIC LOW-RES／LICENSED' : 'SOURCE REVIEW／NO PIXELS'}</small></div>
             <div className="region-debug__choices region-debug__choices--five">
               {HISTORICAL_BENCHMARK_OPTIONS.slice(0, 5).map(id => <button type="button" className={historicalBenchmarkMode === id ? 'is-selected' : ''} onClick={() => chooseHistoricalBenchmark(id)} key={id}>{id}<small>{ENVIRONMENT_HISTORICAL_MODES[id].label}</small></button>)}
             </div>
@@ -881,7 +881,7 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL, initi
               {[0, 25, 50, 75, 100].map(value => <button type="button" className={aerialOpacity === value ? 'is-selected' : ''} onClick={() => chooseAerialOpacity(value)} key={value}>{value}%</button>)}
             </div>
             <button type="button" className={`region-debug__coverage ${coverageMaskDebug ? 'is-on' : ''}`} onClick={toggleCoverageMaskDebug}>資料範圍界線／COVERAGE MASK <i /></button>
-            <p className="region-debug__blocked">1944／1945 為 primary，1958 僅在缺值時 fallback。{localAerialPoc ? '本次為本機低量 POC，像素不會進入 GitHub。' : '未開啟 local POC，不請求、不快取航照像素。'}</p>
+            <p className="region-debug__blocked">1944／1945 為 primary，1958 僅在缺值時 fallback。{localAerialPoc ? '本次 GitHub 僅納入已授權低解析度 z12 mosaic，未納入高解析度與測試截圖。' : '未開啟授權航照，不請求、不快取航照像素。'}</p>
           </div>
           <div className="region-debug__section">
             <div className="region-debug__section-label"><span>環境 benchmark <small>ENVIRONMENT／P0–P3</small></span><small>統一太陽／海面／雲／雲影／大氣</small></div>

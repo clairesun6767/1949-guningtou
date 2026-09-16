@@ -9,8 +9,8 @@ Branch：`feature/2.0-art-region-environment-poc`
 
 ## 1. Scope and rights boundary
 
-- 1944／1945／1958 Kinmen aerial pixels、Smart Composite 與含其像素的畫面只存在於 `.local/aerial-poc/`，維持 LOCAL ONLY，未加入 Git。
-- 公開安全截圖只使用 BASE／現代 DEM、海面、雲、雲影、大氣與 coverage outline；不含 rights-unclear aerial pixels。
+- 1944／1945／1958 Kinmen z12 derived aerial pixels、Smart Composite 已依使用者授權納入 public low-res bundle；higher-zoom 與含像素畫面仍只存在於 `.local/aerial-poc/`。
+- 公開安全截圖仍只使用 BASE／現代 DEM、海面、雲、雲影、大氣與 coverage outline；含像素 review screenshots 不進 GitHub，以控制流量。
 - UI 對本機 Smart Composite 顯示 `VISUAL COMPOSITE`，不把畫面說成單一 1949 航照或 verified historical fact。
 - Xiamen 八張影像仍只作 `EVIDENCE / GEOREGISTRATION RESEARCH`。`XIAMEN_WWII_AERIAL_UNVERIFIED_01` 的 GCP single-image QA 仍為 BLOCKED，沒有 mosaic／terrain projection。
 

@@ -104,14 +104,15 @@ test('tracked 1944/1945/1958 KML metadata mirrors parse through the same registr
   }
 });
 
-test('registry exposes all historical years, bounds and rights boundary', () => {
+test('registry exposes all historical years, bounds and approved low-resolution publication boundary', () => {
   assert.deepEqual(HISTORICAL_AERIAL_YEARS, [1944, 1945, 1958]);
   assert.equal(HISTORICAL_AERIAL_DATASETS.length, 3);
   assert.equal(validateHistoricalAerialRegistry(), true);
   assert.equal(getHistoricalAerialDataset(1944)?.historicalRole, 'PRIMARY');
   assert.equal(getHistoricalAerialDataset(1945)?.historicalRole, 'PRIMARY');
   assert.equal(getHistoricalAerialDataset(1958)?.historicalRole, 'FALLBACK');
-  assert.ok(HISTORICAL_AERIAL_DATASETS.every(dataset => dataset.rightsStatus === 'BLOCKED — RIGHTS UNCLEAR'));
+  assert.ok(HISTORICAL_AERIAL_DATASETS.every(dataset => dataset.rightsStatus === 'APPROVED'));
+  assert.ok(HISTORICAL_AERIAL_DATASETS.every(dataset => dataset.usageStatus === 'production-approved'));
   assert.deepEqual(HISTORICAL_AERIAL_DATASETS.map(dataset => dataset.sourceKmlPath), [
     HISTORICAL_AERIAL_KML_PATHS[1944],
     HISTORICAL_AERIAL_KML_PATHS[1945],

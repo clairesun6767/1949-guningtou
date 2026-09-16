@@ -9,6 +9,7 @@ GATE A.3P.2 — READY FOR GEOREFERENCE REVIEW
 - 範圍：只處理 historical aerial 的 geographic footprint、mosaic bounds、UV、XYZ/TMS 驗證、out-of-bounds sampling 與 tile debug。
 - 明確停止：本輪沒有進 Gate B，也沒有調整 Ocean、Cloud、Cloud Shadow、Atmosphere、UI art direction、camera、DEM exaggeration 或 historical opacity。
 - 歷史影像狀態：TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED。
+- 公開權利狀態：1944／1945／1958 z12 derived mosaic 已取得本專案授權；higher-zoom 與含像素截圖仍 local-only。
 
 本輪修正後，原先落在大嶝島周邊的矩形航照投影，改由實際 XYZ tile footprint 驅動；瀏覽器目視檢查顯示 1944、1945、1958 與 Smart Composite 都位於古寧頭／金門 review area。這是 tile-bound alignment，不是歷史航照的 GCP 或 orthorectification 證明。
 
@@ -49,7 +50,7 @@ GATE A.3P.2 — READY FOR GEOREFERENCE REVIEW
 | 1945 | 118.2727648 | 24.3437997 | 118.4966956 | 24.5362935 | PRIMARY |
 | 1958 | 118.1973476 | 24.3789698 | 118.4924002 | 24.5542212 | FALLBACK |
 
-UI 與 source registry 仍保留 rights boundary：BLOCKED — RIGHTS UNCLEAR。這些 KML 只作 metadata／coverage reference，不等於 pixels 可公開再散布。
+UI 與 source registry 現在標示 1944／1945／1958 z12 derived mosaic 為 `APPROVED`（專案範圍低解析度授權）；原始 WMTS、高解析度與 higher-zoom pixels 仍不公開。
 
 ## 4. Authoritative actual POC mosaic extent
 
@@ -170,7 +171,7 @@ Out-of-bounds contract：
 - 本次三個來源的 POC footprint 相同，所以 compositeMosaicBounds 仍為 118.212890625–118.388671875E、24.367113562651262–24.5271348225978N。
 - year switching 使用 H1=1944、H2=1945、H3=1958、H4=Smart Composite；1958 維持 FALLBACK，不把較晚年份當 PRIMARY。
 - local Smart source mask 實測 distribution：1944 13.21%、1945 52.99%、1958 11.01%、BASE 22.79%。
-- local asset 不存在或 rights-blocked 時，HistoricalAerialLayer 不建立 texture，shader 使用 classification／BASE fallback，不產生 broken image。
+- public low-res asset 不存在、未明確以 `aerial=local` 請求或 rights-blocked 時，HistoricalAerialLayer 不建立 texture，shader 使用 classification／BASE fallback，不產生 broken image。
 
 ## 9. Browser evidence
 

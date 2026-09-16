@@ -36,7 +36,7 @@ export const HISTORICAL_AERIAL_1945: HistoricalSourceMetadata = {
   serviceType: 'OGC WMTS 1.0.0',
   sourceUrl: 'https://gis.sinica.edu.tw/kinmen/wmts',
   sourcePageUrl: 'https://gis.sinica.edu.tw/showwmts/index.php?s=kinmen&l=Kinmen_1945',
-  license: '中央研究院版權所有；非經允許，不得作為商業使用。GitHub／衍生材質／公開 runtime 權利未確認。',
+  license: '中央研究院來源資料；本專案已取得使用者授權，僅公開低解析度 z12 衍生 POC，不公開原始／高解析度 tile。',
   attribution: '中央研究院人社中心／地理資訊科學研究專題中心（官方 tile attribution：Academia Sinica contributors）',
   bounds: {
     west: 118.2727648,
@@ -49,7 +49,7 @@ export const HISTORICAL_AERIAL_1945: HistoricalSourceMetadata = {
   coverage: '官方 bounds 內的金門東南／中部候選覆蓋；不延伸為整個 A.2 戰略區域。',
   acquiredAt: '2026-09-15',
   usageMode: 'disabled',
-  rightsStatus: 'BLOCKED — RIGHTS UNCLEAR',
+  rightsStatus: 'APPROVED',
   alignmentStatus: 'SOURCE REVIEW',
   imageFormat: 'image/png',
   tileMatrixSet: 'GoogleMapsCompatible',
@@ -82,7 +82,7 @@ export const HISTORICAL_AERIAL_CONFIG = {
   defaultOpacity: 0,
   defaultToneEnabled: true,
   coverageMaskDebugDefault: false,
-  rightsStatus: 'BLOCKED — RIGHTS UNCLEAR' as HistoricalAerialRightsStatus,
+  rightsStatus: 'APPROVED' as HistoricalAerialRightsStatus,
   source: HISTORICAL_AERIAL_1945,
 } as const;
 

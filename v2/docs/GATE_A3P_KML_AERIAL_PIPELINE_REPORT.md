@@ -2,7 +2,7 @@
 
 審查日期：2026-09-16（Asia/Taipei）
 
-本報告記錄 1944、1945、1958 三份使用者提供 KML 的實際解析、低量本機 POC、品質分析與 smart source mask。POC 僅供本機評估；航照像素、拼接圖與含受限像素的畫面放在 root .local/aerial-poc/ 並被 .gitignore 排除；GitHub 只保留 KML metadata、程式、測試、報告與安全截圖。
+本報告記錄 1944、1945、1958 三份使用者提供 KML 的實際解析、低量 POC、品質分析與 smart source mask。2026-09-16 起，依使用者取得的專案授權，GitHub 只公開三年度 z12 低解析度衍生 mosaic 與必要 manifest；高解析／higher-zoom tiles、測試截圖與廈門候選 JPEG 仍留在 root `.local/aerial-poc/`。
 
 ## 結論
 
@@ -147,12 +147,13 @@ TILE-BOUND ALIGNED / NOT VERIFIED ORTHORECTIFIED
 
 ## 9. Rights 與提交邊界
 
-KML／WMTS 公開可讀不等於取得 pixel redistribution permission。本次 manifest、tile cache、mosaic、smart texture 與含航照像素截圖均維持：
+KML／WMTS 公開可讀本身不等於取得 pixel redistribution permission；本專案另取得使用者授權，範圍限定為 GitHub／GitHub Pages review 使用的低解析度衍生 POC：
 
-- BLOCKED — RIGHTS UNCLEAR
-- LOCAL POC — NOT REDISTRIBUTABLE
+- `APPROVED`：1944／1945／1958 z12 mosaic、valid mask、Smart Composite、source mask 與 manifest。
+- `LOCAL ONLY`：z15–z17 higher-zoom tiles／mosaics、含航照像素的 benchmark screenshots。
+- `BLOCKED — RIGHTS UNCLEAR`：廈門八張候選 JPEG；它們仍未完成來源與 GCP registration QA。
 
-可提交 GitHub 的只有 parser、registry、provider、quality analyzer、selection/source-mask API、coverage geometry、UI、tests、reports 與不含受限像素的安全畫面。
+公開 bundle 只提交已授權的低解析度 derived assets，不提交原始 WMTS tile、原始高解析度檔或尚未授權的廈門像素。
 
 廈門八張使用者 JPEG 的日期、館藏與公開再散布權均未確認，因此已自 Git 移除 pixels，實體只保留在 .local/aerial-poc/xiamen/。GitHub 的 public/research/xiamen-1943/ 僅保留 manifest、README 與 provenance／SHA-256／dimensions；UI 在 production 或 local pixel 不存在時顯示 graceful fallback，不渲染 broken image。
 
@@ -166,7 +167,7 @@ KML／WMTS 公開可讀不等於取得 pixel redistribution permission。本次 
 - Coverage：A3P_COVERAGE_MASK.png
 - P1 performance：A3P_PERFORMANCE_DEBUG.png、A3P_P1_DEBUG.png
 
-1944、1945、1958、Smart Composite、P2/P3、source map、Cloud T0/T1 的畫面含 local Kinmen pixels，全部放在 .local/aerial-poc/screenshots/gate-a3p/，不提交 GitHub。每次截圖的 query、privacy 與 byte size 見兩個 screenshot manifest.json。
+1944、1945、1958、Smart Composite、P2/P3、source map、Cloud T0/T1 的畫面仍放在 `.local/aerial-poc/screenshots/gate-a3p/`，不提交 GitHub，以控制 repository 與 Pages 流量。GitHub 只提供可由 `aerial=local` 明確載入的低解析度 z12 資產。
 
 ## 10. 本報告對 Gate A.3P 的判定
 

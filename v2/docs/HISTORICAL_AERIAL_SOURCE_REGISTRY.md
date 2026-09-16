@@ -1,6 +1,6 @@
 # Historical Aerial Source Registry
 
-本 registry 是 metadata-first 清單；目前不內含任何航照像素、mosaic、atlas 或 derived texture。
+本 registry 是 metadata-first 清單；2026-09-16 起另由 public low-res bundle 提供已授權的 z12 derived mosaic。原始 tile、higher-zoom 與含像素 screenshots 不在 public bundle。
 
 Git-tracked KML mirrors：
 
@@ -14,9 +14,9 @@ Git-tracked KML mirrors：
 
 | id | year | source | tier | historical role | coverage | projection | rights | usage | production |
 | --- | ---: | --- | --- | --- | --- | --- | --- | --- | --- |
-| KINMEN_1944 | 1944 | 中研院金門百年歷史地圖 WMTS／使用者 KML | Tier A historical aerial | PRIMARY | KML LatLonBox → Polygon | EPSG:3857／GoogleMapsCompatible | BLOCKED — RIGHTS UNCLEAR | not-verified；local POC only | NO |
-| KINMEN_1945 | 1945 | 中研院金門百年歷史地圖 WMTS／使用者 KML | Tier A historical aerial | PRIMARY | KML LatLonBox → Polygon | EPSG:3857／GoogleMapsCompatible | BLOCKED — RIGHTS UNCLEAR | not-verified；local POC only | NO |
-| KINMEN_1958 | 1958 | 中研院金門百年歷史地圖 WMTS／使用者 KML | Tier A historical aerial | FALLBACK | KML LatLonBox → Polygon | EPSG:3857／GoogleMapsCompatible | BLOCKED — RIGHTS UNCLEAR | not-verified；local POC only | NO |
+| KINMEN_1944 | 1944 | 中研院金門百年歷史地圖 WMTS／使用者 KML | Tier A historical aerial | PRIMARY | KML LatLonBox → Polygon | EPSG:3857／GoogleMapsCompatible | APPROVED（低解析度 z12 derived POC） | production-approved；原始／高解析度不公開 | YES（aerial=local） |
+| KINMEN_1945 | 1945 | 中研院金門百年歷史地圖 WMTS／使用者 KML | Tier A historical aerial | PRIMARY | KML LatLonBox → Polygon | EPSG:3857／GoogleMapsCompatible | APPROVED（低解析度 z12 derived POC） | production-approved；原始／高解析度不公開 | YES（aerial=local） |
+| KINMEN_1958 | 1958 | 中研院金門百年歷史地圖 WMTS／使用者 KML | Tier A historical aerial | FALLBACK | KML LatLonBox → Polygon | EPSG:3857／GoogleMapsCompatible | APPROVED（低解析度 z12 derived POC） | production-approved；原始／高解析度不公開 | YES（aerial=local） |
 
 ## Unregistered research leads
 

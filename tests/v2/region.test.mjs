@@ -45,7 +45,7 @@ test('Region config declares the geographic relationship and three art variants'
   assert.equal(REGION_CONFIG.referenceEra, 'modern_reference');
 });
 
-test('Gate A.3 records the official 1945 source bounds and keeps rights blocked', () => {
+test('Gate A.3 records the official 1945 source bounds and the approved low-resolution publication scope', () => {
   assert.equal(HISTORICAL_AERIAL_1945.year, 1945);
   assert.equal(HISTORICAL_AERIAL_1945.layerName, '金門舊航照影像(1945) / Kinmen_1945');
   assert.deepEqual(HISTORICAL_AERIAL_1945.bounds, {
@@ -54,17 +54,17 @@ test('Gate A.3 records the official 1945 source bounds and keeps rights blocked'
     east: 118.4966956,
     north: 24.5362935,
   });
-  assert.equal(HISTORICAL_AERIAL_1945.rightsStatus, 'BLOCKED — RIGHTS UNCLEAR');
+  assert.equal(HISTORICAL_AERIAL_1945.rightsStatus, 'APPROVED');
   assert.equal(HISTORICAL_AERIAL_CONFIG.defaultMode, 'OFF');
   assert.equal(validateHistoricalSourceMetadata(HISTORICAL_AERIAL_1945), true);
   const audit = readFileSync('v2/docs/GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md', 'utf8');
   for (const field of ['Provider', 'Dataset', 'Year', 'Layer Name', 'Service Type', 'Endpoint', 'CRS', 'Bounds', 'Resolution', 'Coverage', 'License', 'Attribution', 'Download Permission', 'Derivative Permission', 'Redistribution Permission', 'Runtime Usage Permission', 'GitHub Commit Permission', 'Known Restrictions', 'Recommended Integration', 'Verdict']) {
     assert.match(audit, new RegExp(`\\| ${field} \\|`));
   }
-  assert.match(audit, /BLOCKED — RIGHTS UNCLEAR/);
+  assert.match(audit, /APPROVED/);
 });
 
-test('Gate A.3 provider and layer never request or expose aerial pixels before permission', async () => {
+test('Gate A.3 remote provider stays disabled and public pixels require explicit aerial=local', async () => {
   const provider = createHistoricalAerialProvider('remote');
   assert.equal(provider.canUsePixels(), false);
   const result = await provider.loadLayer(1945);
@@ -76,7 +76,7 @@ test('Gate A.3 provider and layer never request or expose aerial pixels before p
   assert.equal(layer.aerialOpacity, 50);
   assert.equal(layer.getStats().payloadBytes, 0);
   assert.equal(layer.getStats().status, 'RIGHTS BLOCKED');
-  assert.match(readFileSync('v2/prototypes/region/HistoricalAerialLayer.ts', 'utf8'), /no Three texture or tile request/);
+  assert.match(readFileSync('v2/prototypes/region/HistoricalAerialLayer.ts', 'utf8'), /explicit aerial=local/);
 });
 
 test('Gate A.3 clamps aerial opacity, preserves the year-aware modes, and keeps official coverage order', () => {

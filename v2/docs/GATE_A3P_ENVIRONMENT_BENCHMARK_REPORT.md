@@ -115,7 +115,7 @@ http://localhost:4321/1949-guningtou/v2/region/?historical=H4&aerial=local&envir
 - Coverage：A3P_COVERAGE_MASK.png
 - FPS／performance：A3P_PERFORMANCE_DEBUG.png
 
-含 local Kinmen aerial pixels 的 P2、P3、1944、1945、1958、Smart Composite、source map、Cloud T0、Cloud T1 截圖全部位於 .local/aerial-poc/screenshots/gate-a3p/，保持 LOCAL ONLY；兩份 manifest 記錄 query、privacy 與 byte size。廈門 rights-unclear pixels 不進入任何公開 screenshot。
+含 Kinmen aerial pixels 的 P2、P3、1944、1945、1958、Smart Composite、source map、Cloud T0、Cloud T1 截圖全部位於 `.local/aerial-poc/screenshots/gate-a3p/`，保持 LOCAL ONLY 以控制流量；GitHub Pages runtime 只載入已授權的低解析度 z12 bundle。廈門 rights-unclear pixels 不進入任何公開 screenshot 或 public asset。
 
 ## 10. Environment verdict
 
@@ -124,7 +124,7 @@ http://localhost:4321/1949-guningtou/v2/region/?historical=H4&aerial=local&envir
 - Cloud Shadow：BENCHMARKED／REVIEW
 - Atmosphere：KEEP
 - Unified Sun：BENCHMARKED／PARTIAL ART SIGN-OFF
-- P0/P1/P2/P3：actual browser benchmark 已完成；P2/P3 的 aerial pixels 只在 local-only route，仍受 rights 與正射校正限制。
+- P0/P1/P2/P3：actual browser benchmark 已完成；P2/P3 的 runtime 可在明確 `aerial=local` 時讀取已授權低解析度 bundle，higher-zoom 與正射校正仍受限於原研究邊界。
 
 ## 11. Gate A.3P.1 local visual tuning
 

@@ -8,13 +8,13 @@ Gate A.3 is built on the A.2 regional composition branch at `f49c137970ba530f6ee
 
 ## Historical Source Audit
 
-完整審計見 [GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md](./GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md)。官方 WMTS 可辨識出 `金門舊航照影像(1945)`／`Kinmen_1945`、WGS84 bounds `118.2727648–118.4966956E / 24.3437997–24.5362935N`、EPSG:3857 `GoogleMapsCompatible` tile matrix 與 PNG 格式；但官方頁面保留版權聲明，高解析複製需申請，沒有支持 GitHub、衍生材質或公開 runtime 的明確授權。
+完整審計見 [GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md](./GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md)。官方 WMTS 可辨識出 `金門舊航照影像(1945)`／`Kinmen_1945`、WGS84 bounds `118.2727648–118.4966956E / 24.3437997–24.5362935N`、EPSG:3857 `GoogleMapsCompatible` tile matrix 與 PNG 格式；官方頁面仍保留來源版權聲明，高解析複製與通用再散布不在本次範圍。
 
-因此本關卡判定：**BLOCKED — RIGHTS UNCLEAR**。
+2026-09-16 使用者另確認取得本專案低解析度 z12 derived POC 的 GitHub／GitHub Pages 公開授權。因此本關卡的 Kinmen low-res runtime 判定改為：**APPROVED — PROJECT-SCOPED LOW-RES POC**；原始／高解析度與 higher-zoom 仍不公開。
 
-- 沒有下載、快取、拼接或提交任何 1945 航照像素。
+- 公開 bundle 只放低解析度 z12 derived mosaic；沒有提交原始 WMTS tile 或 higher-zoom pixels。
 - 沒有以現代衛星圖、任意灰階圖或 AI 生成圖冒充 1945 航照。
-- `HistoricalAerialLayer`／`HistoricalAerialProvider` 保留 year-aware 介面；provider 固定回傳 `rights-blocked`，`payloadBytes=0`，不發出 tile request。
+- `HistoricalAerialLayer`／`HistoricalAerialProvider` 保留 year-aware 介面；只有明確 `aerial=local` 才載入已授權 public manifest，遠端 WMTS provider 仍不直接發出 tile request。
 
 ## Aerial Integration
 
@@ -60,10 +60,10 @@ A.3 default 以現代 DEM 為幾何來源，採較明亮、低綠色主導的檔
 | 模式 | 中文顯示 | 實際狀態 |
 | --- | --- | --- |
 | OFF | 歷史地形 | A.3 檔案色調＋現代 DEM；航照 channel 關閉 |
-| AERIAL | 1945 航照 | `SOURCE REVIEW`；無航照像素 |
-| AERIAL_RELIEF | 航照 × 地形 | `SOURCE REVIEW`；保留 relief lighting；無航照像素 |
+| AERIAL | 1945 航照 | `PUBLIC LOW-RES POC`（明確 `aerial=local` 時）；未請求時為 `SOURCE REVIEW` |
+| AERIAL_RELIEF | 航照 × 地形 | `PUBLIC LOW-RES POC`（明確 `aerial=local` 時）；保留 relief lighting，不宣稱正射校正 |
 
-畫面底部以「資料界線／DATA BOUNDARY」文字標示歷史航照為 local-only POC、像素不進 GitHub、權利狀態未確認；不再以阻擋瀏覽的來源審查對話框佔據地圖。
+畫面底部以「資料界線／DATA BOUNDARY」文字標示歷史航照為已授權低解析度 POC；GitHub 僅提供 z12 derived mosaic，原始／高解析度與 higher-zoom 不納入；不再以阻擋瀏覽的來源審查對話框佔據地圖。
 
 ## Ocean / Background
 
@@ -71,7 +71,7 @@ A.3 default 以現代 DEM 為幾何來源，採較明亮、低綠色主導的檔
 
 ## Performance
 
-預設仍為 composition B `640×368`，未新增高密度幾何或整站 tile server。A.3 historical layer 在 rights-blocked 狀態的 aerial payload 與 GPU texture allocation 為 0；新增的 metadata／狀態成本為小型純 TypeScript adapter。debug stats 會列出 FPS、draw calls、triangles、textures、GPU estimate、aerial resolution、payload、source year、bounds、alignment。
+預設仍為 composition B `640×368`，未新增高密度幾何或整站 tile server。沒有明確 `aerial=local` 時 historical layer 的 aerial payload 與 GPU texture allocation 為 0；開啟授權低解析度 POC 後只載入 z12 derived mosaic。debug stats 會列出 FPS、draw calls、triangles、textures、GPU estimate、aerial resolution、payload、source year、bounds、alignment。
 
 ## Browser Screenshots
 

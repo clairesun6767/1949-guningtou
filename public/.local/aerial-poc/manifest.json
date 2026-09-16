@@ -1,0 +1,699 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-16T04:31:21.269Z",
+  "localOnly": true,
+  "rightsStatus": "APPROVED",
+  "usageStatus": "PUBLIC LOW-RES POC — USER AUTHORIZED",
+  "qualityNormalization": {
+    "method": "metric-normalized quality set min-max across this local POC",
+    "minRawScore": 0.1348725029922997,
+    "maxRawScore": 0.7303982100020299
+  },
+  "area": {
+    "id": "GUNINGTOU_PRIORITY_WITH_EAST_CONTEXT",
+    "bounds": {
+      "west": 118.278,
+      "south": 24.438,
+      "east": 118.475,
+      "north": 24.52
+    },
+    "label": "古寧頭優先／東半島 context／低中解析評估範圍"
+  },
+  "request": {
+    "zoom": 12,
+    "maxTiles": 128,
+    "maxBytes": 52428800,
+    "coordinateOrder": "XYZ",
+    "requestPolicy": "sequential / 250ms minimum delay / one request at a time"
+  },
+  "datasets": [
+    {
+      "id": "KINMEN_1944",
+      "name": "金門舊航照影像(1944)",
+      "year": 1944,
+      "date": "1944",
+      "bounds": {
+        "west": 118.1987492,
+        "south": 24.3932995,
+        "east": 118.4750534,
+        "north": 24.5208965
+      },
+      "tileTemplate": "https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_1944-png-{{z}}-{{x}}-{{y}}",
+      "minLevel": 0,
+      "maxLevel": 19,
+      "tileSize": 256,
+      "projection": "EPSG:3857 / GoogleMapsCompatible",
+      "sourceKmlPath": "public/research/kinmen-kml/kinmen-1944.kml",
+      "historicalRole": "PRIMARY",
+      "rightsStatus": "APPROVED",
+      "status": "READY",
+      "bytes": 281616,
+      "tileCount": 6,
+      "readyTileCount": 6,
+      "requestedTileRange": {
+        "z": 12,
+        "minX": 3393,
+        "maxX": 3395,
+        "minY": 1760,
+        "maxY": 1761
+      },
+      "actualMosaicBounds": {
+        "west": 118.212890625,
+        "south": 24.367113562651262,
+        "east": 118.4765625,
+        "north": 24.5271348225978
+      },
+      "validPixelMask": {
+        "localPath": "public/.local/aerial-poc/1944/valid-mask-z12.png",
+        "url": "/1949-guningtou/.local/aerial-poc/1944/valid-mask-z12.png",
+        "width": 768,
+        "height": 512,
+        "bytes": 5691,
+        "encoding": "alpha>8"
+      },
+      "tileRange": {
+        "z": 12,
+        "minX": 3393,
+        "maxX": 3395,
+        "minY": 1760,
+        "maxY": 1761
+      },
+      "mosaic": {
+        "localPath": "public/.local/aerial-poc/1944/mosaic-z12.png",
+        "url": "/1949-guningtou/.local/aerial-poc/1944/mosaic-z12.png",
+        "width": 768,
+        "height": 512,
+        "bounds": {
+          "west": 118.212890625,
+          "south": 24.367113562651262,
+          "east": 118.4765625,
+          "north": 24.5271348225978
+        },
+        "actualMosaicBounds": {
+          "west": 118.212890625,
+          "south": 24.367113562651262,
+          "east": 118.4765625,
+          "north": 24.5271348225978
+        },
+        "tileRange": {
+          "z": 12,
+          "minX": 3393,
+          "maxX": 3395,
+          "minY": 1760,
+          "maxY": 1761
+        },
+        "validPixelMask": {
+          "localPath": ".local/aerial-poc/1944/valid-mask-z12.png",
+          "url": "/1949-guningtou/.local/aerial-poc/1944/valid-mask-z12.png",
+          "width": 768,
+          "height": 512,
+          "bytes": 5691,
+          "encoding": "alpha>8"
+        },
+        "bytes": 265024
+      },
+      "qualityMetadata": {
+        "normalizedScore": 0.5179504287872341,
+        "sharpness": 0.16799216338685038,
+        "contrast": 0.45856964933628996,
+        "entropy": 0.8943107501582732,
+        "alphaValidRatio": 0.30357615152994794,
+        "informationDensity": 0.6661260128994348,
+        "validPixelRatio": 0.30357615152994794,
+        "sampleCount": 119371,
+        "confidence": "measured-local-poc"
+      },
+      "tiles": [
+        {
+          "z": 12,
+          "x": 3393,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 27918,
+          "quality": {
+            "normalizedScore": 0.3604741469024551,
+            "sharpness": 0.07911730920434357,
+            "contrast": 0.34924728242280334,
+            "entropy": 0.8139499520571445,
+            "alphaValidRatio": 0.1951904296875,
+            "informationDensity": 0.5854646395066426,
+            "validPixelRatio": 0.1951904296875,
+            "sampleCount": 12792,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3393,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 59650,
+          "quality": {
+            "normalizedScore": 0.5343217551692665,
+            "sharpness": 0.21148832747736132,
+            "contrast": 0.4104372028423864,
+            "entropy": 0.857475774370959,
+            "alphaValidRatio": 0.3889617919921875,
+            "informationDensity": 0.629757293484551,
+            "validPixelRatio": 0.3889617919921875,
+            "sampleCount": 25491,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3394,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 77798,
+          "quality": {
+            "normalizedScore": 0.593470939189452,
+            "sharpness": 0.28277828326762344,
+            "contrast": 0.3665998153034789,
+            "entropy": 0.8363276449326597,
+            "alphaValidRatio": 0.535186767578125,
+            "informationDensity": 0.6039279700191429,
+            "validPixelRatio": 0.535186767578125,
+            "sampleCount": 35074,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3394,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 18577,
+          "quality": {
+            "normalizedScore": 0.3728275072188171,
+            "sharpness": 0.0946692254871569,
+            "contrast": 0.4271160623274475,
+            "entropy": 0.8265118113838291,
+            "alphaValidRatio": 0.10357666015625,
+            "informationDensity": 0.6166374193981923,
+            "validPixelRatio": 0.10357666015625,
+            "sampleCount": 6788,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3395,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 96844,
+          "quality": {
+            "normalizedScore": 0.7810888397627871,
+            "sharpness": 0.44424377581241326,
+            "contrast": 0.5140890057742278,
+            "entropy": 0.9027308299211644,
+            "alphaValidRatio": 0.5984954833984375,
+            "informationDensity": 0.6880362704955283,
+            "validPixelRatio": 0.5984954833984375,
+            "sampleCount": 39223,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3395,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 829,
+          "quality": {
+            "normalizedScore": 0,
+            "sharpness": 0.00007131432239335067,
+            "contrast": 0.23720389280731205,
+            "entropy": 0.3169925001442312,
+            "alphaValidRatio": 0.0000457763671875,
+            "informationDensity": 0.25891532933594397,
+            "validPixelRatio": 0.0000457763671875,
+            "sampleCount": 3,
+            "confidence": "measured-local-poc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KINMEN_1945",
+      "name": "金門舊航照影像(1945)",
+      "year": 1945,
+      "date": "1945",
+      "bounds": {
+        "west": 118.2727648,
+        "south": 24.3437997,
+        "east": 118.4966956,
+        "north": 24.5362935
+      },
+      "tileTemplate": "https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_1945-png-{{z}}-{{x}}-{{y}}",
+      "minLevel": 0,
+      "maxLevel": 19,
+      "tileSize": 256,
+      "projection": "EPSG:3857 / GoogleMapsCompatible",
+      "sourceKmlPath": "public/research/kinmen-kml/kinmen-1945.kml",
+      "historicalRole": "PRIMARY",
+      "rightsStatus": "APPROVED",
+      "status": "READY",
+      "bytes": 425118,
+      "tileCount": 6,
+      "readyTileCount": 6,
+      "requestedTileRange": {
+        "z": 12,
+        "minX": 3393,
+        "maxX": 3395,
+        "minY": 1760,
+        "maxY": 1761
+      },
+      "actualMosaicBounds": {
+        "west": 118.212890625,
+        "south": 24.367113562651262,
+        "east": 118.4765625,
+        "north": 24.5271348225978
+      },
+      "validPixelMask": {
+        "localPath": "public/.local/aerial-poc/1945/valid-mask-z12.png",
+        "url": "/1949-guningtou/.local/aerial-poc/1945/valid-mask-z12.png",
+        "width": 768,
+        "height": 512,
+        "bytes": 4527,
+        "encoding": "alpha>8"
+      },
+      "tileRange": {
+        "z": 12,
+        "minX": 3393,
+        "maxX": 3395,
+        "minY": 1760,
+        "maxY": 1761
+      },
+      "mosaic": {
+        "localPath": "public/.local/aerial-poc/1945/mosaic-z12.png",
+        "url": "/1949-guningtou/.local/aerial-poc/1945/mosaic-z12.png",
+        "width": 768,
+        "height": 512,
+        "bounds": {
+          "west": 118.212890625,
+          "south": 24.367113562651262,
+          "east": 118.4765625,
+          "north": 24.5271348225978
+        },
+        "actualMosaicBounds": {
+          "west": 118.212890625,
+          "south": 24.367113562651262,
+          "east": 118.4765625,
+          "north": 24.5271348225978
+        },
+        "tileRange": {
+          "z": 12,
+          "minX": 3393,
+          "maxX": 3395,
+          "minY": 1760,
+          "maxY": 1761
+        },
+        "validPixelMask": {
+          "localPath": ".local/aerial-poc/1945/valid-mask-z12.png",
+          "url": "/1949-guningtou/.local/aerial-poc/1945/valid-mask-z12.png",
+          "width": 768,
+          "height": 512,
+          "bytes": 4527,
+          "encoding": "alpha>8"
+        },
+        "bytes": 425638
+      },
+      "qualityMetadata": {
+        "normalizedScore": 0.6469940009405385,
+        "sharpness": 0.14928168612876264,
+        "contrast": 0.5021110557807019,
+        "entropy": 0.9116684788446039,
+        "alphaValidRatio": 0.6440048217773438,
+        "informationDensity": 0.6896352873981714,
+        "validPixelRatio": 0.6440048217773438,
+        "sampleCount": 253233,
+        "confidence": "measured-local-poc"
+      },
+      "tiles": [
+        {
+          "z": 12,
+          "x": 3393,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 15152,
+          "quality": {
+            "normalizedScore": 0.3698391955702762,
+            "sharpness": 0.032903284834647904,
+            "contrast": 0.4234770873505591,
+            "entropy": 0.8542243380138222,
+            "alphaValidRatio": 0.156280517578125,
+            "informationDensity": 0.631827454017917,
+            "validPixelRatio": 0.156280517578125,
+            "sampleCount": 10242,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3393,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 20769,
+          "quality": {
+            "normalizedScore": 0.42585796423660677,
+            "sharpness": 0.04655018260373785,
+            "contrast": 0.5343085351757976,
+            "entropy": 0.846180289061965,
+            "alphaValidRatio": 0.186004638671875,
+            "informationDensity": 0.6609468945810941,
+            "validPixelRatio": 0.186004638671875,
+            "sampleCount": 12190,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3394,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 82659,
+          "quality": {
+            "normalizedScore": 0.6808166563335759,
+            "sharpness": 0.1567159509396651,
+            "contrast": 0.4763195586460258,
+            "entropy": 0.8549987134353408,
+            "alphaValidRatio": 0.8350830078125,
+            "informationDensity": 0.6484226378063397,
+            "validPixelRatio": 0.8350830078125,
+            "sampleCount": 54728,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3394,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 99141,
+          "quality": {
+            "normalizedScore": 0.7055469311683842,
+            "sharpness": 0.17960303177201686,
+            "contrast": 0.40994518483540926,
+            "entropy": 0.8574583766747192,
+            "alphaValidRatio": 0.9472198486328125,
+            "informationDensity": 0.6295967825525052,
+            "validPixelRatio": 0.9472198486328125,
+            "sampleCount": 62077,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3395,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 123243,
+          "quality": {
+            "normalizedScore": 0.7966811014640863,
+            "sharpness": 0.2923788849265555,
+            "contrast": 0.4384251094467158,
+            "entropy": 0.8707033813642336,
+            "alphaValidRatio": 1,
+            "informationDensity": 0.6460865812896095,
+            "validPixelRatio": 1,
+            "sampleCount": 65536,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3395,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 84154,
+          "quality": {
+            "normalizedScore": 0.671586328980539,
+            "sharpness": 0.2164755266934822,
+            "contrast": 0.4392995288594879,
+            "entropy": 0.8714335303685534,
+            "alphaValidRatio": 0.73944091796875,
+            "informationDensity": 0.6467831545064587,
+            "validPixelRatio": 0.73944091796875,
+            "sampleCount": 48460,
+            "confidence": "measured-local-poc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KINMEN_1958",
+      "name": "金門舊航照圖(1958.09.10)",
+      "year": 1958,
+      "date": "1958-09-10",
+      "bounds": {
+        "west": 118.1973476,
+        "south": 24.3789698,
+        "east": 118.4924002,
+        "north": 24.5542212
+      },
+      "tileTemplate": "https://gis.sinica.edu.tw/kinmen/file-exists.php?img=Kinmen_aerialphoto_1958-png-{{z}}-{{x}}-{{y}}",
+      "minLevel": 0,
+      "maxLevel": 19,
+      "tileSize": 256,
+      "projection": "EPSG:3857 / GoogleMapsCompatible",
+      "sourceKmlPath": "public/research/kinmen-kml/kinmen-1958.kml",
+      "historicalRole": "FALLBACK",
+      "rightsStatus": "APPROVED",
+      "status": "READY",
+      "bytes": 406236,
+      "tileCount": 6,
+      "readyTileCount": 6,
+      "requestedTileRange": {
+        "z": 12,
+        "minX": 3393,
+        "maxX": 3395,
+        "minY": 1760,
+        "maxY": 1761
+      },
+      "actualMosaicBounds": {
+        "west": 118.212890625,
+        "south": 24.367113562651262,
+        "east": 118.4765625,
+        "north": 24.5271348225978
+      },
+      "validPixelMask": {
+        "localPath": "public/.local/aerial-poc/1958/valid-mask-z12.png",
+        "url": "/1949-guningtou/.local/aerial-poc/1958/valid-mask-z12.png",
+        "width": 768,
+        "height": 512,
+        "bytes": 2737,
+        "encoding": "alpha>8"
+      },
+      "tileRange": {
+        "z": 12,
+        "minX": 3393,
+        "maxX": 3395,
+        "minY": 1760,
+        "maxY": 1761
+      },
+      "mosaic": {
+        "localPath": "public/.local/aerial-poc/1958/mosaic-z12.png",
+        "url": "/1949-guningtou/.local/aerial-poc/1958/mosaic-z12.png",
+        "width": 768,
+        "height": 512,
+        "bounds": {
+          "west": 118.212890625,
+          "south": 24.367113562651262,
+          "east": 118.4765625,
+          "north": 24.5271348225978
+        },
+        "actualMosaicBounds": {
+          "west": 118.212890625,
+          "south": 24.367113562651262,
+          "east": 118.4765625,
+          "north": 24.5271348225978
+        },
+        "tileRange": {
+          "z": 12,
+          "minX": 3393,
+          "maxX": 3395,
+          "minY": 1760,
+          "maxY": 1761
+        },
+        "validPixelMask": {
+          "localPath": ".local/aerial-poc/1958/valid-mask-z12.png",
+          "url": "/1949-guningtou/.local/aerial-poc/1958/valid-mask-z12.png",
+          "width": 768,
+          "height": 512,
+          "bytes": 2737,
+          "encoding": "alpha>8"
+        },
+        "bytes": 310932
+      },
+      "qualityMetadata": {
+        "normalizedScore": 0.6972681340714092,
+        "sharpness": 0.42723665029453817,
+        "contrast": 0.386241738777614,
+        "entropy": 0.7837806395444635,
+        "alphaValidRatio": 0.6718571980794271,
+        "informationDensity": 0.5790171968699964,
+        "validPixelRatio": 0.6718571980794271,
+        "sampleCount": 264185,
+        "confidence": "measured-local-poc"
+      },
+      "tiles": [
+        {
+          "z": 12,
+          "x": 3393,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 41652,
+          "quality": {
+            "normalizedScore": 0.3720231557225234,
+            "sharpness": 0.15633834561782428,
+            "contrast": 0.22395951744447223,
+            "entropy": 0.49981971921604346,
+            "alphaValidRatio": 0.65625,
+            "informationDensity": 0.36241552455016984,
+            "validPixelRatio": 0.65625,
+            "sampleCount": 43008,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3393,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 55244,
+          "quality": {
+            "normalizedScore": 0.5460427811814743,
+            "sharpness": 0.34508131133903897,
+            "contrast": 0.3206702853428097,
+            "entropy": 0.7018802346233781,
+            "alphaValidRatio": 0.523895263671875,
+            "informationDensity": 0.5108130079713974,
+            "validPixelRatio": 0.523895263671875,
+            "sampleCount": 34334,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3394,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 64218,
+          "quality": {
+            "normalizedScore": 0.6401791297103853,
+            "sharpness": 0.4163914712142474,
+            "contrast": 0.3466530854182771,
+            "entropy": 0.7054382062572999,
+            "alphaValidRatio": 0.6629791259765625,
+            "informationDensity": 0.5208418555619126,
+            "validPixelRatio": 0.6629791259765625,
+            "sampleCount": 43449,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3394,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 87747,
+          "quality": {
+            "normalizedScore": 0.8497705981551593,
+            "sharpness": 0.6208491099336846,
+            "contrast": 0.41496898192850795,
+            "entropy": 0.8097583960636768,
+            "alphaValidRatio": 0.7696533203125,
+            "informationDensity": 0.6030723880925443,
+            "validPixelRatio": 0.7696533203125,
+            "sampleCount": 50440,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3395,
+          "y": 1760,
+          "status": "READY",
+          "bytes": 103534,
+          "quality": {
+            "normalizedScore": 1,
+            "sharpness": 0.7551282490801511,
+            "contrast": 0.4294137337357443,
+            "entropy": 0.8547999144175573,
+            "alphaValidRatio": 0.941802978515625,
+            "informationDensity": 0.6339792574726026,
+            "validPixelRatio": 0.941802978515625,
+            "sampleCount": 61722,
+            "confidence": "measured-local-poc"
+          }
+        },
+        {
+          "z": 12,
+          "x": 3395,
+          "y": 1761,
+          "status": "READY",
+          "bytes": 53841,
+          "quality": {
+            "normalizedScore": 0.5876692729401048,
+            "sharpness": 0.3607638901551762,
+            "contrast": 0.376120281721465,
+            "entropy": 0.7682300229703508,
+            "alphaValidRatio": 0.4765625,
+            "informationDensity": 0.5667783801011063,
+            "validPixelRatio": 0.4765625,
+            "sampleCount": 31232,
+            "confidence": "measured-local-poc"
+          }
+        }
+      ]
+    }
+  ],
+  "smartComposite": {
+    "status": "READY",
+    "url": "/1949-guningtou/.local/aerial-poc/smart/smart-composite-z12.png",
+    "sourceMaskUrl": "/1949-guningtou/.local/aerial-poc/smart/source-mask-z12.png",
+    "width": 768,
+    "height": 512,
+    "bounds": {
+      "west": 118.212890625,
+      "south": 24.367113562651262,
+      "east": 118.4765625,
+      "north": 24.5271348225978
+    },
+    "compositeMosaicBounds": {
+      "west": 118.212890625,
+      "south": 24.367113562651262,
+      "east": 118.4765625,
+      "north": 24.5271348225978
+    },
+    "tileRange": {
+      "z": 12,
+      "minX": 3393,
+      "maxX": 3395,
+      "minY": 1760,
+      "maxY": 1761
+    },
+    "distribution": {
+      "1944": 8.81,
+      "1945": 64.32,
+      "1958": 7.41,
+      "BASE": 19.46
+    },
+    "bytes": 525684,
+    "selectionGranularity": "tile",
+    "selectionPolicy": "1944/1945 primary by measured tile quality; 1958 only when primary is missing/transparent; modern DEM outside valid pixels"
+  },
+  "totals": {
+    "requestedTiles": 18,
+    "downloadedBytes": 1112970,
+    "withinBudget": true
+  },
+  "publication": {
+    "status": "PUBLIC LOW-RES POC",
+    "authorization": "USER-AUTHORIZED FOR GITHUB REPOSITORY AND GITHUB PAGES REVIEW",
+    "authorizedAt": "2026-09-16",
+    "maximumPublishedZoom": 12,
+    "note": "Only derived low-resolution Kinmen mosaics are published; source tiles, higher-zoom review assets, screenshots and Xiamen candidate JPEGs remain excluded."
+  }
+}

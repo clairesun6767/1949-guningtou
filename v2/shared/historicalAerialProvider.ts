@@ -57,7 +57,7 @@ export function createHistoricalAerialProvider(mode: HistoricalAerialProviderMod
       return {
         status: mode === 'disabled' ? 'disabled' : 'rights-blocked',
         metadata: loadedMetadata,
-        reason: 'No aerial pixels are requested or bundled until written runtime and redistribution permission is confirmed.',
+        reason: 'Remote WMTS remains disabled; authorized low-resolution pixels are loaded only by the explicit local aerial bundle path.',
       };
     },
     canUsePixels() {

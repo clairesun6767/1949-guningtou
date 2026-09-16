@@ -10,10 +10,13 @@ cache/
 coverage/
 tmp/
 
-# Gate A.3P local-only aerial evaluation; never publish pixels or derived textures.
+# Gate A.3P source cache and high-detail review assets remain local-only.
 /.local/aerial-poc/
-/public/.local/aerial-poc/
-# Xiamen candidate pixels are always local-only; the public folder stores metadata only.
+# Public publication keeps only the explicitly authorized low-resolution Kinmen bundle.
+/public/.local/aerial-poc/guningtou/
+/public/.local/aerial-poc/screenshots/
+/public/.local/aerial-poc/xiamen/
+# Xiamen candidate pixels remain local-only; the public folder stores metadata only.
 /public/research/xiamen-1943/*.jpg
 
 # desktop attachment staging area; keep private source documents out of Git

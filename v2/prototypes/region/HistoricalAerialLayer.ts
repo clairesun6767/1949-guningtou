@@ -16,7 +16,7 @@ import type { HistoricalAerialTileRange } from '../../shared/historicalAerialGeo
 import type { HistoricalAerialSelectionMode, HistoricalAerialSourceYear } from '../../shared/historicalAerialSelection.js';
 import type { RegionAerialBinding } from './RegionTerrain.js';
 
-export type HistoricalAerialLayerStatus = 'SOURCE REVIEW' | 'RIGHTS BLOCKED' | 'LOCAL READY / RIGHTS REVIEW';
+export type HistoricalAerialLayerStatus = 'SOURCE REVIEW' | 'RIGHTS BLOCKED' | 'LOCAL READY / RIGHTS REVIEW' | 'PUBLIC LOW-RES READY';
 
 export interface HistoricalAerialManifestDataset {
   id: string;
@@ -55,6 +55,13 @@ export interface HistoricalAerialManifest {
   schemaVersion: number;
   localOnly: boolean;
   rightsStatus: string;
+  publication?: {
+    status: string;
+    authorization: string;
+    authorizedAt: string;
+    maximumPublishedZoom: number;
+    note: string;
+  };
   datasets: HistoricalAerialManifestDataset[];
   smartComposite?: {
     status: string;
@@ -151,6 +158,10 @@ function isDevBuild() {
   return typeof import.meta !== 'undefined' && Boolean(import.meta.env?.DEV);
 }
 
+function manifestRightsAreApproved(manifest: HistoricalAerialManifest | HistoricalAerialHigherZoomManifest) {
+  return manifest.rightsStatus === 'APPROVED';
+}
+
 function formatBounds(bounds: HistoricalAerialDataset['bounds']) {
   return `${bounds.west.toFixed(5)}–${bounds.east.toFixed(5)}E / ${bounds.south.toFixed(5)}–${bounds.north.toFixed(5)}N`;
 }
@@ -160,9 +171,10 @@ function manifestDataset(manifest: HistoricalAerialManifest | null, year: Histor
 }
 
 /**
- * Source-safe historical adapter. Production makes no Three texture or tile request
- * until rights are cleared; an explicit local POC
- * query is the only path that reads the ignored local manifest and pixels.
+ * Source-safe historical adapter. An explicit aerial=local query is the only
+ * path that reads the low-resolution public bundle or the ignored local POC.
+ * Production accepts only the manifest carrying the explicit APPROVED status;
+ * development may still inspect older ignored manifests for QA.
  */
 export class HistoricalAerialLayer {
   readonly metadata: HistoricalSourceMetadata;
@@ -269,7 +281,7 @@ export class HistoricalAerialLayer {
 
   async loadLocalPoc(baseUrl = this.localBaseUrl) {
     this.assertActive();
-    if (!this.allowLocalPixels || !isDevBuild()) return false;
+    if (!this.allowLocalPixels) return false;
     if (this.loadPromise) return this.loadPromise;
     this.localBaseUrl = baseUrl;
     this.loadPromise = this.loadLocalPocInternal(baseUrl).finally(() => {
@@ -285,7 +297,9 @@ export class HistoricalAerialLayer {
       : 'manifest.json';
     const sourceManifest = await this.fetchManifest(baseUrl, manifestPath);
     const manifest = this.manifestForRequestedZoom(sourceManifest);
-    if (!manifest.localOnly || manifest.rightsStatus === 'APPROVED') throw new Error('Local aerial POC manifest failed the rights boundary.');
+    if (!manifest.localOnly || (!isDevBuild() && !manifestRightsAreApproved(manifest))) {
+      throw new Error('Published aerial manifest is not approved for runtime pixels.');
+    }
     const url = this.textureUrlForManifest(manifest);
     if (!url) throw new Error('Local aerial POC has no valid mosaic for the selected mode.');
     const texture = await this.loadTexture(url);
@@ -297,7 +311,7 @@ export class HistoricalAerialLayer {
     if (this.aerialZoom) {
       try {
         const contextManifest = await this.fetchManifest(baseUrl, 'manifest.json') as HistoricalAerialManifest;
-        if (!contextManifest.localOnly || contextManifest.rightsStatus === 'APPROVED') {
+        if (!contextManifest.localOnly || (!isDevBuild() && !manifestRightsAreApproved(contextManifest))) {
           throw new Error('Base local aerial POC manifest failed the rights boundary.');
         }
         const contextDataset = manifestDataset(contextManifest, this.year);
@@ -416,7 +430,9 @@ export class HistoricalAerialLayer {
     return {
       year: this.year,
       years: this.enabledYears.join(' + '),
-      status: this.texture ? 'LOCAL READY / RIGHTS REVIEW' : 'RIGHTS BLOCKED',
+      status: this.texture
+        ? this.manifest?.rightsStatus === 'APPROVED' ? 'PUBLIC LOW-RES READY' : 'LOCAL READY / RIGHTS REVIEW'
+        : 'RIGHTS BLOCKED',
       opacity: this.opacity,
       textureResolution: smartComposite?.width && smartComposite.height
         ? `${smartComposite.width}×${smartComposite.height}`
