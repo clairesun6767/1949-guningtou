@@ -1037,10 +1037,15 @@ a:hover {
 
 .museum-brand__tagline {
   display: block;
+  max-width: min(62vw, 760px);
+  overflow: hidden;
   color: var(--text-inverse-muted);
   font-family: var(--font-sans);
   font-size: .64rem;
   font-weight: 400;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .museum-header__nav-row {
@@ -1269,9 +1274,11 @@ a:hover {
 }
 
 .museum-footer__inner {
-  display: grid;
-  gap: 24px;
-  padding-block: 48px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 54px;
+  padding-block: 14px;
 }
 
 .museum-footer__title {
@@ -1294,6 +1301,12 @@ a:hover {
   color: #77756c;
   font-family: var(--font-mono);
   font-size: .64rem;
+  line-height: 1.5;
+}
+
+.museum-footer__meta--single-line {
+  width: 100%;
+  align-items: center;
 }
 
 .museum-footer a {
@@ -1872,6 +1885,10 @@ a:hover {
     gap: 14px;
   }
 
+  .museum-brand__tagline {
+    max-width: 44vw;
+  }
+
   .museum-nav__link,
   .museum-nav__summary {
     padding-inline: 7px;
@@ -2038,8 +2055,18 @@ a:hover {
     width: min(calc(100% - 1.5rem), var(--layout-max));
   }
 
+  .museum-brand {
+    min-width: 0;
+    max-width: calc(100% - 56px);
+  }
+
   .museum-brand__tagline {
-    display: none;
+    display: block;
+    max-width: 44vw;
+    max-height: 2.8em;
+    font-size: .55rem;
+    line-height: 1.4;
+    white-space: normal;
   }
 
   .museum-tools .search-bar {
@@ -2130,7 +2157,7 @@ a:hover {
   }
 
   .museum-footer__inner {
-    padding-block: 36px;
+    padding-block: 14px;
   }
 }
 

@@ -25,3 +25,16 @@ test('production map keeps the authorized year-aware low-resolution aerial bundl
     assert.ok(statSync(mask).size > 1000, `${mask} should be published`);
   }
 });
+
+test('production map keeps controls and battle timeline in one map control deck', () => {
+  const experience = readFileSync('src/components/map/HistoricalMapExperience.tsx', 'utf8');
+  const layout = readFileSync('src/layouts/MainLayout.astro', 'utf8');
+  const controlDeckIndex = experience.indexOf('className="historical-map__control-deck"');
+  const controlsIndex = experience.indexOf('className="historical-map__controls"', controlDeckIndex);
+  const timelineIndex = experience.indexOf('id="battle-map-timeline"', controlsIndex);
+  assert.ok(controlDeckIndex >= 0, 'map control deck should exist');
+  assert.ok(controlsIndex > controlDeckIndex, 'map controls should be inside the deck');
+  assert.ok(timelineIndex > controlsIndex, 'battle timeline should follow the map controls');
+  assert.match(layout, /museum-brand__tagline.*footerPeace/);
+  assert.match(layout, /museum-footer__meta museum-footer__meta--single-line/);
+});

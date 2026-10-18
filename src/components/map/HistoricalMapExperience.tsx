@@ -723,16 +723,6 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           <figcaption><strong>1944 AERIAL PHOTOGRAPH</strong><span>GEOREFERENCE PENDING</span></figcaption>
         </figure>}
 
-        <nav className="historical-map__controls" aria-label="Historical map controls">
-          <button type="button" onClick={enterBattlefield}>{dictionary.explore}</button>
-          <button type="button" onClick={() => document.getElementById('battle-map-timeline')?.scrollIntoView({ block: 'nearest' })}>{dictionary.timeline}</button>
-          <button type="button" onClick={() => setOpenPanel(openPanel === 'locations' ? null : 'locations')} aria-expanded={openPanel === 'locations'}>{dictionary.locations}</button>
-          <a href={`${base.replace(/\/$/, '')}/${lang}/stories/`}>{dictionary.stories}</a>
-          <button type="button" onClick={() => setOpenPanel(openPanel === 'layers' ? null : 'layers')} aria-expanded={openPanel === 'layers'}>{dictionary.layers}</button>
-          <button type="button" onClick={toggleResearchMode} aria-pressed={researchMode}>{dictionary.researchShort}</button>
-          <button type="button" onClick={resetCamera}>{dictionary.reset}</button>
-        </nav>
-
         {openPanel === 'layers' && (
           <aside className="historical-map__layer-panel" aria-label="Layer Manager">
             <div className="historical-map__panel-head"><span>LAYER MANAGER</span><button type="button" onClick={() => setOpenPanel(null)} aria-label={dictionary.close}>×</button></div>
@@ -830,7 +820,18 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         </div>
       </div>
 
-      <div id="battle-map-timeline" className="historical-map__timeline">
+      <div className="historical-map__control-deck">
+        <nav className="historical-map__controls" aria-label="Historical map controls">
+          <button type="button" onClick={enterBattlefield}>{dictionary.explore}</button>
+          <button type="button" onClick={() => document.getElementById('battle-map-timeline')?.scrollIntoView({ block: 'nearest' })}>{dictionary.timeline}</button>
+          <button type="button" onClick={() => setOpenPanel(openPanel === 'locations' ? null : 'locations')} aria-expanded={openPanel === 'locations'}>{dictionary.locations}</button>
+          <a href={`${base.replace(/\/$/, '')}/${lang}/stories/`}>{dictionary.stories}</a>
+          <button type="button" onClick={() => setOpenPanel(openPanel === 'layers' ? null : 'layers')} aria-expanded={openPanel === 'layers'}>{dictionary.layers}</button>
+          <button type="button" onClick={toggleResearchMode} aria-pressed={researchMode}>{dictionary.researchShort}</button>
+          <button type="button" onClick={resetCamera}>{dictionary.reset}</button>
+        </nav>
+
+        <div id="battle-map-timeline" className="historical-map__timeline">
         <div className="historical-map__timeline-copy">
           <span>{activeStep.date}</span><strong>{localized(activeStep.label, lang)}</strong><p>{activeStep.date === '1949-10-27' ? dictionary.noMovementGeometry : localized(activeStep.summary, lang)}</p>
           <small>{activeStep.eventIds.join(' · ')} · {activeStep.sourceIds.join(' · ')}</small>
@@ -856,6 +857,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           </div>
           <input type="range" min="0" max="1000" step="1" value={Math.round(playbackProgress * 1000)} onChange={event => setPlaybackPosition(Number(event.target.value) / 1000)} aria-label="Continuous battle progress" />
           <div className="historical-map__phase-strip">{historicalPhases.map(phase => <button type="button" key={phase.id} className={phase.id === activePhase?.id ? 'is-active' : ''} onClick={() => setPlaybackPosition(phase.startProgress)}>{localized(phase.title, lang)}</button>)}</div>
+        </div>
         </div>
       </div>
     </section>

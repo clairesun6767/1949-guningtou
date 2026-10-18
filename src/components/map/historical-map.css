@@ -225,7 +225,9 @@
 .historical-map__source-trace-legend i.is-area { height: 10px; border: 1px solid rgba(118,98,71,.8); background: rgba(118,98,71,.32); }
 .historical-map__source-trace-legend small { color: #777267; font-size: 8px; line-height: 1.45; }
 
-.historical-map__controls { position: absolute; z-index: 15; right: 20px; bottom: 18px; left: 20px; display: flex; align-items: stretch; justify-content: center; gap: 1px; }
+.historical-map__control-deck { position: relative; z-index: 25; background: #151714; }
+.historical-map__controls { position: relative; z-index: 25; display: flex; min-height: 56px; align-items: stretch; justify-content: center; gap: 1px; overflow-x: auto; border-top: 1px solid rgba(214,201,171,.2); border-bottom: 1px solid rgba(214,201,171,.12); padding: 10px clamp(16px, 5vw, 72px) 0; background: #151714; scrollbar-width: none; }
+.historical-map__controls::-webkit-scrollbar { display: none; }
 .historical-map__controls button,
 .historical-map__controls a { border: 1px solid rgba(224,214,190,.18); padding: 9px 14px; background: rgba(17,19,17,.82); color: #c9c2b1; font: 11px var(--font-sans); text-decoration: none; backdrop-filter: blur(14px); }
 .historical-map__controls button:hover,
@@ -308,7 +310,7 @@
 .three-terrain-debug__hide { grid-column: 1 / -1; color: #777267 !important; }
 .three-terrain-debug small { color: #777267; line-height: 1.45; }
 
-.historical-map__timeline { position: relative; z-index: 25; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: clamp(24px, 5vw, 72px); min-height: 132px; border-top: 1px solid rgba(214,201,171,.2); padding: 20px clamp(20px, 5vw, 72px); background: #151714; }
+.historical-map__timeline { position: relative; z-index: 25; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: clamp(24px, 5vw, 72px); min-height: 132px; padding: 20px clamp(20px, 5vw, 72px); background: #151714; }
 .historical-map__timeline-copy { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 2px 16px; }
 .historical-map__timeline-copy > span { color: var(--atlas-gold); font: 10px var(--font-mono); letter-spacing: .08em; }
 .historical-map__timeline-copy strong { color: #e6dece; font-family: var(--font-serif); font-size: 18px; font-weight: 500; }

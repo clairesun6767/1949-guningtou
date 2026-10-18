@@ -95,7 +95,7 @@ function isGroupCurrent(items: { href: string }[]) {
         <a href={pathFor('')} class="museum-brand" aria-label={`${t('siteTitle')} — ${t('home')}`}>
           <span class="museum-brand__copy">
             <span class="museum-brand__name">{t('siteTitle')}</span>
-            <span class="museum-brand__tagline">{t('siteTagline')}</span>
+            <span class="museum-brand__tagline">{t('siteTagline')} · {t('footerPeace')}</span>
           </span>
         </a>
 
@@ -155,15 +155,10 @@ function isGroupCurrent(items: { href: string }[]) {
 
     <footer class="museum-footer">
       <div class="museum-container museum-footer__inner">
-        <div>
-          <div class="museum-footer__title">{t('siteTitle')}</div>
-          <p class="museum-footer__copy">{t('footerPeace')}</p>
-        </div>
-        <p class="museum-footer__copy">{t('footerSource')}</p>
-        <div class="museum-footer__meta">
+        <div class="museum-footer__meta museum-footer__meta--single-line">
+          <span>{t('footerSource')}</span>
           <span>{lastUpdated ? `${t('footerUpdated')}：${lastUpdated}` : t('footerVersion')}</span>
           <span>{t('footerReport')} <a href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml">{t('footerReportLink')}</a></span>
-          {lang !== 'zh-tw' && <span>{t('translationInProgress')}</span>}
         </div>
       </div>
     </footer>
