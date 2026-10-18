@@ -46,6 +46,30 @@
 .three-historical-renderer__capture { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; }
 .three-historical-renderer__loading { position: absolute; z-index: 4; right: 24px; bottom: 74px; color: #d8d1c1; font: 9px var(--font-mono); letter-spacing: .12em; }
 .three-historical-renderer__credits { position: absolute; z-index: 4; right: 8px; bottom: 4px; color: rgba(235,230,216,.55); font: 7px var(--font-mono); pointer-events: none; }
+.historical-region-renderer { position: absolute; z-index: 2; inset: 0; overflow: hidden; background: #263a3a; opacity: 0; transition: opacity 700ms ease; }
+.historical-region-renderer--ready { opacity: 1; }
+.historical-region-renderer__stage,
+.historical-region-renderer__label-stage { position: absolute; inset: 0; width: 100%; height: 100%; }
+.historical-region-renderer__stage { z-index: 0; }
+.historical-region-renderer__label-stage { z-index: 2; overflow: hidden; pointer-events: none; }
+.historical-region-renderer__stage canvas { display: block; width: 100%; height: 100%; cursor: grab; touch-action: none; user-select: none; overscroll-behavior: contain; }
+.historical-region-renderer__stage canvas:active { cursor: grabbing; }
+.historical-region-renderer__aerial-switcher { position: absolute; z-index: 5; top: 74px; right: 24px; display: grid; gap: 7px; width: min(250px, calc(100% - 48px)); border: 1px solid rgba(224,214,190,.22); padding: 9px 10px; background: rgba(17,19,17,.82); box-shadow: 0 14px 34px rgba(0,0,0,.3); color: #bcb4a3; font: 8px var(--font-mono); backdrop-filter: blur(14px); }
+.historical-region-renderer__aerial-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.historical-region-renderer__aerial-head strong { color: #e7dfcf; font-weight: 500; letter-spacing: .08em; }
+.historical-region-renderer__aerial-head button { border: 1px solid rgba(185,154,98,.52); padding: 3px 6px; background: transparent; color: var(--atlas-gold); font: inherit; }
+.historical-region-renderer__aerial-years { display: flex; gap: 3px; }
+.historical-region-renderer__aerial-years button { flex: 1; border: 1px solid rgba(224,214,190,.16); padding: 5px 4px; background: rgba(255,255,255,.035); color: #817b70; font: inherit; }
+.historical-region-renderer__aerial-years button.is-active { border-color: rgba(185,154,98,.68); background: rgba(185,154,98,.16); color: #f0e7d5; }
+.historical-region-renderer__aerial-opacity { display: grid; grid-template-columns: 1fr auto; gap: 5px 8px; align-items: center; color: #8e887b; }
+.historical-region-renderer__aerial-opacity output { color: var(--atlas-gold); }
+.historical-region-renderer__aerial-opacity input { grid-column: 1 / -1; width: 100%; accent-color: var(--atlas-gold); }
+.historical-region-renderer__aerial-switcher small { color: #777166; line-height: 1.35; }
+.historical-region-renderer__loading,
+.historical-region-renderer__error { position: absolute; z-index: 4; right: 24px; bottom: 74px; border-left: 2px solid var(--atlas-gold); padding: 7px 10px; background: rgba(16,18,16,.7); color: #d8d1c1; font: 9px var(--font-mono); letter-spacing: .08em; }
+.historical-region-renderer__error { color: #e0a895; }
+.historical-region-renderer__credits { position: absolute; z-index: 4; right: 8px; bottom: 4px; color: rgba(235,230,216,.55); font: 7px var(--font-mono); pointer-events: none; }
+.historical-map[data-renderer='v2'] .historical-map__atmosphere { display: none; }
 .three-terrain-label { display: block; border: 1px solid rgba(224,214,190,.28); padding: 4px 7px; background: rgba(24,27,23,.76); box-shadow: 0 6px 18px rgba(5,8,7,.26); color: #eee6d5; font: 600 10px var(--font-mono); letter-spacing: .08em; white-space: nowrap; text-shadow: 0 1px 2px #000; transform: translateY(-50%); pointer-events: auto; transition: opacity 300ms ease, transform 300ms ease; }
 .three-terrain-label--strategic { border: 0; background: rgba(28,31,27,.56); color: #e5ddca; font-size: 9px; letter-spacing: .18em; pointer-events: none; }
 .three-terrain-label--major { border-bottom: 1px solid rgba(229,221,202,.65); color: #fff8e8; font-size: 13px; }
@@ -334,6 +358,7 @@
   .historical-map__poi-card { top: auto; right: 12px; bottom: 58px; left: 12px; width: auto; max-height: 52%; border-radius: 12px 12px 0 0; transform: none; }
   .historical-map__imagery-preview { top: 72px; right: 12px; width: 132px; }
   .historical-map__imagery-preview img { height: 58px; }
+  .historical-region-renderer__aerial-switcher { top: 72px; right: 12px; width: min(220px, calc(100% - 24px)); }
   .historical-map__geographic-status { top: 48px; right: 14px; max-width: 70%; }
   .historical-map__renderer-switch { top: 16px; left: 12px; }
   .historical-map__renderer-switch button { padding: 5px 7px; font-size: 7px; }
@@ -360,6 +385,7 @@
   .historical-map__intro h1 { max-width: 8em; font-size: clamp(2.6rem, 12vw, 4.2rem); }
   .historical-map__lede { margin-block: 18px; font-size: .96rem; }
   .historical-map__scale { right: 14px; }
+  .historical-region-renderer__aerial-switcher { top: 56px; right: 12px; width: min(196px, calc(100% - 24px)); }
   .historical-map__renderer-switch button:nth-child(2) { max-width: 82px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .three-terrain-label--strategic:not(.three-terrain-label--major) { display: none; }
   .three-terrain-label--poi { font-size: 10px; }

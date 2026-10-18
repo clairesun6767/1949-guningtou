@@ -9,6 +9,6 @@ interface Props {
 }
 
 export default function BattleMap({ lang = 'zh-tw' }: Props) {
-  return <HistoricalMapExperience lang={lang} />;
+  return <HistoricalMapExperience lang={lang} rendererMode="v2" />;
 }
 

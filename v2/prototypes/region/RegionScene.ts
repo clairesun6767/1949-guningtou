@@ -52,6 +52,9 @@ import { RegionPerformanceMonitor, type RegionRenderStats, tierSettings } from '
 import { createRegionQualityTerrain } from './RegionQualityTerrain.js';
 import { HistoricalAerialLayer, type HistoricalAerialLayerStatus } from './HistoricalAerialLayer.js';
 import { createRegionEnvironmentSystem, type RegionEnvironmentStats, type RegionEnvironmentSystemHandle } from '../../environment/RegionEnvironmentSystem.js';
+import { RegionBattleOverlay } from './RegionBattleOverlay.js';
+import type { BattleMapFeature } from '../../../src/battle-replay/visualization/types.js';
+import type { HistoricalTraceFeature, HistoricalTraceVisualProgress } from '../../../src/battle-replay/visualization/historicalTraces.js';
 import {
   createRegionTerrain,
   sampleRegionTerrainHeight,
@@ -224,6 +227,13 @@ export interface RegionSceneOptions {
   aerialZoom?: GuningtouHigherZoom;
   fixedCamera?: boolean;
   initialCameraPreset?: RegionPresetId;
+  battleFeatures?: BattleMapFeature[];
+  historicalTraces?: HistoricalTraceFeature[];
+  historicalTraceProgress?: Map<string, HistoricalTraceVisualProgress>;
+  battleLabelsVisible?: boolean;
+  battleLocale?: string;
+  onSelectBattleFeature?: (id: string) => void;
+  onSelectHistoricalTrace?: (id: string) => void;
 }
 
 export interface RegionDebugState {
@@ -317,6 +327,7 @@ export class RegionScene {
   private readonly qualitySource: RegionTerrainQualitySource;
   private readonly qualityAssets = new Map<string, RegionQualityTerrainAsset>();
   private readonly historicalAerial: HistoricalAerialLayer;
+  private readonly battleOverlay?: RegionBattleOverlay;
   private environment?: RegionEnvironmentSystemHandle;
   private composition?: RegionCompositionDataset;
   private compositionPromise?: Promise<RegionCompositionDataset>;
@@ -456,6 +467,19 @@ export class RegionScene {
       aerialOpacity: this.historicalAerial.aerialOpacity,
     });
     this.scene.add(this.terrain.group);
+    if (options.battleFeatures || options.historicalTraces) {
+      this.battleOverlay = new RegionBattleOverlay({
+        terrain: data.terrain,
+        features: options.battleFeatures,
+        historicalTraces: options.historicalTraces,
+        historicalTraceProgress: options.historicalTraceProgress,
+        labelsVisible: options.battleLabelsVisible,
+        locale: options.battleLocale,
+        onSelectFeature: options.onSelectBattleFeature,
+        onSelectHistoricalTrace: options.onSelectHistoricalTrace,
+      });
+      this.scene.add(this.battleOverlay.group);
+    }
     this.coverageGroup.name = 'v2-region-historical-aerial-coverage-outlines';
     for (const dataset of HISTORICAL_AERIAL_DATASETS) {
       const points = [
@@ -575,6 +599,7 @@ export class RegionScene {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height, false);
     this.labelRenderer.setSize(width, height);
+    this.battleOverlay?.resize(width, height);
   }
 
   flyTo(preset: RegionPresetId) {
@@ -744,6 +769,18 @@ export class RegionScene {
     void this.loadLocalAerial();
   }
 
+  updateBattleFeatures(features: BattleMapFeature[], labelsVisible: boolean, selectedId: string | null = null) {
+    this.battleOverlay?.updateFeatures(features, labelsVisible, selectedId);
+  }
+
+  updateHistoricalTraces(features: HistoricalTraceFeature[], labelsVisible: boolean) {
+    this.battleOverlay?.updateHistoricalTraces(features, labelsVisible);
+  }
+
+  updateHistoricalTraceProgress(progress: Map<string, HistoricalTraceVisualProgress>) {
+    this.battleOverlay?.updateHistoricalTraceProgress(progress);
+  }
+
   setEnvironmentBenchmarkMode(mode: EnvironmentBenchmarkMode) {
     this.environmentMode = mode;
     this.environment?.setBenchmarkMode(mode);
@@ -836,11 +873,13 @@ export class RegionScene {
       windSpeed: 0,
     });
     this.labelsVisible = this.debugState.labels;
+    this.battleOverlay?.setLabelsVisible(this.labelsVisible);
   }
 
   setLabelsVisible(visible: boolean) {
     this.labelsVisible = visible;
     this.debugState.labels = visible;
+    this.battleOverlay?.setLabelsVisible(visible);
   }
 
   getStats(): RegionSceneStats {
@@ -926,6 +965,8 @@ export class RegionScene {
       if (object instanceof CSS2DObject) object.element.remove();
     });
     this.scene.remove(this.aerialTileDebugGroup);
+    this.battleOverlay?.dispose();
+    if (this.battleOverlay) this.scene.remove(this.battleOverlay.group);
     this.terrain.dispose();
     this.historicalAerial.dispose();
     this.renderer.dispose();

@@ -37,7 +37,7 @@ interface Props {
   lang?: string;
   base?: string;
   compact?: boolean;
-  rendererMode?: HistoricalRendererMode;
+  rendererMode?: HistoricalRendererMode | 'v2';
 }
 
 interface CanonicalLocation {
@@ -66,6 +66,7 @@ const canonicalCollection = JSON.parse(locationsRaw) as { features: CanonicalLoc
 const canonicalLocations = canonicalCollection.features;
 const ThreeHistoricalTerrainRenderer = lazy(() => import('./three/ThreeHistoricalTerrainRenderer'));
 const CesiumHistoricalRenderer = lazy(() => import('./cesium/CesiumHistoricalRenderer'));
+const HistoricalRegionRenderer = lazy(() => import('./HistoricalRegionRenderer'));
 
 function toHistoricalConfidence(value: CanonicalLocation['properties']['confidence']): HistoricalConfidence {
   if (value === 'confirmed') return 'verified';
@@ -252,14 +253,16 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const [interactionHintVisible, setInteractionHintVisible] = useState(true);
   const [enabledLayers, setEnabledLayers] = useState<Set<MapLayerId>>(() => new Set(DEFAULT_VISITOR_LAYERS));
   const [openPanel, setOpenPanel] = useState<'layers' | 'locations' | null>(null);
-  const [rendererRequested, setRendererRequested] = useState(false);
-  const [preferredRenderer] = useState<HistoricalRendererMode>(() => {
+  const [rendererRequested, setRendererRequested] = useState(rendererMode === 'v2');
+  const [preferredRenderer] = useState<HistoricalRendererMode | 'v2'>(() => {
+    if (rendererMode === 'v2') return 'v2';
     if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('renderer') === 'cesium') return 'cesium';
     return rendererMode === 'atlas' ? 'atlas' : 'three';
   });
-  const [activeRenderer, setActiveRenderer] = useState<HistoricalRendererMode>('atlas');
-  const [rendererStatus, setRendererStatus] = useState<'idle' | 'loading' | 'ready' | 'fallback'>('idle');
-  const [terrainSource, setTerrainSource] = useState<'srtm-reference' | 'ellipsoid' | 'cesium-world-terrain'>('srtm-reference');
+  type ActiveRenderer = HistoricalRendererMode | 'v2';
+  const [activeRenderer, setActiveRenderer] = useState<ActiveRenderer>(rendererMode === 'v2' ? 'v2' : 'atlas');
+  const [rendererStatus, setRendererStatus] = useState<'idle' | 'loading' | 'ready' | 'fallback'>(rendererMode === 'v2' ? 'loading' : 'idle');
+  const [terrainSource, setTerrainSource] = useState<'srtm-reference' | 'ellipsoid' | 'cesium-world-terrain' | 'v2-region-terrain'>('srtm-reference');
   const viewportRef = useRef<HTMLDivElement>(null);
   const battlefieldEngine = useMemo(() => new BattlefieldEngine({
     data: runtimeMapData,
@@ -331,6 +334,12 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   useEffect(() => {
     const viewport = viewportRef.current;
     if (!viewport) return;
+    if (preferredRenderer === 'v2') {
+      setRendererRequested(true);
+      setActiveRenderer('v2');
+      setRendererStatus('loading');
+      return;
+    }
     const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
     const mode = preferredRenderer === 'cesium' ? 'cesium' : chooseHistoricalRenderer({
       preferred: preferredRenderer,
@@ -489,6 +498,49 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
       aria-label={dictionary.title}
     >
       <div ref={viewportRef} className="historical-map__viewport" style={sceneStyle}>
+        {rendererRequested && activeRenderer === 'v2' && (
+          <Suspense fallback={null}>
+            <HistoricalRegionRenderer
+              base={base}
+              compact={compact}
+              features={visibleFeatures}
+              historicalTraces={activeHistoricalTraces}
+              historicalTraceProgress={historicalTraceProgress}
+              cameraId={cameraId}
+              activeDate={activeStep.date}
+              focus={selectedLocation?.geometry.coordinates ?? storyFocus}
+              labelsEnabled={labelsEnabled}
+              selectedId={selectedId}
+              locale={lang === 'zh-tw' ? 'zh-tw' : lang === 'zh-cn' ? 'zh-cn' : 'en'}
+              onSelectFeature={id => {
+                const location = canonicalLocations.find(item => item.id === id);
+                if (location) focusLocation(location);
+              }}
+              onSelectHistoricalTrace={id => {
+                setSelectedTraceId(id);
+                battlefieldEngine.setResearchMode(true);
+                setEnabledLayers(current => {
+                  const next = new Set(current);
+                  next.add('research-layer');
+                  return next;
+                });
+                setDetailReady(true);
+              }}
+              onInteraction={() => {
+                setInteractionHintVisible(false);
+                setFollowBattle(false);
+              }}
+              onReady={() => {
+                setTerrainSource('v2-region-terrain');
+                setRendererStatus('ready');
+              }}
+              onError={() => {
+                setActiveRenderer('atlas');
+                setRendererStatus('fallback');
+              }}
+            />
+          </Suspense>
+        )}
         {rendererRequested && activeRenderer === 'three' && (
           <Suspense fallback={null}>
             <ThreeHistoricalTerrainRenderer
@@ -647,7 +699,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         </div>
 
         {detailReady && imageryEnabled && <div className="historical-map__imagery-status">{dictionary.imageryPending}</div>}
-        {rendererStatus === 'ready' && <div className="historical-map__geographic-status"><span>{activeRenderer === 'three' ? 'CARTOGRAPHIC TERRAIN · 2.25× RELIEF' : dictionary.geographicReference}</span><strong>{terrainSource === 'srtm-reference' ? 'OSM SURFACE · SRTM ELEVATION · MODERN REFERENCE' : terrainSource === 'cesium-world-terrain' ? dictionary.worldTerrain : dictionary.ellipsoid}</strong></div>}
+        {rendererStatus === 'ready' && <div className="historical-map__geographic-status"><span>{activeRenderer === 'v2' ? 'HISTORICAL TERRAIN · AERIAL + ATMOSPHERE' : activeRenderer === 'three' ? 'CARTOGRAPHIC TERRAIN · 2.25× RELIEF' : dictionary.geographicReference}</span><strong>{terrainSource === 'v2-region-terrain' ? 'V2 REGION TERRAIN · AERIAL REVIEW' : terrainSource === 'srtm-reference' ? 'OSM SURFACE · SRTM ELEVATION · MODERN REFERENCE' : terrainSource === 'cesium-world-terrain' ? dictionary.worldTerrain : dictionary.ellipsoid}</strong></div>}
         {rendererStatus === 'fallback' && <div className="historical-map__renderer-fallback" role="status">{dictionary.rendererFallback}</div>}
         {rendererStatus === 'ready' && interactionHintVisible && <aside className="historical-map__interaction-hint" aria-label="Map interaction help">{dictionary.interactionHint}</aside>}
         {!terrainIsolationQa && cameraId !== 'strategic' && enabledLayers.has('historical-battle-traces') && <aside className="historical-map__source-trace-legend" aria-label={dictionary.battleLegend}>
@@ -666,7 +718,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           <small>{productionMovements.length ? `${activeStep.date} · ${productionMovements.length} approved` : dictionary.noMovementGeometry}</small>
         </aside>}
         {!terrainIsolationQa && cameraId !== 'strategic' && enabledLayers.has('battle-movement') && !productionMovements.length && !productionHistoricalTraces.length && <aside className="historical-map__empty-movement-note" role="status">{dictionary.noMovementGeometry}</aside>}
-        {rendererStatus === 'ready' && detailReady && imageryEnabled && <figure className="historical-map__imagery-preview">
+        {rendererStatus === 'ready' && activeRenderer !== 'v2' && detailReady && imageryEnabled && <figure className="historical-map__imagery-preview">
           <img src={`${base.replace(/\/$/, '')}/aerial-1944.png`} alt="1944 Aerial Photograph" loading="lazy" />
           <figcaption><strong>1944 AERIAL PHOTOGRAPH</strong><span>GEOREFERENCE PENDING</span></figcaption>
         </figure>}
