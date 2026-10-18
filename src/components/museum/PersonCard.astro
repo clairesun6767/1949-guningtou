@@ -1,6 +1,8 @@
 ---
 import type { HistoricalPerson } from '../../data/types';
 import { displayRank, displayUnit } from '../../i18n/labels';
+import { getPersonMedia } from '../../data/mediaCatalog';
+import { sitePath } from '../../data/paths';
 
 interface Props {
   person: HistoricalPerson;
@@ -10,12 +12,18 @@ interface Props {
 
 const { person, href, lang = 'zh-tw' } = Astro.props;
 const isEnglish = lang === 'en';
+const portrait = getPersonMedia(person.person_id).find((asset) => asset.kind === 'portrait');
 const displayBio = isEnglish
   ? 'Canonical person record; English editorial biography pending review.'
   : person.short_bio || person.biographical_summary || '尚無摘要';
 ---
 
 <a href={href} class="museum-card museum-card-link museum-person-card">
+  {portrait && (
+    <div class="museum-person-card__image">
+      <img src={sitePath(portrait.src)} alt={isEnglish ? portrait.titleEn : portrait.titleZh} loading="lazy" decoding="async" />
+    </div>
+  )}
   <div class="museum-person-card__top">
     <div>
       <div class="museum-kicker">{isEnglish ? 'Person record' : '人物檔案'}</div>

@@ -5,6 +5,8 @@ import SourceCitation from '../../../components/museum/SourceCitation.astro';
 import { sitePath } from '../../../data/paths';
 import { persons } from '../../../data/loader';
 import { displayRank, displayUnit, displayVerificationStatus } from '../../../i18n/labels';
+import MediaCard from '../../../components/museum/MediaCard.astro';
+import { getPersonMedia } from '../../../data/mediaCatalog';
 
 export function getStaticPaths() {
   const langs = ['zh-tw', 'zh-cn', 'en'];
@@ -18,6 +20,7 @@ export function getStaticPaths() {
 const { id, lang } = Astro.params;
 const isEnglish = lang === 'en';
 const person = persons.find((item) => item.person_id === id);
+const personMedia = person ? getPersonMedia(person.person_id) : [];
 ---
 
 <MainLayout lang={lang}>
@@ -33,6 +36,15 @@ const person = persons.find((item) => item.person_id === id);
           {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>{isEnglish ? 'Evidence' : '證據'} {person.evidence_level}</span>}
           {person.verification_status && <SourceCitation text={displayVerificationStatus(person.verification_status, lang) ?? person.verification_status} />}
         </div>
+
+        {personMedia.length > 0 && (
+          <section class="museum-reading__section museum-person-detail__media">
+            <div class="museum-kicker">{isEnglish ? 'VISUAL RECORDS' : '影像記錄'}</div>
+            <div class="museum-grid museum-grid--2">
+              {personMedia.map((asset) => <MediaCard asset={asset} lang={lang} />)}
+            </div>
+          </section>
+        )}
 
         <section class="museum-paper museum-reading__section">
           <div class="museum-kicker">{isEnglish ? 'BIOGRAPHICAL NOTE' : 'BIOGRAPHICAL NOTE'}</div>

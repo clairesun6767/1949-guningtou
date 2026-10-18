@@ -16,7 +16,8 @@ tmp/
 /public/.local/aerial-poc/guningtou/
 /public/.local/aerial-poc/screenshots/
 /public/.local/aerial-poc/xiamen/
-# Xiamen candidate pixels remain local-only; the public folder stores metadata only.
+# The original Xiamen candidate pixels remain staged locally; explicitly exported,
+# user-authorized internal-test copies live under public/media/guningtou.
 /public/research/xiamen-1943/*.jpg
 
 # desktop attachment staging area; keep private source documents out of Git

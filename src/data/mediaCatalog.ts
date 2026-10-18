@@ -1,0 +1,221 @@
+export type ArchiveMediaKind = 'aerial' | 'map' | 'photograph' | 'portrait' | 'research';
+
+export interface ArchiveMediaAsset {
+  id: string;
+  kind: ArchiveMediaKind;
+  src: string;
+  titleZh: string;
+  titleEn: string;
+  captionZh: string;
+  captionEn: string;
+  sourceZh: string;
+  sourceEn: string;
+  sourceUrl: string;
+  rights: string;
+  personIds?: string[];
+  status?: 'published' | 'research';
+}
+
+/**
+ * Media is kept separate from canonical battle geometry. Every item carries
+ * a visible provenance link and a status so a visual asset cannot silently
+ * become a historical claim.
+ */
+export const archiveMedia: ArchiveMediaAsset[] = [
+  {
+    id: 'ARC-AERIAL-1944',
+    kind: 'aerial',
+    src: 'aerial-1944.png',
+    titleZh: '1944 年古寧頭地區航照',
+    titleEn: '1944 aerial photograph · Guningtou area',
+    captionZh: '既有航照素材；目前作為地景閱讀與視覺對照，不宣稱已完成精密套準。',
+    captionEn: 'Existing aerial material for landscape reading; no precision georeferencing is claimed.',
+    sourceZh: '中央研究院 GIS 中心（專案既有素材）',
+    sourceEn: 'Academia Sinica GIS Center · existing project asset',
+    sourceUrl: 'https://gis.sinica.edu.tw/kinmen/',
+    rights: '專案內部授權紀錄',
+    status: 'published',
+  },
+  {
+    id: 'ARC-AERIAL-1944-VARIANT',
+    kind: 'aerial',
+    src: 'aerial-1944a.png',
+    titleZh: '1944 年航照（展示版）',
+    titleEn: '1944 aerial photograph · display variant',
+    captionZh: '既有展示變體；用於典藏頁與首頁閱讀，不作為新的座標來源。',
+    captionEn: 'Existing display variant for the archive and home page; not a new coordinate source.',
+    sourceZh: '中央研究院 GIS 中心（專案既有素材）',
+    sourceEn: 'Academia Sinica GIS Center · existing project asset',
+    sourceUrl: 'https://gis.sinica.edu.tw/kinmen/',
+    rights: '專案內部授權紀錄',
+    status: 'published',
+  },
+  {
+    id: 'ARC-AERIAL-1944-MOSAIC',
+    kind: 'aerial',
+    src: '.local/aerial-poc/1944/mosaic-z12.png',
+    titleZh: '1944 航照拼圖（低解析度）',
+    titleEn: '1944 aerial mosaic · low resolution',
+    captionZh: '低解析度衍生拼圖；用於跨年度視覺比較，地理套準仍待人工確認。',
+    captionEn: 'Low-resolution derived mosaic for cross-year comparison; georeferencing remains under review.',
+    sourceZh: '專案公開低解析度 POC',
+    sourceEn: 'Project public low-resolution POC',
+    sourceUrl: 'https://gis.sinica.edu.tw/kinmen/',
+    rights: '專案內部授權紀錄',
+    status: 'published',
+  },
+  {
+    id: 'ARC-AERIAL-1945-MOSAIC',
+    kind: 'aerial',
+    src: '.local/aerial-poc/1945/mosaic-z12.png',
+    titleZh: '1945 航照拼圖（低解析度）',
+    titleEn: '1945 aerial mosaic · low resolution',
+    captionZh: '戰後早期地景對照素材；不是 1949 戰役的直接影像證據。',
+    captionEn: 'Early post-war landscape comparison material; not direct imagery of the 1949 battle.',
+    sourceZh: '專案公開低解析度 POC',
+    sourceEn: 'Project public low-resolution POC',
+    sourceUrl: 'https://gis.sinica.edu.tw/kinmen/',
+    rights: '專案內部授權紀錄',
+    status: 'published',
+  },
+  {
+    id: 'ARC-AERIAL-1958-MOSAIC',
+    kind: 'aerial',
+    src: '.local/aerial-poc/1958/mosaic-z12.png',
+    titleZh: '1958 航照拼圖（低解析度）',
+    titleEn: '1958 aerial mosaic · low resolution',
+    captionZh: '戰後地景閱讀素材；用於比較聚落與海岸線的後續變化。',
+    captionEn: 'Post-war landscape material for reading later changes in settlements and coastline.',
+    sourceZh: '專案公開低解析度 POC',
+    sourceEn: 'Project public low-resolution POC',
+    sourceUrl: 'https://gis.sinica.edu.tw/kinmen/',
+    rights: '專案內部授權紀錄',
+    status: 'published',
+  },
+  {
+    id: 'ARC-MAP-HISTORICAL-ROUTE',
+    kind: 'map',
+    src: 'map-data/historical-battle-map.jpg',
+    titleZh: '古寧頭戰役路線圖',
+    titleEn: 'Historical battle route map',
+    captionZh: '使用者提供的歷史路線圖；目前以示意性來源圖展示，戰役線仍保留研究狀態。',
+    captionEn: 'User-supplied historical route map shown as a schematic source image; battle traces remain research material.',
+    sourceZh: '使用者提供；對照國家發展委員會檔案管理局檔案索引',
+    sourceEn: 'User supplied; cross-referenced with National Archives Administration records',
+    sourceUrl: 'https://art.archives.gov.tw/tw/art/1516-13249.html',
+    rights: '使用者確認：內測版可使用',
+    status: 'published',
+  },
+  {
+    id: 'ARC-PHOTO-WANG-01',
+    kind: 'photograph',
+    src: 'media/guningtou/archive/culture-wang-wan-nien-01.jpg',
+    titleZh: '古寧頭戰場留影 01',
+    titleEn: 'Guningtou battlefield photograph 01',
+    captionZh: '王萬年照片組；約 1967–1968 年服役期間拍攝，非 1949 戰時照片。',
+    captionEn: 'From Wang Wan-nien’s photograph set, taken during service around 1967–1968, not during the 1949 battle.',
+    sourceZh: '國家文化記憶庫：王萬年照片：古寧頭戰場留影',
+    sourceEn: 'National Cultural Memory Bank · Wang Wan-nien: Guningtou battlefield photograph',
+    sourceUrl: 'https://tcmb.culture.tw/zh-tw/detail?id=651059&indexCode=Culture_Object',
+    rights: 'CC BY 3.0 TW+',
+    status: 'published',
+  },
+  {
+    id: 'ARC-PHOTO-WANG-02',
+    kind: 'photograph',
+    src: 'media/guningtou/archive/culture-wang-wan-nien-02.jpg',
+    titleZh: '古寧頭戰場留影 02',
+    titleEn: 'Guningtou battlefield photograph 02',
+    captionZh: '王萬年照片組；建築與士兵雕像的戰場記憶影像。',
+    captionEn: 'From Wang Wan-nien’s photograph set, showing the battlefield memory site and soldier sculpture.',
+    sourceZh: '國家文化記憶庫：王萬年照片：古寧頭戰場留影',
+    sourceEn: 'National Cultural Memory Bank · Wang Wan-nien: Guningtou battlefield photograph',
+    sourceUrl: 'https://tcmb.culture.tw/zh-tw/detail?id=651059&indexCode=Culture_Object',
+    rights: 'CC BY 3.0 TW+',
+    status: 'published',
+  },
+  {
+    id: 'ARC-PHOTO-WANG-03',
+    kind: 'photograph',
+    src: 'media/guningtou/archive/culture-wang-wan-nien-03.jpg',
+    titleZh: '古寧頭戰場留影 03',
+    titleEn: 'Guningtou battlefield photograph 03',
+    captionZh: '王萬年照片組；保留來源頁的原始影像編號與構圖。',
+    captionEn: 'From Wang Wan-nien’s photograph set, preserving the source record’s original framing.',
+    sourceZh: '國家文化記憶庫：王萬年照片：古寧頭戰場留影',
+    sourceEn: 'National Cultural Memory Bank · Wang Wan-nien: Guningtou battlefield photograph',
+    sourceUrl: 'https://tcmb.culture.tw/zh-tw/detail?id=651059&indexCode=Culture_Object',
+    rights: 'CC BY 3.0 TW+',
+    status: 'published',
+  },
+  {
+    id: 'ARC-PHOTO-WANG-04',
+    kind: 'photograph',
+    src: 'media/guningtou/archive/culture-wang-wan-nien-04.jpg',
+    titleZh: '古寧頭戰場留影 04',
+    titleEn: 'Guningtou battlefield photograph 04',
+    captionZh: '王萬年照片組；影像年代與說明以典藏來源頁為準。',
+    captionEn: 'From Wang Wan-nien’s photograph set; date and description follow the collection record.',
+    sourceZh: '國家文化記憶庫：王萬年照片：古寧頭戰場留影',
+    sourceEn: 'National Cultural Memory Bank · Wang Wan-nien: Guningtou battlefield photograph',
+    sourceUrl: 'https://tcmb.culture.tw/zh-tw/detail?id=651059&indexCode=Culture_Object',
+    rights: 'CC BY 3.0 TW+',
+    status: 'published',
+  },
+  {
+    id: 'PER-0003-HU-LIEN-PORTRAIT',
+    kind: 'portrait',
+    src: 'media/guningtou/archive/culture-hu-lien-portrait.jpg',
+    titleZh: '胡璉將軍畫像',
+    titleEn: 'Portrait of General Hu Lien',
+    captionZh: '方向繪製、胡璉故居藏；這是人物時代參照，不是 1949 戰場照片。',
+    captionEn: 'Painted by Fang Hsiang from the Hu Lien Residence collection; contextual portrait, not a 1949 battlefield photograph.',
+    sourceZh: '國家文化記憶庫：胡璉將軍畫像',
+    sourceEn: 'National Cultural Memory Bank · Portrait of General Hu Lien',
+    sourceUrl: 'https://tcmb.culture.tw/zh-tw/detail?id=501760&indexCode=Culture_Object',
+    rights: 'CC BY-NC 3.0 TW+',
+    personIds: ['PER-0003'],
+    status: 'published',
+  },
+  {
+    id: 'PER-0003-HU-LIEN-WEDDING',
+    kind: 'portrait',
+    src: 'media/guningtou/archive/culture-hu-lien-wedding-1933.jpg',
+    titleZh: '胡璉與曾廣瑜結婚照',
+    titleEn: 'Hu Lien and Tseng Kuang-yü · 1933',
+    captionZh: '1933 年人物影像；用於胡璉人物檔案的生平脈絡，不等同於戰役現場。',
+    captionEn: 'A 1933 contextual image for Hu Lien’s biography, not an image of the battle site.',
+    sourceZh: '國家文化記憶庫：胡璉與曾廣瑜結婚照',
+    sourceEn: 'National Cultural Memory Bank · Hu Lien and Tseng Kuang-yü wedding photograph',
+    sourceUrl: 'https://tcmb.culture.tw/zh-tw/detail?id=662582&indexCode=Culture_Object',
+    rights: 'CC BY-NC 3.0 TW+',
+    personIds: ['PER-0003'],
+    status: 'published',
+  },
+  ...Array.from({ length: 8 }, (_, index): ArchiveMediaAsset => {
+    const number = String(index + 1).padStart(2, '0');
+    return {
+      id: `ARC-XIAMEN-AERIAL-${number}`,
+      kind: 'research',
+      src: `media/guningtou/xiamen-aerial/xiamen-aerial-${number}.jpg`,
+      titleZh: `廈門航照候選圖 ${number}`,
+      titleEn: `Xiamen aerial candidate ${number}`,
+      captionZh: '使用者提供的候選航照；日期、影幅與地理位置尚未由原始館藏獨立考證，僅供內測研究與比對。',
+      captionEn: 'User-supplied aerial candidate; date, frame, and location are not independently verified and are shown for internal-test research only.',
+      sourceZh: '使用者提供／廈門二戰時期航照候選資料集',
+      sourceEn: 'User supplied · Xiamen WWII aerial candidate dataset',
+      sourceUrl: 'research/xiamen-1943/manifest.json',
+      rights: '使用者確認：內測版可使用；日期與來源仍待考證',
+      status: 'research',
+    };
+  }),
+];
+
+export function getPersonMedia(personId: string): ArchiveMediaAsset[] {
+  return archiveMedia.filter((asset) => asset.personIds?.includes(personId));
+}
+
+export const mapMedia = archiveMedia.filter((asset) => asset.kind === 'map');
+export const aerialMedia = archiveMedia.filter((asset) => asset.kind === 'aerial');
+export const historicalPhotographs = archiveMedia.filter((asset) => asset.kind === 'photograph');
+export const researchMedia = archiveMedia.filter((asset) => asset.kind === 'research');

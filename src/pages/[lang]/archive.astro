@@ -1,48 +1,23 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import HistoricImage from '../../components/museum/HistoricImage.astro';
+import MediaCard from '../../components/museum/MediaCard.astro';
 import EvidenceCard from '../../components/museum/EvidenceCard.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sitePath } from '../../data/paths';
 import { sources } from '../../data/loader';
+import { aerialMedia, historicalPhotographs, mapMedia, researchMedia } from '../../data/mediaCatalog';
 
 const lang = Astro.params.lang ?? 'zh-tw';
 const isEnglish = lang === 'en';
 
 const categories = [
-  { id: 'ARC-01', title: '歷史照片', titleEn: 'Historical photographs', description: '1949 年戰役期間與戰後拍攝的影像記錄。', descriptionEn: 'Photographic records made during and after the 1949 battle.', status: '建置中', statusEn: 'In progress', note: '照片資料待補', noteEn: 'Photographs pending' },
-  { id: 'ARC-02', title: '空照圖', titleEn: 'Aerial imagery', description: '1944 年航照與歷年影像，記錄金門地貌的變化。', descriptionEn: '1944 aerial photography and later imagery documenting changes in Kinmen’s landscape.', status: '部分可用', statusEn: 'Partly available', note: '已有航照入口', noteEn: 'Aerial archive available' },
+  { id: 'ARC-01', title: '歷史照片', titleEn: 'Historical photographs', description: '戰場留影、戰後記憶與人物影像，均保留拍攝年代與來源狀態。', descriptionEn: 'Battlefield photographs, post-war memories, and contextual portraits with their dates and provenance status retained.', status: '可瀏覽', statusEn: 'Available', note: '已有照片與人物影像', noteEn: 'Photographs and portraits available' },
+  { id: 'ARC-02', title: '空照圖', titleEn: 'Aerial imagery', description: '1944 年航照、歷年拼圖與廈門候選航照，分開標示已公開與研究中素材。', descriptionEn: '1944 aerial imagery, later mosaics, and Xiamen candidates, separated by publication and research status.', status: '可瀏覽', statusEn: 'Available', note: '已接入年度與候選影像', noteEn: 'Year-based and candidate imagery connected' },
   { id: 'ARC-03', title: '衛星與今昔', titleEn: 'Satellite and then / now', description: '現代地理影像，支援戰場地景的對照閱讀。', descriptionEn: 'Modern geographic imagery for comparing the battlefield landscape across time.', status: '建置中', statusEn: 'In progress', note: '影像圖層待補', noteEn: 'Imagery layers pending' },
   { id: 'ARC-04', title: '3D 與地形', titleEn: '3D and terrain', description: '戰車、碉堡、聚落建築與地形資料的空間索引。', descriptionEn: 'A spatial index for armour, bunkers, settlement buildings, and terrain data.', status: '建置中', statusEn: 'In progress', note: '模型資料待補', noteEn: 'Model data pending' },
   { id: 'ARC-05', title: '影片與口述', titleEn: 'Film and oral history', description: '紀錄片、訪談與第一人稱敘述，保存個人記憶。', descriptionEn: 'Documentaries, interviews, and first-person accounts preserving personal memory.', status: '建置中', statusEn: 'In progress', note: '影音資料待補', noteEn: 'Audio-visual material pending' },
-  { id: 'ARC-06', title: '掃描文件', titleEn: 'Scanned documents', description: '地圖、文件、證件與家書的高解析掃描檔。', descriptionEn: 'High-resolution scans of maps, documents, identity papers, and letters.', status: '建置中', statusEn: 'In progress', note: '掃描資料待補', noteEn: 'Scanned material pending' },
-];
-
-const aerialCollections = [
-  {
-    year: '1944',
-    src: sitePath('.local/aerial-poc/1944/mosaic-z12.png'),
-    title: '1944 aerial mosaic',
-    titleZh: '1944 航照拼圖',
-    note: '公開低解析度 POC；地理套準仍待人工確認。',
-    noteEn: 'Public low-resolution POC; georeferencing remains subject to human review.',
-  },
-  {
-    year: '1945',
-    src: sitePath('.local/aerial-poc/1945/mosaic-z12.png'),
-    title: '1945 aerial mosaic',
-    titleZh: '1945 航照拼圖',
-    note: '公開低解析度 POC，用於跨年度地景對照。',
-    noteEn: 'Public low-resolution POC for comparing the landscape across years.',
-  },
-  {
-    year: '1958',
-    src: sitePath('.local/aerial-poc/1958/mosaic-z12.png'),
-    title: '1958 aerial mosaic',
-    titleZh: '1958 航照拼圖',
-    note: '公開低解析度 POC，用於戰後地景閱讀。',
-    noteEn: 'Public low-resolution POC for reading the post-war landscape.',
-  },
+  { id: 'ARC-06', title: '掃描文件', titleEn: 'Scanned documents', description: '地圖、文件、證件與家書的高解析掃描檔。', descriptionEn: 'High-resolution scans of maps, documents, identity papers, and letters.', status: '部分可用', statusEn: 'Partly available', note: '歷史路線圖已上線', noteEn: 'Historical route map available' },
 ];
 
 export function getStaticPaths() {
@@ -87,26 +62,28 @@ export function getStaticPaths() {
       </div>
 
       <section class="museum-section--compact">
-        <SectionHeading index="03" eyebrow="AERIAL ARCHIVE" title={isEnglish ? 'Aerial imagery by year' : '歷年空照圖'} description={isEnglish ? 'These existing public low-resolution mosaics are available for visual comparison. They are presentation assets, not a claim of precision georeferencing.' : '以下既有的公開低解析度拼圖可供視覺對照；它們是閱讀素材，不代表已完成精密地理套準。'} />
+        <SectionHeading index="03" eyebrow="IMAGE ARCHIVE" title={isEnglish ? 'Images now available online' : '已上線的文獻影像'} description={isEnglish ? 'Photographs, maps, and portraits are now published as a traceable reading set. Open any image for the original file and source record.' : '照片、地圖與人物影像已整理成可追溯的閱讀集；點開影像可查看原檔與來源記錄。'} />
         <div class="museum-grid museum-grid--3">
-          {aerialCollections.map((aerial) => (
-            <article class="museum-card museum-archive-aerial-card">
-              <a class="museum-archive-aerial-card__image" href={aerial.src} target="_blank" rel="noopener noreferrer">
-                <img src={aerial.src} alt={isEnglish ? aerial.title : aerial.titleZh} loading="lazy" decoding="async" />
-              </a>
-              <div class="museum-archive-aerial-card__body">
-                <div class="museum-label">{aerial.year}</div>
-                <h3>{isEnglish ? aerial.title : aerial.titleZh}</h3>
-                <p>{isEnglish ? aerial.noteEn : aerial.note}</p>
-                <a class="museum-link" href={aerial.src} target="_blank" rel="noopener noreferrer">{isEnglish ? 'Open image ↗' : '開啟影像 ↗'}</a>
-              </div>
-            </article>
-          ))}
+          {[...mapMedia, ...aerialMedia].map((asset) => <MediaCard asset={asset} lang={lang} />)}
         </div>
       </section>
 
       <section class="museum-section--compact">
-        <SectionHeading index="04" eyebrow="PROVENANCE" title={isEnglish ? 'Read the source before the story' : '先看來源，再看敘事'} description={isEnglish ? 'The document database provides traceable bibliographic records and source levels; these records form the backbone of the digital archive.' : '文獻資料庫提供可追溯的書目與來源等級；這些記錄是數位典藏的骨架。'} />
+        <SectionHeading index="04" eyebrow="HISTORICAL PHOTOGRAPHS" title={isEnglish ? 'Battlefield memory and people' : '戰場記憶與人物影像'} description={isEnglish ? 'These are contextual photographs. Their dates and relation to the battle are shown explicitly; they are not silently promoted to battle-time evidence.' : '這些是脈絡影像，頁面明確標示年代與和戰役的關係，不會默默升格為戰時直接證據。'} />
+        <div class="museum-grid museum-grid--3">
+          {historicalPhotographs.map((asset) => <MediaCard asset={asset} lang={lang} />)}
+        </div>
+      </section>
+
+      <section class="museum-section--compact">
+        <SectionHeading index="05" eyebrow="RESEARCH IMAGE SET" title={isEnglish ? 'Xiamen aerial candidates' : '廈門航照候選資料'} description={isEnglish ? 'The eight previously collected files are now reachable in the internal-test site. The dataset remains date- and provenance-unverified, so it is clearly marked as research material.' : '先前收集的 8 張影像已放入內測網站；日期與來源仍未完成獨立考證，因此清楚標為研究素材。'} />
+        <div class="museum-grid museum-grid--4">
+          {researchMedia.map((asset) => <MediaCard asset={asset} lang={lang} compact />)}
+        </div>
+      </section>
+
+      <section class="museum-section--compact">
+        <SectionHeading index="06" eyebrow="PROVENANCE" title={isEnglish ? 'Read the source before the story' : '先看來源，再看敘事'} description={isEnglish ? 'The document database provides traceable bibliographic records and source levels; these records form the backbone of the digital archive.' : '文獻資料庫提供可追溯的書目與來源等級；這些記錄是數位典藏的骨架。'} />
         <div class="museum-grid museum-grid--3">
           {sources.slice(0, 3).map((source) => <EvidenceCard source={source} lang={lang} />)}
         </div>

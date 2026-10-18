@@ -474,6 +474,108 @@ a:hover {
   line-height: 1.5;
 }
 
+.museum-media-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  background: var(--bg-elevated);
+}
+
+.museum-media-card__image {
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-photo);
+}
+
+.museum-media-card__image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  filter: saturate(.86) contrast(1.02);
+  transition: filter var(--motion-standard) var(--ease-museum), transform var(--motion-standard) var(--ease-museum);
+}
+
+.museum-media-card__image:hover img {
+  filter: saturate(1) contrast(1.04);
+  transform: scale(1.015);
+}
+
+.museum-media-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.museum-media-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.museum-media-card h3 {
+  margin: 12px 0 8px;
+  font-size: 1rem;
+  line-height: 1.45;
+}
+
+.museum-media-card p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-family: var(--font-serif);
+  font-size: .84rem;
+  line-height: 1.7;
+}
+
+.museum-media-card__source {
+  display: grid;
+  gap: 5px;
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  line-height: 1.5;
+}
+
+.museum-media-card__source a {
+  color: var(--accent-secondary);
+}
+
+.museum-media-card--compact .museum-media-card__body {
+  padding: 12px;
+}
+
+.museum-media-card--compact h3 {
+  font-size: .88rem;
+}
+
+.museum-media-card--compact p {
+  font-size: .78rem;
+}
+
+.museum-person-card__image {
+  overflow: hidden;
+  margin: -32px -32px 24px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-photo);
+}
+
+.museum-person-card__image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: saturate(.8) contrast(1.02);
+}
+
 .museum-person-card__top,
 .museum-location-card__head,
 .museum-event-card__head,
@@ -2156,6 +2258,10 @@ a:hover {
 
   .museum-card {
     padding: 20px;
+  }
+
+  .museum-person-card__image {
+    margin: -20px -20px 20px;
   }
 
   .museum-hero {
