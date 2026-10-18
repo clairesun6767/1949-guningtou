@@ -211,9 +211,25 @@ const locationTypeLabel: Record<string, string> = {
   'landing-zone': 'Landing Area', coast: 'Coastal Feature', settlement: 'Village', 'military-site': 'Defensive Position',
 };
 
+const LOCATION_LABELS_EN: Record<string, string> = {
+  'LOC-GUN-0001': 'Longkou landing area',
+  'LOC-GUN-0002': 'Longkou coast',
+  'LOC-GUN-0003': 'Anqi',
+  'LOC-GUN-0004': 'Andong Second Battalion Area',
+  'LOC-GUN-0005': 'Nanshan',
+  'LOC-GUN-0006': 'Beishan',
+};
+
 function localized(value: Record<string, string> | undefined, lang: string): string | undefined {
   if (!value) return undefined;
   return value[lang === 'zh-tw' ? 'zh-Hant' : lang === 'zh-cn' ? 'zh-Hant' : 'en'] ?? value['zh-Hant'] ?? Object.values(value)[0];
+}
+
+function localizedLocation(location: CanonicalLocation | undefined, lang: string): string | undefined {
+  if (!location) return undefined;
+  return lang === 'en'
+    ? LOCATION_LABELS_EN[location.properties.id] ?? localized(location.properties.historicalName, lang)
+    : localized(location.properties.historicalName, lang);
 }
 
 function wait(ms: number) {
@@ -284,7 +300,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const rendererFeatures = useMemo(() => [...locationFeatures, ...(researchMode ? movementFeatures : [])].map(feature => {
     const location = canonicalLocations.find(item => item.id === feature.id);
     const movementLabel = feature.metadata?.label as Record<string, string> | undefined;
-    return { ...feature, metadata: { ...feature.metadata, label: localized(location?.properties.historicalName ?? movementLabel, lang) ?? feature.id } };
+    return { ...feature, metadata: { ...feature.metadata, label: localizedLocation(location, lang) ?? localized(movementLabel, lang) ?? feature.id } };
   }), [lang, researchMode]);
   const visibleFeatures = useMemo(() => filterVisibleFeatures(rendererFeatures, {
     enabled: enabledLayers,
@@ -662,10 +678,10 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
                   className={`historical-map__poi historical-map__poi--${location.properties.locationType} ${active ? 'historical-map__poi--active' : ''} ${related ? 'historical-map__poi--related' : ''}`}
                   style={{ left: `${point.x}%`, top: `${point.y}%` }}
                   onClick={() => focusLocation(location)}
-                  aria-label={`${localized(location.properties.historicalName, lang)} · ${location.properties.id}`}
+                  aria-label={`${localizedLocation(location, lang)} · ${location.properties.id}`}
                 >
                   <span className="historical-map__poi-dot" />
-                  {labelsEnabled && <span className="historical-map__poi-label">{localized(location.properties.historicalName, lang)}</span>}
+                  {labelsEnabled && <span className="historical-map__poi-label">{localizedLocation(location, lang)}</span>}
                 </button>
               );
             })}
@@ -754,7 +770,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
             <div className="historical-map__panel-head"><span>{dictionary.allLocations}</span><button type="button" onClick={() => setOpenPanel(null)} aria-label={dictionary.close}>×</button></div>
             <div className="historical-map__story-zone-list">{Object.entries(CARTOGRAPHIC_STORY_ZONES).map(([id, zone]) => <button type="button" key={id} onClick={() => focusStoryZone(zone)}><span>ZONE</span><strong>{lang === 'en' ? zone.labelEn : zone.label}</strong><small>{id}</small></button>)}</div>
             {canonicalLocations.map((location, index) => <button type="button" key={location.id} onClick={() => focusLocation(location, index)}>
-              <span>{String(index + 1).padStart(2, '0')}</span><strong>{localized(location.properties.historicalName, lang)}</strong><small>{locationTypeLabel[location.properties.locationType] ?? location.properties.locationType}</small>
+              <span>{String(index + 1).padStart(2, '0')}</span><strong>{localizedLocation(location, lang)}</strong><small>{locationTypeLabel[location.properties.locationType] ?? location.properties.locationType}</small>
             </button>)}
           </aside>
         )}
@@ -765,7 +781,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
               <span>{locationTypeLabel[selectedLocation.properties.locationType] ?? selectedLocation.properties.locationType} · {selectedLocation.id}</span>
               <button type="button" onClick={() => battlefieldEngine.selectPOI(null)} aria-label={dictionary.close}>×</button>
             </div>
-            <h2>{localized(selectedLocation.properties.historicalName, lang)}</h2>
+            <h2>{localizedLocation(selectedLocation, lang)}</h2>
             <p>{localized(selectedLocation.properties.notes, lang) ?? selectedLocation.properties.coordinateProvenance.notes ?? dictionary.missing}</p>
             <dl className="historical-map__poi-data">
               <div><dt>{dictionary.date}</dt><dd>{dictionary.missing}</dd></div>

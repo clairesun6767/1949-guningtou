@@ -9,13 +9,15 @@ export interface RegionLabelsHandle {
   dispose(): void;
 }
 
-export function createRegionLabels(labelRenderer: CSS2DRenderer, terrainHeight: (longitude: number, latitude: number) => number): RegionLabelsHandle {
+export function createRegionLabels(labelRenderer: CSS2DRenderer, terrainHeight: (longitude: number, latitude: number) => number, locale = 'zh-tw'): RegionLabelsHandle {
   const group = new THREE.Group();
   group.name = 'v2-region-labels';
   const labels = REGION_CONFIG.labels.map(labelConfig => {
     const element = document.createElement('span');
     element.className = `region-label region-label--${labelConfig.kind} region-label--${labelConfig.offset}`;
-    element.innerHTML = `<strong>${labelConfig.text}</strong><small>${labelConfig.chinese}</small>`;
+    element.innerHTML = locale === 'en'
+      ? `<strong>${labelConfig.text}</strong><small>regional reference</small>`
+      : `<strong>${labelConfig.text}</strong><small>${labelConfig.chinese}</small>`;
     element.dataset.label = labelConfig.id;
     const world = lonLatToWorld(labelConfig.point, terrainHeight(labelConfig.point.longitude, labelConfig.point.latitude) + (labelConfig.kind === 'major' ? 0.46 : 0.28));
     const object = new CSS2DObject(element);

@@ -232,6 +232,7 @@ export interface RegionSceneOptions {
   historicalTraceProgress?: Map<string, HistoricalTraceVisualProgress>;
   battleLabelsVisible?: boolean;
   battleLocale?: string;
+  locale?: string;
   onSelectBattleFeature?: (id: string) => void;
   onSelectHistoricalTrace?: (id: string) => void;
 }
@@ -550,7 +551,7 @@ export class RegionScene {
   }
 
   private attachLabels() {
-    this.labels = createRegionLabels(this.labelRenderer, (longitude, latitude) => sampleRegionTerrainHeight(this.data.terrain, longitude, latitude));
+    this.labels = createRegionLabels(this.labelRenderer, (longitude, latitude) => sampleRegionTerrainHeight(this.data.terrain, longitude, latitude), this.options.locale);
     this.scene.add(this.labels.group);
     this.labels.update(this.camera, this.labelsVisible && this.debugState.labels);
   }

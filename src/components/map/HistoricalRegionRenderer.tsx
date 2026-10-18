@@ -155,6 +155,7 @@ export default function HistoricalRegionRenderer({
           historicalTraceProgress,
           battleLabelsVisible: labelsEnabled,
           battleLocale: locale === 'en' ? 'en' : locale === 'zh-cn' ? 'zh-Hans' : 'zh-Hant',
+          locale,
           onSelectBattleFeature: id => callbacksRef.current.onSelectFeature(id),
           onSelectHistoricalTrace: id => callbacksRef.current.onSelectHistoricalTrace(id),
           onStage: () => undefined,
