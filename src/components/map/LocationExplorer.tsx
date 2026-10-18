@@ -13,6 +13,10 @@ interface Props {
 const BASE = '/1949-guningtou';
 
 export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
+  const isEnglish = lang === 'en';
+  const labels = isEnglish
+    ? { categories: 'Location categories', all: 'All', place: 'Location', detail: 'Open record →', locate: 'Select a location to locate it', notSelected: 'No location selected', sourceNote: 'Canonical location record; English editorial description pending review.' }
+    : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點', sourceNote: '' };
   const [selectedPoi, setSelectedPoi] = useState<typeof allPois[0] | null>(null);
   const [filter, setFilter] = useState('');
   const mapRef = useRef<L.Map | null>(null);
@@ -44,7 +48,8 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
       iconSize: [14, 14], iconAnchor: [7, 7],
     });
     const marker = L.marker([selectedPoi.latitude, selectedPoi.longitude], { icon }).addTo(map);
-    marker.bindPopup(`<strong>${selectedPoi.name_chinese}</strong><br><small>${selectedPoi.latitude}, ${selectedPoi.longitude}</small>`).openPopup();
+    const selectedName = isEnglish ? selectedPoi.name_english ?? selectedPoi.name_chinese : selectedPoi.name_chinese;
+    marker.bindPopup(`<strong>${selectedName}</strong><br><small>${selectedPoi.latitude}, ${selectedPoi.longitude}</small>`).openPopup();
     markerRef.current = marker;
     map.flyTo([selectedPoi.latitude, selectedPoi.longitude], 16, { duration: 0.8 });
   }, [selectedPoi]);
@@ -55,8 +60,8 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
   return (
     <div className="museum-location-explorer">
       <div className="museum-location-explorer__list">
-        <div className="museum-filter-row" role="group" aria-label="地點分類">
-          <button type="button" className={`museum-filter ${!filter ? 'museum-filter--active' : ''}`} onClick={() => setFilter('')}>全部 ({allPois.length})</button>
+        <div className="museum-filter-row" role="group" aria-label={labels.categories}>
+          <button type="button" className={`museum-filter ${!filter ? 'museum-filter--active' : ''}`} onClick={() => setFilter('')}>{labels.all} ({allPois.length})</button>
           {categories.map((category) => (
             <button key={category} type="button" className={`museum-filter ${category === filter ? 'museum-filter--active' : ''}`} onClick={() => setFilter(category === filter ? '' : category)}>{category}</button>
           ))}
@@ -66,22 +71,22 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
           {filtered.map((poi) => (
             <article key={poi.poi_id} className={`museum-card museum-location-result ${selectedPoi?.poi_id === poi.poi_id ? 'museum-location-result--active' : ''}`}>
               <button type="button" className="museum-location-result__select" onClick={() => setSelectedPoi(poi)} aria-pressed={selectedPoi?.poi_id === poi.poi_id}>
-                <span className="museum-kicker">{poi.category || '地點'} · {poi.poi_id}</span>
-                <h3>{poi.name_chinese}</h3>
+                <span className="museum-kicker">{poi.category || labels.place} · {poi.poi_id}</span>
+                <h3>{isEnglish ? poi.name_english ?? poi.name_chinese : poi.name_chinese}</h3>
                 {poi.name_english && <span className="museum-citation">{poi.name_english}</span>}
-                <p>{poi.short_description ?? poi.description}</p>
+                <p>{isEnglish ? labels.sourceNote : poi.short_description ?? poi.description}</p>
                 <span className="museum-meta">{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</span>
               </button>
-              <a className="museum-link museum-location-result__detail" href={`${BASE}/${lang}/locations/${poi.poi_id}/`}>查看檔案 →</a>
+              <a className="museum-link museum-location-result__detail" href={`${BASE}/${lang}/locations/${poi.poi_id}/`}>{labels.detail}</a>
             </article>
           ))}
         </div>
       </div>
 
       <aside className="museum-location-explorer__map">
-        <div className="museum-map-header-inline"><span className="museum-kicker">LOCATION INDEX</span><span>點選地點以定位</span></div>
+        <div className="museum-map-header-inline"><span className="museum-kicker">LOCATION INDEX</span><span>{labels.locate}</span></div>
         <div ref={containerRef} />
-        <div className="museum-citation museum-location-explorer__coordinates">{selectedPoi ? `${selectedPoi.name_chinese} · ${selectedPoi.latitude.toFixed(4)}, ${selectedPoi.longitude.toFixed(4)}` : '尚未選取地點'}</div>
+        <div className="museum-citation museum-location-explorer__coordinates">{selectedPoi ? `${isEnglish ? selectedPoi.name_english ?? selectedPoi.name_chinese : selectedPoi.name_chinese} · ${selectedPoi.latitude.toFixed(4)}, ${selectedPoi.longitude.toFixed(4)}` : labels.notSelected}</div>
       </aside>
     </div>
   );

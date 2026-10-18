@@ -201,10 +201,10 @@ const LAYER_DEFINITIONS: Array<{ id: MapLayerId; label: string; dataCount: numbe
 ];
 
 const CARTOGRAPHIC_STORY_ZONES = {
-  guningtou_overview: { label: '古寧頭總覽', cameraId: 'battle_overview' as CameraPresetId, focus: [118.329, 24.47] as [number, number] },
-  north_south_villages: { label: '南北山聚落', cameraId: 'story_mode' as CameraPresetId, focus: [118.3095, 24.479] as [number, number] },
-  landing_coast: { label: '登陸海岸', cameraId: 'landing_coast' as CameraPresetId, focus: [118.351, 24.465] as [number, number] },
-  anqi_sector: { label: '安岐地區', cameraId: 'story_mode' as CameraPresetId, focus: [118.329, 24.466] as [number, number] },
+  guningtou_overview: { label: '古寧頭總覽', labelEn: 'Guningtou overview', cameraId: 'battle_overview' as CameraPresetId, focus: [118.329, 24.47] as [number, number] },
+  north_south_villages: { label: '南北山聚落', labelEn: 'North and South Beishan villages', cameraId: 'story_mode' as CameraPresetId, focus: [118.3095, 24.479] as [number, number] },
+  landing_coast: { label: '登陸海岸', labelEn: 'Landing coast', cameraId: 'landing_coast' as CameraPresetId, focus: [118.351, 24.465] as [number, number] },
+  anqi_sector: { label: '安岐地區', labelEn: 'Anqi sector', cameraId: 'story_mode' as CameraPresetId, focus: [118.329, 24.466] as [number, number] },
 } as const;
 
 const locationTypeLabel: Record<string, string> = {
@@ -674,7 +674,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
 
         {sourceMapEnabled && detailReady && (
           <figure className="historical-map__source-overlay" style={{ opacity: sourceMapOpacity }} aria-label={dictionary.sourceMap}>
-            <img src={base.replace(/\/$/, '') + '/map-data/historical-battle-map.jpg'} alt="古寧頭戰役路線圖（示意性套準）" />
+            <img src={base.replace(/\/$/, '') + '/map-data/historical-battle-map.jpg'} alt={lang === 'en' ? 'Historical Guningtou battle map (schematic registration)' : '古寧頭戰役路線圖（示意性套準）'} />
             <figcaption>
               <strong>{dictionary.sourceMap}</strong>
               <span>{dictionary.sourceMapRegistration}</span>
@@ -752,7 +752,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         {openPanel === 'locations' && (
           <aside className="historical-map__location-panel" aria-label={dictionary.allLocations}>
             <div className="historical-map__panel-head"><span>{dictionary.allLocations}</span><button type="button" onClick={() => setOpenPanel(null)} aria-label={dictionary.close}>×</button></div>
-            <div className="historical-map__story-zone-list">{Object.entries(CARTOGRAPHIC_STORY_ZONES).map(([id, zone]) => <button type="button" key={id} onClick={() => focusStoryZone(zone)}><span>ZONE</span><strong>{zone.label}</strong><small>{id}</small></button>)}</div>
+            <div className="historical-map__story-zone-list">{Object.entries(CARTOGRAPHIC_STORY_ZONES).map(([id, zone]) => <button type="button" key={id} onClick={() => focusStoryZone(zone)}><span>ZONE</span><strong>{lang === 'en' ? zone.labelEn : zone.label}</strong><small>{id}</small></button>)}</div>
             {canonicalLocations.map((location, index) => <button type="button" key={location.id} onClick={() => focusLocation(location, index)}>
               <span>{String(index + 1).padStart(2, '0')}</span><strong>{localized(location.properties.historicalName, lang)}</strong><small>{locationTypeLabel[location.properties.locationType] ?? location.properties.locationType}</small>
             </button>)}

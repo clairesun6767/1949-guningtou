@@ -5,19 +5,21 @@ interface Props {
   caption?: string;
   source?: string;
   priority?: boolean;
+  lang?: string;
 }
 
-const { src, alt, caption, source, priority = false } = Astro.props;
+const { src, alt, caption, source, priority = false, lang = 'zh-tw' } = Astro.props;
+const isEnglish = lang === 'en';
 ---
 
 <figure class="museum-historic-image">
-  <a href={src} target="_blank" rel="noopener noreferrer" aria-label={`查看原始影像：${alt}`}>
+  <a href={src} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? `Open original image: ${alt}` : `查看原始影像：${alt}`}>
     <img src={src} alt={alt} loading={priority ? 'eager' : 'lazy'} decoding="async" />
   </a>
   {(caption || source) && (
     <figcaption>
       {caption && <span>{caption}</span>}
-      {source && <span class="museum-citation">來源：{source}</span>}
+      {source && <span class="museum-citation">{isEnglish ? 'Source: ' : '來源：'}{source}</span>}
     </figcaption>
   )}
 </figure>

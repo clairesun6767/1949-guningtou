@@ -10,16 +10,18 @@ export function getStaticPaths() {
   ];
 }
 
-const destination = sitePath('context', Astro.params.lang);
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+const destination = sitePath('context', lang);
 ---
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <meta http-equiv="refresh" content={`0;url=${destination}`} />
   <div class="museum-page">
     <div class="museum-reading museum-centered">
       <div class="museum-kicker">REDIRECT</div>
-      <h1 class="museum-title">本頁內容已合併至「戰前國際情勢」</h1>
-      <a class="museum-button" href={destination}>前往戰前國際情勢 →</a>
+      <h1 class="museum-title">{isEnglish ? 'This page has been merged into “The international context before the battle”' : '本頁內容已合併至「戰前國際情勢」'}</h1>
+      <a class="museum-button" href={destination}>{isEnglish ? 'Go to world context →' : '前往戰前國際情勢 →'}</a>
     </div>
   </div>
 </MainLayout>

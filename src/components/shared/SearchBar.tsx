@@ -54,7 +54,12 @@ async function loadData() {
   SEARCH_DATA.push(...links, ...terms);
 }
 
-export default function SearchBar() {
+interface Props {
+  lang?: string;
+}
+
+export default function SearchBar({ lang = 'zh-tw' }: Props) {
+  const isEnglish = lang === 'en';
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [open, setOpen] = useState(false);
@@ -89,10 +94,10 @@ export default function SearchBar() {
         value={query}
         onChange={e => handleSearch(e.target.value)}
         onFocus={e => handleSearch(e.target.value)}
-        aria-label="搜尋網站內容"
+        aria-label={isEnglish ? 'Search site content' : '搜尋網站內容'}
         aria-expanded={open}
         aria-controls="museum-search-results"
-        placeholder="搜尋..."
+        placeholder={isEnglish ? 'Search...' : '搜尋...'}
         className="museum-search__input"
       />
       {open && results.length > 0 && (

@@ -4,6 +4,9 @@ import EvidenceCard from '../../components/museum/EvidenceCard.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sources } from '../../data/loader';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 const levelDist: Record<string, number> = {};
 sources.forEach((source) => {
   const level = String(source.source_level ?? '?');
@@ -11,10 +14,10 @@ sources.forEach((source) => {
 });
 
 const LEVELS = [
-  { id: '1', label: '官方 / 一手來源' },
-  { id: '2', label: '學術研究' },
-  { id: '3', label: '輔助來源' },
-  { id: '4', label: '參考來源' },
+  { id: '1', label: '官方 / 一手來源', labelEn: 'Official / primary sources' },
+  { id: '2', label: '學術研究', labelEn: 'Academic research' },
+  { id: '3', label: '輔助來源', labelEn: 'Supporting sources' },
+  { id: '4', label: '參考來源', labelEn: 'Reference sources' },
 ];
 
 export function getStaticPaths() {
@@ -26,23 +29,23 @@ export function getStaticPaths() {
 }
 ---
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="SOURCES & PROVENANCE" title="史料與來源" description={`${sources.length} 筆文獻來源 · 所有史料可追溯 · 依來源等級分級。資料庫展示的是來源狀態，不是替讀者決定唯一答案。`} />
+      <SectionHeading level={1} index="01" eyebrow="SOURCES & PROVENANCE" title={isEnglish ? 'Sources and provenance' : '史料與來源'} description={isEnglish ? `${sources.length} source records · traceable provenance · grouped by source level. The database shows the status of sources; it does not decide a single answer for the reader.` : `${sources.length} 筆文獻來源 · 所有史料可追溯 · 依來源等級分級。資料庫展示的是來源狀態，不是替讀者決定唯一答案。`} />
 
-      <section class="museum-source-levels" aria-label="來源等級分布">
+      <section class="museum-source-levels" aria-label={isEnglish ? 'Source-level distribution' : '來源等級分布'}>
         {LEVELS.map((level) => (
           <div class="museum-source-level">
             <div class="museum-source-level__count">{levelDist[level.id] ?? 0}</div>
             <div class="museum-meta">LEVEL {level.id}</div>
-            <div class="museum-source-level__label">{level.label}</div>
+            <div class="museum-source-level__label">{isEnglish ? level.labelEn : level.label}</div>
           </div>
         ))}
       </section>
 
       <div class="museum-source-list">
-        {sources.map((source) => <EvidenceCard source={source} />)}
+        {sources.map((source) => <EvidenceCard source={source} lang={lang} />)}
       </div>
     </div>
   </div>

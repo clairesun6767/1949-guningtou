@@ -542,6 +542,49 @@ a:hover {
   line-height: 1.75;
 }
 
+.museum-archive-aerial-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.museum-archive-aerial-card__image {
+  display: block;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-photo);
+}
+
+.museum-archive-aerial-card__image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  filter: saturate(.78) contrast(1.02);
+  transition: filter var(--motion-standard) var(--ease-museum), transform var(--motion-standard) var(--ease-museum);
+}
+
+.museum-archive-aerial-card__image:hover img {
+  filter: saturate(.95) contrast(1.04);
+  transform: scale(1.02);
+}
+
+.museum-archive-aerial-card__body {
+  padding: 20px;
+}
+
+.museum-archive-aerial-card__body h3 {
+  margin: 12px 0 8px;
+}
+
+.museum-archive-aerial-card__body p {
+  min-height: 70px;
+  margin: 0 0 16px;
+  color: var(--text-secondary);
+  font-family: var(--font-serif);
+  font-size: .88rem;
+  line-height: 1.7;
+}
+
 .museum-status {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-xs);

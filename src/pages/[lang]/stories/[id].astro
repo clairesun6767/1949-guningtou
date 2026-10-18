@@ -12,17 +12,38 @@ export function getStaticPaths() {
 }
 
 const { id, lang } = Astro.params;
+const isEnglish = lang === 'en';
 const arc = storyArcs.find((item) => item.story_arc_id === id);
 const arcScenes = scenes.filter((scene) => scene.story_arc_id === id).sort((a, b) => (a.sequence_number ?? 0) - (b.sequence_number ?? 0));
+
+const STORY_TITLES_EN: Record<string, string> = {
+  'ARC-0001': 'Kinmen in crisis', 'ARC-0002': 'Amphibious landing', 'ARC-0003': 'Armoured counterattack', 'ARC-0004': 'The Guningtou village battle',
+  'ARC-0005': 'ROC reinforcement and encirclement', 'ARC-0006': 'The Beishan finale', 'ARC-0007': 'Battle memory', 'ARC-0008': 'Weather, tides, and the limits of the crossing',
+  'ARC-0009': 'Command, communications, and reinforcement', 'ARC-0010': 'Villages, roads, and terrain combat', 'ARC-0011': 'Casualties, prisoners, and post-war handling', 'ARC-0012': 'Memory, commemoration, and today’s landscape',
+};
+
+const SCENE_TITLES_EN: Record<string, string> = {
+  'SCN-0001': 'PLA sea crossing begins', 'SCN-0002': 'Wind and waves during the crossing', 'SCN-0003': 'Landing at Longkou', 'SCN-0004': 'Landing at Huwei',
+  'SCN-0005': 'Vehicle 66 enters the battle', 'SCN-0006': 'Fighting in Guningtou village', 'SCN-0007': 'Command at Hunan Heights', 'SCN-0008': 'The three-pronged counterattack',
+  'SCN-0009': 'The Beishan cliff finale', 'SCN-0010': 'Battle memory and the war museum', 'SCN-0011': 'Kinmen’s defensive posture', 'SCN-0012': 'PLA preparations for the crossing',
+  'SCN-0013': 'Weather and vessel limitations', 'SCN-0014': 'The first wave sails', 'SCN-0015': 'At sea: formation breaks apart',
+};
+
+const SCENE_SUMMARIES_EN: Record<string, string> = {
+  'SCN-0001': 'PLA troops board vessels at Lianhe, Dadan Island, and Houcun.', 'SCN-0002': 'The wooden-boat fleet encounters Force 7–8 winds at sea.', 'SCN-0003': 'The 244th Regiment lands at Longkou under pressure from ROC armour.', 'SCN-0004': 'The 251st Regiment lands at Huwei.',
+  'SCN-0005': 'After Hsiung Chen-Chiu fires the first shot, armoured units continue the attack.', 'SCN-0006': 'PLA troops enter Guningtou and street fighting begins.', 'SCN-0007': 'Hu Lien reaches Hunan Heights to assess the situation.', 'SCN-0008': 'The 118th Division launches a full counterattack.',
+  'SCN-0009': 'The remaining PLA troops are trapped at the Beishan cliff.', 'SCN-0010': 'The Guningtou War History Museum is established and maintained.', 'SCN-0011': 'ROC deployments on Kinmen grow from an initially insufficient posture.', 'SCN-0012': 'The PLA Tenth Army Group plans the operation against Kinmen.',
+  'SCN-0013': 'Force 7–8 winds and an ebb tide leave many wooden boats grounded.', 'SCN-0014': 'Roughly 9,000 troops depart from Lianhe, Dadan Island, and Houcun.', 'SCN-0015': 'Strong winds scatter the fleet and some vessels drift toward Longkou.',
+};
 ---
 
 <MainLayout lang={lang}>
   {arc ? (
     <div class="museum-page">
       <div class="museum-reading">
-        <a href={sitePath('stories', lang)} class="museum-link">← 回到戰役故事</a>
+        <a href={sitePath('stories', lang)} class="museum-link">{isEnglish ? '← Back to battle stories' : '← 回到戰役故事'}</a>
         <div class="museum-kicker museum-space-before">NARRATIVE ARC · {arc.story_arc_id}</div>
-        <h1 class="museum-title">{arc.title}</h1>
+        <h1 class="museum-title">{isEnglish ? STORY_TITLES_EN[arc.story_arc_id] ?? arc.title : arc.title}</h1>
         {arc.theme && <p class="museum-deck">{arc.theme}</p>}
 
         {arc.start_state && (
@@ -33,14 +54,14 @@ const arcScenes = scenes.filter((scene) => scene.story_arc_id === id).sort((a, b
         )}
 
         <section class="museum-reading__section">
-          <div class="museum-kicker">SCENES · {arcScenes.length}</div>
+            <div class="museum-kicker">{isEnglish ? 'SCENES' : 'SCENES'} · {arcScenes.length}</div>
           <div class="museum-story-scenes">
             {arcScenes.map((scene) => (
               <article class="museum-card museum-story-scene">
                 <div class="museum-meta">{String(scene.sequence_number ?? '').padStart(2, '0')} · {scene.scene_type || 'SCENE'} · {scene.start_datetime || 'TIME UNKNOWN'}</div>
-                <h2>{scene.scene_title}</h2>
-                {scene.scene_summary && <p class="museum-prose">{scene.scene_summary}</p>}
-                {scene.evidence_level && <span class={`evidence-badge evidence-${scene.evidence_level}`}>證據 {scene.evidence_level}</span>}
+                <h2>{isEnglish ? SCENE_TITLES_EN[scene.scene_id] ?? scene.scene_title : scene.scene_title}</h2>
+                {scene.scene_summary && <p class="museum-prose">{isEnglish ? SCENE_SUMMARIES_EN[scene.scene_id] ?? 'Scene record from the canonical dataset.' : scene.scene_summary}</p>}
+                {scene.evidence_level && <span class={`evidence-badge evidence-${scene.evidence_level}`}>{isEnglish ? 'Evidence' : '證據'} {scene.evidence_level}</span>}
               </article>
             ))}
           </div>
@@ -48,6 +69,6 @@ const arcScenes = scenes.filter((scene) => scene.story_arc_id === id).sort((a, b
       </div>
     </div>
   ) : (
-    <div class="museum-page"><div class="museum-reading museum-centered"><div class="museum-kicker">RECORD NOT FOUND</div><h1 class="museum-title">故事不存在</h1><a class="museum-button" href={sitePath('stories', lang)}>回到戰役故事</a></div></div>
+    <div class="museum-page"><div class="museum-reading museum-centered"><div class="museum-kicker">RECORD NOT FOUND</div><h1 class="museum-title">{isEnglish ? 'Story not found' : '故事不存在'}</h1><a class="museum-button" href={sitePath('stories', lang)}>{isEnglish ? 'Back to battle stories' : '回到戰役故事'}</a></div></div>
   )}
 </MainLayout>

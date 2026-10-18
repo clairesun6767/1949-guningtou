@@ -3,6 +3,57 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sitePath } from '../../data/paths';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
+const impactSections = isEnglish ? [
+  {
+    mark: 'T', tone: 'roc', title: 'Impact on the two sides of the Strait', cards: [
+      { title: 'Politics', body: 'The Battle of Guningtou was the key engagement in which Nationalist forces first successfully stopped a Communist amphibious operation. It helped establish the division across the Taiwan Strait: the Republic of China government moved to Taiwan in December 1949, and the two sides thereafter followed different political paths. In Taiwan, Guningtou was framed as the “First Battle of the Taiwan Strait,” symbolizing the determination to defend Taiwan, Penghu, Kinmen, and Matsu.' },
+      { title: 'Military affairs', body: 'The battle exposed critical weaknesses in the PLA’s amphibious operation: limited naval and air support, too few vessels, and poor control of tides. The PLA paused plans for a cross-Strait invasion and turned toward building stronger naval and air forces. For the ROC military, Guningtou became a case study in defensive operations.' },
+      { title: 'Diplomacy', body: 'After the Korean War began in June 1950, the U.S. Seventh Fleet entered the Taiwan Strait. The defensive capacity symbolized by Guningtou became an important consideration in U.S. strategy in East Asia and influenced the triangular relationship among the United States, China, and Taiwan for decades.' },
+      { title: 'Cold War alignment', body: 'The Battle of Guningtou took place at the beginning of the Cold War. A regional conflict was absorbed into a global Cold War framework, and Kinmen became a frontline symbol of the confrontation between the “Free World” and the Communist bloc in Asia.' },
+    ],
+  },
+  {
+    mark: 'K', tone: 'archive', title: 'Impact on Kinmen', cards: [
+      { title: 'Military administration', body: 'After the battle, Kinmen entered a 36-year period of military administration (1956–1992). Civilian life was shaped by curfews, blackout rules, entry and exit controls, and building-height limits. Kinmen became a “military island.”' },
+      { title: 'Economic change', body: 'The large garrison created demand that produced a distinctive military economy. Kaoliang liquor, tribute candy, and related industries developed in response to military consumption. After the lifting of martial law in 1992, the garrison was greatly reduced and Kinmen’s economy shifted toward tourism and cultural industries.' },
+      { title: 'Education and culture', body: 'Education during the period of military administration emphasized patriotic instruction. Kinmen schools incorporated battlefield themes and students took part in civil-defense training. Decades later, these memories became part of Kinmen’s collective identity.' },
+    ],
+  },
+  {
+    mark: 'V', tone: 'civilian', title: 'Impact on the Guningtou settlements', cards: [
+      { title: 'Population change', body: 'Some residents left the combat zone after the battle, and the populations of Beishan, Nanshan, Lincuo, and nearby villages fell. Younger generations moved away for education and work, leaving the settlements to face aging and depopulation.' },
+      { title: 'Buildings and land', body: 'Fighting damaged many traditional Minnan buildings. During post-war reconstruction, some land was designated for military use, limiting the natural expansion of settlements. After Kinmen National Park was established in 1995, settlement buildings entered a cultural-preservation framework.' },
+      { title: 'Lineage and culture', body: 'Guningtou was historically a settlement dominated by a single surname, primarily Li, with close lineage organizations. Although some ancestral halls were destroyed, families rebuilt them after the war. Today, traditional lineage culture and battlefield memory continue to coexist.' },
+    ],
+  },
+] : [
+  {
+    mark: '兩', tone: 'roc', title: '對兩岸的影響', cards: [
+      { title: '政治', body: '古寧頭戰役是國共內戰中，國軍首次成功阻止解放軍渡海作戰的關鍵戰役。此役確立了台海分治的格局——中華民國政府於同年 12 月遷台，兩岸從此走上不同的政治發展道路。古寧頭被台灣方面定位為「台海第一戰」，象徵保衛台澎金馬的決心。' },
+      { title: '軍事', body: '戰役暴露了解放軍渡海作戰的致命弱點：缺乏海空支援、船隻不足、潮汐掌握不佳。此後解放軍暫緩對台渡海計畫，轉而強化海空軍建設。對國軍而言，古寧頭成為防衛作戰的典範教材。' },
+      { title: '外交', body: '1950 年 6 月韓戰爆發後，美國第七艦隊進駐台灣海峽。古寧頭象徵的「台海防衛能力」，成為美國遠東戰略的重要考量因素，也影響了接下來數十年的美中台三角關係。' },
+      { title: '冷戰格局', body: '古寧頭戰役發生在冷戰初始階段。這場區域性衝突被納入全球冷戰框架，金門從此成為「自由世界 vs 共產陣營」在亞洲的最前線象徵。' },
+    ],
+  },
+  {
+    mark: '金', tone: 'archive', title: '對金門的影響', cards: [
+      { title: '軍管時期', body: '戰後金門進入長達 36 年的戰地政務時期（1956-1992）。居民生活受軍事管制，包含宵禁、燈火管制、出入境限制、建築高度限制等。金門成為一座「戰地島嶼」。' },
+      { title: '經濟轉變', body: '大量駐軍帶來消費需求，催生了金門特有的「軍中經濟」。高粱酒、貢糖等產業因應軍隊需求而發展。1992 年解嚴後，駐軍大幅縮減，金門經濟轉向觀光與文化產業。' },
+      { title: '教育與文化', body: '戰地政務時期的教育強調愛國意識。金門中小學課程融入戰地元素，學生參與民防訓練。數十年後，戰地記憶已成為金門人集體身分認同的一部分。' },
+    ],
+  },
+  {
+    mark: '村', tone: 'civilian', title: '對古寧頭聚落的影響', cards: [
+      { title: '人口變遷', body: '戰後部分居民遷離戰區，北山、南山、林厝等村落人口銳減。年輕一代外移就學就業，聚落面臨老化與空洞化挑戰。' },
+      { title: '建築與土地', body: '戰火損壞大量傳統閩南建築。戰後重建中，部分土地被劃為軍事用地，限制了聚落的自然擴張。1995 年國家公園成立後，聚落建築納入文化保存體系。' },
+      { title: '宗族與文化', body: '古寧頭為單姓聚落（李姓為主），宗族組織緊密。戰火雖摧毀了部分宗祠，但戰後族人積極重建，宗族文化得以延續。今日的古寧頭，傳統宗族與戰地記憶交織共生。' },
+    ],
+  },
+];
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -12,120 +63,33 @@ export function getStaticPaths() {
 }
 ---
 
-
-
-
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-reading">
-      <SectionHeading level={1} index="01" eyebrow="AFTERMATH" title="戰役影響" description="戰役的影響不只在軍事結果，也延伸到兩岸格局、金門治理、聚落與今日的記憶方式。" />
+      <SectionHeading level={1} index="01" eyebrow="AFTERMATH" title={isEnglish ? 'Aftermath and impact' : '戰役影響'} description={isEnglish ? 'The battle’s impact extended beyond its military result into cross-Strait politics, the administration of Kinmen, settlement life, and the ways memory is carried today.' : '戰役的影響不只在軍事結果，也延伸到兩岸格局、金門治理、聚落與今日的記憶方式。'} />
 
-    <!-- Level 1: 兩岸 -->
-    <section class="museum-content-section">
-      <div class="museum-content-section__heading">
-        <span class="museum-category-mark museum-category-mark--roc">兩</span>
-        <h2 class="text-xl font-serif font-bold">對兩岸的影響</h2>
-      </div>
-      <div class="space-y-4">
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">政治</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            古寧頭戰役是國共內戰中，國軍首次成功阻止解放軍渡海作戰的關鍵戰役。
-            此役確立了台海分治的格局——中華民國政府於同年12月遷台，兩岸從此走上不同的政治發展道路。
-            古寧頭被台灣方面定位為「台海第一戰」，象徵保衛台澎金馬的決心。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">軍事</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            戰役暴露了解放軍渡海作戰的致命弱點：缺乏海空支援、船隻不足、潮汐掌握不佳。
-            此後解放軍暫緩對台渡海計畫，轉而強化海空軍建設。對國軍而言，古寧頭成為防衛作戰的典範教材。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">外交</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            1950年6月韓戰爆發後，美國第七艦隊進駐台灣海峽。古寧頭象徵的「台海防衛能力」，
-            成為美國遠東戰略的重要考量因素，也影響了接下來數十年的美中台三角關係。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">冷戰格局</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            古寧頭戰役發生在冷戰初始階段。這場區域性衝突被納入全球冷戰框架，
-            金門從此成為「自由世界 vs 共產陣營」在亞洲的最前線象徵。
-          </p>
-        </div>
-      </div>
-    </section>
+      {impactSections.map((section) => (
+        <section class="museum-content-section">
+          <div class="museum-content-section__heading">
+            <span class={`museum-category-mark museum-category-mark--${section.tone}`}>{section.mark}</span>
+            <h2 class="text-xl font-serif font-bold">{section.title}</h2>
+          </div>
+          <div class="space-y-4">
+            {section.cards.map((card) => (
+              <div class="museum-content-card">
+                <h3 class="font-bold text-stone-700">{card.title}</h3>
+                <p class="text-sm text-stone-600 mt-1 leading-relaxed">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
 
-    <!-- Level 2: 金門 -->
-    <section class="museum-content-section">
-      <div class="museum-content-section__heading">
-        <span class="museum-category-mark museum-category-mark--archive">金</span>
-        <h2 class="text-xl font-serif font-bold">對金門的影響</h2>
+      <div class="text-center mt-8">
+        <a href={sitePath('peace', lang)} class="text-amber-600 hover:text-amber-800 no-underline font-medium">
+          {isEnglish ? 'Continue reading: from the post-war period to peace →' : '繼續閱讀：戰後至和平 →'}
+        </a>
       </div>
-      <div class="space-y-4">
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">軍管時期</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            戰後金門進入長達36年的戰地政務時期（1956-1992）。居民生活受軍事管制，
-            包含宵禁、燈火管制、出入境限制、建築高度限制等。金門成為一座「戰地島嶼」。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">經濟轉變</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            大量駐軍帶來消費需求，催生了金門特有的「軍中經濟」。高粱酒、貢糖等產業因應軍隊需求而發展。
-            1992年解嚴後，駐軍大幅縮減，金門經濟轉向觀光與文化產業。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">教育與文化</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            戰地政務時期的教育強調愛國意識。金門中小學課程融入戰地元素，
-            學生參與民防訓練。數十年後，戰地記憶已成為金門人集體身分認同的一部分。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Level 3: 聚落 -->
-    <section class="museum-content-section">
-      <div class="museum-content-section__heading">
-        <span class="museum-category-mark museum-category-mark--civilian">村</span>
-        <h2 class="text-xl font-serif font-bold">對古寧頭聚落的影響</h2>
-      </div>
-      <div class="space-y-4">
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">人口變遷</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            戰後部分居民遷離戰區，北山、南山、林厝等村落人口銳減。
-            年輕一代外移就學就業，聚落面臨老化與空洞化挑戰。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">建築與土地</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            戰火損壞大量傳統閩南建築。戰後重建中，部分土地被劃為軍事用地，
-            限制了聚落的自然擴張。1995年國家公園成立後，聚落建築納入文化保存體系。
-          </p>
-        </div>
-        <div class="museum-content-card">
-          <h3 class="font-bold text-stone-700">宗族與文化</h3>
-          <p class="text-sm text-stone-600 mt-1 leading-relaxed">
-            古寧頭為單姓聚落（李姓為主），宗族組織緊密。戰火雖摧毀了部分宗祠，
-            但戰後族人積極重建，宗族文化得以延續。今日的古寧頭，傳統宗族與戰地記憶交織共生。
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <div class="text-center mt-8">
-      <a href={sitePath('peace', Astro.params.lang)} class="text-amber-600 hover:text-amber-800 no-underline font-medium">
-        繼續閱讀：戰後至和平 →
-      </a>
-    </div>
     </div>
   </div>
 </MainLayout>

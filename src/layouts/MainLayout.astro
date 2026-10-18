@@ -101,7 +101,7 @@ function isGroupCurrent(items: { href: string }[]) {
 
         <div class="museum-tools">
           <div class="search-bar">
-            <SearchBar client:load />
+            <SearchBar client:load lang={typedLang} />
           </div>
           <div class="museum-language" aria-label="Language selector">
             {LANGS.map((item) => (

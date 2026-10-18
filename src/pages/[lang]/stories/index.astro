@@ -5,6 +5,13 @@ import { sitePath } from '../../../data/paths';
 import { storyArcs, scenes, narrativeBeats } from '../../../data/loader';
 
 const lang = Astro.params.lang;
+const isEnglish = lang === 'en';
+
+const STORY_TITLES_EN: Record<string, string> = {
+  'ARC-0001': 'Kinmen in crisis', 'ARC-0002': 'Amphibious landing', 'ARC-0003': 'Armoured counterattack', 'ARC-0004': 'The Guningtou village battle',
+  'ARC-0005': 'ROC reinforcement and encirclement', 'ARC-0006': 'The Beishan finale', 'ARC-0007': 'Battle memory', 'ARC-0008': 'Weather, tides, and the limits of the crossing',
+  'ARC-0009': 'Command, communications, and reinforcement', 'ARC-0010': 'Villages, roads, and terrain combat', 'ARC-0011': 'Casualties, prisoners, and post-war handling', 'ARC-0012': 'Memory, commemoration, and today’s landscape',
+};
 
 export function getStaticPaths() {
   return [
@@ -18,15 +25,15 @@ export function getStaticPaths() {
 <MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="NARRATIVE ARCS" title="戰役故事" description={`${storyArcs.length} 條故事弧線 · ${scenes.length} 個場景 · ${narrativeBeats.length} 個敘事節拍。從結構化資料回到一段可被閱讀的歷史經驗。`} />
+      <SectionHeading level={1} index="01" eyebrow="NARRATIVE ARCS" title={isEnglish ? 'Battle stories' : '戰役故事'} description={isEnglish ? `${storyArcs.length} narrative arcs · ${scenes.length} scenes · ${narrativeBeats.length} narrative beats. Structured data becomes a history that can be read.` : `${storyArcs.length} 條故事弧線 · ${scenes.length} 個場景 · ${narrativeBeats.length} 個敘事節拍。從結構化資料回到一段可被閱讀的歷史經驗。`} />
       <div class="museum-grid museum-grid--2">
         {storyArcs.map((arc) => (
           <a href={sitePath(`stories/${arc.story_arc_id}`, lang)} class="museum-card museum-card-link museum-story-card">
             <div class="museum-story-card__head"><span class="museum-label">{arc.story_arc_id}</span><span class="museum-citation">{arc.content_type || 'NARRATIVE'}</span></div>
-            <h2>{arc.title}</h2>
+            <h2>{isEnglish ? STORY_TITLES_EN[arc.story_arc_id] ?? arc.title : arc.title}</h2>
             {arc.theme && <p class="museum-story-card__theme">{arc.theme}</p>}
             {arc.historical_scope && <p>{arc.historical_scope}</p>}
-            <span class="museum-link">進入故事 →</span>
+            <span class="museum-link">{isEnglish ? 'Enter story →' : '進入故事 →'}</span>
           </a>
         ))}
       </div>

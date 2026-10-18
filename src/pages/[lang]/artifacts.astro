@@ -2,36 +2,45 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 const categories = [
   {
-    code: '01', title: '軍用品',
+    code: '01', title: '軍用品', titleEn: 'Military equipment',
     items: ['國軍 M1 鋼盔', '解放軍布製彈藥袋', '軍用水壺', '野戰餐具', '指北針', '望遠鏡'],
-    desc: '戰場上士兵隨身攜帶的個人裝備，反映當時的物資條件與作戰環境。'
+    itemsEn: ['ROC M1 helmet', 'PLA cloth ammunition pouch', 'Military canteen', 'Field mess kit', 'Compass', 'Field binoculars'],
+    desc: '戰場上士兵隨身攜帶的個人裝備，反映當時的物資條件與作戰環境。', descEn: 'Personal equipment carried by soldiers, reflecting the material conditions and operational environment of the battlefield.'
   },
   {
-    code: '02', title: '徽章與證件',
+    code: '02', title: '徽章與證件', titleEn: 'Insignia and identity documents',
     items: ['國軍部隊臂章', '軍官識別證', '功勳獎章', '退伍令', '兵籍牌'],
-    desc: '用以辨識身分、單位與榮譽的標誌，承載個人軍旅記憶。'
+    itemsEn: ['ROC unit patch', 'Officer identification card', 'Medal of merit', 'Discharge order', 'Service identification tag'],
+    desc: '用以辨識身分、單位與榮譽的標誌，承載個人軍旅記憶。', descEn: 'Marks of identity, unit, and honour that carry individual memories of military service.'
   },
   {
-    code: '03', title: '軍票與貨幣',
+    code: '03', title: '軍票與貨幣', titleEn: 'Military notes and currency',
     items: ['金門地區軍票', '銀圓券', '舊台幣', '物資配給券'],
-    desc: '戰時經濟的縮影，反映金門在戰時的特殊貨幣流通體系。'
+    itemsEn: ['Kinmen military notes', 'Silver yuan notes', 'Old New Taiwan dollars', 'Ration coupons'],
+    desc: '戰時經濟的縮影，反映金門在戰時的特殊貨幣流通體系。', descEn: 'A small-scale record of the wartime economy and Kinmen’s distinctive circulation of currency.'
   },
   {
-    code: '04', title: '家書與文件',
+    code: '04', title: '家書與文件', titleEn: 'Letters and documents',
     items: ['士兵家書', '戰地日記', '命令書', '戰報', '陣亡通知書'],
-    desc: '最珍貴的第一手史料，記錄戰爭中個人的恐懼、思念與勇氣。'
+    itemsEn: ['Soldier’s letter home', 'Field diary', 'Orders', 'Battle report', 'Notice of death in action'],
+    desc: '最珍貴的第一手史料，記錄戰爭中個人的恐懼、思念與勇氣。', descEn: 'First-hand records of fear, longing, and courage experienced by individuals during war.'
   },
   {
-    code: '05', title: '地圖與作戰圖',
+    code: '05', title: '地圖與作戰圖', titleEn: 'Maps and operational plans',
     items: ['金門防禦部署圖', '登陸作戰計畫圖', '戰況推進圖', '地形偵察圖'],
-    desc: '軍事行動的核心文件，記錄指揮官的戰略思維與戰場判斷。'
+    itemsEn: ['Kinmen defensive deployment map', 'Amphibious operation plan', 'Battle progress map', 'Terrain reconnaissance map'],
+    desc: '軍事行動的核心文件，記錄指揮官的戰略思維與戰場判斷。', descEn: 'Core documents of military action, recording commanders’ strategic thinking and battlefield judgments.'
   },
   {
-    code: '06', title: '歷史照片',
+    code: '06', title: '歷史照片', titleEn: 'Historical photographs',
     items: ['戰後灘頭照片', '部隊集合照', '戰車與士兵合影', '村落戰後景象', '俘虜照片'],
-    desc: '影像記錄了戰役最真實的瞬間，是歷史研究不可或缺的視覺證據。'
+    itemsEn: ['Post-battle beach photographs', 'Unit group photograph', 'Armour and soldiers', 'Village after the battle', 'Photographs of prisoners'],
+    desc: '影像記錄了戰役最真實的瞬間，是歷史研究不可或缺的視覺證據。', descEn: 'Images record the most immediate moments of the battle and provide indispensable visual evidence for historical research.'
   },
 ];
 
@@ -47,21 +56,21 @@ export function getStaticPaths() {
 
 
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="MATERIAL CULTURE" title="文物" description="古寧頭戰役相關文物分類。從軍用品到家書，每件物件都需要有來源、保存狀態與脈絡。" />
+      <SectionHeading level={1} index="01" eyebrow="MATERIAL CULTURE" title={isEnglish ? 'Artifacts' : '文物'} description={isEnglish ? 'Artifact categories related to the Battle of Guningtou. From equipment to letters, each object needs provenance, a preservation status, and context.' : '古寧頭戰役相關文物分類。從軍用品到家書，每件物件都需要有來源、保存狀態與脈絡。'} />
 
     <div class="museum-grid museum-grid--2 museum-artifact-grid">
       {categories.map(cat => (
         <div class="museum-content-card museum-content-card--interactive">
           <div class="museum-artifact-card__heading">
             <span class="museum-label">{cat.code}</span>
-            <h2 class="museum-content-card__title">{cat.title}</h2>
+          <h2 class="museum-content-card__title">{isEnglish ? cat.titleEn : cat.title}</h2>
           </div>
-          <p class="museum-content-card__body museum-content-card__body--small">{cat.desc}</p>
+          <p class="museum-content-card__body museum-content-card__body--small">{isEnglish ? cat.descEn : cat.desc}</p>
           <div class="museum-tag-list">
-            {cat.items.map(item => (
+            {(isEnglish ? cat.itemsEn : cat.items).map(item => (
               <span class="museum-tag">{item}</span>
             ))}
           </div>
@@ -70,10 +79,9 @@ export function getStaticPaths() {
     </div>
 
     <div class="museum-callout museum-callout--archive museum-callout--centered">
-      <h3 class="museum-callout__title">徵集文物素材</h3>
+      <h3 class="museum-callout__title">{isEnglish ? 'Contribute artifact material' : '徵集文物素材'}</h3>
       <p class="museum-callout__body">
-        如果你持有古寧頭戰役相關文物（軍用品、家書、照片、地圖等），<br />
-        歡迎提供數位化素材，協助充實本平台的典藏內容。
+        {isEnglish ? <>If you hold artifacts related to Guningtou—equipment, letters, photographs, maps, or similar material—<br />please share digitized material to help build the archive.</> : <>如果你持有古寧頭戰役相關文物（軍用品、家書、照片、地圖等），<br />歡迎提供數位化素材，協助充實本平台的典藏內容。</>}
       </p>
     </div>
     </div>

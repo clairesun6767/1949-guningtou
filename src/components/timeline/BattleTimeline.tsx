@@ -8,13 +8,14 @@ import type { TimelineEntry } from '../../data/types';
 
 interface Props {
   entries: TimelineEntry[];
+  lang?: string;
 }
 
 const DAY_TABS = [
-  { key: '10-24', label: '10/24 · 第一日', start: '1949-10-24', end: '1949-10-24' },
-  { key: '10-25', label: '10/25 · 第二日', start: '1949-10-25', end: '1949-10-25' },
-  { key: '10-26', label: '10/26 · 第三日', start: '1949-10-26', end: '1949-10-26' },
-  { key: '10-27', label: '10/27 · 第四日', start: '1949-10-27', end: '1949-10-27' },
+  { key: '10-24', zh: '10/24 · 第一天', en: '10/24 · Day one', start: '1949-10-24', end: '1949-10-24' },
+  { key: '10-25', zh: '10/25 · 第二天', en: '10/25 · Day two', start: '1949-10-25', end: '1949-10-25' },
+  { key: '10-26', zh: '10/26 · 第三天', en: '10/26 · Day three', start: '1949-10-26', end: '1949-10-26' },
+  { key: '10-27', zh: '10/27 · 第四天', en: '10/27 · Day four', start: '1949-10-27', end: '1949-10-27' },
 ];
 
 function sortTime(value?: string) {
@@ -25,7 +26,8 @@ function sortTime(value?: string) {
   return 9999;
 }
 
-export default function BattleTimeline({ entries }: Props) {
+export default function BattleTimeline({ entries, lang = 'zh-tw' }: Props) {
+  const isEnglish = lang === 'en';
   const [activeTab, setActiveTab] = useState('10-25');
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -36,6 +38,12 @@ export default function BattleTimeline({ entries }: Props) {
       : entries;
     return [...result].sort((a, b) => sortTime(a.time) - sortTime(b.time));
   }, [entries, activeTab]);
+
+  const labels = isEnglish ? {
+    tabCount: 'events', unknownTime: 'Time unknown', location: 'Location', roc: 'ROC units', pla: 'PLA units', figures: 'Key figures', sources: 'Sources', evidence: 'Evidence', empty: 'No timeline records for this date.',
+  } : {
+    tabCount: '個事件', unknownTime: '時間未詳', location: '地點', roc: '國軍單位', pla: '解放軍單位', figures: '關鍵人物', sources: '來源', evidence: '證據', empty: '此日期尚無時間軸資料。',
+  };
 
   return (
     <div>
@@ -53,7 +61,7 @@ export default function BattleTimeline({ entries }: Props) {
               className="museum-timeline-tab"
               onClick={() => { setActiveTab(tab.key); setExpandedId(null); }}
             >
-              {tab.label} <span aria-label={`${count} 個事件`}>({count})</span>
+              {isEnglish ? tab.en : tab.zh} <span aria-label={`${count} ${labels.tabCount}`}>({count})</span>
             </button>
           );
         })}
@@ -71,23 +79,23 @@ export default function BattleTimeline({ entries }: Props) {
                 onClick={() => setExpandedId(isExpanded ? null : entry.timeline_id)}
               >
                 <span className="museum-timeline-entry__time">
-                  {entry.time || '時間未詳'} · {entry.timeline_id}
+                  {entry.time || labels.unknownTime} · {entry.timeline_id}
                 </span>
                 <span className="museum-timeline-entry__title">{entry.title}</span>
-                {entry.location && <span className="museum-citation">地點：{entry.location}</span>}
+                {entry.location && <span className="museum-citation">{labels.location}: {entry.location}</span>}
               </button>
 
               {isExpanded && (
                 <div className="museum-timeline-entry__detail">
                   {entry.description && <p className="museum-timeline-entry__description">{entry.description}</p>}
                   <div className="museum-meta-grid museum-timeline-entry__meta">
-                    {entry.roc_units && <dl className="museum-meta"><dt>國軍單位</dt><dd>{entry.roc_units}</dd></dl>}
-                    {entry.pla_units && <dl className="museum-meta"><dt>解放軍單位</dt><dd>{entry.pla_units}</dd></dl>}
-                    {entry.key_figures && <dl className="museum-meta"><dt>關鍵人物</dt><dd>{entry.key_figures}</dd></dl>}
-                    {entry.source_ids && <dl className="museum-meta"><dt>來源</dt><dd>{entry.source_ids.join(' · ')}</dd></dl>}
+                    {entry.roc_units && <dl className="museum-meta"><dt>{labels.roc}</dt><dd>{entry.roc_units}</dd></dl>}
+                    {entry.pla_units && <dl className="museum-meta"><dt>{labels.pla}</dt><dd>{entry.pla_units}</dd></dl>}
+                    {entry.key_figures && <dl className="museum-meta"><dt>{labels.figures}</dt><dd>{entry.key_figures}</dd></dl>}
+                    {entry.source_ids && <dl className="museum-meta"><dt>{labels.sources}</dt><dd>{entry.source_ids.join(' · ')}</dd></dl>}
                   </div>
                   <div className="flex flex-wrap items-center gap-2 museum-timeline-entry__status">
-                    {entry.evidence_level && <span className={`evidence-badge evidence-${entry.evidence_level}`}>證據 {entry.evidence_level}</span>}
+                    {entry.evidence_level && <span className={`evidence-badge evidence-${entry.evidence_level}`}>{labels.evidence} {entry.evidence_level}</span>}
                     {entry.verification_status && <span className="museum-citation">{entry.verification_status}</span>}
                   </div>
                 </div>
@@ -97,7 +105,7 @@ export default function BattleTimeline({ entries }: Props) {
         })}
       </div>
 
-      {filtered.length === 0 && <p className="museum-card museum-empty-state">此日期尚無時間軸資料。</p>}
+      {filtered.length === 0 && <p className="museum-card museum-empty-state">{labels.empty}</p>}
     </div>
   );
 }

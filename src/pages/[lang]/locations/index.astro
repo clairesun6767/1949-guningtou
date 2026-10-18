@@ -4,6 +4,9 @@ import LocationExplorer from '../../../components/map/LocationExplorer';
 import SectionHeading from '../../../components/museum/SectionHeading.astro';
 import { pois } from '../../../data/loader';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -16,11 +19,11 @@ export function getStaticPaths() {
 
 
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="PLACE & TERRAIN" title="地點探索" description={`${pois.length} 個古寧頭戰役相關地點。選取地點後在地圖上定位，或進入檔案查看座標、戰役角色與來源狀態。`} />
-      <LocationExplorer client:only="react" lang={Astro.params.lang} />
+      <SectionHeading level={1} index="01" eyebrow="PLACE & TERRAIN" title={isEnglish ? 'Explore locations' : '地點探索'} description={isEnglish ? `${pois.length} locations connected to the Battle of Guningtou. Select a place to locate it on the map, or open its record for coordinates, battle role, and source status.` : `${pois.length} 個古寧頭戰役相關地點。選取地點後在地圖上定位，或進入檔案查看座標、戰役角色與來源狀態。`} />
+      <LocationExplorer client:only="react" lang={lang} />
     </div>
   </div>
 </MainLayout>

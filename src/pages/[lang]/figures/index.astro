@@ -9,6 +9,7 @@ const rocPersons = persons.filter((person) => person.primary_category?.includes(
 const plaPersons = persons.filter((person) => person.primary_category?.includes('PLA'));
 const others = persons.filter((person) => !person.primary_category?.includes('Nationalist') && !person.primary_category?.includes('PLA'));
 const lang = Astro.params.lang;
+const isEnglish = lang === 'en';
 
 export function getStaticPaths() {
   return [
@@ -22,19 +23,19 @@ export function getStaticPaths() {
 <MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="PEOPLE & ROLES" title="人物檔案" description={`${persons.length} 位歷史人物。依資料中的類別分組，保留每個人的角色、單位與證據狀態。`} />
+      <SectionHeading level={1} index="01" eyebrow="PEOPLE & ROLES" title={isEnglish ? 'People and roles' : '人物檔案'} description={isEnglish ? `${persons.length} historical people. Grouped by the categories in the dataset, with each person’s role, unit, and evidence status retained.` : `${persons.length} 位歷史人物。依資料中的類別分組，保留每個人的角色、單位與證據狀態。`} />
 
       <section class="museum-person-group">
         <div class="museum-person-group__head"><div class="museum-kicker">ROC · NATIONALIST</div><span class="museum-meta">{rocPersons.length} RECORDS</span></div>
         <div class="museum-grid museum-grid--3">
-          {rocPersons.map((person) => <PersonCard person={person} href={sitePath(`figures/${person.person_id}`, lang)} />)}
+          {rocPersons.map((person) => <PersonCard person={person} lang={lang} href={sitePath(`figures/${person.person_id}`, lang)} />)}
         </div>
       </section>
 
       <section class="museum-person-group">
         <div class="museum-person-group__head"><div class="museum-kicker">PLA · COMMUNIST</div><span class="museum-meta">{plaPersons.length} RECORDS</span></div>
         <div class="museum-grid museum-grid--3">
-          {plaPersons.map((person) => <PersonCard person={person} href={sitePath(`figures/${person.person_id}`, lang)} />)}
+          {plaPersons.map((person) => <PersonCard person={person} lang={lang} href={sitePath(`figures/${person.person_id}`, lang)} />)}
         </div>
       </section>
 
@@ -42,7 +43,7 @@ export function getStaticPaths() {
         <section class="museum-person-group">
           <div class="museum-person-group__head"><div class="museum-kicker">OTHER / CIVILIAN</div><span class="museum-meta">{others.length} RECORDS</span></div>
           <div class="museum-grid museum-grid--3">
-            {others.map((person) => <PersonCard person={person} href={sitePath(`figures/${person.person_id}`, lang)} />)}
+            {others.map((person) => <PersonCard person={person} lang={lang} href={sitePath(`figures/${person.person_id}`, lang)} />)}
           </div>
         </section>
       )}

@@ -4,7 +4,8 @@ import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { perspectiveEvents } from '../../data/perspectiveLoader';
 import { UI } from '../../i18n/ui';
 import type { Lang } from '../../i18n/ui';
-const { lang } = Astro.params;
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
 const t = (key: string) => UI[lang as Lang]?.[key] || UI['zh-tw']?.[key] || key;
 
 export function getStaticPaths() {
@@ -38,9 +39,9 @@ const STATUS_KEYS: Record<string, string> = {
 <MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="MULTIPLE PERSPECTIVES" title="多元史觀" description="同一場戰役，不同位置的人留下不同的記憶。選擇事件，比較各方記載，並把史料差異保留在閱讀現場。" />
+      <SectionHeading level={1} index="01" eyebrow="MULTIPLE PERSPECTIVES" title={isEnglish ? 'Multiple perspectives' : '多元史觀'} description={isEnglish ? 'The same battle left different memories depending on where people stood. Select an event, compare accounts, and keep the differences between sources visible.' : '同一場戰役，不同位置的人留下不同的記憶。選擇事件，比較各方記載，並把史料差異保留在閱讀現場。'} />
 
-    <nav class="museum-anchor-list" aria-label="事件索引">
+    <nav class="museum-anchor-list" aria-label={isEnglish ? 'Event index' : '事件索引'}>
       {perspectiveEvents.map(evt => (
         <a href={`#${evt.id}`} class="museum-anchor-link">
           {tx(evt.title, evt.id)}
@@ -83,13 +84,13 @@ const STATUS_KEYS: Record<string, string> = {
 
           {evt.disputes && evt.disputes.length > 0 && (
             <div class="museum-perspective-card__disputes">
-              <h3>史料差異</h3>
+              <h3>{isEnglish ? 'Differences between sources' : '史料差異'}</h3>
               <div class="museum-perspective-card__dispute-list">
                 {evt.disputes.map(d => (
                   <div class="museum-perspective-card__dispute">
                     <span>•</span>
                     <div>
-                      <span class="font-medium text-stone-700">{d.topic}：</span>
+                      <span class="font-medium text-stone-700">{isEnglish ? 'Topic' : d.topic}：</span>
                       <span class="text-stone-600">{tx(d as any, d.topic)}</span>
                     </div>
                   </div>
@@ -102,8 +103,8 @@ const STATUS_KEYS: Record<string, string> = {
     ))}
 
     <div class="museum-callout museum-callout--archive museum-callout--small">
-      <h3 class="museum-callout__title">研究方法</h3>
-      <p>每個事件的「國軍記載」主要引用國防部戰史與金門國家公園史料。「解放軍記載」引用解放軍戰史與軍事科學院編纂史料。「居民記憶」來自金門地方口述歷史採集。爭議事項已明確標示，讀者可自行對照各方原始出處。</p>
+      <h3 class="museum-callout__title">{isEnglish ? 'Research method' : '研究方法'}</h3>
+      <p>{isEnglish ? 'ROC accounts primarily cite Ministry of National Defense military histories and Kinmen National Park materials. PLA accounts cite PLA histories and works compiled by the Academy of Military Sciences. Civilian recollections come from oral-history collection in Kinmen. Disputed items are marked so readers can compare the original sources themselves.' : '每個事件的「國軍記載」主要引用國防部戰史與金門國家公園史料。「解放軍記載」引用解放軍戰史與軍事科學院編纂史料。「居民記憶」來自金門地方口述歷史採集。爭議事項已明確標示，讀者可自行對照各方原始出處。'}</p>
     </div>
     </div>
   </div>

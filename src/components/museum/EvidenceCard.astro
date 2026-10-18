@@ -3,22 +3,76 @@ import type { Source } from '../../data/types';
 
 interface Props {
   source: Source;
+  lang?: string;
 }
 
-const { source } = Astro.props;
+const { source, lang = 'zh-tw' } = Astro.props;
+const isEnglish = lang === 'en';
 const externalHref = source.url_or_identifier?.startsWith('http') ? source.url_or_identifier : undefined;
+
+const SOURCE_EN: Record<string, { title: string; author: string; type: string }> = {
+  'SRC-0001': { title: 'Kinmen National Park — Battle Heritage', author: 'Kinmen National Park Headquarters, National Park Service', type: 'Official website' },
+  'SRC-0002': { title: 'Guningtou War History Museum — Kinmen Tourism', author: 'Kinmen County Government Tourism Department', type: 'Official website' },
+  'SRC-0003': { title: 'Guningtou War History Museum — Tourism Administration', author: 'Tourism Administration, Ministry of Transportation and Communications', type: 'Official website' },
+  'SRC-0004': { title: 'Technology and immersive design bring the Guningtou War History Museum back to life', author: 'Taiwan National Parks / National Park Service', type: 'Official press release' },
+  'SRC-0005': { title: 'Kinmen County Cultural Affairs Bureau', author: 'Kinmen County Cultural Affairs Bureau', type: 'Official website' },
+  'SRC-0006': { title: 'Kinmen County Government', author: 'Kinmen County Government', type: 'Official website' },
+  'SRC-0007': { title: 'Academia Historica', author: 'Academia Historica', type: 'Official website' },
+  'SRC-0008': { title: 'National Central Library', author: 'National Central Library', type: 'Official website' },
+  'SRC-0009': { title: 'Taiwan Memory — National Central Library', author: 'National Central Library', type: 'Digital archive' },
+  'SRC-0010': { title: 'The Battle of Guningtou — Ministry of National Defense historical archives', author: 'Ministry of National Defense Historical Affairs Bureau / Ministry of National Defense', type: 'Official archive' },
+  'SRC-0011': { title: 'The Defense of Kinmen — Ministry of National Defense publication', author: 'Ministry of National Defense Historical Affairs Bureau', type: 'Official publication' },
+  'SRC-0012': { title: 'National Cultural Memory Bank — Ministry of Culture', author: 'Ministry of Culture', type: 'Digital archive' },
+  'SRC-0013': { title: 'National Taiwan Library', author: 'National Taiwan Library', type: 'Official website' },
+  'SRC-0014': { title: 'Graduate theses on the Battle of Guningtou — Taiwan theses database', author: 'National Central Library', type: 'Academic database' },
+  'SRC-0015': { title: 'Airiti Library', author: 'Airiti Press', type: 'Academic database' },
+  'SRC-0016': { title: 'Research on the Kinmen campaign — National Defense University and military academies', author: 'National Defense University and military academies', type: 'Academic paper' },
+  'SRC-0017': { title: 'Kinmen County Gazetteer', author: 'Kinmen County Government', type: 'Local gazetteer' },
+  'SRC-0018': { title: 'Survey and research on the preservation of Guningtou battle heritage', author: 'Kinmen National Park Headquarters', type: 'Official research report' },
+  'SRC-0019': { title: 'Guningtou War History Museum exhibition materials', author: 'Kinmen National Park Headquarters', type: 'Museum exhibition' },
+  'SRC-0020': { title: 'Kinmen Daily — Battle of Guningtou coverage', author: 'Kinmen Daily', type: 'News media' },
+  'SRC-0021': { title: 'The 1949 Battle of Guningtou — Stories from Kinmen', author: 'Kinmen local historians', type: 'Local history' },
+  'SRC-0022': { title: 'Veterans Affairs Council — memories of the Battle of Guningtou', author: 'Veterans Affairs Council', type: 'Official publication' },
+  'SRC-0023': { title: 'Google Scholar — research search for the Battle of Guningtou', author: 'Google', type: 'Academic search engine' },
+  'SRC-0024': { title: 'Kinmen National Park digital archive', author: 'Kinmen National Park Headquarters, National Park Service', type: 'Digital archive' },
+  'SRC-0025': { title: 'Guningtou War History Museum — immersive theatre introduction', author: 'Kinmen County Government Tourism Department', type: 'Official website' },
+  'SRC-0026': { title: 'Open Museum — Painting Glory, Pointing to Kinmen', author: 'Academia Sinica / Kinmen National Park Headquarters', type: 'Digital archive' },
+  'SRC-0027': { title: 'Wikipedia — Battle of Guningtou', author: 'Wikipedia contributors', type: 'Encyclopedia' },
+  'SRC-0028': { title: 'The Battle for the China Coast: The Nationalist Failure in the Chinese Civil War, 1949', author: 'George H. Kerr', type: 'Academic publication' },
+  'SRC-0029': { title: 'Institute of Modern History Archives, Academia Sinica', author: 'Academia Sinica', type: 'Official archive' },
+  'SRC-0030': { title: 'Academic journal articles on the Battle of Guningtou — Airiti Library', author: 'Airiti Press', type: 'Academic database' },
+  'SRC-0031': { title: 'Kinmen Daily — 75th anniversary series', author: 'Kinmen Daily', type: 'News media' },
+  'SRC-0032': { title: 'The War of Pacification — The Defense of Kinmen', author: 'Ministry of National Defense Historical Affairs Bureau', type: 'Official publication' },
+  'SRC-0033': { title: 'The Battle of Guningtou — A record of the defense of Kinmen', author: 'Ministry of National Defense', type: 'Official publication' },
+  'SRC-0034': { title: 'Oral history of the Battle of Guningtou', author: 'Kinmen County Cultural Affairs Bureau', type: 'Official publication' },
+  'SRC-0035': { title: 'Official PLA military history — relevant volume on Guningtou', author: 'PLA Academy of Military Sciences', type: 'Official publication' },
+  'SRC-0036': { title: 'The Kinmen Campaign (1949) — memoir chapters by Hu Lien', author: 'Hu Lien', type: 'Published memoir' },
+  'SRC-0037': { title: 'Kinmen heritage and battles', author: 'Kinmen National Park Headquarters', type: 'Official publication' },
+  'SRC-0038': { title: 'Open Museum — Painting Glory, Pointing to Kinmen', author: 'Academia Sinica', type: 'Academic digital archive' },
+};
+
+const translated = SOURCE_EN[source.source_id];
+const displayTitle = isEnglish ? translated?.title ?? source.title : source.title;
+const displayAuthor = isEnglish ? translated?.author ?? source.author_or_institution : source.author_or_institution;
+const displayType = isEnglish ? translated?.type ?? 'Source record' : source.source_type || '文獻來源';
+const displaySummary = isEnglish
+  ? 'Traceable source record in the project bibliography; consult the original entry for scope and limitations.'
+  : source.relevance_summary;
+const displayDate = isEnglish && source.publication_date
+  ? source.publication_date.replace('（最近修訂）', ' (latest revision)').replace('（推估）', ' (estimated)').replace('歷年', 'various years').replace('年代', 's')
+  : source.publication_date;
 ---
 
 <article class="museum-card museum-evidence-card">
   <div class="museum-evidence-card__head">
-    <span class="museum-label">{source.source_type || '文獻來源'}</span>
+    <span class="museum-label">{displayType}</span>
     <span class="museum-citation">{source.source_id}</span>
   </div>
-  <h3>{source.title}</h3>
-  <p class="museum-evidence-card__author">{source.author_or_institution}{source.publication_date ? ` · ${source.publication_date}` : ''}</p>
-  {source.relevance_summary && <p class="museum-evidence-card__summary">{source.relevance_summary}</p>}
+  <h3>{displayTitle}</h3>
+  <p class="museum-evidence-card__author">{displayAuthor}{displayDate ? ` · ${displayDate}` : ''}</p>
+  {displaySummary && <p class="museum-evidence-card__summary">{displaySummary}</p>}
   <div class="museum-evidence-card__footer">
-    <span class="museum-citation">來源等級 L{source.source_level ?? '—'}</span>
-    {externalHref && <a class="museum-link" href={externalHref} target="_blank" rel="noopener noreferrer">開啟來源 ↗</a>}
+    <span class="museum-citation">{isEnglish ? 'Source level' : '來源等級'} L{source.source_level ?? '—'}</span>
+    {externalHref && <a class="museum-link" href={externalHref} target="_blank" rel="noopener noreferrer">{isEnglish ? 'Open source ↗' : '開啟來源 ↗'}</a>}
   </div>
 </article>

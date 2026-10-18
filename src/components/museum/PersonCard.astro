@@ -1,26 +1,32 @@
 ---
 import type { HistoricalPerson } from '../../data/types';
+import { displayRank, displayUnit } from '../../i18n/labels';
 
 interface Props {
   person: HistoricalPerson;
   href: string;
+  lang?: string;
 }
 
-const { person, href } = Astro.props;
+const { person, href, lang = 'zh-tw' } = Astro.props;
+const isEnglish = lang === 'en';
+const displayBio = isEnglish
+  ? 'Canonical person record; English editorial biography pending review.'
+  : person.short_bio || person.biographical_summary || '尚無摘要';
 ---
 
 <a href={href} class="museum-card museum-card-link museum-person-card">
   <div class="museum-person-card__top">
     <div>
-      <div class="museum-kicker">人物檔案</div>
-      <h3>{person.name_zh}</h3>
+      <div class="museum-kicker">{isEnglish ? 'Person record' : '人物檔案'}</div>
+      <h3>{isEnglish ? person.name_en ?? person.name_zh : person.name_zh}</h3>
     </div>
-    {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>證據 {person.evidence_level}</span>}
+    {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>{isEnglish ? 'Evidence' : '證據'} {person.evidence_level}</span>}
   </div>
-  <p class="museum-person-card__role">{person.role_in_battle || person.primary_category || '角色待補'}</p>
+  <p class="museum-person-card__role">{isEnglish ? person.primary_category || 'Role pending' : person.role_in_battle || person.primary_category || '角色待補'}</p>
   <div class="museum-meta-grid">
-    <dl class="museum-meta"><dt>單位</dt><dd>{person.unit || '—'}</dd></dl>
-    <dl class="museum-meta"><dt>軍階</dt><dd>{person.rank_at_event || '—'}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Unit' : '單位'}</dt><dd>{displayUnit(person.unit, lang) || '—'}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Rank' : '軍階'}</dt><dd>{displayRank(person.rank_at_event, lang) || '—'}</dd></dl>
   </div>
-  {(person.short_bio || person.biographical_summary) && <p class="museum-person-card__summary">{person.short_bio || person.biographical_summary}</p>}
+  <p class="museum-person-card__summary">{displayBio}</p>
 </a>

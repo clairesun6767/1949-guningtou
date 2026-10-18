@@ -3,6 +3,9 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { STATS } from '../../data/loader';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -15,83 +18,85 @@ export function getStaticPaths() {
 
 
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-reading">
-      <SectionHeading level={1} index="01" eyebrow="ABOUT THE MUSEUM" title="關於本站" description="這個平台以結構化史料與多元觀點，陪讀者從古寧頭的地理現場進入 1949 年的歷史。" />
+      <SectionHeading level={1} index="01" eyebrow="ABOUT THE MUSEUM" title={isEnglish ? 'About this museum' : '關於本站'} description={isEnglish ? 'This platform uses structured sources and multiple perspectives to take readers from the geography of Guningtou into the history of 1949.' : '這個平台以結構化史料與多元觀點，陪讀者從古寧頭的地理現場進入 1949 年的歷史。'} />
 
     <div class="museum-content-card museum-space-after">
-      <h2 class="museum-content-card__title">建站理念</h2>
-      <p class="museum-content-card__quote">「以歷史見和平」</p>
+      <h2 class="museum-content-card__title">{isEnglish ? 'Mission' : '建站理念'}</h2>
+      <p class="museum-content-card__quote">{isEnglish ? '“Learning peace through history”' : '「以歷史見和平」'}</p>
       <p class="museum-content-card__body museum-content-card__body--lead">
-        1949 年古寧頭戰役數位知識平台，旨在以客觀、多元的史料為基礎，
-        呈現這場改變兩岸命運的關鍵戰役。我們不以勝負論英雄，
-        而是透過理解歷史，反思戰爭的代價，珍惜和平的可貴。
+        {isEnglish ? 'The Battle of Guningtou 1949 digital knowledge platform presents this pivotal battle through objective, diverse sources. We do not turn victory or defeat into a measure of heroism; we use historical understanding to reflect on the cost of war and the value of peace.' : '1949 年古寧頭戰役數位知識平台，旨在以客觀、多元的史料為基礎，呈現這場改變兩岸命運的關鍵戰役。我們不以勝負論英雄，而是透過理解歷史，反思戰爭的代價，珍惜和平的可貴。'}
       </p>
     </div>
 
     <div class="museum-content-card museum-space-after">
-      <h2 class="museum-content-card__title">編輯原則</h2>
+      <h2 class="museum-content-card__title">{isEnglish ? 'Editorial principles' : '編輯原則'}</h2>
       <ul class="museum-content-card__list">
-        <li><strong>多元史料</strong>：同時收錄國軍、共軍與第三方來源，不自行判定正確性</li>
-        <li><strong>明確標示來源</strong>：所有陳述附原始出處，讀者可追溯查證</li>
-        <li><strong>觀點透明</strong>：同一事件如存在不同記載，全部並列呈現並標明來源</li>
-        <li><strong>政治中立</strong>：不以任何政治立場為敘事核心，聚焦歷史事實</li>
-        <li><strong>歷史與創作分離</strong>：史料與推測/創作內容明確區分，不混淆</li>
+        {isEnglish ? <>
+          <li><strong>Multiple sources</strong>: ROC, PLA, and third-party sources are included without imposing a single verdict.</li>
+          <li><strong>Clear provenance</strong>: Every statement is linked to an original source for follow-up research.</li>
+          <li><strong>Transparent perspectives</strong>: Where accounts differ, they are shown together with their sources.</li>
+          <li><strong>Political neutrality</strong>: The narrative focuses on historical evidence rather than a political position.</li>
+          <li><strong>History separated from creation</strong>: Source-based material and speculation or creative reconstruction are clearly distinguished.</li>
+        </> : <>
+          <li><strong>多元史料</strong>：同時收錄國軍、共軍與第三方來源，不自行判定正確性</li>
+          <li><strong>明確標示來源</strong>：所有陳述附原始出處，讀者可追溯查證</li>
+          <li><strong>觀點透明</strong>：同一事件如存在不同記載，全部並列呈現並標明來源</li>
+          <li><strong>政治中立</strong>：不以任何政治立場為敘事核心，聚焦歷史事實</li>
+          <li><strong>歷史與創作分離</strong>：史料與推測/創作內容明確區分，不混淆</li>
+        </>}
       </ul>
     </div>
 
     <div class="museum-content-card museum-space-after">
-      <h2 class="museum-content-card__title">資料規模</h2>
+      <h2 class="museum-content-card__title">{isEnglish ? 'Collection size' : '資料規模'}</h2>
       <div class="museum-stat-grid">
         <div class="museum-stat-tile">
           <div class="museum-stat-tile__value">{STATS.totalTimeline}</div>
-          <div class="museum-stat-tile__label">時間點</div>
+          <div class="museum-stat-tile__label">{isEnglish ? 'Timeline entries' : '時間點'}</div>
         </div>
         <div class="museum-stat-tile">
           <div class="museum-stat-tile__value">{STATS.totalEvents}</div>
-          <div class="museum-stat-tile__label">歷史事件</div>
+          <div class="museum-stat-tile__label">{isEnglish ? 'Historical events' : '歷史事件'}</div>
         </div>
         <div class="museum-stat-tile">
           <div class="museum-stat-tile__value">{STATS.totalPOIs}</div>
-          <div class="museum-stat-tile__label">戰役地點</div>
+          <div class="museum-stat-tile__label">{isEnglish ? 'Battlefield locations' : '戰役地點'}</div>
         </div>
         <div class="museum-stat-tile">
           <div class="museum-stat-tile__value">{STATS.totalPersons}</div>
-          <div class="museum-stat-tile__label">人物</div>
+          <div class="museum-stat-tile__label">{isEnglish ? 'People' : '人物'}</div>
         </div>
         <div class="museum-stat-tile">
           <div class="museum-stat-tile__value">{STATS.totalSources}</div>
-          <div class="museum-stat-tile__label">文獻來源</div>
+          <div class="museum-stat-tile__label">{isEnglish ? 'Sources' : '文獻來源'}</div>
         </div>
         <div class="museum-stat-tile">
           <div class="museum-stat-tile__value">91</div>
-          <div class="museum-stat-tile__label">靜態頁面</div>
+          <div class="museum-stat-tile__label">{isEnglish ? 'Static pages' : '靜態頁面'}</div>
         </div>
       </div>
     </div>
 
     <div class="museum-content-card museum-space-after">
-      <h2 class="museum-content-card__title">技術</h2>
+      <h2 class="museum-content-card__title">{isEnglish ? 'Technology' : '技術'}</h2>
       <p class="museum-content-card__body museum-content-card__body--small">
-        本站以 Astro + React + TypeScript + Tailwind CSS 建置，部署於 GitHub Pages。
-        資料來源為 Battlefield Research Database（結構化 JSON），支援多史觀並存與三語呈現。
-        1944 年航照由中央研究院 GIS 中心提供。
+        {isEnglish ? 'The site is built with Astro, React, TypeScript, and Tailwind CSS and deployed on GitHub Pages. Its structured JSON comes from the Battlefield Research Database and supports multiple perspectives in three languages. The 1944 aerial image is provided by the Academia Sinica GIS Center.' : '本站以 Astro + React + TypeScript + Tailwind CSS 建置，部署於 GitHub Pages。資料來源為 Battlefield Research Database（結構化 JSON），支援多史觀並存與三語呈現。1944 年航照由中央研究院 GIS 中心提供。'}
       </p>
     </div>
 
     <div class="museum-content-card museum-space-after">
-      <h2 class="museum-content-card__title">著作權說明</h2>
+      <h2 class="museum-content-card__title">{isEnglish ? 'Copyright and use' : '著作權說明'}</h2>
       <p class="museum-content-card__body museum-content-card__body--small">
-        本站文字內容基於公開史料編寫。照片與多媒體素材之著作權歸屬原权利人所有，
-        使用前請確認授權狀態。1944 年航照影像由中央研究院人文社會科學研究中心
-        地理資訊科學研究專題中心提供。
+        {isEnglish ? 'The text is based on publicly available historical sources. Copyright in photographs and other media remains with the original rights holders; confirm permissions before reuse. The 1944 aerial image is provided by the Center for Geographic Information Science, Research Center for Humanities and Social Sciences, Academia Sinica.' : '本站文字內容基於公開史料編寫。照片與多媒體素材之著作權歸屬原權利人所有，使用前請確認授權狀態。1944 年航照影像由中央研究院人文社會科學研究中心地理資訊科學研究專題中心提供。'}
       </p>
     </div>
 
     <div class="museum-page__credit">
-      <p>古寧頭戰役數位知識平台 · v1.0</p>
-      <p>以歷史見和平 · Learning Peace Through History</p>
+      <p>{isEnglish ? 'Battle of Guningtou Digital Knowledge Platform · v1.0' : '古寧頭戰役數位知識平台 · v1.0'}</p>
+      <p>{isEnglish ? 'Learning Peace Through History' : '以歷史見和平 · Learning Peace Through History'}</p>
     </div>
     </div>
   </div>

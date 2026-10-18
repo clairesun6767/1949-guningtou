@@ -2,6 +2,9 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import { sitePath } from '../../data/paths';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -13,14 +16,14 @@ export function getStaticPaths() {
 
 
 
-<MainLayout lang={Astro.params.lang}>
-  <meta http-equiv="refresh" content={`0;url=${sitePath('aftermath', Astro.params.lang)}`} />
+<MainLayout lang={lang}>
+  <meta http-equiv="refresh" content={`0;url=${sitePath('aftermath', lang)}`} />
   <div class="museum-page">
     <div class="museum-reading museum-centered">
       <div class="museum-kicker">REFLECTION</div>
-      <h1 class="museum-title">頁面已合併至「戰後影響」</h1>
-      <p class="museum-deck museum-deck--centered museum-space-after">正在重新導向，或直接進入戰後影響頁面。</p>
-      <a class="museum-button" href={sitePath('aftermath', Astro.params.lang)}>前往戰後影響 →</a>
+      <h1 class="museum-title">{isEnglish ? 'This page has been merged into “Aftermath and impact”' : '頁面已合併至「戰後影響」'}</h1>
+      <p class="museum-deck museum-deck--centered museum-space-after">{isEnglish ? 'Redirecting now, or open the aftermath page directly.' : '正在重新導向，或直接進入戰後影響頁面。'}</p>
+      <a class="museum-button" href={sitePath('aftermath', lang)}>{isEnglish ? 'Go to aftermath →' : '前往戰後影響 →'}</a>
     </div>
   </div>
 </MainLayout>

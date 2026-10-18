@@ -3,6 +3,9 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import BattleMap from '../../components/map/BattleMap';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -12,14 +15,14 @@ export function getStaticPaths() {
 }
 ---
 
-<MainLayout lang={Astro.params.lang} title="Battlefield OS · 1949 古寧頭戰役">
-  <BattleMap client:only="react" lang={Astro.params.lang} />
+<MainLayout lang={lang} title={isEnglish ? 'Battlefield OS · Battle of Guningtou 1949' : 'Battlefield OS · 1949 古寧頭戰役'}>
+  <BattleMap client:only="react" lang={lang} />
   <section class="museum-section museum-section--compact">
     <div class="museum-reading">
-      <SectionHeading index="01" eyebrow="HISTORY FIRST" title="從精確路線，轉向可查證的空間敘事" description="新版 Battlefield OS 以人工驗證地點作為地理 SSOT；未獲史料支持的路線不在 Production map 顯示。Direction、Area、Corridor 與 Front 已建立資料介面，待研究資料通過審查後再加入。" />
+      <SectionHeading index="01" eyebrow="HISTORY FIRST" title={isEnglish ? 'From precise routes to traceable spatial history' : '從精確路線，轉向可查證的空間敘事'} description={isEnglish ? 'The current Battlefield OS uses manually verified locations as its geographic source of truth. Routes without historical support are not shown on the production map. Interfaces for directions, areas, corridors, and fronts are ready for reviewed research data.' : '新版 Battlefield OS 以人工驗證地點作為地理 SSOT；未獲史料支持的路線不在 Production map 顯示。Direction、Area、Corridor 與 Front 已建立資料介面，待研究資料通過審查後再加入。'} />
       <div class="museum-callout museum-callout--archive">
-        <h3 class="museum-callout__title">目前的誠實邊界</h3>
-        <p class="museum-callout__body">六處 verified Locations 可以探索；canonical routes、battle areas、events 與 camera cues 仍是空資料。1944 航照只作歷史影像閱讀，尚未完成 GCP 與 georeference，因此不宣稱與地形精確對齊。</p>
+        <h3 class="museum-callout__title">{isEnglish ? 'The current boundary of what we can claim' : '目前的誠實邊界'}</h3>
+        <p class="museum-callout__body">{isEnglish ? 'Six verified Locations can be explored; canonical routes, battle areas, events, and camera cues remain empty. The 1944 aerial image is presented as historical imagery only. GCP and georeferencing are incomplete, so no precise alignment with terrain is claimed.' : '六處 verified Locations 可以探索；canonical routes、battle areas、events 與 camera cues 仍是空資料。1944 航照只作歷史影像閱讀，尚未完成 GCP 與 georeference，因此不宣稱與地形精確對齊。'}</p>
       </div>
     </div>
   </section>

@@ -6,13 +6,43 @@ import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sitePath } from '../../data/paths';
 import { sources } from '../../data/loader';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 const categories = [
-  { id: 'ARC-01', title: '歷史照片', description: '1949 年戰役期間與戰後拍攝的影像記錄。', status: '建置中', note: '照片資料待補' },
-  { id: 'ARC-02', title: '空照圖', description: '1944 年航照與歷年影像，記錄金門地貌的變化。', status: '部分可用', note: '已有航照入口' },
-  { id: 'ARC-03', title: '衛星與今昔', description: '現代地理影像，支援戰場地景的對照閱讀。', status: '建置中', note: '影像圖層待補' },
-  { id: 'ARC-04', title: '3D 與地形', description: '戰車、碉堡、聚落建築與地形資料的空間索引。', status: '建置中', note: '模型資料待補' },
-  { id: 'ARC-05', title: '影片與口述', description: '紀錄片、訪談與第一人稱敘述，保存個人記憶。', status: '建置中', note: '影音資料待補' },
-  { id: 'ARC-06', title: '掃描文件', description: '地圖、文件、證件與家書的高解析掃描檔。', status: '建置中', note: '掃描資料待補' },
+  { id: 'ARC-01', title: '歷史照片', titleEn: 'Historical photographs', description: '1949 年戰役期間與戰後拍攝的影像記錄。', descriptionEn: 'Photographic records made during and after the 1949 battle.', status: '建置中', statusEn: 'In progress', note: '照片資料待補', noteEn: 'Photographs pending' },
+  { id: 'ARC-02', title: '空照圖', titleEn: 'Aerial imagery', description: '1944 年航照與歷年影像，記錄金門地貌的變化。', descriptionEn: '1944 aerial photography and later imagery documenting changes in Kinmen’s landscape.', status: '部分可用', statusEn: 'Partly available', note: '已有航照入口', noteEn: 'Aerial archive available' },
+  { id: 'ARC-03', title: '衛星與今昔', titleEn: 'Satellite and then / now', description: '現代地理影像，支援戰場地景的對照閱讀。', descriptionEn: 'Modern geographic imagery for comparing the battlefield landscape across time.', status: '建置中', statusEn: 'In progress', note: '影像圖層待補', noteEn: 'Imagery layers pending' },
+  { id: 'ARC-04', title: '3D 與地形', titleEn: '3D and terrain', description: '戰車、碉堡、聚落建築與地形資料的空間索引。', descriptionEn: 'A spatial index for armour, bunkers, settlement buildings, and terrain data.', status: '建置中', statusEn: 'In progress', note: '模型資料待補', noteEn: 'Model data pending' },
+  { id: 'ARC-05', title: '影片與口述', titleEn: 'Film and oral history', description: '紀錄片、訪談與第一人稱敘述，保存個人記憶。', descriptionEn: 'Documentaries, interviews, and first-person accounts preserving personal memory.', status: '建置中', statusEn: 'In progress', note: '影音資料待補', noteEn: 'Audio-visual material pending' },
+  { id: 'ARC-06', title: '掃描文件', titleEn: 'Scanned documents', description: '地圖、文件、證件與家書的高解析掃描檔。', descriptionEn: 'High-resolution scans of maps, documents, identity papers, and letters.', status: '建置中', statusEn: 'In progress', note: '掃描資料待補', noteEn: 'Scanned material pending' },
+];
+
+const aerialCollections = [
+  {
+    year: '1944',
+    src: sitePath('.local/aerial-poc/1944/mosaic-z12.png'),
+    title: '1944 aerial mosaic',
+    titleZh: '1944 航照拼圖',
+    note: '公開低解析度 POC；地理套準仍待人工確認。',
+    noteEn: 'Public low-resolution POC; georeferencing remains subject to human review.',
+  },
+  {
+    year: '1945',
+    src: sitePath('.local/aerial-poc/1945/mosaic-z12.png'),
+    title: '1945 aerial mosaic',
+    titleZh: '1945 航照拼圖',
+    note: '公開低解析度 POC，用於跨年度地景對照。',
+    noteEn: 'Public low-resolution POC for comparing the landscape across years.',
+  },
+  {
+    year: '1958',
+    src: sitePath('.local/aerial-poc/1958/mosaic-z12.png'),
+    title: '1958 aerial mosaic',
+    titleZh: '1958 航照拼圖',
+    note: '公開低解析度 POC，用於戰後地景閱讀。',
+    noteEn: 'Public low-resolution POC for reading the post-war landscape.',
+  },
 ];
 
 export function getStaticPaths() {
@@ -24,56 +54,75 @@ export function getStaticPaths() {
 }
 ---
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="DIGITAL ARCHIVE" title="數位典藏" description="典藏不是素材牆，而是每一件影像、文件與口述記憶的來源、時間與保存狀態。" />
+      <SectionHeading level={1} index="01" eyebrow="DIGITAL ARCHIVE" title={isEnglish ? 'Digital archive' : '數位典藏'} description={isEnglish ? 'An archive is not a wall of assets. Each image, document, and memory carries a source, a date, and a preservation status.' : '典藏不是素材牆，而是每一件影像、文件與口述記憶的來源、時間與保存狀態。'} />
 
       <div class="museum-archive-feature">
-        <HistoricImage src="/1949-guningtou/aerial-1944.png" alt="1944 年古寧頭地區航照圖" caption="1944 年航照 · 古寧頭地區" source="中央研究院 GIS 中心" priority />
+        <HistoricImage src={sitePath('aerial-1944.png')} alt={isEnglish ? '1944 aerial photograph of the Guningtou area' : '1944 年古寧頭地區航照圖'} caption={isEnglish ? '1944 aerial photograph · Guningtou area' : '1944 年航照 · 古寧頭地區'} source={isEnglish ? 'Academia Sinica GIS Center' : '中央研究院 GIS 中心'} priority lang={lang} />
         <div class="museum-card museum-card--dark museum-archive-feature__copy">
           <div class="museum-kicker">ARCHIVE NOTE · ARC-1944-AERIAL</div>
-          <h2>一張影像，先把戰場放回它的地形。</h2>
-          <p>航照讓我們看見灘頭、聚落與道路之間的關係。進入地圖，可以將這個視角與現代位置及戰役路線並置。</p>
-          <a class="museum-button museum-button--outline" href={sitePath('map', Astro.params.lang)}>在地圖中查看 →</a>
+          <h2>{isEnglish ? 'Place the battlefield back in its terrain.' : '一張影像，先把戰場放回它的地形。'}</h2>
+          <p>{isEnglish ? 'Aerial photography makes the relationship between beaches, settlements, and roads visible. Open the map to read this view beside present-day locations and battle traces.' : '航照讓我們看見灘頭、聚落與道路之間的關係。進入地圖，可以將這個視角與現代位置及戰役路線並置。'}</p>
+          <a class="museum-button museum-button--outline" href={sitePath('map', lang)}>{isEnglish ? 'View in map →' : '在地圖中查看 →'}</a>
         </div>
       </div>
 
       <div class="museum-section--compact museum-archive-section">
-        <SectionHeading index="02" eyebrow="COLLECTIONS" title="典藏分類" description="目前可用與建置中的內容分開標示；尚未有原始資料的項目，不以裝飾性卡片取代史料。" />
+        <SectionHeading index="02" eyebrow="COLLECTIONS" title={isEnglish ? 'Collection categories' : '典藏分類'} description={isEnglish ? 'Available material is separated from collections still in progress; decorative cards do not stand in for missing primary sources.' : '目前可用與建置中的內容分開標示；尚未有原始資料的項目，不以裝飾性卡片取代史料。'} />
         <div class="museum-grid museum-grid--3">
           {categories.map((category) => (
             <article class="museum-card museum-archive-card">
               <div class="museum-archive-card__head">
                 <span class="museum-label">{category.id}</span>
-                <span class={`museum-status ${category.status === '部分可用' ? 'museum-status--available' : ''}`}>{category.status}</span>
+                <span class={`museum-status ${category.status === '部分可用' ? 'museum-status--available' : ''}`}>{isEnglish ? category.statusEn : category.status}</span>
               </div>
-              <h3>{category.title}</h3>
-              <p>{category.description}</p>
-              <div class="museum-citation">{category.note}</div>
+              <h3>{isEnglish ? category.titleEn : category.title}</h3>
+              <p>{isEnglish ? category.descriptionEn : category.description}</p>
+              <div class="museum-citation">{isEnglish ? category.noteEn : category.note}</div>
             </article>
           ))}
         </div>
       </div>
 
       <section class="museum-section--compact">
-        <SectionHeading index="03" eyebrow="PROVENANCE" title="先看來源，再看敘事" description="文獻資料庫提供可追溯的書目與來源等級；這些記錄是數位典藏的骨架。" />
+        <SectionHeading index="03" eyebrow="AERIAL ARCHIVE" title={isEnglish ? 'Aerial imagery by year' : '歷年空照圖'} description={isEnglish ? 'These existing public low-resolution mosaics are available for visual comparison. They are presentation assets, not a claim of precision georeferencing.' : '以下既有的公開低解析度拼圖可供視覺對照；它們是閱讀素材，不代表已完成精密地理套準。'} />
         <div class="museum-grid museum-grid--3">
-          {sources.slice(0, 3).map((source) => <EvidenceCard source={source} />)}
+          {aerialCollections.map((aerial) => (
+            <article class="museum-card museum-archive-aerial-card">
+              <a class="museum-archive-aerial-card__image" href={aerial.src} target="_blank" rel="noopener noreferrer">
+                <img src={aerial.src} alt={isEnglish ? aerial.title : aerial.titleZh} loading="lazy" decoding="async" />
+              </a>
+              <div class="museum-archive-aerial-card__body">
+                <div class="museum-label">{aerial.year}</div>
+                <h3>{isEnglish ? aerial.title : aerial.titleZh}</h3>
+                <p>{isEnglish ? aerial.noteEn : aerial.note}</p>
+                <a class="museum-link" href={aerial.src} target="_blank" rel="noopener noreferrer">{isEnglish ? 'Open image ↗' : '開啟影像 ↗'}</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="museum-section--compact">
+        <SectionHeading index="04" eyebrow="PROVENANCE" title={isEnglish ? 'Read the source before the story' : '先看來源，再看敘事'} description={isEnglish ? 'The document database provides traceable bibliographic records and source levels; these records form the backbone of the digital archive.' : '文獻資料庫提供可追溯的書目與來源等級；這些記錄是數位典藏的骨架。'} />
+        <div class="museum-grid museum-grid--3">
+          {sources.slice(0, 3).map((source) => <EvidenceCard source={source} lang={lang} />)}
         </div>
         <div class="museum-home-timeline__footer">
           <span class="museum-meta">{sources.length} SOURCE RECORDS</span>
-          <a class="museum-link" href={sitePath('sources', Astro.params.lang)}>進入完整文獻資料庫 →</a>
+          <a class="museum-link" href={sitePath('sources', lang)}>{isEnglish ? 'Open the full source database →' : '進入完整文獻資料庫 →'}</a>
         </div>
       </section>
 
       <section class="museum-archive-callout">
         <div>
           <div class="museum-kicker">MATERIALS WANTED</div>
-          <h2>你手上的影像，也可能是下一條證據。</h2>
+          <h2>{isEnglish ? 'The image you hold may be the next piece of evidence.' : '你手上的影像，也可能是下一條證據。'}</h2>
         </div>
-        <p>如果你持有古寧頭戰役相關的歷史照片、空照、影片或口述歷史錄音，歡迎提供數位化素材與來源資訊。</p>
-        <a class="museum-button" href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml">提供素材或回報史料 →</a>
+        <p>{isEnglish ? 'If you hold historical photographs, aerial imagery, film, or oral-history recordings related to Guningtou, please share digitized material and provenance information.' : '如果你持有古寧頭戰役相關的歷史照片、空照、影片或口述歷史錄音，歡迎提供數位化素材與來源資訊。'}</p>
+        <a class="museum-button" href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml">{isEnglish ? 'Contribute material or report a source →' : '提供素材或回報史料 →'}</a>
       </section>
     </div>
   </div>

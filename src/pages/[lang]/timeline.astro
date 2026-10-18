@@ -5,6 +5,9 @@ import BattleTimeline from '../../components/timeline/BattleTimeline';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { timeline } from '../../data/loader';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -17,11 +20,11 @@ export function getStaticPaths() {
 
 
 
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-reading">
-      <SectionHeading level={1} index="01" eyebrow="TIME RAIL" title="戰役時間軸" description={`1949 年 10 月 24—27 日 · 四日戰役逐時記錄 · ${timeline.length} 條時間點。選擇日期後展開節點，查看部隊、人物與證據狀態。`} />
-      <BattleTimeline client:load entries={timeline} />
+      <SectionHeading level={1} index="01" eyebrow="TIME RAIL" title={isEnglish ? 'Battle timeline' : '戰役時間軸'} description={isEnglish ? `24–27 October 1949 · a four-day record organized by time · ${timeline.length} timeline entries. Choose a date and expand a node to view units, people, and evidence status.` : `1949 年 10 月 24—27 日 · 四日戰役逐時記錄 · ${timeline.length} 條時間點。選擇日期後展開節點，查看部隊、人物與證據狀態。`} />
+      <BattleTimeline client:load entries={timeline} lang={lang} />
     </div>
   </div>
 </MainLayout>

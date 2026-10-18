@@ -4,6 +4,27 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sitePath } from '../../data/paths';
 
+const lang = Astro.params.lang ?? 'zh-tw';
+const isEnglish = lang === 'en';
+
+const entries = isEnglish ? [
+  { date: 'August 1945', title: 'The Second World War ends; Japan surrenders', body: 'On 15 August, Japan announced its unconditional surrender and the Second World War formally ended. Taiwan was returned to the Republic of China under the Cairo Declaration and the Potsdam Proclamation. Victory in the China theatre did not bring peace: armed conflict between the Nationalists and the Communists soon reignited across North and Northeast China.' },
+  { date: 'June 1946', title: 'The Chinese Civil War enters full-scale conflict', body: 'Nationalist forces launched a major offensive against Communist-held areas, opening the next phase of the civil war. The Nationalists initially held advantages in equipment and control of major cities and transport lines. The Communists used guerrilla and mobile warfare to wear down those advantages.' },
+  { date: 'September 1948 — January 1949', title: 'The three major campaigns break the Nationalist main forces', body: 'The Liaoshen, Huaihai, and Pingjin campaigns brought a sequence of decisive Communist victories. Nationalist losses exceeded one million personnel and the area north of the Yangtze was lost. In January 1949, Chiang Kai-shek stepped down and Li Zongren became acting president.' },
+  { date: 'April 1949', title: 'The Yangtze Crossing Campaign; Nanjing falls', body: 'On 20 April, Communist forces launched the Yangtze Crossing Campaign. On 23 April, Nanjing fell. The Republic of China government moved first to Guangzhou, then Chongqing, and ultimately Taipei. The outcome on the mainland was no longer reversible.' },
+  { date: 'August 1949', title: 'The United States publishes the China White Paper', body: 'The U.S. State Department published its white paper, attributing the Nationalist government’s defeat to corruption and administrative failure. U.S. military assistance to the Republic of China was sharply reduced, while the Taiwan Strait became the last line of confrontation.' },
+  { date: '1 October 1949', title: 'The People’s Republic of China is established', body: 'Mao Zedong proclaimed the People’s Republic of China in Beijing. On the same day, the People’s Liberation Army’s Tenth Army Group was advancing toward the Fujian coast, facing Kinmen across the water. Xiamen fell on 17 October, leaving Kinmen as the first defensive line of the Taiwan Strait.' },
+  { date: '17 October 1949', title: 'Xiamen falls; Kinmen faces an immediate crisis', body: 'The People’s Liberation Army captured Xiamen. Kinmen and Xiamen are separated by a strait roughly 10 kilometres wide. The Nationalist garrison numbered about 20,000, facing the threat of a much larger force. Tang Enbo was ordered to hold Kinmen, while Nationalist vessels waited in port under blockade.', note: 'PLA commander Xiao Feng began planning the amphibious operation. Tides, wind, and a shortage of vessels would become decisive factors in the battle that followed.' },
+] : [
+  { date: '1945 年 8 月', title: '二戰結束，日本投降', body: '8 月 15 日，日本宣布無條件投降。第二次世界大戰正式結束。台灣依據《開羅宣言》與《波茨坦公告》歸還中華民國。中國戰區的勝利並未帶來和平——國共兩黨的軍事衝突隨即在華北、東北重新點燃。' },
+  { date: '1946 年 6 月', title: '國共內戰全面爆發', body: '國民黨軍隊向中共控制區發動全面進攻，內戰正式開啟。初期國軍佔據兵力與裝備優勢，控制主要城市與交通線。共軍採取遊擊戰與運動戰策略，逐步消耗國軍力量。' },
+  { date: '1948 年 9 月 — 1949 年 1 月', title: '三大戰役：國軍主力潰敗', body: '遼瀋戰役（1948.9-11）、淮海戰役（1948.11-1949.1）、平津戰役（1948.12-1949.1）——解放軍接連取得決定性勝利。國軍損失超過 150 萬人，長江以北盡失。1949 年 1 月，蔣介石宣布下野，李宗仁代理總統。' },
+  { date: '1949 年 4 月', title: '渡江戰役，南京淪陷', body: '4 月 20 日，解放軍發起渡江戰役，百萬大軍跨越長江。4 月 23 日，南京淪陷。中華民國政府先遷廣州，後遷重慶，最終遷往台北。中國大陸的戰局已不可逆轉。' },
+  { date: '1949 年 8 月', title: '美國發表《中美關係白皮書》', body: '美國國務院發表白皮書，將中國內戰的失敗歸咎於國民黨政府的腐敗與無能。美國對中華民國政府的軍事援助大幅減少，台灣海峽成為國共對峙的最後防線。' },
+  { date: '1949 年 10 月 1 日', title: '中華人民共和國成立', body: '毛澤東在北京天安門廣場宣布中華人民共和國成立。同日，解放軍第十兵團已推進至福建沿海，與金門隔海相望。廈門於 10 月 17 日淪陷，金門成為台灣海峽的第一道防線。' },
+  { date: '1949 年 10 月 17 日', title: '廈門淪陷 · 金門岌岌可危', body: '解放軍第十兵團攻佔廈門。金門與廈門僅相隔約 10 公里的海峽，國軍守軍約兩萬人，面對解放軍數萬兵力的威脅。湯恩伯奉命固守金門，國軍船艦被封鎖於港口待命。', note: '解放軍將領蕭鋒開始擬定渡海作戰計劃。潮汐、風向、船隻不足等問題將在接下來的戰役中成為決定性因素。' },
+];
+
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -13,84 +34,30 @@ export function getStaticPaths() {
 }
 ---
 
-
-
-
-<MainLayout lang={Astro.params.lang}>
+<MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-reading">
-      <SectionHeading level={1} index="01" eyebrow="WORLD CONTEXT" title="戰前國際情勢" description="1945—1949 · 從二戰結束到台海對峙前夜。古寧頭不是孤立事件，而是更大區域轉折中的一個具體地點。" />
+      <SectionHeading level={1} index="01" eyebrow="WORLD CONTEXT" title={isEnglish ? 'The international context before the battle' : '戰前國際情勢'} description={isEnglish ? '1945–1949 · From the end of the Second World War to the eve of confrontation in the Taiwan Strait. Guningtou was not an isolated event, but a specific place within a wider regional turning point.' : '1945—1949 · 從二戰結束到台海對峙前夜。古寧頭不是孤立事件，而是更大區域轉折中的一個具體地點。'} />
 
-    <!-- Timeline sections -->
-    <div class="museum-timeline-list">
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1945 年 8 月</div>
-        <h2 class="text-xl font-serif font-bold mb-3">二戰結束，日本投降</h2>
-        <p class="text-stone-600 leading-relaxed">
-          8 月 15 日，日本宣布無條件投降。第二次世界大戰正式結束。台灣依據《開羅宣言》與《波茨坦公告》歸還中華民國。中國戰區的勝利並未帶來和平——國共兩黨的軍事衝突隨即在華北、東北重新點燃。
-        </p>
-      </section>
+      <div class="museum-timeline-list">
+        {entries.map((entry) => (
+          <section class="museum-context-card">
+            <div class="museum-context-card__date">{entry.date}</div>
+            <h2 class="text-xl font-serif font-bold mb-3">{entry.title}</h2>
+            <p class="text-stone-600 leading-relaxed">{entry.body}</p>
+            {entry.note && <p class="text-stone-500 text-sm mt-3">{entry.note}</p>}
+          </section>
+        ))}
 
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1946 年 6 月</div>
-        <h2 class="text-xl font-serif font-bold mb-3">國共內戰全面爆發</h2>
-        <p class="text-stone-600 leading-relaxed">
-          國民黨軍隊向中共控制區發動全面進攻，內戰正式開啟。初期國軍佔據兵力與裝備優勢，控制主要城市與交通線。共軍採取遊擊戰與運動戰策略，逐步消耗國軍力量。
-        </p>
-      </section>
-
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1948 年 9 月 — 1949 年 1 月</div>
-        <h2 class="text-xl font-serif font-bold mb-3">三大戰役：國軍主力潰敗</h2>
-        <p class="text-stone-600 leading-relaxed">
-          遼瀋戰役（1948.9-11）、淮海戰役（1948.11-1949.1）、平津戰役（1948.12-1949.1）——解放軍接連取得決定性勝利。國軍損失超過 150 萬人，長江以北盡失。1949 年 1 月，蔣介石宣布下野，李宗仁代理總統。
-        </p>
-      </section>
-
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1949 年 4 月</div>
-        <h2 class="text-xl font-serif font-bold mb-3">渡江戰役，南京淪陷</h2>
-        <p class="text-stone-600 leading-relaxed">
-          4 月 20 日，解放軍發起渡江戰役，百萬大軍跨越長江。4 月 23 日，南京淪陷。中華民國政府先遷廣州，後遷重慶，最終遷往台北。中國大陸的戰局已不可逆轉。
-        </p>
-      </section>
-
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1949 年 8 月</div>
-        <h2 class="text-xl font-serif font-bold mb-3">美國發表《中美關係白皮書》</h2>
-        <p class="text-stone-600 leading-relaxed">
-          美國國務院發表白皮書，將中國內戰的失敗歸咎於國民黨政府的腐敗與無能。美國對中華民國政府的軍事援助大幅減少，台灣海峽成為國共對峙的最後防線。
-        </p>
-      </section>
-
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1949 年 10 月 1 日</div>
-        <h2 class="text-xl font-serif font-bold mb-3">中華人民共和國成立</h2>
-        <p class="text-stone-600 leading-relaxed">
-          毛澤東在北京天安門廣場宣布中華人民共和國成立。同日，解放軍第十兵團已推進至福建沿海，與金門隔海相望。廈門於 10 月 17 日淪陷，金門成為台灣海峽的第一道防線。
-        </p>
-      </section>
-
-      <section class="museum-context-card">
-        <div class="museum-context-card__date">1949 年 10 月 17 日</div>
-        <h2 class="text-xl font-serif font-bold mb-3">廈門淪陷 · 金門岌岌可危</h2>
-        <p class="text-stone-600 leading-relaxed">
-          解放軍第十兵團攻佔廈門。金門與廈門僅相隔約 10 公里的海峽，國軍守軍約兩萬人，面對解放軍數萬兵力的威脅。湯恩伯奉命固守金門，國軍船艦被封鎖於港口待命。
-        </p>
-        <p class="text-stone-500 text-sm mt-3">
-          解放軍將領蕭鋒開始擬定渡海作戰計劃。潮汐、風向、船隻不足等問題將在接下來的戰役中成為決定性因素。
-        </p>
-      </section>
-
-      <section class="museum-callout museum-callout--archive museum-callout--centered">
-        <p class="text-stone-600 leading-relaxed">
-          1949 年 10 月 24 日晚，解放軍第一梯隊約 9,000 人從廈門出發，航向金門古寧頭海岸。
-        </p>
-        <a href={sitePath('timeline', Astro.params.lang)} class="inline-block mt-4 text-amber-700 font-bold hover:text-amber-900 no-underline">
-          進入四日戰役時間軸 →
-        </a>
-      </section>
-    </div>
+        <section class="museum-callout museum-callout--archive museum-callout--centered">
+          <p class="text-stone-600 leading-relaxed">
+            {isEnglish ? 'On the night of 24 October 1949, the first wave of roughly 9,000 PLA troops left Xiamen for the Guningtou coast of Kinmen.' : '1949 年 10 月 24 日晚，解放軍第一梯隊約 9,000 人從廈門出發，航向金門古寧頭海岸。'}
+          </p>
+          <a href={sitePath('timeline', lang)} class="inline-block mt-4 text-amber-700 font-bold hover:text-amber-900 no-underline">
+            {isEnglish ? 'Enter the four-day battle timeline →' : '進入四日戰役時間軸 →'}
+          </a>
+        </section>
+      </div>
     </div>
   </div>
 </MainLayout>
