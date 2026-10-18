@@ -330,9 +330,6 @@
 .historical-map__phase-strip button { flex: 1 0 auto; border: 0; border-top: 1px solid rgba(210,198,169,.14); padding: 5px 3px; background: transparent; color: #777267; font: 8px var(--font-mono); }
 .historical-map__phase-strip button.is-active { border-top-color: var(--atlas-gold); color: var(--atlas-gold); }
 
-.historical-map--compact .historical-map__control-deck,
-.historical-map--compact .historical-map__timeline { display: none; }
-.historical-map--compact .historical-map__controls { display: none; }
 .historical-map--compact .historical-map__viewport { min-height: min(790px, calc(100svh - 72px)); }
 
 @keyframes atlas-flow { to { stroke-dashoffset: -72; } }
