@@ -1,4 +1,6 @@
-// @ts-check
+// Astro loads this config at build time. The dev-only middleware uses Node APIs;
+// keep this JavaScript config runtime-checked because the package does not ship
+// a direct @types/node dependency.
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';

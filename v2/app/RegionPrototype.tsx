@@ -498,11 +498,6 @@ export default function RegionPrototype({ base = import.meta.env.BASE_URL, initi
     sceneRef.current?.reset();
   }
 
-  function chooseVariant(nextVariant: RegionVariantId) {
-    setVariant(nextVariant);
-    sceneRef.current?.setVariant(nextVariant);
-  }
-
   function chooseVertical(nextVertical: number) {
     setVerticalExaggeration(nextVertical);
     sceneRef.current?.setVerticalExaggeration(nextVertical);

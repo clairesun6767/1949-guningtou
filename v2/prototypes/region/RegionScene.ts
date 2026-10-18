@@ -50,7 +50,7 @@ import { createRegionLabels, type RegionLabelsHandle } from './RegionLabels.js';
 import type { RegionOceanHandle } from './RegionOcean.js';
 import { RegionPerformanceMonitor, type RegionRenderStats, tierSettings } from './RegionPerformance.js';
 import { createRegionQualityTerrain } from './RegionQualityTerrain.js';
-import { HistoricalAerialLayer } from './HistoricalAerialLayer.js';
+import { HistoricalAerialLayer, type HistoricalAerialLayerStatus } from './HistoricalAerialLayer.js';
 import { createRegionEnvironmentSystem, type RegionEnvironmentStats, type RegionEnvironmentSystemHandle } from '../../environment/RegionEnvironmentSystem.js';
 import {
   createRegionTerrain,
@@ -255,7 +255,7 @@ export interface RegionSceneStats extends RegionRenderStats {
   gpuEstimateBytes: number;
   historicalMode: HistoricalAerialMode;
   aerialOpacity: number;
-  aerialStatus: 'SOURCE REVIEW' | 'RIGHTS BLOCKED' | 'LOCAL READY / RIGHTS REVIEW';
+  aerialStatus: HistoricalAerialLayerStatus;
   aerialYear: HistoricalAerialYear;
   aerialYears: string;
   aerialSelectionMode: HistoricalAerialSelectionMode;

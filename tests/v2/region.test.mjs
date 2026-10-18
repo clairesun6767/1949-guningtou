@@ -91,7 +91,7 @@ test('Gate A.3 clamps aerial opacity, preserves the year-aware modes, and keeps 
   assert.equal(HISTORICAL_AERIAL_1945.imageFormat, 'image/png');
 });
 
-test('Gate A.3 makes Traditional Chinese the primary review language and does not claim an aerial asset', () => {
+test('Gate A.3 keeps Traditional Chinese review language and the low-resolution publication boundary explicit', () => {
   const source = readFileSync('v2/app/RegionPrototype.tsx', 'utf8');
   assert.match(source, /金門 <em>—<\/em> 廈門/);
   assert.match(source, /一水之隔，兩岸對峙。/);
@@ -104,7 +104,9 @@ test('Gate A.3 makes Traditional Chinese the primary review language and does no
   assert.match(source, /HISTORICAL AERIAL/);
   assert.match(source, /航照不透明度/);
   assert.doesNotMatch(source, /Kinmen_1945.*TextureLoader/);
-  assert.match(readFileSync('v2/docs/GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md', 'utf8'), /不下載、不快取、不提交 1945 航照像素/);
+  const audit = readFileSync('v2/docs/GATE_A3_HISTORICAL_AERIAL_SOURCE_AUDIT.md', 'utf8');
+  assert.match(audit, /不提交原始 WMTS tile、高解析度檔或 higher-zoom review pixels/);
+  assert.match(audit, /APPROVED — PROJECT-SCOPED LOW-RES POC/);
 });
 
 test('RegionDataProvider loads only the regional modern-reference boundary', async () => {
