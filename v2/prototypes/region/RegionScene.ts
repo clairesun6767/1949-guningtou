@@ -373,6 +373,10 @@ export class RegionScene {
     const fallbackB = createNeutralTexture();
     const scene = new RegionScene(options, provider, data, fallbackA, fallbackB);
     scene.start();
+    // Size the baseline terrain before optional classification, quality, and
+    // aerial assets finish loading so slow mobile connections never show an
+    // empty renderer shell.
+    scene.resize();
     const classificationAssets = options.qualitySource === 'composition'
       ? { classificationA: data.assets.compositionClassificationA, classificationB: data.assets.compositionClassificationB }
       : { classificationA: data.assets.classificationA, classificationB: data.assets.classificationB };
@@ -384,7 +388,13 @@ export class RegionScene {
     options.onStage('material');
     scene.attachEnvironment();
     if (options.initialQuality && options.initialQuality !== 'A') {
-      await scene.setTerrainQuality(options.initialQuality);
+      try {
+        await scene.setTerrainQuality(options.initialQuality);
+      } catch (error) {
+        // The A grid is a valid documented fallback. Keep the renderer alive
+        // when an optional higher-resolution asset is unavailable on a device.
+        console.warn('Optional regional terrain quality unavailable; keeping A baseline:', error);
+      }
     }
     await scene.loadLocalAerial();
     options.onStage('atmosphere');

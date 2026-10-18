@@ -7,6 +7,7 @@ import { REGION_COMPOSITION_BOUNDS, REGION_COMPOSITION_FOG, REGION_COMPOSITION_Q
 import { clampRegionDistance, clampRegionPolarDegrees, clampRegionTarget, getRegionPreset, targetWithinRegionBounds } from '../../.tmp/v2-tests/v2/prototypes/region/RegionCamera.js';
 import { HistoricalAerialLayer } from '../../.tmp/v2-tests/v2/prototypes/region/HistoricalAerialLayer.js';
 import { REGION_SCENE_CONTRACT } from '../../.tmp/v2-tests/v2/prototypes/region/RegionScene.js';
+import { chooseRegionTerrainQuality, chooseRegionTier } from '../../.tmp/v2-tests/v2/prototypes/region/RegionPerformance.js';
 import { clampHistoricalAerialOpacity, createHistoricalAerialProvider, validateHistoricalSourceMetadata } from '../../.tmp/v2-tests/v2/shared/historicalAerialProvider.js';
 import { HttpRegionDataProvider, regionAssetPaths } from '../../.tmp/v2-tests/v2/shared/regionDataProvider.js';
 
@@ -34,6 +35,14 @@ test('camera constraints keep Region View inside the visitor field geometry', ()
   assert.equal(targetWithinRegionBounds(REGION_CONFIG.presets.guningtou.target), true);
   assert.equal(targetWithinRegionBounds({ longitude: 117, latitude: 24 }), false);
   assert.equal(getRegionPreset('guningtou').distance, REGION_CONFIG.presets.guningtou.distance);
+});
+
+test('device profile selects a mobile-safe terrain quality and desktop composition quality', () => {
+  assert.equal(chooseRegionTier({ mobile: true, deviceMemory: 8, hardwareConcurrency: 8, pixelRatio: 1 }), 'LOW');
+  assert.equal(chooseRegionTerrainQuality({ mobile: true, tier: 'LOW' }), 'A');
+  assert.equal(chooseRegionTerrainQuality({ mobile: false, tier: 'LOW' }), 'A');
+  assert.equal(chooseRegionTerrainQuality({ mobile: false, tier: 'MEDIUM' }), 'B');
+  assert.equal(chooseRegionTerrainQuality({ mobile: false, tier: 'HIGH' }), 'B');
 });
 
 test('Region config declares the geographic relationship and three art variants', () => {

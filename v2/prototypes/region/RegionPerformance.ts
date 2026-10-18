@@ -1,5 +1,5 @@
 import type * as THREE from 'three';
-import { REGION_CONFIG, REGION_PERFORMANCE_TIERS, type RegionPerformanceTier } from '../../config/region.js';
+import { REGION_CONFIG, REGION_PERFORMANCE_TIERS, type RegionPerformanceTier, type RegionTerrainQualityId } from '../../config/region.js';
 import { worldToLonLat } from '../../shared/geo.js';
 
 export interface RegionDeviceProfile {
@@ -13,6 +13,15 @@ export function chooseRegionTier(profile: RegionDeviceProfile): RegionPerformanc
   if (profile.mobile || (profile.deviceMemory ?? 8) <= 2 || (profile.hardwareConcurrency ?? 8) <= 2) return 'LOW';
   if ((profile.deviceMemory ?? 8) <= 4 || (profile.hardwareConcurrency ?? 8) <= 4 || (profile.pixelRatio ?? 1) > 2) return 'MEDIUM';
   return 'HIGH';
+}
+
+/**
+ * Keep the first mobile frame within the documented A-quality safety baseline.
+ * Desktop still gets the composition B grid, while the renderer's tier settings
+ * independently cap pixel ratio, shadows, and environment detail.
+ */
+export function chooseRegionTerrainQuality(profile: { mobile: boolean; tier: RegionPerformanceTier }): RegionTerrainQualityId {
+  return profile.mobile || profile.tier === 'LOW' ? 'A' : 'B';
 }
 
 export interface RegionRenderStats {

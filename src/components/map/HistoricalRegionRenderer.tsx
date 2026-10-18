@@ -5,7 +5,7 @@ import type { HistoricalTraceFeature, HistoricalTraceVisualProgress } from '../.
 import type { EnvironmentDebugState, EnvironmentTimePreset, EnvironmentWeather } from '../../../v2/config/environment.js';
 import type { HistoricalAerialYear } from '../../../v2/config/historicalAerialRegistry.js';
 import type { HistoricalAerialMode } from '../../../v2/config/historicalAerial.js';
-import { chooseRegionTier } from '../../../v2/prototypes/region/RegionPerformance.js';
+import { chooseRegionTerrainQuality, chooseRegionTier } from '../../../v2/prototypes/region/RegionPerformance.js';
 import { RegionScene } from '../../../v2/prototypes/region/RegionScene.js';
 
 interface Props {
@@ -134,7 +134,7 @@ export default function HistoricalRegionRenderer({
           variant: 'historical',
           labelsVisible: true,
           qualitySource: 'composition',
-          initialQuality: 'B',
+          initialQuality: chooseRegionTerrainQuality(profile),
           initialVerticalExaggeration: 1.5,
           initialLightingMode: 'RELIEF',
           initialHistoricalMode: 'AERIAL' as HistoricalAerialMode,
