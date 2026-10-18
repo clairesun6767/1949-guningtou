@@ -17,13 +17,13 @@ export function getStaticPaths() {
 
 
 <MainLayout lang={lang}>
-  <meta http-equiv="refresh" content={`0;url=${sitePath('aftermath', lang)}`} />
+  <meta http-equiv="refresh" content={'0;url=' + sitePath('postwar', lang)} />
   <div class="museum-page">
     <div class="museum-reading museum-centered">
       <div class="museum-kicker">REFLECTION</div>
-      <h1 class="museum-title">{isEnglish ? 'This page has been merged into “Aftermath and impact”' : '頁面已合併至「戰後影響」'}</h1>
-      <p class="museum-deck museum-deck--centered museum-space-after">{isEnglish ? 'Redirecting now, or open the aftermath page directly.' : '正在重新導向，或直接進入戰後影響頁面。'}</p>
-      <a class="museum-button" href={sitePath('aftermath', lang)}>{isEnglish ? 'Go to aftermath →' : '前往戰後影響 →'}</a>
+      <h1 class="museum-title">{isEnglish ? 'This page has moved to “Post-War Kinmen”' : lang === 'zh-cn' ? '页面已移至「战后金门」' : '頁面已移至「戰後金門」'}</h1>
+      <p class="museum-deck museum-deck--centered museum-space-after">{isEnglish ? 'Redirecting now, or open the post-war history page directly.' : lang === 'zh-cn' ? '正在重新导向，或直接进入战后金门页面。' : '正在重新導向，或直接進入戰後金門頁面。'}</p>
+      <a class="museum-button" href={sitePath('postwar', lang)}>{isEnglish ? 'Go to Post-War Kinmen →' : lang === 'zh-cn' ? '前往战后金门 →' : '前往戰後金門 →'}</a>
     </div>
   </div>
 </MainLayout>

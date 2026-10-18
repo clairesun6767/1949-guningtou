@@ -1,0 +1,361 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import SectionHeading from '../../components/museum/SectionHeading.astro';
+import { sitePath } from '../../data/paths';
+import type { Lang } from '../../i18n/ui';
+
+type Localized = Record<Lang, string>;
+
+const lang = (Astro.params.lang ?? 'zh-tw') as Lang;
+const text = (value: Localized) => value[lang];
+
+const labels = {
+  note: { 'zh-tw': '閱讀說明', 'zh-cn': '阅读说明', en: 'Reading note' },
+  noteBody: {
+    'zh-tw': '本頁不是古寧頭四日戰役時間線的延伸，而是把戰後金門放回居民生活、軍事遺產、祭祀、觀光與和平交流的長時段脈絡。已由官方資料記錄的事件，與仍待清冊或人工核對的工作帶標記，分開呈現。',
+    'zh-cn': '本页不是古宁头四日战役时间线的延伸，而是把战后金门放回居民生活、军事遗产、祭祀、观光与和平交流的长时段脉络。已由官方资料记录的事件，与仍待清册或人工核对的工作带标记，分开呈现。',
+    en: 'This is not an extension of the four-day battle timeline. It places post-war Kinmen in the longer context of civilian life, military heritage, ritual, tourism, and peace-oriented exchange. Officially recorded milestones are kept separate from working-band labels that still require register and human review.',
+  },
+  timeline: { 'zh-tw': '戰後轉型時間線', 'zh-cn': '战后转型时间线', en: 'Post-war transformation timeline' },
+  coast: { 'zh-tw': '嚨口—北山斷崖：海岸據點活化工作帶', 'zh-cn': '垄口—北山断崖：海岸据点活化工作带', en: 'Longkou–Beishan Cliff: a coastal heritage activation band' },
+  coastIntro: {
+    'zh-tw': '這是一條從嚨口、營區、戰史館、和平園區延伸至北山斷崖的閱讀路徑。既有資料可對應的地點連到本站 Location 頁面；W011、W012、W013、W016、W027 等標記則保留為工作帶索引，未被用來推算座標或改寫 canonical Location。',
+    'zh-cn': '这是一条从垄口、营区、战史馆、和平园区延伸至北山断崖的阅读路径。既有资料可对应的地点连到本站 Location 页面；W011、W012、W013、W016、W027 等标记则保留为工作带索引，未被用来推算坐标或改写 canonical Location。',
+    en: 'This reading route runs from Longkou through camps, the war museum, the Peace Memorial Park, and on to Beishan Cliff. Nodes already present in this site link to their Location pages. W011, W012, W013, W016, and W027 remain working-band indexes only; they are not used to infer coordinates or alter canonical Locations.',
+  },
+  workBandNote: {
+    'zh-tw': '資料狀態：W 編號與尚未對應本站 canonical POI 的名稱，需以官方工程／文化資產清冊及人工現地核對後，才能進入正式地圖資料。',
+    'zh-cn': '数据状态：W 编号与尚未对应本站 canonical POI 的名称，需以官方工程／文化资产清册及人工现场核对后，才能进入正式地图数据。',
+    en: 'Data status: W codes and names not yet matched to a canonical POI must be checked against official project or heritage registers and by human review before entering formal map data.',
+  },
+  transformation: { 'zh-tw': '從戰地到公共文化場域', 'zh-cn': '从战地到公共文化场域', en: 'From frontline to public cultural landscape' },
+  memory: { 'zh-tw': '祭祀、戰亡記憶與兩岸交流', 'zh-cn': '祭祀、战亡记忆与两岸交流', en: 'Ritual, memory of the dead, and cross-Strait exchange' },
+  future: { 'zh-tw': '未來展望', 'zh-cn': '未来展望', en: 'Looking ahead' },
+  sources: { 'zh-tw': '官方資料與延伸閱讀', 'zh-cn': '官方资料与延伸阅读', en: 'Official sources and further reading' },
+  openLocation: { 'zh-tw': '開啟地點頁', 'zh-cn': '打开地点页', en: 'Open location' },
+  registerPending: { 'zh-tw': '待官方清冊／人工核對', 'zh-cn': '待官方清册／人工核对', en: 'Pending register / human review' },
+  officialSource: { 'zh-tw': '官方來源', 'zh-cn': '官方来源', en: 'Official source' },
+  routeMap: { 'zh-tw': '前往戰役地圖', 'zh-cn': '前往战役地图', en: 'Open battle map' },
+  sourcePrefix: { 'zh-tw': '來源：', 'zh-cn': '来源：', en: 'Source: ' },
+};
+
+const timeline = [
+  {
+    date: '1949',
+    title: { 'zh-tw': '古寧頭戰役後：金門成為長期對峙的前線', 'zh-cn': '古宁头战役后：金门成为长期对峙的前线', en: 'After Guningtou: Kinmen becomes a long-term frontline' },
+    body: {
+      'zh-tw': '戰役的軍事結果延伸為長期的軍事部署與地方生活變化。這一頁以戰後制度、地景保存與居民記憶接續閱讀，不把後來的發展倒推成 1949 年的戰場事實。',
+      'zh-cn': '战役的军事结果延伸为长期的军事部署与地方生活变化。本页以战后制度、地景保存与居民记忆接续阅读，不把后来的发展倒推成 1949 年的战场事实。',
+      en: 'The military result developed into decades of deployment and changes in local life. This page follows the story through post-war institutions, landscape conservation, and lived memory without projecting later developments back into the 1949 battlefield.',
+    },
+    link: 'aftermath',
+    source: null,
+  },
+  {
+    date: '1956',
+    title: { 'zh-tw': '戰地政務開始：軍事管制進入日常治理', 'zh-cn': '战地政务开始：军事管制进入日常治理', en: 'Battlefield administration begins: military control enters everyday governance' },
+    body: {
+      'zh-tw': '官方國家公園資料將 1956 年列為金門、馬祖開始實施戰地政務的節點。宵禁、出入管制與軍事土地使用，成為居民記憶與聚落地景的一部分。',
+      'zh-cn': '官方国家公园资料将 1956 年列为金门、马祖开始实施战地政务的节点。宵禁、出入管制与军事土地使用，成为居民记忆与聚落地景的一部分。',
+      en: 'Official National Park material identifies 1956 as the beginning of battlefield administration in Kinmen and Matsu. Curfews, movement controls, and military land use became part of civilian memory and settlement landscapes.',
+    },
+    link: null,
+    source: 'https://www.kmnp.gov.tw/ch/titlelist/office-introduction/492',
+  },
+  {
+    date: '1958',
+    title: { 'zh-tw': '八二三砲戰：前線生活與軍民防衛記憶再度被塑造', 'zh-cn': '八二三炮战：前线生活与军民防卫记忆再次被塑造', en: 'The Second Taiwan Strait Crisis: frontline life and civil-military memory are reshaped' },
+    body: {
+      'zh-tw': '八二三砲戰使金門再次成為高強度對峙的前線。此處不自行補入未經本頁來源支持的傷亡數字，而以官方紀念與戰地文化保存資料作為後續閱讀入口。',
+      'zh-cn': '八二三炮战使金门再次成为高强度对峙的前线。本页不自行补入未经来源支持的伤亡数字，而以官方纪念与战地文化保存资料作为后续阅读入口。',
+      en: 'The 1958 crisis again placed Kinmen at the centre of a high-intensity confrontation. This page does not add casualty figures without direct support; official commemorative and heritage material provides the entry point for further research.',
+    },
+    link: null,
+    source: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=D5588ACC40F729F1&sms=BF7D6D478B935644',
+  },
+  {
+    date: '1992-11-07',
+    title: { 'zh-tw': '解除／終止戰地政務', 'zh-cn': '解除／终止战地政务', en: 'Battlefield administration ends' },
+    body: {
+      'zh-tw': '金門縣政府與金門國家公園官方資料均以 1992 年 11 月 7 日記錄戰地政務終止。這是軍事島嶼轉向開放、保存與觀光治理的重要制度轉折。',
+      'zh-cn': '金门县政府与金门国家公园官方资料均以 1992 年 11 月 7 日记录战地政务终止。这是军事岛屿转向开放、保存与观光治理的重要制度转折。',
+      en: 'Kinmen County Government and Kinmen National Park sources record 7 November 1992 as the end of battlefield administration. It marked a major institutional transition toward openness, conservation, and tourism governance.',
+    },
+    link: null,
+    source: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=B86E65C3B62013B6&sms=BF7D6D478B935644',
+  },
+  {
+    date: '1993-02-07',
+    title: { 'zh-tw': '開放觀光：戰地景觀開始成為公共閱讀場域', 'zh-cn': '开放观光：战地景观开始成为公共阅读场域', en: 'Tourism opens: the former battlefield becomes a public place of interpretation' },
+    body: {
+      'zh-tw': '官方沿革資料記錄金門於戰地政務終止後開放觀光。觀光不只是景點導覽，也讓營區、碉堡、戰史館與聚落能以保存、教育和居民生活的角度被重新閱讀。',
+      'zh-cn': '官方沿革资料记录金门在战地政务终止后开放观光。观光不只是景点导览，也让营区、碉堡、战史馆与聚落能以保存、教育和居民生活的角度被重新阅读。',
+      en: 'Official institutional history records the opening of Kinmen to tourism after battlefield administration ended. Tourism is not only sightseeing: it creates a public framework for reading camps, bunkers, museums, and settlements through conservation, education, and civilian life.',
+    },
+    link: null,
+    source: 'https://www.kmnp.gov.tw/ch/titlelist/office-introduction/492',
+  },
+  {
+    date: '1995-10-18',
+    title: { 'zh-tw': '金門國家公園管理處成立', 'zh-cn': '金门国家公园管理处成立', en: 'Kinmen National Park Administration is established' },
+    body: {
+      'zh-tw': '金門國家公園成為把戰地史蹟、傳統聚落與自然環境放在同一保存框架中理解的制度平台。後續建設與活動也由單一軍事敘事，逐步轉向文化資產、環境與和平教育的共同治理。',
+      'zh-cn': '金门国家公园成为把战地史迹、传统聚落与自然环境放在同一保存框架中理解的制度平台。后续建设与活动也由单一军事叙事，逐步转向文化资产、环境与和平教育的共同治理。',
+      en: 'Kinmen National Park became an institutional platform for understanding battlefield heritage, traditional settlements, and the natural environment within one conservation framework. Later works and programs broadened from a single military narrative toward cultural heritage, ecology, and peace education.',
+    },
+    link: null,
+    source: 'https://www.kmnp.gov.tw/ch/planlist/conservation-achievement-reports/18',
+  },
+  {
+    date: '2001',
+    title: { 'zh-tw': '古寧頭戰史館納入國家公園保存與展示脈絡', 'zh-cn': '古宁头战史馆纳入国家公园保存与展示脉络', en: 'Guningtou War Museum enters the National Park conservation and interpretation framework' },
+    body: {
+      'zh-tw': '既有觀光資料記錄戰史館於 1984 年興建、2001 年移交金門國家公園管理。這使戰史館不只保存戰役記憶，也成為海岸據點、營區與和平園區的入口。',
+      'zh-cn': '既有观光资料记录战史馆于 1984 年兴建、2001 年移交金门国家公园管理。这使战史馆不只保存战役记忆，也成为海岸据点、营区与和平园区的入口。',
+      en: 'Existing tourism material records the museum as built in 1984 and transferred to Kinmen National Park management in 2001. It therefore functions not only as a repository of battle memory but also as an entry point to the coastal sites, camps, and Peace Memorial Park.',
+    },
+    link: null,
+    source: 'https://kinmen.travel/zh-tw/travel/attraction/533',
+  },
+  {
+    date: '近年',
+    title: { 'zh-tw': '保存、活化與和平紀念持續進行', 'zh-cn': '保存、活化与和平纪念持续进行', en: 'Conservation, adaptive reuse, and peace commemoration continue' },
+    body: {
+      'zh-tw': '近年官方資料可見戰史館展演更新、古寧頭戰役週年祭典、戰地路線與社區／跨域規劃。這些活動讓軍事遺產與居民、觀光、祭祀及兩岸和平語境彼此連接。',
+      'zh-cn': '近年来官方资料可见战史馆展演更新、古宁头战役周年祭典、战地路线与社区／跨域规划。这些活动让军事遗产与居民、观光、祭祀及两岸和平语境彼此连接。',
+      en: 'Recent official material documents museum interpretation updates, Guningtou anniversary rituals, battlefield routes, and community or cross-sector planning. Together they connect military heritage with residents, tourism, ritual, and a peace-oriented cross-Strait context.',
+    },
+    link: null,
+    source: 'https://www.taiwan.nps.gov.tw/home/zh-tw/news/30051.html',
+  },
+];
+
+const locationNodes = [
+  { name: { 'zh-tw': '嚨口', 'zh-cn': '垄口', en: 'Longkou' }, code: 'COAST · POI-0001', role: { 'zh-tw': '海岸入口與登陸地景', 'zh-cn': '海岸入口与登陆地景', en: 'Coastal entrance and landing landscape' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0001' },
+  { name: { 'zh-tw': '安東三／W011', 'zh-cn': '安东三／W011', en: 'Andong 3 / W011' }, code: 'WORKING BAND · W011', role: { 'zh-tw': '使用者指定海岸活化節點', 'zh-cn': '用户指定海岸活化节点', en: 'User-specified coastal activation node' }, note: { 'zh-tw': '待官方清冊與人工核對', 'zh-cn': '待官方清册与人工核对', en: 'Pending official register and human review' } },
+  { name: { 'zh-tw': '安東二／W012', 'zh-cn': '安东二／W012', en: 'Andong 2 / W012' }, code: 'WORKING BAND · W012 · POI-0023', role: { 'zh-tw': '營區道路與據點閱讀入口', 'zh-cn': '营区道路与据点阅读入口', en: 'Camp road and site-interpretation entrance' }, note: { 'zh-tw': '目前資料以安東二營區道路記錄', 'zh-cn': '目前资料以安东二营区道路记录', en: 'Current data records an Andong 2 camp road' }, poiId: 'POI-0023' },
+  { name: { 'zh-tw': '安東一／W013', 'zh-cn': '安东一／W013', en: 'Andong 1 / W013' }, code: 'WORKING BAND · W013 · POI-0019', role: { 'zh-tw': '營區活化節點', 'zh-cn': '营区活化节点', en: 'Camp adaptive-reuse node' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0019' },
+  { name: { 'zh-tw': '古寧頭戰史館', 'zh-cn': '古宁头战史馆', en: 'Guningtou War Museum' }, code: 'MUSEUM · POI-0016', role: { 'zh-tw': '戰役記憶與公共展示', 'zh-cn': '战役记忆与公共展示', en: 'Battle memory and public interpretation' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0016' },
+  { name: { 'zh-tw': 'W016', 'zh-cn': 'W016', en: 'W016' }, code: 'WORKING BAND · W016', role: { 'zh-tw': '使用者指定海岸活化節點', 'zh-cn': '用户指定海岸活化节点', en: 'User-specified coastal activation node' }, note: { 'zh-tw': '待官方清冊與人工核對', 'zh-cn': '待官方清册与人工核对', en: 'Pending official register and human review' } },
+  { name: { 'zh-tw': '湖下一／W027', 'zh-cn': '湖下一／W027', en: 'Huxia 1 / W027' }, code: 'WORKING BAND · W027', role: { 'zh-tw': '使用者指定海岸活化節點', 'zh-cn': '用户指定海岸活化节点', en: 'User-specified coastal activation node' }, note: { 'zh-tw': '待官方清冊與人工核對', 'zh-cn': '待官方清册与人工核对', en: 'Pending official register and human review' } },
+  { name: { 'zh-tw': '和平紀念園區', 'zh-cn': '和平纪念园区', en: 'Peace Memorial Park' }, code: 'MEMORIAL · POI-0018', role: { 'zh-tw': '戰地遺產與和平紀念', 'zh-cn': '战地遗产与和平纪念', en: 'Battlefield heritage and peace memorial' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0018' },
+  { name: { 'zh-tw': '北山共軍指揮所', 'zh-cn': '北山共军指挥所', en: 'Beishan PLA command post' }, code: 'REFERENCE NODE', role: { 'zh-tw': '使用者指定閱讀節點', 'zh-cn': '用户指定阅读节点', en: 'User-specified interpretation node' }, note: { 'zh-tw': '待官方名稱與清冊對照', 'zh-cn': '待官方名称与清册对照', en: 'Pending official name and register match' } },
+  { name: { 'zh-tw': '北山斷崖', 'zh-cn': '北山断崖', en: 'Beishan Cliff' }, code: 'COAST · POI-0021', role: { 'zh-tw': '海岸地景與戰地視線', 'zh-cn': '海岸地景与战地视线', en: 'Coastal landscape and battlefield sightline' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0021' },
+  { name: { 'zh-tw': '播音牆／古寧頭播音站', 'zh-cn': '播音墙／古宁头播音站', en: 'Broadcast wall / Guningtou broadcast station' }, code: 'MEMORY SITE · POI-0020', role: { 'zh-tw': '心理戰與兩岸記憶地景', 'zh-cn': '心理战与两岸记忆地景', en: 'Psychological-warfare and cross-Strait memory site' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0020' },
+  { name: { 'zh-tw': '李光前將軍廟', 'zh-cn': '李光前将军庙', en: 'General Li Guangqian Shrine' }, code: 'RITUAL · POI-0017', role: { 'zh-tw': '祭祀、地方記憶與兩岸和平對話', 'zh-cn': '祭祀、地方记忆与两岸和平对话', en: 'Ritual, local memory, and peace dialogue' }, note: { 'zh-tw': '本站既有地點資料', 'zh-cn': '本站既有地点资料', en: 'Existing site location data' }, poiId: 'POI-0017' },
+];
+
+const transformationCards = [
+  {
+    mark: 'P',
+    title: { 'zh-tw': '國家公園保存', 'zh-cn': '国家公园保存', en: 'National Park conservation' },
+    body: { 'zh-tw': '把戰地遺址、傳統聚落與自然環境放進同一套保存與解說框架，讓軍事地景不只被觀看，也能被研究、維護與理解。', 'zh-cn': '把战地遗址、传统聚落与自然环境放进同一套保存与解说框架，让军事地景不只被观看，也能被研究、维护与理解。', en: 'Battlefield sites, traditional settlements, and natural environments are interpreted within one conservation framework so military landscapes can be studied, maintained, and understood rather than merely viewed.' },
+    source: 'https://www.kmnp.gov.tw/ch/planlist/conservation-achievement-reports/18',
+  },
+  {
+    mark: 'R',
+    title: { 'zh-tw': '營區與戰史館再利用', 'zh-cn': '营区与战史馆再利用', en: 'Adaptive reuse of camps and the museum' },
+    body: { 'zh-tw': '戰史館、營區、碉堡與海岸節點可透過展演、步行路線與公共教育重新連線。再利用的前提是保留史蹟脈絡，並清楚區分已證實資料與待查節點。', 'zh-cn': '战史馆、营区、碉堡与海岸节点可通过展演、步行路线与公共教育重新连接。再利用的前提是保留史迹脉络，并清楚区分已证实资料与待查节点。', en: 'Museums, camps, bunkers, and coastal nodes can be reconnected through interpretation, walking routes, and public education. Adaptive reuse should preserve historical context and distinguish supported evidence from nodes still under review.' },
+    source: 'https://www.taiwan.nps.gov.tw/home/zh-tw/news/30051.html',
+  },
+  {
+    mark: 'C',
+    title: { 'zh-tw': '縣府、國家公園與社區協作', 'zh-cn': '县府、国家公园与社区协作', en: 'County, National Park, and community collaboration' },
+    body: { 'zh-tw': '金門縣政府、金門國家公園與地方社區的建設及活動，逐步把戰場、閩南文化、生態、慢活與和平紀念串在一起。官方規劃可作為未來工作帶的公共討論起點。', 'zh-cn': '金门县政府、金门国家公园与地方社区的建设及活动，逐步把战场、闽南文化、生态、慢活与和平纪念串在一起。官方规划可作为未来工作带的公共讨论起点。', en: 'Projects and programs by Kinmen County, Kinmen National Park, and local communities increasingly connect battlefield heritage with Minnan culture, ecology, slow travel, and peace commemoration. Official plans provide a starting point for public discussion of future heritage bands.' },
+    source: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=C0B47D98C645525B&sms=BF7D6D478B935644',
+  },
+  {
+    mark: 'T',
+    title: { 'zh-tw': '觀光路線與公共活動', 'zh-cn': '观光路线与公共活动', en: 'Tourism routes and public programs' },
+    body: { 'zh-tw': '古寧頭戰場線、文化資產導覽、戰役週年紀念與環境教育，讓人們能以步行、展覽、祭典或地方故事接近同一段海岸。活動不應取代史料，而應成為回到史料的入口。', 'zh-cn': '古宁头战场线、文化资产导览、战役周年纪念与环境教育，让人们能以步行、展览、祭典或地方故事接近同一段海岸。活动不应取代史料，而应成为回到史料的入口。', en: 'The Guningtou battlefield route, heritage interpretation, anniversary commemorations, and environmental education bring people to the same coast through walking, exhibitions, ritual, and local stories. Programs should not replace sources; they should lead people back to them.' },
+    source: 'https://www.kinmen.travel/zh-tw/discover/tour/171',
+  },
+];
+
+const memoryCards = [
+  {
+    mark: 'R',
+    title: { 'zh-tw': '國共軍陣亡將士的共同祭祀', 'zh-cn': '国共军阵亡将士的共同祭祀', en: 'Ritual for the dead of both armies' },
+    body: { 'zh-tw': '官方報導記錄李光前將軍廟／安東一帶對兩岸陣亡者的祭祀脈絡。頁面保留不同群體的稱呼與記憶，不替地方信仰或政治立場作單一裁決。', 'zh-cn': '官方报道记录李光前将军庙／安东一带对两岸阵亡者的祭祀脉络。本页保留不同群体的称呼与记忆，不替地方信仰或政治立场作单一裁决。', en: 'Official reports document a ritual context around General Li Guangqian Shrine and Andong that remembers the dead on both sides. This page preserves different names and memories without imposing a single theological or political judgment.' },
+    source: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=3446152EEAD4A60F&sms=BF7D6D478B935644',
+  },
+  {
+    mark: 'M',
+    title: { 'zh-tw': '萬善祠與古寧頭戰役紀念', 'zh-cn': '万善祠与古宁头战役纪念', en: 'Wan Shan Shrine and Guningtou commemorations' },
+    body: { 'zh-tw': '金門縣府、金門防衛指揮部、國家公園與地方居民共同參與春、秋祭典等官方紀念活動。紀念同時指向戰亡者、地方安魂與對和平的期待。', 'zh-cn': '金门县府、金门防卫指挥部、国家公园与地方居民共同参与春、秋祭典等官方纪念活动。纪念同时指向战亡者、地方安魂与对和平的期待。', en: 'Kinmen County, the Kinmen Defense Command, the National Park, and local residents take part in official spring and autumn commemorations. These rituals remember the war dead, local spirits, and hopes for peace at the same time.' },
+    source: 'https://kccad.kinmen.gov.tw/News_Content.aspx?n=1401293451C14B5D&s=8D213EF24657CE09&sms=41E369FD1B4C8BC0',
+  },
+  {
+    mark: 'L',
+    title: { 'zh-tw': '地方路祭與民間記憶', 'zh-cn': '地方路祭与民间记忆', en: 'Local processions and lived memory' },
+    body: { 'zh-tw': '地方祭祀與路祭把戰場、聚落、廟宇和家族記憶連在一起。這些活動是活的文化實踐，應與檔案、口述史及現地解說並讀，而不是被簡化成單一觀光符號。', 'zh-cn': '地方祭祀与路祭把战场、聚落、庙宇和家族记忆连在一起。这些活动是活的文化实践，应与档案、口述史及现场解说并读，而不是被简化成单一观光符号。', en: 'Local rituals and processions connect battlefields, settlements, temples, and family memory. They are living cultural practices that should be read alongside archives, oral history, and site interpretation rather than reduced to a single tourism symbol.' },
+    source: 'https://www.kinmen.gov.tw/News_Content2.aspx?Create=1&n=98E3CA7358C89100&s=F4337467D376352F&sms=BF7D6D478B935644',
+  },
+  {
+    mark: 'P',
+    title: { 'zh-tw': '從對峙到交流的和平語境', 'zh-cn': '从对峙到交流的和平语境', en: 'A peace context moving beyond confrontation' },
+    body: { 'zh-tw': '官方資料記錄後代尋訪、共同祭祀與兩岸交流活動。對金門而言，交流不是抹去衝突，而是讓記憶、責任與未來和平能在同一個公共空間被討論。', 'zh-cn': '官方资料记录后代寻访、共同祭祀与两岸交流活动。对金门而言，交流不是抹去冲突，而是让记忆、责任与未来和平能在同一个公共空间被讨论。', en: 'Official material records descendant visits, shared rituals, and cross-Strait exchange. For Kinmen, exchange does not erase conflict; it creates a public space in which memory, responsibility, and a peaceful future can be discussed together.' },
+    source: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=3446152EEAD4A60F&sms=BF7D6D478B935644',
+  },
+];
+
+const futureItems = [
+  { mark: '01', title: { 'zh-tw': '保存真實地景，避免過度景觀化', 'zh-cn': '保存真实地景，避免过度景观化', en: 'Preserve authentic landscapes without over-commercialization' }, body: { 'zh-tw': '優先維護遺址、聚落、生態與居民使用脈絡，讓觀光服務服從於保存與理解。', 'zh-cn': '优先维护遗址、聚落、生态与居民使用脉络，让观光服务服从于保存与理解。', en: 'Prioritize sites, settlements, ecology, and lived context so tourism serves conservation and understanding.' } },
+  { mark: '02', title: { 'zh-tw': '先完成節點清冊，再進入正式地圖', 'zh-cn': '先完成节点清册，再进入正式地图', en: 'Complete the node register before formal mapping' }, body: { 'zh-tw': 'W011、W012、W013、W016、W027 與北山相關名稱，應補上官方來源、名稱對照、位置證據與人工審核紀錄。', 'zh-cn': 'W011、W012、W013、W016、W027 与北山相关名称，应补上官方来源、名称对照、位置证据与人工审核记录。', en: 'W011, W012, W013, W016, W027, and Beishan names need official sources, name matching, location evidence, and human-review records before formal mapping.' } },
+  { mark: '03', title: { 'zh-tw': '把營區、海岸、聚落與生態串成可步行路徑', 'zh-cn': '把营区、海岸、聚落与生态串成可步行路径', en: 'Connect camps, coast, settlements, and ecology as walkable routes' }, body: { 'zh-tw': '以可理解、可休息、可回到史料的路徑設計，讓活化不只是在據點放置新設施，而是建立地景之間的關係。', 'zh-cn': '以可理解、可休息、可回到史料的路径设计，让活化不只是在据点放置新设施，而是建立地景之间的关系。', en: 'Design routes that are legible, accessible, and source-linked. Activation should build relationships between landscapes rather than simply add new facilities at isolated sites.' } },
+  { mark: '04', title: { 'zh-tw': '讓祭祀與交流成為和平教育的一部分', 'zh-cn': '让祭祀与交流成为和平教育的一部分', en: 'Make ritual and exchange part of peace education' }, body: { 'zh-tw': '以多元觀點、可追溯史料與地方參與，讓陣亡者記憶、家族故事與兩岸交流能被尊重地共同保存。', 'zh-cn': '以多元观点、可追溯史料与地方参与，让阵亡者记忆、家族故事与两岸交流能被尊重地共同保存。', en: 'Use multiple perspectives, traceable sources, and local participation to preserve memories of the dead, family stories, and cross-Strait exchange with care.' } },
+];
+
+const sourceLinks = [
+  { label: { 'zh-tw': '金門國家公園：成立沿革', 'zh-cn': '金门国家公园：成立沿革', en: 'Kinmen National Park: institutional history' }, href: 'https://www.kmnp.gov.tw/ch/titlelist/office-introduction/492' },
+  { label: { 'zh-tw': '金門國家公園：保育成果與戰地景觀', 'zh-cn': '金门国家公园：保育成果与战地景观', en: 'Kinmen National Park: conservation and battlefield landscape' }, href: 'https://www.kmnp.gov.tw/ch/planlist/conservation-achievement-reports/18' },
+  { label: { 'zh-tw': '金門觀光：古寧頭戰史館', 'zh-cn': '金门观光：古宁头战史馆', en: 'Kinmen Tourism: Guningtou War Museum' }, href: 'https://kinmen.travel/zh-tw/travel/attraction/533' },
+  { label: { 'zh-tw': '金門縣政府：國家公園與地方建設', 'zh-cn': '金门县政府：国家公园与地方建设', en: 'Kinmen County Government: National Park and local development' }, href: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=34C6C4E8F4CFFC5B&sms=BF7D6D478B935644' },
+  { label: { 'zh-tw': '金門縣政府：古寧頭跨域亮點規劃', 'zh-cn': '金门县政府：古宁头跨域亮点规划', en: 'Kinmen County Government: Guningtou cross-sector plan' }, href: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=C0B47D98C645525B&sms=BF7D6D478B935644' },
+  { label: { 'zh-tw': '金門縣政府：安東一帶祭祀與兩岸記憶', 'zh-cn': '金门县政府：安东一带祭祀与两岸记忆', en: 'Kinmen County Government: Andong ritual and cross-Strait memory' }, href: 'https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=3446152EEAD4A60F&sms=BF7D6D478B935644' },
+  { label: { 'zh-tw': '金門縣文化局：古寧頭戰役紀念活動', 'zh-cn': '金门县文化局：古宁头战役纪念活动', en: 'Kinmen Cultural Affairs Bureau: Guningtou commemorations' }, href: 'https://kccad.kinmen.gov.tw/News_Content.aspx?n=1401293451C14B5D&s=8D213EF24657CE09&sms=41E369FD1B4C8BC0' },
+  { label: { 'zh-tw': '金門觀光：古寧頭戰場線', 'zh-cn': '金门观光：古宁头战场线', en: 'Kinmen Tourism: Guningtou battlefield route' }, href: 'https://www.kinmen.travel/zh-tw/discover/tour/171' },
+];
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
+---
+
+<MainLayout lang={lang} title={text({ 'zh-tw': '戰後金門：從戰地到和平生活', 'zh-cn': '战后金门：从战地到和平生活', en: 'Post-War Kinmen: From Frontline to Shared Peace' }) + ' · ' + text({ 'zh-tw': '古寧頭戰役 1949', 'zh-cn': '古宁头战役 1949', en: 'Battle of Guningtou 1949' })}>
+  <div class="museum-page">
+    <div class="museum-reading">
+      <SectionHeading
+        level={1}
+        index="01"
+        eyebrow="POST-WAR KINMEN · 1956—NOW"
+        title={text({ 'zh-tw': '戰後金門：從戰地到和平生活', 'zh-cn': '战后金门：从战地到和平生活', en: 'Post-War Kinmen: From Frontline to Shared Peace' })}
+        description={text({
+          'zh-tw': '古寧頭之後，金門經歷八二三砲戰、戰地政務、開放觀光、國家公園保存與營區活化。這一頁把軍事地景放回居民生活、祭祀、觀光與兩岸交流的長時段脈絡。',
+          'zh-cn': '古宁头之后，金门经历八二三炮战、战地政务、开放观光、国家公园保存与营区活化。本页把军事地景放回居民生活、祭祀、观光与两岸交流的长时段脉络。',
+          en: 'After Guningtou, Kinmen experienced the 1958 crisis, battlefield administration, the opening of tourism, National Park conservation, and the adaptive reuse of military sites. This page places military landscapes within the longer history of civilian life, ritual, tourism, and cross-Strait exchange.',
+        })}
+      />
+
+      <div class="museum-callout museum-callout--archive museum-postwar-note">
+        <h2 class="museum-callout__title">{text(labels.note)}</h2>
+        <p class="museum-callout__body">{text(labels.noteBody)}</p>
+      </div>
+
+      <section class="museum-content-section">
+        <div class="museum-content-section__heading">
+          <span class="museum-category-mark museum-category-mark--roc">T</span>
+          <h2 class="text-xl font-serif font-bold">{text(labels.timeline)}</h2>
+        </div>
+        <div class="museum-timeline-list">
+          {timeline.map((item) => (
+            <article class="museum-context-card">
+              <div class="museum-postwar-timeline__date">{item.date}</div>
+              <h3>{text(item.title)}</h3>
+              <p>{text(item.body)}</p>
+              <div class="museum-postwar-card__links">
+                {item.link && <a class="museum-link" href={sitePath(item.link, lang)}>{text(labels.routeMap)} →</a>}
+                {item.source && <a class="museum-link" href={item.source} target="_blank" rel="noopener noreferrer">{text(labels.sourcePrefix)}{text(labels.officialSource)} ↗</a>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="museum-content-section">
+        <div class="museum-content-section__heading">
+          <span class="museum-category-mark museum-category-mark--geographic">C</span>
+          <h2 class="text-xl font-serif font-bold">{text(labels.coast)}</h2>
+        </div>
+        <p class="museum-deck">{text(labels.coastIntro)}</p>
+        <div class="museum-postwar-location-grid">
+          {locationNodes.map((node) => (
+            <article class="museum-postwar-location-card">
+              <div class="museum-postwar-location-card__code">{node.code}</div>
+              <h3>{text(node.name)}</h3>
+              <p>{text(node.role)}</p>
+              <div class="museum-postwar-location-card__note">{text(node.note)}</div>
+              {node.poiId && <a class="museum-link" href={sitePath('locations/' + node.poiId, lang)}>{text(labels.openLocation)} →</a>}
+              {!node.poiId && <span class="museum-postwar-pending">{text(labels.registerPending)}</span>}
+            </article>
+          ))}
+        </div>
+        <div class="museum-callout museum-callout--small museum-postwar-note">
+          <p class="museum-callout__body">{text(labels.workBandNote)}</p>
+        </div>
+      </section>
+
+      <section class="museum-content-section">
+        <div class="museum-content-section__heading">
+          <span class="museum-category-mark museum-category-mark--archive">R</span>
+          <h2 class="text-xl font-serif font-bold">{text(labels.transformation)}</h2>
+        </div>
+        <div class="museum-postwar-card-grid">
+          {transformationCards.map((card) => (
+            <article class="museum-content-card museum-postwar-card">
+              <div class="museum-postwar-card__mark">{card.mark}</div>
+              <h3>{text(card.title)}</h3>
+              <p>{text(card.body)}</p>
+              <a class="museum-link" href={card.source} target="_blank" rel="noopener noreferrer">{text(labels.officialSource)} ↗</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="museum-content-section">
+        <div class="museum-content-section__heading">
+          <span class="museum-category-mark museum-category-mark--civilian">M</span>
+          <h2 class="text-xl font-serif font-bold">{text(labels.memory)}</h2>
+        </div>
+        <div class="museum-postwar-card-grid">
+          {memoryCards.map((card) => (
+            <article class="museum-content-card museum-postwar-card">
+              <div class="museum-postwar-card__mark">{card.mark}</div>
+              <h3>{text(card.title)}</h3>
+              <p>{text(card.body)}</p>
+              <a class="museum-link" href={card.source} target="_blank" rel="noopener noreferrer">{text(labels.officialSource)} ↗</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="museum-content-section">
+        <div class="museum-content-section__heading">
+          <span class="museum-category-mark museum-category-mark--roc">F</span>
+          <h2 class="text-xl font-serif font-bold">{text(labels.future)}</h2>
+        </div>
+        <div class="museum-postwar-future-list">
+          {futureItems.map((item) => (
+            <article class="museum-context-card museum-postwar-future-item">
+              <div class="museum-postwar-future-item__mark">{item.mark}</div>
+              <div>
+                <h3>{text(item.title)}</h3>
+                <p>{text(item.body)}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="museum-content-section museum-postwar-sources">
+        <div class="museum-content-section__heading">
+          <span class="museum-category-mark museum-category-mark--archive">S</span>
+          <h2 class="text-xl font-serif font-bold">{text(labels.sources)}</h2>
+        </div>
+        <p class="museum-deck">{text({ 'zh-tw': '本頁以官方機關與既有本站來源作為入口；它不是完整年度建設清單。後續若要把工作帶節點納入地圖，仍需逐項補上可追溯證據。', 'zh-cn': '本页以官方机关与既有本站来源作为入口；它不是完整年度建设清单。后续若要把工作带节点纳入地图，仍需逐项补上可追溯证据。', en: 'This page uses official agencies and existing site sources as entry points; it is not a complete annual works register. Any future map integration of the working-band nodes still requires traceable evidence for each item.' })}</p>
+        <div class="museum-postwar-source-list">
+          {sourceLinks.map((source) => (
+            <a class="museum-postwar-source-link" href={source.href} target="_blank" rel="noopener noreferrer">
+              <span>{text(source.label)}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+</MainLayout>

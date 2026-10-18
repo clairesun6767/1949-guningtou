@@ -32,7 +32,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     navSources: '文獻資料庫',
     navArchive: '數位典藏',
     navPeace: '和平與計畫',
-    navAfterwar: '戰後至今',
+    navAfterwar: '戰後金門',
     navBattlefieldOS: 'Battlefield OS',
     navAbout: '關於本站',
 
@@ -87,7 +87,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     navSources: '文献数据库',
     navArchive: '数字典藏',
     navPeace: '和平与计划',
-    navAfterwar: '战后至今',
+    navAfterwar: '战后金门',
     navBattlefieldOS: 'Battlefield OS',
     navAbout: '关于本站',
 
@@ -139,7 +139,7 @@ export const UI: Record<Lang, Record<string, string>> = {
     navSources: 'Document Database',
     navArchive: 'Digital Archive',
     navPeace: 'Peace & Projects',
-    navAfterwar: 'Post-War to Today',
+    navAfterwar: 'Post-War Kinmen',
     navBattlefieldOS: 'Battlefield OS',
     navAbout: 'About',
 
