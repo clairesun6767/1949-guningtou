@@ -138,6 +138,7 @@ const COPY = {
     sourceTrace: '戰役圖例', sourceMap: '歷史戰役圖', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: '依歷史戰役圖描繪，位置為示意性套準，非精密測量路徑。',
     battleLegend: '戰役圖例', plaAttack: '共軍進攻', rocCounterattack: '國軍反擊', rocDefense: '國軍防線', battleArea: '戰鬥／行動區域',
     play: '播放', pause: '暫停', previousPhase: '上一階段', nextPhase: '下一階段', followBattle: '跟隨戰況', sourceReview: '來源圖檢視',
+    openMapControls: '開啟地圖控制列', closeMapControls: '收合地圖控制列',
   },
   'zh-cn': {
     eyebrow: 'INTERACTIVE HISTORICAL ATLAS · 1949', title: '1949 金厦战略空间',
@@ -157,6 +158,7 @@ const COPY = {
     sourceTrace: '战役图例', sourceMap: '历史战役图', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: '依历史战役图描绘，位置为示意性套准，非精密测量路径。',
     battleLegend: '战役图例', plaAttack: '共军进攻', rocCounterattack: '国军反击', rocDefense: '国军防线', battleArea: '战斗／行动区域',
     play: '播放', pause: '暂停', previousPhase: '上一阶段', nextPhase: '下一阶段', followBattle: '跟随战况', sourceReview: '来源图检视',
+    openMapControls: '打开地图控制列', closeMapControls: '收合地图控制列',
   },
   en: {
     eyebrow: 'INTERACTIVE HISTORICAL ATLAS · 1949', title: 'The Kinmen–Xiamen Strategic Space',
@@ -176,6 +178,7 @@ const COPY = {
     sourceTrace: 'Battle legend', sourceMap: 'Historical Battle Map', sourceMapRegistration: 'Schematic historical map · registration approximate', sourceTraceDisclaimer: 'Traced from a historical battle map; positions are schematically registered, not precision-measured routes.',
     battleLegend: 'Battle legend', plaAttack: 'PLA attack', rocCounterattack: 'ROC counterattack', rocDefense: 'ROC defensive line', battleArea: 'Battle / action area',
     play: 'Play', pause: 'Pause', previousPhase: 'Previous phase', nextPhase: 'Next phase', followBattle: 'Follow battle', sourceReview: 'Source review',
+    openMapControls: 'Open map controls', closeMapControls: 'Collapse map controls',
   },
 } as const;
 
@@ -269,6 +272,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const [interactionHintVisible, setInteractionHintVisible] = useState(true);
   const [enabledLayers, setEnabledLayers] = useState<Set<MapLayerId>>(() => new Set(DEFAULT_VISITOR_LAYERS));
   const [openPanel, setOpenPanel] = useState<'layers' | 'locations' | null>(null);
+  const [mobileDeckExpanded, setMobileDeckExpanded] = useState(false);
   const [rendererRequested, setRendererRequested] = useState(rendererMode === 'v2');
   const [preferredRenderer] = useState<HistoricalRendererMode | 'v2'>(() => {
     if (rendererMode === 'v2') return 'v2';
@@ -826,7 +830,18 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         )}
 
         {!selectedLocation && cameraId !== 'strategic' && <aside className="historical-map__integrity-note"><strong>{dictionary.mapMeaning}</strong><span>{dictionary.mapMeaningBody}</span></aside>}
-        <div className="historical-map__control-deck">
+        <div className="historical-map__control-deck" data-mobile-expanded={mobileDeckExpanded ? 'true' : 'false'}>
+        <button
+          type="button"
+          className="historical-map__mobile-deck-toggle"
+          onClick={() => setMobileDeckExpanded(current => !current)}
+          aria-expanded={mobileDeckExpanded}
+          aria-controls="battle-map-control-content"
+        >
+          <span>{mobileDeckExpanded ? dictionary.closeMapControls : dictionary.openMapControls}</span>
+          <span aria-hidden="true">{mobileDeckExpanded ? '⌄' : '⌃'}</span>
+        </button>
+        <div id="battle-map-control-content" className="historical-map__control-deck-content">
         <nav className="historical-map__controls" aria-label="Historical map controls">
           <button type="button" onClick={enterBattlefield}>{dictionary.explore}</button>
           <button type="button" onClick={() => document.getElementById('battle-map-timeline')?.scrollIntoView({ block: 'nearest' })}>{dictionary.timeline}</button>
@@ -863,6 +878,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
           </div>
           <input type="range" min="0" max="1000" step="1" value={Math.round(playbackProgress * 1000)} onChange={event => setPlaybackPosition(Number(event.target.value) / 1000)} aria-label="Continuous battle progress" />
           <div className="historical-map__phase-strip">{historicalPhases.map(phase => <button type="button" key={phase.id} className={phase.id === activePhase?.id ? 'is-active' : ''} onClick={() => setPlaybackPosition(phase.startProgress)}>{localized(phase.title, lang)}</button>)}</div>
+        </div>
         </div>
         </div>
         </div>

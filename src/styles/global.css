@@ -2092,17 +2092,19 @@ a:hover {
 
   .museum-mobile-menu__panel {
     position: fixed;
-    top: 64px;
-    right: 0;
-    left: 0;
+    top: 72px;
+    right: 12px;
+    left: auto;
     z-index: 55;
-    max-height: calc(100vh - 64px);
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(70svh, 560px);
     overflow-y: auto;
-    border-top: 1px solid var(--border-dark);
-    border-bottom: 1px solid var(--border-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--radius-sm);
     padding: 16px;
     background: var(--bg-secondary);
     box-shadow: var(--shadow-overlay);
+    overscroll-behavior: contain;
   }
 
   .museum-mobile-menu:not([open]) .museum-mobile-menu__panel {
