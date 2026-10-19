@@ -3,18 +3,20 @@
 | Field | Value |
 | --- | --- |
 | Status | **PASS** |
-| Commit | `9dbf285a3c956b52e03f7f601966d11e3020203e` |
+| Commit | `6ccb2c93a7a9a95d1e6d27f56c704cac88d094b0` |
 | Branch | `feature/guningtou-then-now-v2` |
 | Preview URL | not configured |
-| Generated | 2026-10-19T01:41:32.992Z |
+| Generated | 2026-10-19T02:27:03.445Z |
 | Viewports | 1440×900 · 768×1024 · 390×844 |
 | Tests | 12 total · 0 failed |
 
 ## Selected screenshots
 
 - [desktop-1440x900-homepage.png](./desktop-1440x900-homepage.png)
+- [desktop-1440x900-homepage-postwar-menu.png](./desktop-1440x900-homepage-postwar-menu.png)
 - [desktop-1440x900-then-now-overview.png](./desktop-1440x900-then-now-overview.png)
 - [desktop-1440x900-then-now-images.png](./desktop-1440x900-then-now-images.png)
+- [desktop-1440x900-then-now-activation.png](./desktop-1440x900-then-now-activation.png)
 - [desktop-1440x900-map.png](./desktop-1440x900-map.png)
 - [mobile-390x844-homepage.png](./mobile-390x844-homepage.png)
 - [mobile-390x844-map.png](./mobile-390x844-map.png)
