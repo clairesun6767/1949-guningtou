@@ -3,12 +3,12 @@
 | Field | Value |
 | --- | --- |
 | Status | **PASS** |
-| Commit | `1c5b7adb3dea737dd91539e03b9e2c8b03a519b4` |
-| Branch | `feature/guningtou-then-now-v2` |
+| Commit | `4c3ffe9` |
+| Branch | `fix/site-content-quality-v4` |
 | Preview URL | not configured |
-| Generated | 2026-10-19T03:08:17.096Z |
+| Generated | 2026-10-19T05:12:08.079Z |
 | Viewports | 1440×900 · 768×1024 · 390×844 |
-| Tests | 12 total · 0 failed |
+| Tests | 15 total · 0 failed |
 
 ## Selected screenshots
 
