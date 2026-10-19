@@ -4,8 +4,10 @@ import HistoricImage from '../museum/HistoricImage.astro';
 import MediaCard from '../museum/MediaCard.astro';
 import SectionHeading from '../museum/SectionHeading.astro';
 import LocationExplorer from '../map/LocationExplorer';
+import ThenNowMapCompare from '../map/ThenNowMapCompare';
 import { sitePath } from '../../data/paths';
 import type { Lang } from '../../i18n/ui';
+import siteInventoryDocument from '../../../data/then-now/site-inventory.json';
 import {
   getThenNowGallery,
   getThenNowMedia,
@@ -20,12 +22,30 @@ interface Props {
   lang: string;
 }
 
+interface InventorySite {
+  siteId: string;
+  code: string | null;
+  officialName: Localized;
+  region: string;
+  priority: string;
+  evidenceStatus: string;
+  sourceIds: string[];
+  humanReview: { required: boolean };
+}
+
 const { lang: rawLang } = Astro.props;
 const lang = rawLang as Lang;
 const text = (value: Localized) => value[lang] ?? value['zh-tw'];
 const isEnglish = lang === 'en';
 const gallery = getThenNowGallery();
 const museumMedia = getThenNowMedia('TN-MEDIA-MUSEUM-2013');
+const siteInventory = siteInventoryDocument as { sites: InventorySite[] };
+const inventorySites = siteInventory.sites;
+const inventoryCounts = {
+  core: inventorySites.filter((site) => site.priority === 'core').length,
+  general: inventorySites.filter((site) => site.priority === 'general').length,
+  research: inventorySites.filter((site) => site.priority === 'research').length,
+};
 
 const sectionImages: Record<string, string> = {
   overview: 'aerial-1944a.png',
@@ -69,6 +89,12 @@ const labels = {
   core: { 'zh-tw': '1949 核心', 'zh-cn': '1949 核心', en: '1949 CORE' } satisfies Localized,
   imagePending: { 'zh-tw': '影像待補', 'zh-cn': '影像待补', en: 'IMAGE PENDING' } satisfies Localized,
   researchEntry: { 'zh-tw': '研究入口', 'zh-cn': '研究入口', en: 'RESEARCH ENTRY' } satisfies Localized,
+  mapCompare: { 'zh-tw': '歷史航照 × 現代地圖', 'zh-cn': '历史航照 × 现代地图', en: 'HISTORICAL AERIAL × MODERN MAP' } satisfies Localized,
+  inventory: { 'zh-tw': '全區史蹟調查清冊', 'zh-cn': '全区史迹调查清册', en: 'FULL SITE INVENTORY' } satisfies Localized,
+  inventoryNote: { 'zh-tw': '以下是今昔研究資料，不是新的 canonical Location、路線或地形資料；座標只引用既有 POI，未核實項目保留研究狀態。', 'zh-cn': '以下是今昔研究资料，不是新的 canonical Location、路线或地形资料；坐标只引用既有 POI，未核实项目保留研究状态。', en: 'This is a then-and-now research inventory, not a new canonical Location, route, or terrain dataset. Coordinates only reference existing POIs; unresolved items remain research.' } satisfies Localized,
+  inventorySites: { 'zh-tw': '站點', 'zh-cn': '站点', en: 'sites' } satisfies Localized,
+  inventorySources: { 'zh-tw': '來源', 'zh-cn': '来源', en: 'sources' } satisfies Localized,
+  inventoryReview: { 'zh-tw': '需人工覆核', 'zh-cn': '需人工复核', en: 'human review' } satisfies Localized,
 };
 ---
 
@@ -145,6 +171,12 @@ const labels = {
           </div>
           <p>{isEnglish ? 'Use the canonical map, timeline, and location records for the battle itself; this page adds the post-war layers around them.' : '戰役本身仍請回到 canonical 地圖、時間軸與地點檔案；本頁只在其周圍補上戰後地景層。'}</p>
         </div>
+        <div class="then-now-map-compare-intro">
+          <span class="museum-label">{text(labels.mapCompare)}</span>
+          <h3>{isEnglish ? 'Read the same landscape through two evidence layers.' : '用兩個證據層，閱讀同一片地景。'}</h3>
+          <p>{isEnglish ? 'The historical image stays visibly separate from the modern POI map. Markers and labels come from the existing location index only.' : '歷史航照與現代 POI 地圖保持分開；標記與標籤只來自既有地點索引。'}</p>
+        </div>
+        <ThenNowMapCompare client:only="react" lang={lang} />
       </section>
 
       <section id="images" class="then-now-section" aria-labelledby="then-now-images-title">
@@ -188,6 +220,36 @@ const labels = {
 
       <section id="activation" class="then-now-section" aria-labelledby="then-now-activation-title">
         <SectionHeading index="04" eyebrow={text(thenNowSections[3].eyebrow)} title={text(thenNowSections[3].title)} description={text(thenNowSections[3].description)} />
+        <div class="then-now-inventory-intro">
+          <div>
+            <span class="museum-label">{text(labels.inventory)}</span>
+            <h3>{isEnglish ? 'A research register for the whole reading area.' : '把全區站點先整理成可追溯的研究清冊。'}</h3>
+            <p>{text(labels.inventoryNote)}</p>
+          </div>
+          <div class="then-now-inventory-stats" aria-label={text(labels.inventory)}>
+            <span><strong>{inventorySites.length}</strong> {text(labels.inventorySites)}</span>
+            <span><strong>{inventoryCounts.core}</strong> core</span>
+            <span><strong>{inventoryCounts.general}</strong> general</span>
+            <span><strong>{inventoryCounts.research}</strong> research</span>
+          </div>
+        </div>
+        <div class="then-now-inventory-grid">
+          {inventorySites.map((site) => (
+            <article class="then-now-inventory-item">
+              <div class="then-now-inventory-item__head">
+                <span class="museum-kicker">{site.siteId}{site.code ? ` · ${site.code}` : ''}</span>
+                <span class={`then-now-inventory-item__status then-now-inventory-item__status--${site.evidenceStatus.toLowerCase()}`}>{site.evidenceStatus}</span>
+              </div>
+              <h4>{site.officialName[lang] ?? site.officialName['zh-tw']}</h4>
+              <p>{site.region}</p>
+              <div class="then-now-inventory-item__meta">
+                <span>{site.priority}</span>
+                <span>{site.sourceIds.length} {text(labels.inventorySources)}</span>
+                {site.humanReview.required && <span>{text(labels.inventoryReview)}</span>}
+              </div>
+            </article>
+          ))}
+        </div>
         <div class="then-now-site-grid">
           {thenNowSites.filter((site) => activationIds.has(site.id)).map((site) => {
             const asset = siteMedia(site);

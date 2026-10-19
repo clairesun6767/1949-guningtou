@@ -24,7 +24,7 @@ test('military-site reading band retains requested site codes without inventing 
     assert.match(catalog, new RegExp(`id: '${code}'`), `${code} should be present`);
     assert.match(catalog, new RegExp(`code: '${code}'`), `${code} should retain its code`);
   }
-  assert.match(catalog, /No canonical Location is added before human verification/);
+  assert.match(catalog, /no canonical Location or precise coordinate is inferred/);
   assert.match(catalog, /The existing POI-0023 is a road record/);
   assert.match(page, /imagePending/);
 });

@@ -2,7 +2,7 @@
 
 ## Authority
 
-`data/sources.json` remains the authoritative source catalog during the V1.2 migration. It contains 38 stable `source_id` records. The typed view is produced in memory by `adaptLegacySourceRegistry()`; no second editable source catalog is created.
+`data/sources.json` remains the authoritative source catalog during the V1.2/V3 migration. It contains 55 stable `source_id` records, including the V3 research additions `SRC-0039`–`SRC-0055`. The typed view is produced in memory by `adaptLegacySourceRegistry()`; no second editable source catalog is created.
 
 Migration direction:
 
@@ -37,7 +37,7 @@ The original legacy type is retained in each typed entry's metadata. The adapter
 
 ## Review rules
 
-- Every source reference in a claim or evidence-matrix dimension must resolve to one of the 38 registry IDs.
+- Every source reference in a claim, evidence-matrix dimension, or then-and-now site inventory must resolve to one of the 55 registry IDs.
 - A source URL or catalog pointer is not a page-level citation.
 - Missing page, excerpt, archive identifier, or direct unit/location binding remains a research gap.
 - `SRC-0027` (Wikipedia) is retained as repository evidence context, but is not treated as the sole basis for a `VERIFIED` production claim.

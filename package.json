@@ -23,6 +23,7 @@
     "benchmark:gate-a3p2b": "node scripts/capture-gate-a3p2b-guningtou.mjs",
     "publish:aerial:low-res": "node scripts/publish-authorized-low-res-aerial-poc.mjs",
     "typecheck": "astro check",
+    "validate:then-now": "node scripts/validate-then-now-inventory.mjs",
     "build:battle-data-tools": "tsc -p tsconfig.battle-replay.json",
     "validate:battle-data": "npm run build:battle-data-tools --silent && node scripts/validate-battle-data.mjs",
     "test:battle-data": "npm run build:battle-data-tools --silent && node --test tests/battle-replay/*.test.mjs"
