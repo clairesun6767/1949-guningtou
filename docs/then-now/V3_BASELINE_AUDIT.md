@@ -1,7 +1,7 @@
 # 《昔日戰場・今日古寧頭》V3.0 基準稽核
 
-稽核日期：2026-10-19（Asia/Taipei）  
-稽核分支：`feature/guningtou-then-now-v2`  
+稽核日期：2026-10-19（Asia/Taipei）<br>
+稽核分支：`feature/guningtou-then-now-v2`<br>
 基準 commit：`604721497d4f8628ed61c819bc353b5995351e10`
 
 ## 0. 執行邊界
@@ -131,4 +131,3 @@ V3 不會提交 `.env`、token、credential、local cache、build output、原�
 ## 9. 變更前保護結論
 
 基準 audit PASS。可以在 `feature/guningtou-then-now-v2` 上進行 V3 的研究 inventory、來源紀錄、展示 adapter 與測試；不得修改 main、不得 push main、不得修改既有 canonical battle geometry。任何涉及新座標、新戰役事件、新部隊、新路線或史料衝突的項目都必須停在 research/human-review 狀態。
-

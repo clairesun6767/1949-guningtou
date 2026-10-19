@@ -1,7 +1,7 @@
 # 《昔日戰場・今日古寧頭》V3.0 研究紀錄
 
-研究日期：2026-10-19（Asia/Taipei）  
-研究分支：`feature/guningtou-then-now-v2`  
+研究日期：2026-10-19（Asia/Taipei）<br>
+研究分支：`feature/guningtou-then-now-v2`<br>
 研究範圍：戰後軍事據點、聚落／海岸地景、紀念與祭祀、保存活化，以及可公開使用的現況影像。
 
 ## 方法與界線
@@ -58,4 +58,3 @@ W011、W012、W016、W027 的官方頁面仍作為研究／現況入口；在個
 - [金門縣政府嚨口二營區會勘資料](https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=A0A158E23410A02A&sms=BF7D6D478B935644)
 - [解除戰地政務與國家公園沿革](https://kmfinance.kinmen.gov.tw/News.aspx?Create=1&PageSize=999&n=55FDE4EAE7CDA1E6&page=220&sms=4FEFD09995C4BB81)
 - [古寧頭先靈祭典](https://www.kinmen.gov.tw/News_Content2.aspx?n=98E3CA7358C89100&s=9D8905D3A7D05A93&sms=BF7D6D478B935644)
-
