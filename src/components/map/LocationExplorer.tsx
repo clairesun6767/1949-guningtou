@@ -22,10 +22,10 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
       ? { categories: '地点分类', all: '全部', place: '地点', detail: '查看档案 →', locate: '点击地点以定位', notSelected: '尚未选择地点', researchOnly: '研究索引；暂不显示精确标记' }
       : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點', researchOnly: '研究索引；暫不顯示精確標記' };
   const coordinateStatusLabel = (status?: string) => isEnglish
-    ? ({ modern_verified: 'Modern site verified', representative: 'Modern representative / area point', historical_review: 'Historical location under review', unresolved: 'Location not independently verified' }[status ?? ''] ?? 'Location basis not recorded')
+      ? ({ modern_verified: 'Modern site verified', representative: 'Modern representative / area point', historical_review: 'Historical location under review', unresolved: 'Location not independently verified', user_specified: 'User-specified coordinate' }[status ?? ''] ?? 'Location basis not recorded')
     : isSimplified
-      ? ({ modern_verified: '现代地点已查证', representative: '现代代表点／范围位置', historical_review: '历史位置审查中', unresolved: '位置尚未独立查证' }[status ?? ''] ?? '位置依据未记录')
-      : ({ modern_verified: '現代地點已查證', representative: '現代代表點／範圍位置', historical_review: '歷史位置審查中', unresolved: '位置尚未獨立查證' }[status ?? ''] ?? '位置依據未記錄');
+      ? ({ modern_verified: '现代地点已查证', representative: '现代代表点／范围位置', historical_review: '历史位置审查中', unresolved: '位置尚未独立查证', user_specified: '用户指定坐标' }[status ?? ''] ?? '位置依据未记录')
+      : ({ modern_verified: '現代地點已查證', representative: '現代代表點／範圍位置', historical_review: '歷史位置審查中', unresolved: '位置尚未獨立查證', user_specified: '使用者指定座標' }[status ?? ''] ?? '位置依據未記錄');
   const [selectedPoi, setSelectedPoi] = useState<typeof allPois[0] | null>(null);
   const [filter, setFilter] = useState('');
   const mapRef = useRef<L.Map | null>(null);

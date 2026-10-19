@@ -77,8 +77,8 @@ export interface POI {
   longitude: number;
   coordinate_accuracy?: string;
   location_class?: 'modern_site' | 'historical_area' | 'historical_point' | 'uncertain_area';
-  coordinate_status?: 'modern_verified' | 'representative' | 'historical_review' | 'unresolved';
-  /** Public map markers are limited to current verified or representative points. */
+  coordinate_status?: 'modern_verified' | 'representative' | 'historical_review' | 'unresolved' | 'user_specified';
+  /** Public map markers can include the user-specified coordinate table when explicitly published. */
   map_visibility?: 'public' | 'research';
   coordinate_source?: string;
   coordinate_source_url?: string;

@@ -94,12 +94,12 @@ export const thenNowSites: ThenNowSite[] = [
   },
   {
     id: 'W012', poiId: 'POI-0026', code: 'W012',
-    title: { 'zh-tw': '安東二營區', 'zh-cn': '安东二营区', en: 'Andong 2 Camp' },
+    title: { 'zh-tw': 'W012 安東二營區（熾白安東）', 'zh-cn': 'W012 安东二营区（炽白安东）', en: 'W012 Andong 2 Camp (Chibai Andong)' },
     category: { 'zh-tw': '戰後軍事設施／民間活化', 'zh-cn': '战后军事设施／民间活化', en: 'Post-war military facility / community reuse' },
     status: { 'zh-tw': '官方據點資料與現況營運資料分開標示', 'zh-cn': '官方据点资料与现况运营资料分开标示', en: 'Official site record and current operator material kept separate' },
     role: { 'zh-tw': '海岸防禦據點；曾經歷軍方與海巡使用，後由民間團隊進駐。', 'zh-cn': '海岸防御据点；曾经历军方与海巡使用，后由民间团队进驻。', en: 'A coastal defence site with later military and coast-guard use, followed by private adaptive reuse.' },
     present: { 'zh-tw': '現況可見碉堡、海景與體驗活動；營運內容不等同官方歷史證據。', 'zh-cn': '现况可见碉堡、海景与体验活动；运营内容不等同官方历史证据。', en: 'The site presents bunkers, sea views, and activities; operator descriptions are not by themselves official historical evidence.' },
-    evidenceNote: { 'zh-tw': '本站已將 W-012 現代營區與 POI-0023 道路研究紀錄分開；官方據點頁座標為 24.47413, 118.33239。', 'zh-cn': '本站已将 W-012 现代营区与 POI-0023 道路研究记录分开；官方据点页坐标为 24.47413, 118.33239。', en: 'The present-day W-012 camp is separated from the POI-0023 road research record; the official site page gives 24.47413, 118.33239.' },
+    evidenceNote: { 'zh-tw': '本站已將 W-012 現代營區與 POI-0023 道路研究紀錄分開；本輪座標依使用者提供的 38 處地點表採用 24.47376, 118.33245。', 'zh-cn': '本站已将 W-012 现代营区与 POI-0023 道路研究记录分开；本轮坐标依用户提供的 38 处地点表采用 24.47376, 118.33245。', en: 'The present-day W-012 camp is separated from the POI-0023 road research record; this release adopts 24.47376, 118.33245 from the user-provided 38-place table.' },
     sourceLinks: [
       { label: { 'zh-tw': '金門國家公園據點資料', 'zh-cn': '金门国家公园据点资料', en: 'Kinmen National Park site record' }, href: 'https://www.kmnp.gov.tw/ch/touristInfo/recreation-sites/49' },
       { label: { 'zh-tw': '現況營運網站（非唯一史料）', 'zh-cn': '现况运营网站（非唯一史料）', en: 'Current operator site (not sole historical evidence)' }, href: 'https://w-012.com/' },
@@ -107,39 +107,39 @@ export const thenNowSites: ThenNowSite[] = [
     mediaIds: ['TN-MEDIA-W012-ENTRANCE-2026', 'TN-MEDIA-W012-EXTERIOR-2026'],
   },
   {
-    id: 'W011', code: 'W011',
+    id: 'W011', poiId: 'POI-0027', code: 'W011',
     title: { 'zh-tw': '安東三營區', 'zh-cn': '安东三营区', en: 'Andong 3 Camp' },
     category: { 'zh-tw': '戰後軍事設施／研究中', 'zh-cn': '战后军事设施／研究中', en: 'Post-war military facility / research' },
     status: { 'zh-tw': '官方 3D 現況解說可查；照片與清冊待補', 'zh-cn': '官方 3D 现况解说可查；照片与清册待补', en: 'Official 3D current-state feature found; photo and register work pending' },
     role: { 'zh-tw': '與 W012、W013 同屬安東系列，形成海岸防禦節點。', 'zh-cn': '与 W012、W013 同属安东系列，形成海岸防御节点。', en: 'Part of the Andong series with W012 and W013, forming a coastal defence group.' },
-    present: { 'zh-tw': '目前只以官方影片與研究入口呈現，不擅自新增座標或現況照片。', 'zh-cn': '目前只以官方影片与研究入口呈现，不擅自新增坐标或现况照片。', en: 'Presented through the official video and research entry only; no coordinate or current photo is invented.' },
-    evidenceNote: { 'zh-tw': '需人工核對官方名稱、開放狀態與可公開影像。', 'zh-cn': '需人工核对官方名称、开放状态与可公开影像。', en: 'Official name, access status, and reusable images require human review.' },
+    present: { 'zh-tw': '目前以官方影片、研究入口與使用者指定座標呈現；不將座標說成官方實測。', 'zh-cn': '目前以官方影片、研究入口与用户指定坐标呈现；不将坐标说成官方实测。', en: 'Presented through the official video, research entry, and a user-specified coordinate; the point is not described as an official survey.' },
+    evidenceNote: { 'zh-tw': '使用者指定座標；官方名稱、開放狀態與可公開影像仍需人工核對。', 'zh-cn': '用户指定坐标；官方名称、开放状态与可公开影像仍需人工核对。', en: 'The coordinate is user-specified; official name, access status, and reusable images still require human review.' },
     sourceLinks: [
       { label: { 'zh-tw': '國家公園 3D 現況影片', 'zh-cn': '国家公园 3D 现况影片', en: 'National Park 3D current-state video' }, href: 'https://www.youtube.com/watch?v=NbwId1bSfa8' },
       { label: { 'zh-tw': '安東一營區報導（含系列關係）', 'zh-cn': '安东一营区报道（含系列关系）', en: 'Andong 1 report (series relationship)' }, href: 'https://www.taiwan.nps.gov.tw/home/zh-tw/news/26680' },
     ],
   },
   {
-    id: 'W016', code: 'W016',
+    id: 'W016', poiId: 'POI-0028', code: 'W016',
     title: { 'zh-tw': '古寧頭三營區', 'zh-cn': '古宁头三营区', en: 'Guningtou Three Camp' },
     category: { 'zh-tw': '戰後軍事設施／公共展示', 'zh-cn': '战后军事设施／公共展示', en: 'Post-war military facility / public interpretation' },
     status: { 'zh-tw': '官方資料確認；2014 年啟用', 'zh-cn': '官方资料确认；2014 年启用', en: 'Officially identified; opened in 2014' },
     role: { 'zh-tw': '位於古寧頭戰史館後方，是古寧頭海岸戰後軍事遺址閱讀帶的一站。', 'zh-cn': '位于古宁头战史馆后方，是古宁头海岸战后军事遗址阅读带的一站。', en: 'Located behind the Guningtou Battle Museum, it is one stop in the post-war military-heritage reading band along the coast.' },
     present: { 'zh-tw': '由金門國家公園整理並開放作為軍事遺址展示；展示現況不等同 1949 原始工事。', 'zh-cn': '由金门国家公园整理并开放作为军事遗址展示；展示现况不等同 1949 原始工事。', en: 'Restored and opened by Kinmen National Park for military-heritage interpretation; the present display is not claimed to be an original 1949 fortification.' },
-    evidenceNote: { 'zh-tw': '官方來源已把 W16 對應為古寧頭三營區；仍不因此新增 canonical Location 或推定精確座標。', 'zh-cn': '官方来源已将 W16 对应为古宁头三营区；仍不因此新增 canonical Location 或推定精确坐标。', en: 'The official source identifies W16 as Guningtou Three Camp; no canonical Location or precise coordinate is inferred from that identification.' },
+    evidenceNote: { 'zh-tw': '本筆採用使用者指定座標；不將座標說成官方實測，也不改寫 1949 原始工事。', 'zh-cn': '本笔采用用户指定坐标；不将坐标说成官方实测，也不改写 1949 原始工事。', en: 'This record uses a user-specified coordinate; it is not described as an official survey or an original 1949 fortification.' },
     sourceLinks: [
       { label: { 'zh-tw': '古寧頭三營區啟用公告', 'zh-cn': '古宁头三营区启用公告', en: 'Guningtou Three Camp opening notice' }, href: 'https://www.taiwan.nps.gov.tw/home/zh-tw/news/25845' },
       { label: { 'zh-tw': '古寧頭文化景觀研究', 'zh-cn': '古宁头文化景观研究', en: 'Guningtou cultural-landscape study' }, href: 'https://www.taiwan.nps.gov.tw/home/zh-tw/topic/18647' },
     ],
   },
   {
-    id: 'W027', code: 'W027',
+    id: 'W027', poiId: 'POI-0029', code: 'W027',
     title: { 'zh-tw': '湖下一營區', 'zh-cn': '湖下一营区', en: 'Huxia Camp 1' },
     category: { 'zh-tw': '戰後軍事設施／活化據點', 'zh-cn': '战后军事设施／活化据点', en: 'Post-war military facility / adaptive reuse' },
     status: { 'zh-tw': '官方資料可查；已開放參觀', 'zh-cn': '官方资料可查；已开放参观', en: 'Official record; open to visitors' },
     role: { 'zh-tw': '守望金烈水道口與海岸線的戰後海防據點，含房舍、哨所、碉堡與坑道。', 'zh-cn': '守望金烈水道口与海岸线的战后海防据点，含房舍、哨所、碉堡与坑道。', en: 'A post-war coastal defence site watching the Jinlie waterway and coast, with buildings, posts, bunkers, and tunnels.' },
     present: { 'zh-tw': '國家公園整理後以原有軍事風貌、壁畫與坑道供訪客理解。', 'zh-cn': '国家公园整理后以原有军事风貌、壁画与坑道供访客理解。', en: 'After National Park work, its military character, murals, and tunnels support visitor interpretation.' },
-    evidenceNote: { 'zh-tw': '1986–1988 建造資訊屬戰後設施，不能回推為 1949 原始工事。', 'zh-cn': '1986–1988 建造信息属战后设施，不能回推为 1949 原始工事。', en: 'The 1986–1988 construction record is post-war and cannot be back-projected as an original 1949 fortification.' },
+    evidenceNote: { 'zh-tw': '本筆採用使用者指定座標；1986–1988 建造資訊屬戰後設施，不能回推為 1949 原始工事。', 'zh-cn': '本笔采用用户指定坐标；1986–1988 建造信息属战后设施，不能回推为 1949 原始工事。', en: 'This record uses a user-specified coordinate; the 1986–1988 construction record is post-war and cannot be back-projected as an original 1949 fortification.' },
     sourceLinks: [
       { label: { 'zh-tw': '國家公園湖下一營區專題', 'zh-cn': '国家公园湖下一营区专题', en: 'National Park Huxia Camp feature' }, href: 'https://www.taiwan.nps.gov.tw/home/zh-tw/topic/18061.html' },
       { label: { 'zh-tw': '金門觀光旅遊網現況', 'zh-cn': '金门观光旅游网现况', en: 'Kinmen tourism current information' }, href: 'https://kinmen.travel/zh-tw/travel/attraction/1664' },
@@ -216,7 +216,7 @@ export const thenNowSites: ThenNowSite[] = [
     mediaIds: ['TN-MEDIA-LI-SHRINE-2014'],
   },
   {
-    id: 'BEISHAN-COMMAND', code: 'RESEARCH',
+    id: 'BEISHAN-COMMAND', poiId: 'POI-0035', code: 'RESEARCH',
     title: { 'zh-tw': '北山共軍指揮所', 'zh-cn': '北山共军指挥所', en: 'Beishan PLA command post' },
     category: { 'zh-tw': '名稱與位置待查', 'zh-cn': '名称与位置待查', en: 'Name and location pending' },
     status: { 'zh-tw': '研究中；未標示為確定地點', 'zh-cn': '研究中；未标示为确定地点', en: 'Research only; not marked as a confirmed site' },
@@ -226,7 +226,7 @@ export const thenNowSites: ThenNowSite[] = [
     sourceLinks: [{ label: { 'zh-tw': '古寧頭文化景觀研究入口', 'zh-cn': '古宁头文化景观研究入口', en: 'Guningtou cultural-landscape research entry' }, href: 'https://www.taiwan.nps.gov.tw/home/zh-tw/topic/18647' }],
   },
   {
-    id: 'BEISHAN-HOUSE', code: 'SETTLEMENT',
+    id: 'BEISHAN-HOUSE', poiId: 'POI-0034', code: 'SETTLEMENT',
     title: { 'zh-tw': '北山古洋樓', 'zh-cn': '北山古洋楼', en: 'Beishan Old Western-style House' },
     category: { 'zh-tw': '聚落文化景觀', 'zh-cn': '聚落文化景观', en: 'Settlement heritage' },
     status: { 'zh-tw': '現況影像與文化資產資料可查', 'zh-cn': '现况影像与文化资产资料可查', en: 'Current image and heritage record available' },
@@ -235,6 +235,18 @@ export const thenNowSites: ThenNowSite[] = [
     evidenceNote: { 'zh-tw': '影像授權與建築資訊明列於典藏資料。', 'zh-cn': '影像授权与建筑信息明列于典藏资料。', en: 'Image licensing and building information are listed in the archive record.' },
     sourceLinks: [{ label: { 'zh-tw': 'Wikimedia Commons 影像紀錄', 'zh-cn': 'Wikimedia Commons 影像记录', en: 'Wikimedia Commons image record' }, href: 'https://commons.wikimedia.org/wiki/File:%E5%8F%A4%E5%AF%A7%E9%A0%AD%E5%8C%97%E5%B1%B1%E5%8F%A4%E6%B4%8B%E6%A8%93.jpg' }],
     mediaIds: ['TN-MEDIA-BEISHAN-HOUSE-2018'],
+  },
+  {
+    id: 'LINCUO-ARTILLERY', poiId: 'POI-0038', code: 'ARTILLERY',
+    title: { 'zh-tw': '林厝砲陣地', 'zh-cn': '林厝炮阵地', en: 'Lincuo Artillery Position' },
+    category: { 'zh-tw': '戰場與紀念地景', 'zh-cn': '战场与纪念地景', en: 'Battlefield and memorial landscape' },
+    status: { 'zh-tw': '使用者指定座標；與和平紀念園區分開', 'zh-cn': '用户指定坐标；与和平纪念园区分开', en: 'User-specified point; kept separate from the Peace Memorial Park' },
+    role: { 'zh-tw': '保留為獨立砲陣地研究項目，不以和平紀念園區或林厝聚落影像代替。', 'zh-cn': '保留为独立炮阵地研究项目，不以和平纪念园区或林厝聚落影像代替。', en: 'Kept as a separate artillery-position research item; no Peace Park or settlement image is used as a substitute.' },
+    present: { 'zh-tw': '地圖標記採用使用者提供的 24.48300, 118.32100；現況遺構與展示關係仍需分層閱讀。', 'zh-cn': '地图标记采用用户提供的 24.48300, 118.32100；现况遗构与展示关系仍需分层阅读。', en: 'The map uses the user-provided 24.48300, 118.32100; surviving structures and later display layers remain separate.' },
+    evidenceNote: { 'zh-tw': '本筆不與 POI-0018 金門和平紀念園區合併。', 'zh-cn': '本笔不与 POI-0018 金门和平纪念园区合并。', en: 'This record is not merged with POI-0018, Kinmen Peace Memorial Park.' },
+    sourceLinks: [
+      { label: { 'zh-tw': '本站既有地點檔案', 'zh-cn': '本站既有地点档案', en: 'Location record' }, href: 'locations/POI-0038' },
+    ],
   },
 ];
 

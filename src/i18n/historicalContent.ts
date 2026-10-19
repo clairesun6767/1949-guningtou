@@ -407,7 +407,19 @@ const POI_EN: Record<string, Partial<PoiCopy>> = {
   'POI-0023': { description: 'A road record associated with movement and supply during the battle period.', shortDescription: 'Route research record; not a verified historic road centreline.', historicalBackground: 'The project does not automatically map the modern road onto a 1949 movement route.', battleRole: 'Associated with movement and supply, but no historical geometry is promoted from the label alone.', historicalContext: 'Requires route-specific source review before it can be used as a battle trace.', importance: 'Research-only movement and supply record.' },
   'POI-0024': { description: 'A research record for surviving field-fortification remains in the Guningtou area.', shortDescription: 'Bunker research record; individual structures require field verification.', historicalBackground: 'The record refers to dispersed field fortifications rather than one confirmed bunker.', battleRole: 'Associated with the ROC defensive landscape; no individual bunker coordinate is asserted.', historicalContext: 'Use field survey and official heritage documentation before publishing a precise point.', importance: 'Fieldwork candidate for defensive remains.' },
   'POI-0025': { description: 'The Mount Taiwu area associated with the post-battle hiding and capture account of 253rd Regiment commander Xu Bo.', shortDescription: 'Post-battle narrative area; cave location is not precisely established.', historicalBackground: 'The project keeps this as a broad post-battle area and does not invent a cave coordinate.', battleRole: 'It belongs to the aftermath of the battle rather than the main battlefield geometry.', historicalContext: 'The capture narrative should be read with the linked event and source records.', importance: 'Post-battle hiding and capture area.' },
-  'POI-0026': { description: 'Andong Camp 2 (W-012) is a present-day coastal military-heritage site on Kinmen’s north coast. Its published coordinate comes from the official Kinmen National Park recreation-site page and is not a 1949 battle coordinate.', shortDescription: 'W-012 current military-heritage site; official point verified.', historicalBackground: 'The National Park record describes the sentry roof, rear foxhole, central salient, two anti-tank positions, and later restoration and adaptive reuse.', battleRole: 'A post-war coastal-defence site; no new 1949 route or combat geometry is inferred here.', historicalContext: 'The modern camp point is kept separate from the POI-0023 road research record and from historical battle traces.', importance: 'A current military-heritage and adaptive-reuse site in the Guningtou coastal landscape.' },
+  'POI-0026': { description: 'Andong Camp 2 (W-012) is a present-day coastal military-heritage site on Kinmen’s north coast. Its coordinate is adopted from the user-provided 38-place table and is not presented as an official survey or 1949 battle coordinate.', shortDescription: 'W-012 current military-heritage site; user-specified point.', historicalBackground: 'The existing site record describes the sentry roof, rear foxhole, central salient, two anti-tank positions, and later restoration and adaptive reuse.', battleRole: 'A post-war coastal-defence site; no new 1949 route or combat geometry is inferred here.', historicalContext: 'The modern camp point remains separate from the POI-0023 road research record and from historical battle traces.', importance: 'A current military-heritage and adaptive-reuse site in the Guningtou coastal landscape.' },
+  'POI-0027': { description: 'W011 Andong 3 Camp, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Andong defence-site record; user-specified point.', importance: 'A post-war military-site research and interpretation point.' },
+  'POI-0028': { description: 'W016 Guningtou Three Camp, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Guningtou military-site record; user-specified point.', importance: 'A post-war military-site research and interpretation point.' },
+  'POI-0029': { description: 'W027 Huxia Camp 1, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Huxia coastal-defence record; user-specified point.', importance: 'A post-war military-site research and interpretation point.' },
+  'POI-0030': { description: 'Longkou 2 Camp, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Longkou military-site record; user-specified point.', importance: 'A post-war military-site research and interpretation point.' },
+  'POI-0031': { description: 'Longkou Fort, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Longkou fortification record; user-specified point.', importance: 'A coastal-defence research and interpretation point.' },
+  'POI-0032': { description: 'East One Red, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Coastal-defence record; user-specified point.', importance: 'A military-site research and interpretation point.' },
+  'POI-0033': { description: 'Zhenzhong Fort, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Defensive-work record; user-specified point.', importance: 'A military-site research and interpretation point.' },
+  'POI-0034': { description: 'Beishan Old Western-style House, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Settlement heritage record; user-specified point.', importance: 'A Beishan settlement and heritage-building research point.' },
+  'POI-0035': { description: 'Beishan PLA Command Post, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Research command-post record; user-specified point.', importance: 'A historical research point whose exact identity remains separately documented.' },
+  'POI-0036': { description: 'Guningtou Shuiwei Pagoda, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Settlement landmark record; user-specified point.', importance: 'A cultural-landscape research and interpretation point.' },
+  'POI-0037': { description: 'Guandi Temple, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Settlement ritual-site record; user-specified point.', importance: 'A cultural-landscape research and interpretation point.' },
+  'POI-0038': { description: 'Lincuo Artillery Position, kept separate from the Kinmen Peace Memorial Park record, with a coordinate adopted from the user-provided 38-place table.', shortDescription: 'Lincuo artillery-position record; user-specified point.', importance: 'A battlefield and memorial-landscape research point.' },
 };
 
 function cleanResearchField(value: string | undefined, fallback: string): string {
@@ -436,7 +448,9 @@ export function getPersonCopy(person: HistoricalPerson, langValue?: string): Per
 export function getPoiCopy(poi: POI, langValue?: string): PoiCopy {
   const lang = normalizeLang(langValue);
   const rawFallback = '此據點的逐筆說明尚待來源與現地資料核對。';
-  const coordinateBasis = poi.coordinate_status === 'modern_verified'
+  const coordinateBasis = poi.coordinate_status === 'user_specified'
+    ? '使用者指定座標'
+    : poi.coordinate_status === 'modern_verified'
     ? '現代地點已查證'
     : poi.coordinate_status === 'representative'
       ? '現代代表點／範圍位置'
@@ -460,7 +474,9 @@ export function getPoiCopy(poi: POI, langValue?: string): PoiCopy {
   if (lang === 'en') {
     const copy = POI_EN[poi.poi_id] ?? {};
     const coordinateNote = poi.coordinate_note_en
-      ?? (poi.coordinate_status === 'modern_verified'
+      ?? (poi.coordinate_status === 'user_specified'
+        ? 'The coordinate is adopted from the user-provided 38-place table and is not presented as an official survey or independently verified historical coordinate.'
+        : poi.coordinate_status === 'modern_verified'
         ? 'The published coordinate identifies the present-day site; it is not automatically a 1949 battlefield coordinate.'
         : poi.coordinate_status === 'representative'
           ? 'The published coordinate is a present-day representative point for an area or named landscape, not a surveyed battle point.'
@@ -477,7 +493,7 @@ export function getPoiCopy(poi: POI, langValue?: string): PoiCopy {
       historicalContext: copy.historicalContext ?? 'Historical context pending source review; see linked timeline records.',
       importance: copy.importance ?? 'Historical importance pending source review.',
       coordinateAccuracy: poi.coordinate_accuracy ?? 'Not yet independently verified',
-      coordinateBasis: poi.coordinate_status === 'modern_verified' ? 'Modern site verified' : poi.coordinate_status === 'representative' ? 'Modern representative / area point' : poi.coordinate_status === 'historical_review' ? 'Historical location under review' : 'Location not independently verified',
+      coordinateBasis: poi.coordinate_status === 'user_specified' ? 'User-specified coordinate' : poi.coordinate_status === 'modern_verified' ? 'Modern site verified' : poi.coordinate_status === 'representative' ? 'Modern representative / area point' : poi.coordinate_status === 'historical_review' ? 'Historical location under review' : 'Location not independently verified',
       coordinateNote,
       openStatus: POI_OPEN_STATUS_EN[poi.open_status ?? ''] ?? 'Access status not recorded',
     };

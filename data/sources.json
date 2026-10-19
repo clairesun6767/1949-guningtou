@@ -830,6 +830,21 @@
       "usage_rights": "政府公開資料",
       "verification_status": "accessible",
       "notes": "既有 POI-0023 是道路紀錄，不以此頁面自動產生營區座標。"
+    },
+    {
+      "source_id": "SRC-0056",
+      "title": "使用者提供之古寧頭 38 處地點座標表",
+      "author_or_institution": "專案使用者",
+      "publication_date": "2026-10-19",
+      "source_type": "使用者指定座標表",
+      "source_level": 4,
+      "url_or_identifier": "conversation input",
+      "access_date": "2026-10-19",
+      "relevant_pages_or_sections": "現有地點探索 POI、軍事據點與活化場域、戰後研究歷史地點",
+      "relevance_summary": "本輪指定套用的 38 處 WGS84 緯度、經度與備註基準。",
+      "usage_rights": "專案使用者提供資料；限本專案使用",
+      "verification_status": "user_specified",
+      "notes": "本表依使用者要求直接套用，不代表官方實測、網路查證或歷史證據核實；不得以其他座標覆蓋。"
     }
   ]
 }

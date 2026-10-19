@@ -39,9 +39,10 @@ const coordinateStatusCounts = Object.fromEntries(
   [...new Set(pois.map((poi) => poi.coordinate_status ?? 'unclassified'))]
     .map((status) => [status, pois.filter((poi) => (poi.coordinate_status ?? 'unclassified') === status).length]),
 );
-const coordinateSourceCount = pois.filter((poi) => Boolean(poi.coordinate_source_url)).length;
+const coordinateSourceCount = pois.filter((poi) => Boolean(poi.coordinate_source)).length;
 const publicVerifiedModernCount = pois.filter((poi) => poi.coordinate_status === 'modern_verified').length;
 const representativeCount = pois.filter((poi) => poi.coordinate_status === 'representative').length;
+const userSpecifiedCount = pois.filter((poi) => poi.coordinate_status === 'user_specified').length;
 const unresolvedCount = pois.filter((poi) => ['unresolved', 'historical_review'].includes(poi.coordinate_status)).length;
 
 const metrics = {
@@ -64,6 +65,7 @@ const metrics = {
     sourceCount: coordinateSourceCount,
     modernVerifiedCount: publicVerifiedModernCount,
     representativeCount,
+    userSpecifiedCount,
     unresolvedOrHistoricalReviewCount: unresolvedCount,
     modernVerifiedIds: pois.filter((poi) => poi.coordinate_status === 'modern_verified').map((poi) => poi.poi_id),
   },
@@ -79,7 +81,7 @@ const metrics = {
   status: {
     pass: missingTimelineTranslations.length === 0
       && untranslatedTimelineFields.length === 0
-      && pois.length === 26
+      && pois.length === 38
       && pois.every((poi) => Boolean(poi.location_class && poi.coordinate_status))
       && missingMedia.length === 0
       && localMediaRefs.length > 0,

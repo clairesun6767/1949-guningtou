@@ -19,13 +19,13 @@ test('then-and-now has five anchored sections and three language records', () =>
   }
 });
 
-test('military-site reading band retains requested site codes without inventing coordinates', () => {
+test('military-site reading band retains requested site codes and user-specified coordinates', () => {
   for (const code of ['W011', 'W012', 'W013', 'W016', 'W027']) {
     assert.match(catalog, new RegExp(`id: '${code}'`), `${code} should be present`);
     assert.match(catalog, new RegExp(`code: '${code}'`), `${code} should retain its code`);
   }
-  assert.match(catalog, /no canonical Location or precise coordinate is inferred/);
-  assert.match(catalog, /The present-day W-012 camp is separated from the POI-0023 road research record/);
+  assert.match(catalog, /user-specified coordinate/);
+  assert.match(catalog, /24\.47376, 118\.33245/);
   assert.match(catalog, /TN-MEDIA-W012-ENTRANCE-2026/);
   assert.match(page, /imagePending/);
 });

@@ -44,8 +44,9 @@ test('all canonical POIs retain a cautious English presentation record', () => {
 
 test('coordinate uncertainty remains visible instead of being promoted', () => {
   const pois = arrayFrom(readJson('data/poi.json'), 'pois');
-  assert.deepEqual(pois.filter((poi) => poi.verification_status === 'verified').map((poi) => poi.poi_id), ['POI-0026']);
-  assert.equal(pois.filter((poi) => poi.coordinate_status !== 'modern_verified').some((poi) => poi.verification_status === 'verified'), false);
+  assert.deepEqual(pois.filter((poi) => poi.verification_status === 'verified').map((poi) => poi.poi_id), []);
+  assert.equal(pois.every((poi) => poi.coordinate_status === 'user_specified'), true);
+  assert.equal(pois.every((poi) => poi.map_visibility === 'public'), true);
   assert.equal(pois.every((poi) => poi.coordinate_accuracy), true);
 });
 

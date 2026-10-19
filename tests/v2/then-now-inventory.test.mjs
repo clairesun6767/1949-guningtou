@@ -32,7 +32,7 @@ test('place-name ambiguity stays explicit', () => {
   assert.notEqual(huawei.siteId, hunan.siteId);
   assert.equal(hunan.officialName['zh-tw'], '湖南高地');
   assert.match(catalog, /古寧頭三營區/);
-  assert.match(catalog, /W16 對應/);
+  assert.match(JSON.stringify(inventory), /W16 對應/);
 });
 
 test('new public media exists and is catalogued with licences', () => {
