@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "commitSha": "6ccb2c93a7a9a95d1e6d27f56c704cac88d094b0",
+  "commitSha": "1c5b7adb3dea737dd91539e03b9e2c8b03a519b4",
   "branch": "feature/guningtou-then-now-v2",
   "previewUrl": "not configured",
-  "capturedAt": "2026-10-19T02:27:07.613Z",
+  "capturedAt": "2026-10-19T03:08:17.693Z",
   "source": "Playwright visual acceptance artifact; selected PNGs only",
   "screenshots": [
     "desktop-1440x900-homepage.png",
