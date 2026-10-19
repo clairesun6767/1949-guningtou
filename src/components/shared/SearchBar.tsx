@@ -29,9 +29,7 @@ const links = [
       { type: '頁面', title: '多元觀點', href: '/1949-guningtou/zh-tw/perspectives/' },
       { type: '頁面', title: '文獻資料庫', href: '/1949-guningtou/zh-tw/sources/' },
       { type: '頁面', title: '數位典藏', href: '/1949-guningtou/zh-tw/archive/' },
-      { type: '頁面', title: '戰後至今', href: '/1949-guningtou/zh-tw/peace/' },
-      { type: '頁面', title: 'Battlefield OS', href: '/1949-guningtou/zh-tw/battlefield-os/' },
-      { type: '頁面', title: '關於本站', href: '/1949-guningtou/zh-tw/about/' },
+      { type: '頁面', title: '昔日戰場・今日古寧頭', href: '/1949-guningtou/zh-tw/then-and-now/' },
 ];
 
 // Add some key search terms

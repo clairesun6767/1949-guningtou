@@ -4,6 +4,13 @@ import path from 'node:path';
 
 const BASE_PATH = process.env.PREVIEW_BASE_PATH?.replace(/\/$/, '') || '/1949-guningtou';
 const artifactRoot = path.resolve(process.env.VISUAL_ARTIFACT_DIR ?? 'artifacts/visual-acceptance');
+const postwarSections = [
+  ['01｜1949 與今日', 'overview'],
+  ['02｜戰場影像對照', 'images'],
+  ['03｜古寧頭戰場探索', 'explore'],
+  ['04｜軍事據點活化', 'activation'],
+  ['05｜留下的歷史痕跡', 'traces'],
+] as const;
 
 type RuntimeIssues = {
   pageErrors: string[];
@@ -90,6 +97,10 @@ test.describe('remote preview visual acceptance', () => {
     const issues = await openPage(page, `${BASE_PATH}/zh-tw/`);
     await expect(page.getByRole('main')).toContainText('1949');
     await capture(page, testInfo, 'homepage', true);
+    await expect(page.locator('.museum-nav__link')).toHaveCount(1);
+    await expect(page.locator('.museum-nav__group')).toHaveCount(5);
+    await expect(page.locator('.museum-nav')).not.toContainText('和平與計畫');
+    await expect(page.locator('.museum-nav')).not.toContainText('Battlefield OS');
 
     const search = page.getByLabel('搜尋網站內容');
     if (await search.isVisible()) {
@@ -102,11 +113,23 @@ test.describe('remote preview visual acceptance', () => {
     if (await mobileMenu.isVisible()) {
       await mobileMenu.click();
       await expect(page.locator('.museum-mobile-menu__panel')).toBeVisible();
+      const afterwarGroup = page.locator('.museum-mobile-menu__panel details').filter({ hasText: '戰後金門' }).first();
+      await expect(afterwarGroup).toBeVisible();
+      await afterwarGroup.locator('summary').click();
+      for (const [label, sectionId] of postwarSections) {
+        await expect(afterwarGroup.locator('a').filter({ hasText: label })).toHaveAttribute('href', `${BASE_PATH}/zh-tw/then-and-now/#${sectionId}`);
+      }
+      await capture(page, testInfo, 'homepage-postwar-menu');
     } else {
-      const menuSummary = page.locator('.museum-nav__summary').filter({ hasText: '認識戰役' }).first();
-      await expect(menuSummary).toBeVisible();
-      await menuSummary.click();
-      await expect(page.locator('.museum-nav__dropdown').filter({ hasText: '世界局勢與戰役背景' }).first()).toBeVisible();
+      const afterwarSummary = page.locator('.museum-nav__summary').filter({ hasText: '戰後金門' }).first();
+      await expect(afterwarSummary).toBeVisible();
+      await afterwarSummary.hover();
+      const dropdown = page.locator('.museum-nav__dropdown').filter({ hasText: '01｜1949 與今日' }).first();
+      await expect(dropdown).toBeVisible();
+      for (const [label, sectionId] of postwarSections) {
+        await expect(dropdown.locator('a').filter({ hasText: label })).toHaveAttribute('href', `${BASE_PATH}/zh-tw/then-and-now/#${sectionId}`);
+      }
+      await capture(page, testInfo, 'homepage-postwar-menu');
     }
     await assertHealthy(page, issues);
   });

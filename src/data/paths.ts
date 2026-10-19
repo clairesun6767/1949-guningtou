@@ -5,10 +5,13 @@ export const BASE = '/1949-guningtou/';
 
 export function sitePath(path: string, lang?: string): string {
   const clean = path.replace(/^\/+/, '');
-  const isFile = /(^|\/)[^/]+\.[^/]+$/.test(clean);
-  const route = clean && !isFile && !clean.endsWith('/') ? `${clean}/` : clean;
-  if (lang) return `${BASE}${lang}/${route}`;
-  return BASE + route;
+  const suffixStart = clean.search(/[?#]/);
+  const pathname = suffixStart >= 0 ? clean.slice(0, suffixStart) : clean;
+  const suffix = suffixStart >= 0 ? clean.slice(suffixStart) : '';
+  const isFile = /(^|\/)[^/]+\.[^/]+$/.test(pathname);
+  const route = pathname && !isFile && !pathname.endsWith('/') ? `${pathname}/` : pathname;
+  if (lang) return `${BASE}${lang}/${route}${suffix}`;
+  return `${BASE}${route}${suffix}`;
 }
 
 export const LANGS = [

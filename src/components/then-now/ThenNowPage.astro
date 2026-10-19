@@ -62,6 +62,12 @@ function siteMedia(site: ThenNowSite) {
   return site.mediaIds?.map(getThenNowMedia).find((asset) => Boolean(asset));
 }
 
+const activationSites = thenNowSites.filter((site) => activationIds.has(site.id));
+const activationSitesWithMedia = activationSites.filter((site) => Boolean(siteMedia(site)));
+const activationResearchSites = activationSites.filter((site) => !siteMedia(site));
+const traceSitesWithMedia = traceSites.filter((site) => Boolean(siteMedia(site)));
+const traceResearchSites = traceSites.filter((site) => !siteMedia(site));
+
 function sourceHref(href: string) {
   if (href.startsWith('http')) return href;
   return sitePath(href.replace(/^\/+/, ''), lang);
@@ -95,6 +101,9 @@ const labels = {
   inventorySites: { 'zh-tw': '站點', 'zh-cn': '站点', en: 'sites' } satisfies Localized,
   inventorySources: { 'zh-tw': '來源', 'zh-cn': '来源', en: 'sources' } satisfies Localized,
   inventoryReview: { 'zh-tw': '需人工覆核', 'zh-cn': '需人工复核', en: 'human review' } satisfies Localized,
+  activationResearch: { 'zh-tw': '照片與現況清冊待補的研究項目', 'zh-cn': '照片与现况清册待补的研究项目', en: 'Research items awaiting site-specific images' } satisfies Localized,
+  activationResearchNote: { 'zh-tw': '以下項目保留官方來源與研究內容，但目前沒有能確認為該據點、且可公開重製的照片；不以其他地點影像代替。', 'zh-cn': '以下项目保留官方来源与研究内容，但目前没有能确认属于该据点、且可公开重制的照片；不以其他地点影像代替。', en: 'These records retain their official sources and research notes, but no site-specific, rights-cleared photograph is currently confirmed; unrelated images are not substituted.' } satisfies Localized,
+  mediaCredit: { 'zh-tw': '影像', 'zh-cn': '影像', en: 'Image' } satisfies Localized,
 };
 ---
 
@@ -251,15 +260,11 @@ const labels = {
           ))}
         </div>
         <div class="then-now-site-grid">
-          {thenNowSites.filter((site) => activationIds.has(site.id)).map((site) => {
+          {activationSitesWithMedia.map((site) => {
             const asset = siteMedia(site);
             return (
               <article class="then-now-site-card">
-                {asset ? (
-                  <img class="then-now-site-card__image" src={sitePath(asset.src)} alt={lang === 'en' ? asset.titleEn : asset.titleZh} loading="lazy" decoding="async" />
-                ) : (
-                  <div class="then-now-site-card__pending"><span>{text(labels.imagePending)}</span><small>{text(labels.pendingImage)}</small></div>
-                )}
+                {asset && <img class="then-now-site-card__image" src={sitePath(asset.src)} alt={lang === 'en' ? asset.titleEn : asset.titleZh} loading="lazy" decoding="async" />}
                 <div class="then-now-site-card__body">
                   <div class="then-now-site-card__head"><span class="museum-label">{site.code}</span><span class="museum-status">{text(site.status)}</span></div>
                   <h3>{text(site.title)}</h3>
@@ -267,9 +272,9 @@ const labels = {
                   <p>{text(site.role)}</p>
                   <p>{text(site.present)}</p>
                   <div class="then-now-site-card__note">{text(site.evidenceNote)}</div>
+                  {asset && <div class="then-now-site-card__media-credit"><span>{text(labels.mediaCredit)} · {asset.author ?? (lang === 'en' ? asset.sourceEn : asset.sourceZh)}{asset.capturedAt ? ` · ${asset.capturedAt}` : ''}</span><a href={sourceHref(asset.sourceUrl)} target="_blank" rel="noopener noreferrer">{asset.rights}</a></div>}
                   <div class="then-now-site-card__links">
                     {site.poiId && <a class="museum-link" href={sitePath(`locations/${site.poiId}`, lang)}>{text(labels.openLocation)}</a>}
-                    {!site.poiId && <span class="museum-postwar-pending">{text(labels.researchOnly)}</span>}
                     {site.sourceLinks.map((source) => <a class="museum-link" href={sourceHref(source.href)} target="_blank" rel="noopener noreferrer">{sourceLabel(source)} ↗</a>)}
                   </div>
                 </div>
@@ -277,12 +282,38 @@ const labels = {
             );
           })}
         </div>
+        <div class="then-now-activation-research">
+          <div class="then-now-activation-research__intro">
+            <div>
+              <span class="museum-label">{text(labels.activationResearch)}</span>
+              <h3>{isEnglish ? 'Keep the record visible without inventing a picture.' : '保留研究內容，但不替缺圖據點虛構照片。'}</h3>
+            </div>
+            <p>{text(labels.activationResearchNote)}</p>
+          </div>
+          <div class="then-now-activation-list">
+            {activationResearchSites.map((site) => (
+              <article class="then-now-activation-item">
+                <div class="then-now-activation-item__head">
+                  <span class="museum-kicker">{site.code}</span>
+                  <span class="museum-status">{text(site.status)}</span>
+                </div>
+                <h4>{text(site.title)}</h4>
+                <p class="then-now-site-card__category">{text(site.category)}</p>
+                <p>{text(site.present)}</p>
+                <div class="then-now-site-card__links">
+                  {site.poiId && <a class="museum-link" href={sitePath(`locations/${site.poiId}`, lang)}>{text(labels.openLocation)}</a>}
+                  {site.sourceLinks.map((source) => <a class="museum-link" href={sourceHref(source.href)} target="_blank" rel="noopener noreferrer">{sourceLabel(source)} ↗</a>)}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section id="traces" class="then-now-section" aria-labelledby="then-now-traces-title">
         <SectionHeading index="05" eyebrow={text(thenNowSections[4].eyebrow)} title={text(thenNowSections[4].title)} description={text(thenNowSections[4].description)} />
         <div class="then-now-site-grid then-now-site-grid--traces">
-          {traceSites.map((site) => {
+          {traceSitesWithMedia.map((site) => {
             const asset = siteMedia(site);
             return (
               <article class="then-now-site-card then-now-site-card--trace">
@@ -293,6 +324,7 @@ const labels = {
                   <p class="then-now-site-card__category">{text(site.category)}</p>
                   <p>{text(site.present)}</p>
                   <div class="then-now-site-card__note">{text(site.evidenceNote)}</div>
+                  {asset && <div class="then-now-site-card__media-credit"><span>{text(labels.mediaCredit)} · {asset.author ?? (lang === 'en' ? asset.sourceEn : asset.sourceZh)}{asset.capturedAt ? ` · ${asset.capturedAt}` : ''}</span><a href={sourceHref(asset.sourceUrl)} target="_blank" rel="noopener noreferrer">{asset.rights}</a></div>}
                   <div class="then-now-site-card__links">
                     {site.poiId && <a class="museum-link" href={sitePath(`locations/${site.poiId}`, lang)}>{text(labels.openLocation)}</a>}
                     {!site.poiId && <span class="museum-postwar-pending">{text(labels.researchOnly)}</span>}
@@ -303,6 +335,31 @@ const labels = {
             );
           })}
         </div>
+        {traceResearchSites.length > 0 && <div class="then-now-activation-research">
+          <div class="then-now-activation-research__intro">
+            <div>
+              <span class="museum-label">{text(labels.researchEntry)}</span>
+              <h3>{isEnglish ? 'Research records stay separate from the photo gallery.' : '研究項目與照片展示分開保留。'}</h3>
+            </div>
+            <p>{text(labels.activationResearchNote)}</p>
+          </div>
+          <div class="then-now-activation-list">
+            {traceResearchSites.map((site) => (
+              <article class="then-now-activation-item">
+                <div class="then-now-activation-item__head">
+                  <span class="museum-kicker">{site.code}</span>
+                  <span class="museum-status">{text(site.status)}</span>
+                </div>
+                <h4>{text(site.title)}</h4>
+                <p class="then-now-site-card__category">{text(site.category)}</p>
+                <p>{text(site.present)}</p>
+                <div class="then-now-site-card__links">
+                  {site.sourceLinks.map((source) => <a class="museum-link" href={sourceHref(source.href)} target="_blank" rel="noopener noreferrer">{sourceLabel(source)} ↗</a>)}
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>}
         <div class="then-now-traces-footer">
           <a class="museum-button" href={sitePath('', lang)}>{isEnglish ? 'Return to the 1949 museum home →' : '回到 1949 古寧頭主頁 →'}</a>
           <a class="museum-button museum-button--outline" href={sitePath('timeline', lang)}>{isEnglish ? 'Read the battle timeline →' : '閱讀戰役時間軸 →'}</a>

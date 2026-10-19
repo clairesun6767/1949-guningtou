@@ -16,7 +16,7 @@ const typedLang = lang as Lang;
 const t = (key: string) => UI[typedLang]?.[key] || UI['zh-tw']?.[key] || key;
 const currentPath = Astro.url.pathname;
 
-const navGroups: { labelKey: string; items: { href: string; labelKey: string }[] }[] = [
+const navGroups: { labelKey: string; href?: string; activeHrefs?: string[]; items: { href: string; labelKey: string }[] }[] = [
   {
     labelKey: 'navUnderstanding' as const,
     items: [
@@ -51,11 +51,15 @@ const navGroups: { labelKey: string; items: { href: string; labelKey: string }[]
     ],
   },
   {
-    labelKey: 'navPeace' as const,
+    labelKey: 'navAfterwar' as const,
+    href: 'then-and-now',
+    activeHrefs: ['postwar'],
     items: [
-      { href: 'postwar', labelKey: 'navAfterwar' as const },
-      { href: 'battlefield-os', labelKey: 'navBattlefieldOS' as const },
-      { href: 'about', labelKey: 'navAbout' as const },
+      { href: 'then-and-now/#overview', labelKey: 'navAfterwarOverview' as const },
+      { href: 'then-and-now/#images', labelKey: 'navAfterwarImages' as const },
+      { href: 'then-and-now/#explore', labelKey: 'navAfterwarExplore' as const },
+      { href: 'then-and-now/#activation', labelKey: 'navAfterwarActivation' as const },
+      { href: 'then-and-now/#traces', labelKey: 'navAfterwarTraces' as const },
     ],
   },
 ];
@@ -65,12 +69,17 @@ function pathFor(href: string) {
 }
 
 function isCurrent(href: string) {
-  if (!href) return currentPath.endsWith(`/${lang}/`) || currentPath.endsWith(`/${lang}`);
-  return currentPath.includes(`/${lang}/${href}`);
+  const route = href.split(/[?#]/)[0].replace(/^\/+|\/+$/g, '');
+  if (!route) return currentPath.endsWith(`/${lang}/`) || currentPath.endsWith(`/${lang}`);
+  return currentPath.includes(`/${lang}/${route}/`) || currentPath.endsWith(`/${lang}/${route}`);
 }
 
-function isGroupCurrent(items: { href: string }[]) {
-  return items.some((item) => isCurrent(item.href));
+function isGroupCurrent(group: { href?: string; activeHrefs?: string[]; items: { href: string }[] }) {
+  return Boolean(
+    (group.href && isCurrent(group.href))
+    || group.activeHrefs?.some((href) => isCurrent(href))
+    || group.items.some((item) => isCurrent(item.href)),
+  );
 }
 ---
 
@@ -115,8 +124,10 @@ function isGroupCurrent(items: { href: string }[]) {
             <div class="museum-mobile-menu__panel">
               <a href={pathFor('')} class="museum-mobile-menu__home" aria-current={isCurrent('') ? 'page' : undefined}>{t('home')}</a>
               {navGroups.map((group) => (
-                <details open={isGroupCurrent(group.items)}>
-                  <summary>{t(group.labelKey)}</summary>
+                <details open={isGroupCurrent(group)}>
+                  <summary>
+                    {group.href ? <a href={pathFor(group.href)} class="museum-nav__summary-link">{t(group.labelKey)}</a> : t(group.labelKey)}
+                  </summary>
                   <div>
                     {group.items.map((item) => (
                       <a href={pathFor(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>{t(item.labelKey)}</a>
@@ -134,8 +145,8 @@ function isGroupCurrent(items: { href: string }[]) {
             <a href={pathFor('')} class="museum-nav__link" aria-current={isCurrent('') ? 'page' : undefined}>{t('home')}</a>
             {navGroups.map((group) => (
               <details class="museum-nav__group">
-                <summary class:list={['museum-nav__summary', isGroupCurrent(group.items) && 'museum-nav__summary--current']}>
-                  {t(group.labelKey)}
+                <summary class:list={['museum-nav__summary', isGroupCurrent(group) && 'museum-nav__summary--current']}>
+                  {group.href ? <a href={pathFor(group.href)} class="museum-nav__summary-link">{t(group.labelKey)}</a> : t(group.labelKey)}
                 </summary>
                 <div class="museum-nav__dropdown">
                   {group.items.map((item) => (
@@ -159,6 +170,7 @@ function isGroupCurrent(items: { href: string }[]) {
           <span>{t('footerSource')}</span>
           <span>{lastUpdated ? `${t('footerUpdated')}：${lastUpdated}` : t('footerVersion')}</span>
           <span>{t('footerReport')} <a href="https://github.com/clairesun6767/1949-guningtou/issues/new?template=史料回報.yml">{t('footerReportLink')}</a></span>
+          <a class="museum-footer__about" href={pathFor('about')}>{t('navAbout')}</a>
         </div>
       </div>
     </footer>
@@ -166,12 +178,38 @@ function isGroupCurrent(items: { href: string }[]) {
     <script>
       const desktopNavGroups = document.querySelectorAll<HTMLDetailsElement>('.museum-nav__group');
 
+      let closeTimer: number | undefined;
+      const isDesktopNavigation = () => window.matchMedia('(min-width: 901px)').matches;
+
       desktopNavGroups.forEach((group) => {
         group.addEventListener('toggle', () => {
           if (!group.open) return;
           desktopNavGroups.forEach((otherGroup) => {
             if (otherGroup !== group) otherGroup.removeAttribute('open');
           });
+        });
+
+        group.addEventListener('mouseenter', () => {
+          if (!isDesktopNavigation()) return;
+          if (closeTimer) window.clearTimeout(closeTimer);
+          group.open = true;
+        });
+
+        group.addEventListener('mouseleave', () => {
+          if (!isDesktopNavigation()) return;
+          closeTimer = window.setTimeout(() => group.removeAttribute('open'), 180);
+        });
+
+        group.addEventListener('focusin', () => {
+          if (!isDesktopNavigation()) return;
+          if (closeTimer) window.clearTimeout(closeTimer);
+          group.open = true;
+        });
+
+        group.addEventListener('focusout', (event) => {
+          if (!isDesktopNavigation()) return;
+          const nextTarget = event.relatedTarget as Node | null;
+          if (!nextTarget || !group.contains(nextTarget)) group.removeAttribute('open');
         });
       });
     </script>

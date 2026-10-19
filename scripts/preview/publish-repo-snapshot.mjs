@@ -7,8 +7,10 @@ const artifacts = path.resolve(root, process.env.VISUAL_ARTIFACT_DIR ?? 'artifac
 const destination = path.resolve(root, 'docs/preview/current');
 const selectedNames = [
   'desktop-1440x900-homepage.png',
+  'desktop-1440x900-homepage-postwar-menu.png',
   'desktop-1440x900-then-now-overview.png',
   'desktop-1440x900-then-now-images.png',
+  'desktop-1440x900-then-now-activation.png',
   'desktop-1440x900-map.png',
   'mobile-390x844-homepage.png',
   'mobile-390x844-map.png',
