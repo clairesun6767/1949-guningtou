@@ -25,7 +25,8 @@ test('military-site reading band retains requested site codes without inventing 
     assert.match(catalog, new RegExp(`code: '${code}'`), `${code} should retain its code`);
   }
   assert.match(catalog, /no canonical Location or precise coordinate is inferred/);
-  assert.match(catalog, /The existing POI-0023 is a road record/);
+  assert.match(catalog, /The present-day W-012 camp is separated from the POI-0023 road research record/);
+  assert.match(catalog, /TN-MEDIA-W012-ENTRANCE-2026/);
   assert.match(page, /imagePending/);
 });
 
@@ -36,13 +37,15 @@ test('published then-and-now image bundle exists and carries explicit attributio
     'beishan-broadcast-wall-2013.jpg',
     'beishan-old-house-2018.jpg',
     'guningtou-arch-2012.jpg',
+    'w012-entrance.jpg',
+    'w012-exterior.jpg',
   ];
   for (const name of imageNames) {
     const path = `public/media/guningtou/then-now/${name}`;
     assert.equal(existsSync(path), true, `${path} should be tracked`);
     assert.ok(statSync(path).size > 1000, `${path} should not be an empty placeholder`);
   }
-  for (const id of ['TN-MEDIA-MUSEUM-2013', 'TN-MEDIA-BEISHAN-CLIFF-2022', 'TN-MEDIA-BROADCAST-WALL-2013', 'TN-MEDIA-BEISHAN-HOUSE-2018', 'TN-MEDIA-ARCH-2012']) {
+  for (const id of ['TN-MEDIA-MUSEUM-2013', 'TN-MEDIA-BEISHAN-CLIFF-2022', 'TN-MEDIA-BROADCAST-WALL-2013', 'TN-MEDIA-BEISHAN-HOUSE-2018', 'TN-MEDIA-ARCH-2012', 'TN-MEDIA-W012-ENTRANCE-2026', 'TN-MEDIA-W012-EXTERIOR-2026']) {
     assert.match(readFileSync('src/data/mediaCatalog.ts', 'utf8'), new RegExp(id));
   }
   assert.match(readFileSync('src/data/mediaCatalog.ts', 'utf8'), /CC BY-SA 4\.0/);

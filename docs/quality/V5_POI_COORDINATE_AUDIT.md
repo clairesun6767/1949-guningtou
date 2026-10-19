@@ -29,11 +29,12 @@
 | POI-0023 | Andong Camp 2 Road | 24.470, 118.310 | 24.470, 118.310 | historical_area / historical_review | 道路不等於戰役路線或營區邊界 |
 | POI-0024 | Guningtou Area Defense Bunkers | 24.476, 118.317 | 24.476, 118.317 | uncertain_area / unresolved | 分散工事群，沒有安全單一碉堡點 |
 | POI-0025 | Mount Taiwu (Xu Bo's Hideout) | 24.430, 118.350 | 24.430, 118.350 | historical_area / historical_review | 廣域躲藏敘事，沒有洞穴級座標 |
+| POI-0026 | 安東二營區（W-012） | — | 24.47413, 118.33239 | modern_site / modern_verified | 金門國家公園官方遊憩據點頁的 Google Maps 精確連結；不與 POI-0023 道路紀錄混用 |
 
 ## 統計
 
-- 核對：25/25。
-- 使用新的 OSM 現代／代表點：13 處（其中 5 處 `modern_verified`、8 處 `representative`）。
+- 核對：26/26。
+- 使用新的可公開現代／代表點：14 處（13 處 OSM 現代／代表點，加上 1 處金門國家公園官方精確點；其中 6 處 `modern_verified`、8 處 `representative`）。
 - 保留原索引但明確降級為研究狀態：12 處（10 `historical_review`、2 `unresolved`）。
-- 以位置不明而隱藏的標記：0；改為在列表、詳情與選取標記上顯示定位依據，避免誤讀。
+- 以位置不明而隱藏的標記：12；研究索引仍保留在列表與詳情，但不再在公開地圖放置精確標記或顯示 GPS 數字。
 - 湖尾高地（POI-0015）與湖南高地（POI-0010）沒有合併。

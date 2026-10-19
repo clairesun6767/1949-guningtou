@@ -17,10 +17,10 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
   const isEnglish = lang === 'en';
   const isSimplified = lang === 'zh-cn';
   const labels = isEnglish
-    ? { categories: 'Location categories', all: 'All', place: 'Location', detail: 'Open record →', locate: 'Select a location to locate it', notSelected: 'No location selected' }
+    ? { categories: 'Location categories', all: 'All', place: 'Location', detail: 'Open record →', locate: 'Select a location to locate it', notSelected: 'No location selected', researchOnly: 'Research index; exact marker withheld' }
     : isSimplified
-      ? { categories: '地点分类', all: '全部', place: '地点', detail: '查看档案 →', locate: '点击地点以定位', notSelected: '尚未选择地点' }
-      : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點' };
+      ? { categories: '地点分类', all: '全部', place: '地点', detail: '查看档案 →', locate: '点击地点以定位', notSelected: '尚未选择地点', researchOnly: '研究索引；暂不显示精确标记' }
+      : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點', researchOnly: '研究索引；暫不顯示精確標記' };
   const coordinateStatusLabel = (status?: string) => isEnglish
     ? ({ modern_verified: 'Modern site verified', representative: 'Modern representative / area point', historical_review: 'Historical location under review', unresolved: 'Location not independently verified' }[status ?? ''] ?? 'Location basis not recorded')
     : isSimplified
@@ -31,6 +31,8 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hasPublicCoordinate = (poi: typeof allPois[0]) =>
+    (poi.map_visibility ?? (poi.coordinate_status === 'modern_verified' || poi.coordinate_status === 'representative' ? 'public' : 'research')) === 'public';
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -49,7 +51,12 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !selectedPoi) return;
-    if (markerRef.current) markerRef.current.remove();
+    if (markerRef.current) {
+      markerRef.current.remove();
+      markerRef.current = null;
+    }
+
+    if (!hasPublicCoordinate(selectedPoi)) return;
 
     const isExactModern = selectedPoi.coordinate_status === 'modern_verified';
     const icon = L.divIcon({
@@ -88,7 +95,7 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
                 <h3>{copy.name}</h3>
                 {poi.name_english && lang !== 'en' && <span className="museum-citation">{poi.name_english}</span>}
                 <p>{copy.shortDescription}</p>
-                <span className="museum-meta">{coordinateStatusLabel(poi.coordinate_status)} · {poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</span>
+                <span className="museum-meta">{coordinateStatusLabel(poi.coordinate_status)} · {hasPublicCoordinate(poi) ? `${poi.latitude.toFixed(4)}, ${poi.longitude.toFixed(4)}` : labels.researchOnly}</span>
               </button>
               <a className="museum-link museum-location-result__detail" href={`${BASE}/${lang}/locations/${poi.poi_id}/`}>{labels.detail}</a>
             </article>
@@ -101,7 +108,7 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
       <aside className="museum-location-explorer__map">
         <div className="museum-map-header-inline"><span className="museum-kicker">LOCATION INDEX</span><span>{labels.locate}</span></div>
         <div ref={containerRef} />
-        <div className="museum-citation museum-location-explorer__coordinates">{selectedPoi ? `${getPoiCopy(selectedPoi, lang).name} · ${selectedPoi.latitude.toFixed(4)}, ${selectedPoi.longitude.toFixed(4)}` : labels.notSelected}</div>
+        <div className="museum-citation museum-location-explorer__coordinates">{selectedPoi ? `${getPoiCopy(selectedPoi, lang).name} · ${hasPublicCoordinate(selectedPoi) ? `${selectedPoi.latitude.toFixed(4)}, ${selectedPoi.longitude.toFixed(4)}` : labels.researchOnly}` : labels.notSelected}</div>
       </aside>
     </div>
   );

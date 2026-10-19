@@ -301,6 +301,7 @@ export const archiveMedia: ArchiveMediaAsset[] = [
     author: '張雅倫',
     capturedAt: '2018-05-11',
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/',
+    placeIds: ['POI-0006'],
     status: 'published',
   },
   {
@@ -390,6 +391,39 @@ export const archiveMedia: ArchiveMediaAsset[] = [
     author: 'Rolfmueller',
     capturedAt: '2012-12-15',
     licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/',
+    placeIds: ['POI-0022'],
+    status: 'published',
+  },
+  {
+    id: 'TN-MEDIA-W012-ENTRANCE-2026',
+    kind: 'photograph',
+    src: 'media/guningtou/then-now/w012-entrance.jpg',
+    titleZh: '安東二營區賣店／入口（官方現況影像）',
+    titleEn: 'Andong Camp 2 shop / entrance · official current view',
+    captionZh: '金門國家公園安東二營區官方據點頁所載現況影像；用於辨識 W-012 現代據點，不回推 1949 戰役幾何。',
+    captionEn: 'Official current view from the Kinmen National Park W-012 site record; used to identify the present-day site, not to infer 1949 battle geometry.',
+    sourceZh: '金門國家公園全球資訊網：安東二營區',
+    sourceEn: 'Kinmen National Park: Andong Camp 2 site record',
+    sourceUrl: 'https://www.kmnp.gov.tw/ch/touristInfo/recreation-sites/49',
+    rights: '金門國家公園政府網站資料開放宣告；註明出處，個別特別聲明除外',
+    placeIds: ['POI-0026'],
+    licenseUrl: 'https://www.kmnp.gov.tw/ch/sglarticle/government-open-data-statement',
+    status: 'published',
+  },
+  {
+    id: 'TN-MEDIA-W012-EXTERIOR-2026',
+    kind: 'photograph',
+    src: 'media/guningtou/then-now/w012-exterior.jpg',
+    titleZh: '安東二營區外觀（官方現況影像）',
+    titleEn: 'Andong Camp 2 exterior · official current view',
+    captionZh: '金門國家公園官方據點頁所載安東二營區外觀；作為 W-012 現代營區的實際照片。',
+    captionEn: 'Exterior view of Andong Camp 2 from the official Kinmen National Park site record; an actual current image of the W-012 camp.',
+    sourceZh: '金門國家公園全球資訊網：安東二營區',
+    sourceEn: 'Kinmen National Park: Andong Camp 2 site record',
+    sourceUrl: 'https://www.kmnp.gov.tw/ch/touristInfo/recreation-sites/49',
+    rights: '金門國家公園政府網站資料開放宣告；註明出處，個別特別聲明除外',
+    placeIds: ['POI-0026'],
+    licenseUrl: 'https://www.kmnp.gov.tw/ch/sglarticle/government-open-data-statement',
     status: 'published',
   },
   ...Array.from({ length: 8 }, (_, index): ArchiveMediaAsset => {
@@ -413,6 +447,10 @@ export const archiveMedia: ArchiveMediaAsset[] = [
 
 export function getPersonMedia(personId: string): ArchiveMediaAsset[] {
   return publicArchiveMedia.filter((asset) => asset.personIds?.includes(personId));
+}
+
+export function getPlaceMedia(placeId: string): ArchiveMediaAsset[] {
+  return publicArchiveMedia.filter((asset) => asset.kind === 'photograph' && asset.placeIds?.includes(placeId));
 }
 
 /**

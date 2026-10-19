@@ -78,6 +78,8 @@ export interface POI {
   coordinate_accuracy?: string;
   location_class?: 'modern_site' | 'historical_area' | 'historical_point' | 'uncertain_area';
   coordinate_status?: 'modern_verified' | 'representative' | 'historical_review' | 'unresolved';
+  /** Public map markers are limited to current verified or representative points. */
+  map_visibility?: 'public' | 'research';
   coordinate_source?: string;
   coordinate_source_url?: string;
   coordinate_note?: string;

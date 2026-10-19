@@ -11,6 +11,14 @@ interface Props {
 const { poi, href, lang = 'zh-tw' } = Astro.props;
 const copy = getPoiCopy(poi, lang);
 const isEnglish = lang === 'en';
+const hasPublicCoordinate = (poi.map_visibility ?? (poi.coordinate_status === 'modern_verified' || poi.coordinate_status === 'representative' ? 'public' : 'research')) === 'public';
+const coordinateLabel = hasPublicCoordinate
+  ? `${poi.latitude.toFixed(4)}, ${poi.longitude.toFixed(4)}`
+  : isEnglish
+    ? 'Research index; exact point withheld'
+    : lang === 'zh-cn'
+      ? '研究索引；不显示精确点位'
+      : '研究索引；不顯示精確點位';
 ---
 
 <a href={href} class="museum-card museum-card-link museum-location-card">
@@ -22,7 +30,7 @@ const isEnglish = lang === 'en';
   {poi.name_english && lang !== 'en' && <p class="museum-location-card__english">{poi.name_english}</p>}
   <p class="museum-location-card__summary">{copy.shortDescription}</p>
   <div class="museum-meta-grid">
-    <dl class="museum-meta"><dt>{isEnglish ? 'Coordinates' : lang === 'zh-cn' ? '坐标' : '座標'}</dt><dd>{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Coordinates' : lang === 'zh-cn' ? '坐标' : '座標'}</dt><dd>{coordinateLabel}</dd></dl>
     <dl class="museum-meta"><dt>{isEnglish ? 'Record' : lang === 'zh-cn' ? '编号' : '編號'}</dt><dd>{poi.poi_id}</dd></dl>
   </div>
 </a>

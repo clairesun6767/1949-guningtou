@@ -14,7 +14,7 @@ const copy = {
     now: '今日 · canonical POI 地圖',
     note: '兩側使用同一古寧頭區域中心閱讀；航照尚未完成 GCP 套準，不代表精確疊合。',
     opacity: '昔日航照透明度',
-    markerNote: '現代地圖顯示既有 POI；不新增座標。',
+    markerNote: '現代地圖只顯示已查證或代表性位置；研究索引不公開精確標記。',
     selected: '目前選取',
     none: '點選地圖標記查看地點',
   },
@@ -23,7 +23,7 @@ const copy = {
     now: '今日 · canonical POI 地图',
     note: '两侧使用同一古宁头区域中心阅读；航照尚未完成 GCP 套准，不代表精确叠合。',
     opacity: '昔日航照透明度',
-    markerNote: '现代地图显示既有 POI；不新增坐标。',
+    markerNote: '现代地图只显示已查证或代表性位置；研究索引不公开精确标记。',
     selected: '目前选取',
     none: '点击地图标记查看地点',
   },
@@ -32,7 +32,7 @@ const copy = {
     now: 'NOW · canonical POI map',
     note: 'Both panels use the same Guningtou-area centre for reading. The aerial is not GCP-aligned and is not an exact overlay.',
     opacity: 'Historical image opacity',
-    markerNote: 'The modern map shows existing POIs; no coordinates are added here.',
+    markerNote: 'The modern map shows only verified or representative points; research indexes have no public exact marker.',
     selected: 'Selected',
     none: 'Select a map marker to inspect a place',
   },
@@ -47,8 +47,10 @@ export default function ThenNowMapCompare({ lang = 'zh-tw' }: Props) {
   const markerLayerRef = useRef<L.LayerGroup | null>(null);
   const [opacity, setOpacity] = useState(62);
   const [selectedPoiId, setSelectedPoiId] = useState<string | null>(null);
+  const hasPublicCoordinate = (poi: typeof allPois[0]) =>
+    (poi.map_visibility ?? (poi.coordinate_status === 'modern_verified' || poi.coordinate_status === 'representative' ? 'public' : 'research')) === 'public';
 
-  const selectedPoi = allPois.find((poi) => poi.poi_id === selectedPoiId) ?? null;
+  const selectedPoi = allPois.find((poi) => poi.poi_id === selectedPoiId && hasPublicCoordinate(poi)) ?? null;
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -86,7 +88,7 @@ export default function ThenNowMapCompare({ lang = 'zh-tw' }: Props) {
     if (!map || !markerLayer) return;
 
     markerLayer.clearLayers();
-    allPois.forEach((poi) => {
+    allPois.filter(hasPublicCoordinate).forEach((poi) => {
       const name = isEnglish ? poi.name_english ?? poi.name_chinese : poi.name_chinese;
       const marker = L.circleMarker([poi.latitude, poi.longitude], {
         radius: poi.poi_id === selectedPoiId ? 8 : 5,

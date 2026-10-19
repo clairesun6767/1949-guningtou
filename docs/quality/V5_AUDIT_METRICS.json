@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-19T05:35:12.783Z",
+  "generatedAt": "2026-10-19T06:31:53.109Z",
   "canonicalCounts": {
     "timelineEntries": 123,
-    "pois": 25
+    "pois": 26
   },
   "translation": {
     "englishTimeline": {
@@ -17,11 +17,11 @@
     "statusCounts": {
       "historical_review": 10,
       "representative": 8,
-      "modern_verified": 5,
+      "modern_verified": 6,
       "unresolved": 2
     },
-    "sourceCount": 13,
-    "modernVerifiedCount": 5,
+    "sourceCount": 14,
+    "modernVerifiedCount": 6,
     "representativeCount": 8,
     "unresolvedOrHistoricalReviewCount": 12,
     "modernVerifiedIds": [
@@ -29,15 +29,16 @@
       "POI-0016",
       "POI-0017",
       "POI-0020",
-      "POI-0022"
+      "POI-0022",
+      "POI-0026"
     ]
   },
   "media": {
-    "catalogPublicReferences": 20,
+    "catalogPublicReferences": 22,
     "missingPublicAssets": [],
     "researchLocalReferencesExcluded": 3,
     "publicCollectionsExcludeLocal": true,
-    "publicImageFiles": 28,
+    "publicImageFiles": 30,
     "peopleWithPublishedPortraits": 3,
     "peopleWithoutPublishedPortraits": 33
   },

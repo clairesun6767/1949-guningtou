@@ -7,6 +7,8 @@ import { sitePath } from '../../../data/paths';
 import { pois } from '../../../data/loader';
 import { displayVerificationStatus } from '../../../i18n/labels';
 import { getPoiCopy } from '../../../i18n/historicalContent';
+import MediaCard from '../../../components/museum/MediaCard.astro';
+import { getPlaceMedia } from '../../../data/mediaCatalog';
 
 export function getStaticPaths() {
   const langs = ['zh-tw', 'zh-cn', 'en'];
@@ -22,6 +24,10 @@ const isEnglish = lang === 'en';
 const isSimplified = lang === 'zh-cn';
 const poi = pois.find((item) => item.poi_id === id);
 const poiCopy = poi ? getPoiCopy(poi, lang) : null;
+const placeMedia = poi ? getPlaceMedia(poi.poi_id) : [];
+const hasPublicCoordinate = poi
+  ? (poi.map_visibility ?? (poi.coordinate_status === 'modern_verified' || poi.coordinate_status === 'representative' ? 'public' : 'research')) === 'public'
+  : false;
 ---
 
 <MainLayout lang={lang}>
@@ -39,6 +45,15 @@ const poiCopy = poi ? getPoiCopy(poi, lang) : null;
               {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>{isEnglish ? 'Evidence' : isSimplified ? '证据' : '證據'} {poi.evidence_level}</span>}
               {poi.verification_status && <SourceCitation text={displayVerificationStatus(poi.verification_status, lang) ?? poi.verification_status} />}
             </div>
+
+            {placeMedia.length > 0 && (
+              <section class="museum-reading__section museum-location-detail__media">
+                <div class="museum-kicker">{isEnglish ? 'SITE PHOTOGRAPHS' : isSimplified ? '地点照片' : '地點照片'}</div>
+                <div class="museum-grid museum-grid--2">
+                  {placeMedia.map((asset) => <MediaCard asset={asset} lang={lang} />)}
+                </div>
+              </section>
+            )}
 
             {poi.historical_background && (
               <section class="museum-reading__section">
@@ -65,7 +80,7 @@ const poiCopy = poi ? getPoiCopy(poi, lang) : null;
             )}
 
             <div class="museum-meta-grid museum-location-detail__meta">
-              <MetadataRow label={isEnglish ? 'GPS coordinates' : isSimplified ? 'GPS 坐标' : 'GPS 座標'} value={`${poi.latitude}, ${poi.longitude}`} />
+              <MetadataRow label={isEnglish ? 'GPS coordinates' : isSimplified ? 'GPS 坐标' : 'GPS 座標'} value={hasPublicCoordinate ? `${poi.latitude}, ${poi.longitude}` : isEnglish ? 'Research index; exact point withheld' : isSimplified ? '研究索引；不显示精确点位' : '研究索引；不顯示精確點位'} />
               <MetadataRow label={isEnglish ? 'Coordinate accuracy' : isSimplified ? '坐标精度' : '座標精度'} value={poiCopy?.coordinateAccuracy} />
               <MetadataRow label={isEnglish ? 'Coordinate basis' : isSimplified ? '坐标依据' : '座標依據'} value={poiCopy?.coordinateBasis} />
               <MetadataRow label={isEnglish ? 'Category' : isSimplified ? '类别' : '類別'} value={poiCopy?.category} />
@@ -80,7 +95,12 @@ const poiCopy = poi ? getPoiCopy(poi, lang) : null;
             )}
           </div>
           <aside class="museum-location-detail__map">
-            <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poiCopy?.name ?? poi.name_chinese} />
+            {hasPublicCoordinate
+              ? <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poiCopy?.name ?? poi.name_chinese} />
+              : <div class="museum-paper museum-location-detail__map-note">
+                  <div class="museum-kicker">{isEnglish ? 'MAP STATUS' : isSimplified ? '地图状态' : '地圖狀態'}</div>
+                  <p class="museum-prose">{isEnglish ? 'This record remains a research area. The site does not publish an exact visitor marker until an independent location source is confirmed.' : isSimplified ? '此记录仍是研究范围。在确认独立定位来源前，网站不公开精确访客标记。' : '此筆仍是研究範圍。在確認獨立定位來源前，網站不公開精確訪客標記。'}</p>
+                </div>}
           </aside>
         </div>
       </div>

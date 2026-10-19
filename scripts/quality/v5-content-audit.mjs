@@ -79,7 +79,7 @@ const metrics = {
   status: {
     pass: missingTimelineTranslations.length === 0
       && untranslatedTimelineFields.length === 0
-      && pois.length === 25
+      && pois.length === 26
       && pois.every((poi) => Boolean(poi.location_class && poi.coordinate_status))
       && missingMedia.length === 0
       && localMediaRefs.length > 0,

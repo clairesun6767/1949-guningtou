@@ -15,9 +15,9 @@ test('V5 covers every canonical timeline record with English editorial copy', ()
 
 test('V5 classifies every POI as a modern site, historical area, or unresolved area', () => {
   assert.equal(metrics.coordinates.allPoiClassified, true);
-  assert.equal(metrics.canonicalCounts.pois, 25);
-  assert.equal(metrics.coordinates.modernVerifiedCount, 5);
-  assert.equal(metrics.coordinates.sourceCount, 13);
+  assert.equal(metrics.canonicalCounts.pois, 26);
+  assert.equal(metrics.coordinates.modernVerifiedCount, 6);
+  assert.equal(metrics.coordinates.sourceCount, 14);
 });
 
 test('V5 does not publish missing or local-only media references', () => {

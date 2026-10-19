@@ -915,6 +915,18 @@ a:hover {
   padding-top: 32px;
 }
 
+.museum-location-detail__map-note {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px;
+}
+
+.museum-location-detail__media {
+  margin-top: 32px;
+}
+
 .museum-story-card {
   min-height: 240px;
 }

@@ -2,7 +2,7 @@
   "metadata": {
     "version": "2.0",
     "created": "2026-07-21",
-    "total": 25,
+    "total": 26,
     "phase": "2.5",
     "status": "enriched"
   },
@@ -1635,6 +1635,83 @@
       "future_scan_required": true,
       "created_date": "2026-07-21",
       "updated_date": "2026-07-21"
+    },
+    {
+      "poi_id": "POI-0026",
+      "name_chinese": "安東二營區",
+      "name_english": "Andong Camp 2 (W-012)",
+      "category": "Military Facility",
+      "description": "金門北海岸的安東二營區，編號 W-012。現代據點位置採金門國家公園官方遊憩據點頁所連結的 Google Maps 座標；此現代位置不回推為 1949 戰役幾何。",
+      "short_description": "W-012 現代海防據點；官方座標已核對。",
+      "long_description": "安東二營區位於金門北海岸西側，屋頂設置海哨，據點後方設置伏地堡，碉堡內配置兩側戰防砲與人員生活設施。解除戰備後曾由海巡單位使用，後由金門國家公園管理處修復活化。官方據點頁的公開地圖連結指向 24.47413, 118.33239；本筆資料只描述現代可定位據點，不將現況建築直接稱為 1949 原始工事。",
+      "historical_background": "金門國家公園官方據點資料記錄 W-012 的現況構造、後續使用與修復活化脈絡。",
+      "battle_role": "安東系列屬戰後海防據點；本筆不新增或推定 1949 部隊路線。",
+      "historical_context": "現代據點座標與 1949 戰役地點分層保存；既有 POI-0023 仍是道路研究紀錄。",
+      "historical_importance": "古寧頭北海岸戰後軍事遺產與活化展示節點。",
+      "latitude": 24.47413,
+      "longitude": 118.33239,
+      "coordinate_accuracy": "Exact",
+      "location_class": "modern_site",
+      "coordinate_status": "modern_verified",
+      "map_visibility": "public",
+      "coordinate_source": "金門國家公園安東二營區官方遊憩據點頁／Google Maps 連結",
+      "coordinate_source_url": "https://www.kmnp.gov.tw/ch/touristInfo/recreation-sites/49",
+      "coordinate_note": "官方據點頁的地圖連結明確指向 24.47413, 118.33239；這是現代 W-012 營區位置，不是 1949 戰役路線或歷史工事的推定座標。",
+      "coordinate_note_en": "The official recreation-site page links the present-day W-012 camp to 24.47413, 118.33239. This is a modern site coordinate, not an inferred 1949 route or fortification coordinate.",
+      "related_events": "",
+      "related_timeline": "",
+      "related_persons": "",
+      "related_sources": [
+        "SRC-0041",
+        "SRC-0042",
+        "SRC-0055"
+      ],
+      "evidence_level": "A",
+      "evidence_summary": "SRC-0055(L1)；官方據點頁與精確地圖連結",
+      "verification_status": "verified",
+      "adjacent_pois": [
+        "POI-0019",
+        "POI-0023"
+      ],
+      "connected_roads": [
+        "安東二營區道路"
+      ],
+      "defense_network": "安東系列戰後海岸防禦據點",
+      "landing_route": "",
+      "retreat_route": "",
+      "supply_route": "",
+      "historical_photos": [],
+      "modern_photos": [
+        "TN-MEDIA-W012-ENTRANCE-2026",
+        "TN-MEDIA-W012-EXTERIOR-2026"
+      ],
+      "maps": [],
+      "aerial_photos": [],
+      "documents": [],
+      "video": [],
+      "audio": [],
+      "3d_assets": [],
+      "photo_count": 2,
+      "document_count": 1,
+      "open_status": "官方據點資料：10:00–17:00；每週一、二公休",
+      "accessibility": "依官方據點頁公告；出發前請確認",
+      "visiting_time": "依官方據點頁公告",
+      "nearby_parking": "依現場與官方指示",
+      "nearby_pois": [
+        "POI-0016",
+        "POI-0020"
+      ],
+      "game_applications": [
+        "Exploration",
+        "Education"
+      ],
+      "has_3d_model": true,
+      "has_point_cloud": false,
+      "has_drone_photo": false,
+      "has_lidar": false,
+      "future_scan_required": false,
+      "created_date": "2026-10-19",
+      "updated_date": "2026-10-19"
     }
   ]
 }

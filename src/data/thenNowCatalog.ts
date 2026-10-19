@@ -93,17 +93,18 @@ export const thenNowSites: ThenNowSite[] = [
     ],
   },
   {
-    id: 'W012', poiId: 'POI-0023', code: 'W012',
+    id: 'W012', poiId: 'POI-0026', code: 'W012',
     title: { 'zh-tw': '安東二營區', 'zh-cn': '安东二营区', en: 'Andong 2 Camp' },
     category: { 'zh-tw': '戰後軍事設施／民間活化', 'zh-cn': '战后军事设施／民间活化', en: 'Post-war military facility / community reuse' },
     status: { 'zh-tw': '官方據點資料與現況營運資料分開標示', 'zh-cn': '官方据点资料与现况运营资料分开标示', en: 'Official site record and current operator material kept separate' },
     role: { 'zh-tw': '海岸防禦據點；曾經歷軍方與海巡使用，後由民間團隊進駐。', 'zh-cn': '海岸防御据点；曾经历军方与海巡使用，后由民间团队进驻。', en: 'A coastal defence site with later military and coast-guard use, followed by private adaptive reuse.' },
     present: { 'zh-tw': '現況可見碉堡、海景與體驗活動；營運內容不等同官方歷史證據。', 'zh-cn': '现况可见碉堡、海景与体验活动；运营内容不等同官方历史证据。', en: 'The site presents bunkers, sea views, and activities; operator descriptions are not by themselves official historical evidence.' },
-    evidenceNote: { 'zh-tw': '本站既有 POI-0023 是道路紀錄，不把它當成完整營區座標。', 'zh-cn': '本站既有 POI-0023 是道路记录，不把它当成完整营区坐标。', en: 'The existing POI-0023 is a road record, not a complete camp coordinate.' },
+    evidenceNote: { 'zh-tw': '本站已將 W-012 現代營區與 POI-0023 道路研究紀錄分開；官方據點頁座標為 24.47413, 118.33239。', 'zh-cn': '本站已将 W-012 现代营区与 POI-0023 道路研究记录分开；官方据点页坐标为 24.47413, 118.33239。', en: 'The present-day W-012 camp is separated from the POI-0023 road research record; the official site page gives 24.47413, 118.33239.' },
     sourceLinks: [
       { label: { 'zh-tw': '金門國家公園據點資料', 'zh-cn': '金门国家公园据点资料', en: 'Kinmen National Park site record' }, href: 'https://www.kmnp.gov.tw/ch/touristInfo/recreation-sites/49' },
       { label: { 'zh-tw': '現況營運網站（非唯一史料）', 'zh-cn': '现况运营网站（非唯一史料）', en: 'Current operator site (not sole historical evidence)' }, href: 'https://w-012.com/' },
     ],
+    mediaIds: ['TN-MEDIA-W012-ENTRANCE-2026', 'TN-MEDIA-W012-EXTERIOR-2026'],
   },
   {
     id: 'W011', code: 'W011',
