@@ -2,8 +2,8 @@
   "metadata": {
     "version": "2.1",
     "created": "2026-07-21",
-    "total": 38,
-    "updated": "2026-07-21"
+    "total": 57,
+    "updated": "2026-10-19"
   },
   "sources": [
     {
@@ -845,6 +845,21 @@
       "usage_rights": "專案使用者提供資料；限本專案使用",
       "verification_status": "user_specified",
       "notes": "本表依使用者要求直接套用，不代表官方實測、網路查證或歷史證據核實；不得以其他座標覆蓋。"
+    },
+    {
+      "source_id": "SRC-0057",
+      "title": "使用者上傳 chat.md 最後 XLS 座標表",
+      "author_or_institution": "專案使用者／Google Gemini 匯出對話",
+      "publication_date": "2026-10-19",
+      "source_type": "使用者上傳座標表",
+      "source_level": 4,
+      "url_or_identifier": "uploaded attachment: chat.md (user-provided)",
+      "access_date": "2026-10-19",
+      "relevant_pages_or_sections": "Turn 7：整理成 XLS 表格的 38 筆座標資料",
+      "relevance_summary": "本次網站直接套用的 38 筆緯度、經度與備註；以最後 XLS 區塊為準。",
+      "usage_rights": "專案使用者提供資料；限本專案使用",
+      "verification_status": "user_specified",
+      "notes": "檔案前段另有一套較早的 38 筆座標；本輪採用檔案最後 XLS 區塊，不代表官方實測、網路查證或歷史證據核實。"
     }
   ]
 }

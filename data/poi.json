@@ -4,7 +4,8 @@
     "created": "2026-07-21",
     "total": 38,
     "phase": "2.5",
-    "status": "enriched"
+    "status": "enriched",
+    "updated": "2026-10-19"
   },
   "pois": [
     {
@@ -19,20 +20,21 @@
       "battle_role": "解放軍第244團預定登陸點（東路）。因強風海流，大量船團偏離至此。國軍戰車66號在此發射第一砲擊中彈藥船，為戰役揭開序幕。",
       "historical_context": "1949年10月24日下午國軍戰車排演習後在此拋錨。25日00:30熊震球在此發射第一砲。25日凌晨第244團在此登陸遭殲滅戰。",
       "historical_importance": "解放軍第一梯隊登陸點之一。熊震球第一砲發生地。國軍戰車66號在此接戰。",
-      "latitude": 24.45986,
-      "longitude": 118.34977,
+      "latitude": 24.4598,
+      "longitude": 118.3512,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：古寧頭戰役登陸點之一；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 古寧頭戰役登陸點之一. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：金寧鄉嚨口沿海一帶；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 金寧鄉嚨口沿海一帶. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "TIM-0029; TIM-0030; TIM-0031",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -82,7 +84,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0002",
@@ -96,13 +98,13 @@
       "battle_role": "戰役主要登陸場。超過300艘解放軍木船在此區域搶灘。退潮使船隻大量擱淺，解放軍被迫涉水前進暴露於國軍火力下。",
       "historical_context": "1949年10月25日凌晨1時30分起，解放軍第一梯隊在此區域全面搶灘。國軍戰車、岸防砲兵、步兵陣地火力全開。",
       "historical_importance": "戰役主要登陸場。解放軍第一梯隊主力在此登陸。",
-      "latitude": 24.482,
-      "longitude": 118.315,
+      "latitude": 24.485,
+      "longitude": 118.313,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：北山海濱防線；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 北山海濱防線. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：北山海濱防線；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 北山海濱防線. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001",
       "related_timeline": "TIM-0034; TIM-0035",
       "related_persons": "",
@@ -110,7 +112,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0025",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1); SRC-0027(L4)",
@@ -164,7 +167,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0003",
@@ -183,15 +186,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：金寧鄉聚落；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 金寧鄉聚落. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：金寧鄉湖尾聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 金寧鄉湖尾聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "TIM-0038; TIM-0044; TIM-0047",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -240,7 +244,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0004",
@@ -259,15 +263,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：沿海聚落；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 沿海聚落. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：沿海聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 沿海聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0003",
       "related_timeline": "TIM-0030",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -307,7 +312,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0005",
@@ -326,15 +331,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：島內聚落；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 島內聚落. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：金沙鎮中蘭／蘭湖一帶；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 金沙鎮中蘭／蘭湖一帶. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0003",
       "related_timeline": "TIM-0037",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -374,7 +380,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0006",
@@ -393,8 +399,8 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：戰役核心交戰村落；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：戰役核心交戰村落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0004; EVT-0005; EVT-0006",
       "related_timeline": "TIM-0039; TIM-0052; TIM-0060; TIM-0072",
       "related_persons": "",
@@ -402,7 +408,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0025",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1); SRC-0027(L4)",
@@ -442,7 +449,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 戰役核心交戰村落. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 戰役核心交戰村落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0007",
@@ -461,15 +468,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：國共激戰據點；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：國共激戰據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0045; TIM-0053; TIM-0064",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -509,7 +517,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 國共激戰據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 國共激戰據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0008",
@@ -528,15 +536,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：雙鯉湖畔聚落；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：雙鯉湖畔聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0066",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -576,7 +585,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 雙鯉湖畔聚落. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 雙鯉湖畔聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0009",
@@ -595,15 +604,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：金沙鎮聚落；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 金沙鎮聚落. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：金沙鎮聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 金沙鎮聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0059; TIM-0060",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -643,7 +653,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0010",
@@ -662,15 +672,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：重要戰術高地；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：重要戰術高地（頂林路287號）；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0063",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -708,7 +719,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 重要戰術高地. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 重要戰術高地（頂林路287號）. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0011",
@@ -722,13 +733,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "胡璉登陸金門之地點。第12兵團司令部設立處。",
-      "latitude": 24.38662,
-      "longitude": 118.28662,
+      "latitude": 24.3866,
+      "longitude": 118.2866,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：小三通及重要對外港口；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：小三通及對外港口；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0063",
       "related_persons": "",
@@ -736,7 +747,8 @@
         "SRC-0027",
         "SRC-0025",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1); SRC-0027(L4)",
@@ -774,7 +786,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 小三通及重要對外港口. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 小三通及對外港口. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0012",
@@ -793,15 +805,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：戰地坑道與聚落代表；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：戰地坑道與聚落代表；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "TIM-0041",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -839,7 +852,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 戰地坑道與聚落代表. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 戰地坑道與聚落代表. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0013",
@@ -858,15 +871,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：視野遼闊之戰術要地；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 視野遼闊之戰術要地. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：視野遼闊之戰術要地；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 視野遼闊之戰術要地. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "TIM-0047",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -906,7 +920,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0014",
@@ -920,20 +934,21 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰役最後大規模戰鬥地點。",
-      "latitude": 24.43686,
-      "longitude": 118.41282,
+      "latitude": 24.456,
+      "longitude": 118.3567,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：島中樞紐高地；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：島中樞紐高地；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0005",
       "related_timeline": "TIM-0079",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -973,7 +988,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 島中樞紐高地. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 島中樞紐高地. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0015",
@@ -992,15 +1007,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：北海岸防衛高地；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 北海岸防衛高地. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：北海岸防衛高地；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 北海岸防衛高地. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "TIM-0047; TIM-0048",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1040,7 +1056,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0016",
@@ -1054,13 +1070,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭戰役核心紀念館。戰役史料保存與展示中心。",
-      "latitude": 24.48023,
+      "latitude": 24.4802,
       "longitude": 118.3257,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：紀念戰役歷史館舍；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：紀念戰役歷史館舍；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "",
       "related_persons": "",
@@ -1068,7 +1084,8 @@
         "SRC-0004",
         "SRC-0025",
         "SRC-0002",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0002(L1); SRC-0004(L1); SRC-0025(L1)",
@@ -1107,7 +1124,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 紀念戰役歷史館舍. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 紀念戰役歷史館舍. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0017",
@@ -1121,20 +1138,21 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "李光前紀念地。古寧頭戰役文化地標。",
-      "latitude": 24.455,
-      "longitude": 118.36,
+      "latitude": 24.4685,
+      "longitude": 118.3168,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：悼念殉國將領之廟宇；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：悼念殉國將領之廟宇；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0003",
       "related_timeline": "TIM-0045",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1173,7 +1191,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 悼念殉國將領之廟宇. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 悼念殉國將領之廟宇. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0018",
@@ -1187,20 +1205,21 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭戰役相關紀念設施。含戰地遺址展示。",
-      "latitude": 24.48564,
-      "longitude": 118.44112,
+      "latitude": 24.483,
+      "longitude": 118.3215,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：展示砲陣地與歷史文物；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：林厝砲陣地周邊；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
         "SRC-0025",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1)",
@@ -1239,7 +1258,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 展示砲陣地與歷史文物. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 林厝砲陣地周邊. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0019",
@@ -1258,15 +1277,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：安東防線系列據點；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 安東防線系列據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：安東防線系列據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 安東防線系列據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
         "SRC-0025",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1)",
@@ -1305,7 +1325,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0020",
@@ -1324,15 +1344,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：歷史心戰喊話站；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：歷史心戰喊話站；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1371,7 +1392,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 歷史心戰喊話站. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 歷史心戰喊話站. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0021",
@@ -1390,15 +1411,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：北山海濱陡峭斷崖地形；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：北山海濱陡峭斷崖地形；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "EVT-0005",
       "related_timeline": "TIM-0070; TIM-0071",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1436,7 +1458,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 北山海濱陡峭斷崖地形. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 北山海濱陡峭斷崖地形. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0022",
@@ -1455,15 +1477,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：進入古寧頭區之標誌；本輪採用的座標不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：進入古寧頭區之標誌；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
         "SRC-0025",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1)",
@@ -1501,7 +1524,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_note_en": "User note: 進入古寧頭區之標誌. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLS note: 進入古寧頭區之標誌. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0023",
@@ -1515,20 +1538,21 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰役期間部隊移動與補給路線。",
-      "latitude": 24.47376,
-      "longitude": 118.33245,
+      "latitude": 24.4738,
+      "longitude": 118.3325,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：連接 W-012 安東二營區之道路；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 連接 W-012 安東二營區之道路. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：連接 W-012 安東二營區之道路；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 連接 W-012 安東二營區之道路. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1566,7 +1590,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0024",
@@ -1585,15 +1609,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：散布於古寧頭周遭之多處碉堡；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 散布於古寧頭周遭之多處碉堡. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：散布於古寧頭周遭之多處碉堡；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 散布於古寧頭周遭之多處碉堡. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "TIM-0022",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1631,7 +1656,7 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0025",
@@ -1650,15 +1675,16 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者備註：太武山核心山區；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 太武山核心山區. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLS 備註：太武山核心山區；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 太武山核心山區. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "TIM-0084",
       "related_persons": "",
       "related_sources": [
         "SRC-0027",
         "SRC-0004",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1696,29 +1722,29 @@
       "created_date": "2026-07-21",
       "updated_date": "2026-10-19",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表"
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
     },
     {
       "poi_id": "POI-0026",
       "name_chinese": "W012 安東二營區（熾白安東）",
       "name_english": "W012 Andong 2 Camp",
       "category": "Military Facility",
-      "description": "W-012 安東二營區的現代據點資料；本輪座標依使用者提供之 38 處地點座標表套用。",
-      "short_description": "W-012 現代軍事遺產據點；座標為使用者指定。",
-      "long_description": "本筆只描述現代 W-012 據點與既有活化資料，不將現況建築直接稱為 1949 原始工事；座標採用使用者指定值 24.47376, 118.33245。",
+      "description": "W012 安東二營區（熾白安東）的現代據點資料；本輪座標依使用者上傳 chat.md 最後 XLS 座標表套用。",
+      "short_description": "W012 現代軍事遺產據點；座標為上傳檔案指定值。",
+      "long_description": "本筆只描述現代 W012 據點與既有活化資料，不將現況建築直接稱為 1949 原始工事；座標採用上傳檔案最後 XLS 表指定值 24.4738, 118.3325。",
       "historical_background": "金門國家公園官方據點資料記錄 W-012 的現況構造、後續使用與修復活化脈絡。",
       "battle_role": "安東系列屬戰後海防據點；本筆不新增或推定 1949 部隊路線。",
       "historical_context": "現代據點座標與 1949 戰役地點分層保存；既有 POI-0023 仍是道路研究紀錄。",
       "historical_importance": "古寧頭北海岸戰後軍事遺產與活化展示節點。",
-      "latitude": 24.47376,
-      "longitude": 118.33245,
+      "latitude": 24.4738,
+      "longitude": 118.3325,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：現已活化為體驗空間；本輪以使用者指定值取代先前座標，W012 營區與 POI-0023 道路仍為不同資料。",
-      "coordinate_note_en": "User note: 現已活化為體驗空間. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：頂林路390號，現已活化為體驗空間；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 頂林路390號，現已活化為體驗空間. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1726,10 +1752,11 @@
         "SRC-0041",
         "SRC-0042",
         "SRC-0055",
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
-      "evidence_summary": "SRC-0056；使用者指定座標，非官方實測或史料核實",
+      "evidence_summary": "SRC-0057；上傳檔案指定座標，非官方實測或史料核實",
       "verification_status": "needs_human_review",
       "adjacent_pois": [
         "POI-0019",
@@ -1791,7 +1818,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -1833,9 +1861,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：安東防線據點；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 安東防線據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：安東防線據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 安東防線據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -1854,7 +1882,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -1896,9 +1925,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：古寧頭海防據點；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 古寧頭海防據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：古寧頭海防據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 古寧頭海防據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -1917,7 +1946,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -1953,15 +1983,15 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.43125,
-      "longitude": 118.31857,
+      "latitude": 24.4313,
+      "longitude": 118.3186,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：西海防線據點；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 西海防線據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：西海防線據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 西海防線據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -1980,7 +2010,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2022,9 +2053,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：嚨口防區延伸據點；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 嚨口防區延伸據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：嚨口防區延伸據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 嚨口防區延伸據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2043,7 +2074,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2085,9 +2117,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：嚨口海灘據點主堡；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 嚨口海灘據點主堡. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：嚨口海灘據點主堡；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 嚨口海灘據點主堡. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2106,7 +2138,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2142,15 +2175,15 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.44251,
-      "longitude": 118.36993,
+      "latitude": 24.4425,
+      "longitude": 118.3699,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：東半島重要海防據點；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 東半島重要海防據點. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：東半島重要海防據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 東半島重要海防據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2169,7 +2202,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2211,9 +2245,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：戰地防禦工事；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 戰地防禦工事. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：戰地防禦工事；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 戰地防禦工事. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2232,7 +2266,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2268,15 +2303,15 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.4785,
-      "longitude": 118.3205,
+      "latitude": 24.4791,
+      "longitude": 118.3126,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：戰役彈痕古厝（古寧頭戰史代表）；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 戰役彈痕古厝（古寧頭戰史代表）. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：戰役彈痕古厝；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 戰役彈痕古厝. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2295,7 +2330,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2337,9 +2373,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：戰時指揮所舊址（位置史實考證中）；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 戰時指揮所舊址（位置史實考證中）. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：位置及史實待查；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 位置及史實待查. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2358,7 +2394,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2400,9 +2437,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：聚落信仰與地景地標；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 聚落信仰與地景地標. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：聚落信仰與地景地標；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 聚落信仰與地景地標. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2421,7 +2458,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2463,9 +2501,9 @@
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：聚落傳統廟宇；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 聚落傳統廟宇. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：聚落傳統廟宇；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 聚落傳統廟宇. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     },
     {
@@ -2484,7 +2522,8 @@
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
-        "SRC-0056"
+        "SRC-0056",
+        "SRC-0057"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2521,14 +2560,14 @@
       "future_scan_required": true,
       "created_date": "2026-10-19",
       "latitude": 24.483,
-      "longitude": 118.321,
+      "longitude": 118.3215,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者提供之古寧頭 38 處地點座標表",
-      "coordinate_note": "使用者備註：現多規納於和平紀念園區範圍；本輪採用的座標不代表官方實測或史料核實。",
-      "coordinate_note_en": "User note: 現多規納於和平紀念園區範圍. This coordinate is adopted from the user-provided table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
+      "coordinate_note": "使用者上傳 XLS 備註：現納入和平紀念園區範圍；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLS note: 現納入和平紀念園區範圍. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
       "updated_date": "2026-10-19"
     }
   ]

@@ -57,7 +57,7 @@ test('V1.2 historical package supplements validate without promoting incomplete 
   assert.equal(report.valid, true);
   assert.equal(report.errors, 0);
   assert.deepEqual(report.counts, {
-    sources: 56,
+    sources: 57,
     claims: 13,
     evidenceRows: 5,
     routeAuditRows: 12,
@@ -157,7 +157,7 @@ test('Legacy adapter preserves the migration boundary and promotes zero routes',
   };
   const result = adaptLegacyHistoricalCatalog(input);
 
-  assert.equal(result.sourceRegistry.length, 56);
+  assert.equal(result.sourceRegistry.length, 57);
   assert.equal(result.adapted.units, 25);
   assert.equal(result.adapted.events, 30);
   assert.equal(result.adapted.promotedRoutes, 0);

@@ -4,8 +4,16 @@
   "surveyDate": "2026-10-19",
   "scope": "古寧頭核心戰場、北山／南山／林厝聚落、嚨口至北山斷崖海岸，以及與其直接相連的戰後軍事、保存、紀念與活化地景",
   "coordinatePolicy": "本檔案不新增、不重算、不複製 canonical coordinates。location.coordinates 永遠為 null；已知地點只能以 canonicalPoiId 或 relatedPoiIds 參照既有資料。",
-  "evidenceStatuses": ["SUPPORTED", "PARTIAL", "RESEARCH"],
-  "priorityTiers": ["core", "general", "research"],
+  "evidenceStatuses": [
+    "SUPPORTED",
+    "PARTIAL",
+    "RESEARCH"
+  ],
+  "priorityTiers": [
+    "core",
+    "general",
+    "research"
+  ],
   "siteTypeVocabulary": [
     "battlefield",
     "coastal-landscape",
@@ -22,516 +30,2419 @@
   "sites": [
     {
       "siteId": "TN-LONGKOU",
-      "officialName": {"zh-tw": "嚨口海岸／嚨口", "zh-cn": "垄口海岸／垄口", "en": "Longkou coast / Longkou"},
-      "aliases": ["嚨口", "壟口", "Longkou", "Lungkou"],
+      "officialName": {
+        "zh-tw": "嚨口海岸／嚨口",
+        "zh-cn": "垄口海岸／垄口",
+        "en": "Longkou coast / Longkou"
+      },
+      "aliases": [
+        "嚨口",
+        "壟口",
+        "Longkou",
+        "Lungkou"
+      ],
       "code": null,
       "region": "古寧頭東南側海岸",
-      "siteType": ["battlefield", "coastal-landscape"],
-      "battleRelation": {"status": "PARTIAL", "summary": "既有 POI 將此列為 1949 登陸與國軍第一砲相關地點；本 inventory 不重新裁決戰史細節。", "sourceIds": ["SRC-0004", "SRC-0027", "SRC-0052"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "戰前海岸、農田與戰役防禦地景的具體範圍需依戰史與現勘分層整理。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "縣府將嚨口至古寧頭海岸列入保存與活化討論", "currentUse": "戶外海岸與戰役閱讀節點", "status": "PARTIAL", "sourceIds": ["SRC-0043", "SRC-0044"]},
-      "access": {"status": "existing POI records an outdoor coast; route and access conditions require current field confirmation", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0001", "relatedPoiIds": [], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0004", "SRC-0027"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["rights-cleared current coast view", "field photograph of Longkou defensive remains if access permits"], "rightsStatus": "missing site-specific published asset"},
-      "sourceIds": ["SRC-0004", "SRC-0027", "SRC-0043", "SRC-0044", "SRC-0052"],
+      "siteType": [
+        "battlefield",
+        "coastal-landscape"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "既有 POI 將此列為 1949 登陸與國軍第一砲相關地點；本 inventory 不重新裁決戰史細節。",
+        "sourceIds": [
+          "SRC-0004",
+          "SRC-0027",
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "戰前海岸、農田與戰役防禦地景的具體範圍需依戰史與現勘分層整理。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "縣府將嚨口至古寧頭海岸列入保存與活化討論",
+        "currentUse": "戶外海岸與戰役閱讀節點",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0043",
+          "SRC-0044"
+        ]
+      },
+      "access": {
+        "status": "existing POI records an outdoor coast; route and access conditions require current field confirmation",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0001",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0004",
+          "SRC-0027",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "rights-cleared current coast view",
+          "field photograph of Longkou defensive remains if access permits"
+        ],
+        "rightsStatus": "missing site-specific published asset"
+      },
+      "sourceIds": [
+        "SRC-0004",
+        "SRC-0027",
+        "SRC-0043",
+        "SRC-0044",
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["exact boundary of Longkou 2 Camp versus Longkou coast", "current access and ownership of underground remains"],
-      "humanReview": {"required": true, "questions": ["Which surviving structures can be identified as Longkou battlefield remains?", "Can the proposed cultural-landscape boundary be cited from an approved survey?"]}
+      "knownUnknowns": [
+        "exact boundary of Longkou 2 Camp versus Longkou coast",
+        "current access and ownership of underground remains"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which surviving structures can be identified as Longkou battlefield remains?",
+          "Can the proposed cultural-landscape boundary be cited from an approved survey?"
+        ]
+      }
     },
     {
       "siteId": "TN-GUNINGTOU-BEACH",
-      "officialName": {"zh-tw": "古寧頭海灘（北山段）", "zh-cn": "古宁头海滩（北山段）", "en": "Guningtou Beach, Beishan section"},
-      "aliases": ["古寧頭北岸", "古寧頭海灘", "Guningtou Beach"],
+      "officialName": {
+        "zh-tw": "古寧頭海灘（北山段）",
+        "zh-cn": "古宁头海滩（北山段）",
+        "en": "Guningtou Beach, Beishan section"
+      },
+      "aliases": [
+        "古寧頭北岸",
+        "古寧頭海灘",
+        "Guningtou Beach"
+      ],
       "code": null,
       "region": "北山北岸",
-      "siteType": ["battlefield", "coastal-landscape"],
-      "battleRelation": {"status": "PARTIAL", "summary": "既有 POI 將此列為主要登陸場；本檔只保存既有 reference，不把範圍轉成新 route。", "sourceIds": ["SRC-0004", "SRC-0025", "SRC-0027", "SRC-0052"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "現代海岸地景與戰役登陸敘事並置閱讀；反登陸設施的年代與保存狀況需分別標記。"},
-      "restorationReuse": {"reconstruction": "not a reconstructed building", "transfer": "not applicable", "restoration": "海岸環境與軍事遺跡依國家公園／地方管理資料另查", "currentUse": "戶外海岸、戰役紀念與觀光路線", "status": "PARTIAL", "sourceIds": ["SRC-0047", "SRC-0045"]},
-      "access": {"status": "official tourism route lists the coast context; exact shoreline access requires current check", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0002", "relatedPoiIds": ["POI-0021"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0004", "SRC-0025"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-GUNINGTOU-BEACH-2015"], "candidate": [], "needed": ["historical landing-area source image with rights record", "current coast detail"], "rightsStatus": "current CC BY 3.0 display copy integrated"},
-      "sourceIds": ["SRC-0004", "SRC-0025", "SRC-0027", "SRC-0045", "SRC-0047", "SRC-0052"],
+      "siteType": [
+        "battlefield",
+        "coastal-landscape"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "既有 POI 將此列為主要登陸場；本檔只保存既有 reference，不把範圍轉成新 route。",
+        "sourceIds": [
+          "SRC-0004",
+          "SRC-0025",
+          "SRC-0027",
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "現代海岸地景與戰役登陸敘事並置閱讀；反登陸設施的年代與保存狀況需分別標記。"
+      },
+      "restorationReuse": {
+        "reconstruction": "not a reconstructed building",
+        "transfer": "not applicable",
+        "restoration": "海岸環境與軍事遺跡依國家公園／地方管理資料另查",
+        "currentUse": "戶外海岸、戰役紀念與觀光路線",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0045"
+        ]
+      },
+      "access": {
+        "status": "official tourism route lists the coast context; exact shoreline access requires current check",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0002",
+        "relatedPoiIds": [
+          "POI-0021"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0004",
+          "SRC-0025",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-GUNINGTOU-BEACH-2015"
+        ],
+        "candidate": [],
+        "needed": [
+          "historical landing-area source image with rights record",
+          "current coast detail"
+        ],
+        "rightsStatus": "current CC BY 3.0 display copy integrated"
+      },
+      "sourceIds": [
+        "SRC-0004",
+        "SRC-0025",
+        "SRC-0027",
+        "SRC-0045",
+        "SRC-0047",
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["exact historical landing frontage", "which visible coastal structures belong to which period"],
-      "humanReview": {"required": true, "questions": ["Approve the separation between beach landscape and later military structures?", "Confirm whether the current image viewpoint can be associated with the existing POI without implying exact 1949 alignment."]}
+      "knownUnknowns": [
+        "exact historical landing frontage",
+        "which visible coastal structures belong to which period"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Approve the separation between beach landscape and later military structures?",
+          "Confirm whether the current image viewpoint can be associated with the existing POI without implying exact 1949 alignment."
+        ]
+      }
     },
     {
       "siteId": "TN-HUWEI",
-      "officialName": {"zh-tw": "湖尾", "zh-cn": "湖尾", "en": "Huwei"},
-      "aliases": ["湖尾鄉", "湖尾海岸", "Huwei coast"],
+      "officialName": {
+        "zh-tw": "湖尾",
+        "zh-cn": "湖尾",
+        "en": "Huwei"
+      },
+      "aliases": [
+        "湖尾鄉",
+        "湖尾海岸",
+        "Huwei coast"
+      ],
       "code": null,
       "region": "古寧頭東側戰場",
-      "siteType": ["battlefield", "coastal-landscape"],
-      "battleRelation": {"status": "PARTIAL", "summary": "既有 POI 將湖尾列為登陸與戰鬥地點；官方戰史資料另提湖尾高地，仍需維持地名／高地層級區分。", "sourceIds": ["SRC-0027", "SRC-0052"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "現代地景與 1949 戰役地名需以官方戰史和地形調查交叉閱讀。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "not established", "currentUse": "existing POI research reference", "status": "RESEARCH", "sourceIds": ["SRC-0052"]},
-      "access": {"status": "current visitor access not established in the reviewed official sources", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0003", "relatedPoiIds": ["POI-0015"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0052"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["current Huwei coast or high-ground image with exact site identification"], "rightsStatus": "no site-specific published asset"},
-      "sourceIds": ["SRC-0027", "SRC-0052"],
+      "siteType": [
+        "battlefield",
+        "coastal-landscape"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "既有 POI 將湖尾列為登陸與戰鬥地點；官方戰史資料另提湖尾高地，仍需維持地名／高地層級區分。",
+        "sourceIds": [
+          "SRC-0027",
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "現代地景與 1949 戰役地名需以官方戰史和地形調查交叉閱讀。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "not established",
+        "currentUse": "existing POI research reference",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0052"
+        ]
+      },
+      "access": {
+        "status": "current visitor access not established in the reviewed official sources",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0003",
+        "relatedPoiIds": [
+          "POI-0015"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0052",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "current Huwei coast or high-ground image with exact site identification"
+        ],
+        "rightsStatus": "no site-specific published asset"
+      },
+      "sourceIds": [
+        "SRC-0027",
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["relationship between Huwei settlement, Huwei coast and Huwei High Ground", "current accessible viewpoint"],
-      "humanReview": {"required": true, "questions": ["Which official place-name form should be primary for the 1949 battlefield record?"]}
+      "knownUnknowns": [
+        "relationship between Huwei settlement, Huwei coast and Huwei High Ground",
+        "current accessible viewpoint"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which official place-name form should be primary for the 1949 battlefield record?"
+        ]
+      }
     },
     {
       "siteId": "TN-HUWEI-HIGH",
-      "officialName": {"zh-tw": "湖尾高地", "zh-cn": "湖尾高地", "en": "Huwei High Ground"},
-      "aliases": ["湖尾高地", "湖尾山仔（待核）"],
+      "officialName": {
+        "zh-tw": "湖尾高地",
+        "zh-cn": "湖尾高地",
+        "en": "Huwei High Ground"
+      },
+      "aliases": [
+        "湖尾高地",
+        "湖尾山仔（待核）"
+      ],
       "code": null,
       "region": "湖尾／觀音亭山一帶",
-      "siteType": ["battlefield", "high-ground"],
-      "battleRelation": {"status": "PARTIAL", "summary": "國防部與退輔會資料將湖尾高地列入戰役反擊與作戰空間；不與湖南高地合併。", "sourceIds": ["SRC-0052"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "未找到足以建立獨立現代建築／營區記錄的官方資料。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "unknown", "currentUse": "battlefield landscape reference only", "status": "RESEARCH", "sourceIds": ["SRC-0052"]},
-      "access": {"status": "not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0015", "relatedPoiIds": ["POI-0003", "POI-0013"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0052"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["rights-cleared current landscape photo"], "rightsStatus": "missing site-specific published asset"},
-      "sourceIds": ["SRC-0052"],
+      "siteType": [
+        "battlefield",
+        "high-ground"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "國防部與退輔會資料將湖尾高地列入戰役反擊與作戰空間；不與湖南高地合併。",
+        "sourceIds": [
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "未找到足以建立獨立現代建築／營區記錄的官方資料。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "unknown",
+        "currentUse": "battlefield landscape reference only",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0052"
+        ]
+      },
+      "access": {
+        "status": "not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0015",
+        "relatedPoiIds": [
+          "POI-0003",
+          "POI-0013"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0052",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "rights-cleared current landscape photo"
+        ],
+        "rightsStatus": "missing site-specific published asset"
+      },
+      "sourceIds": [
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["whether this is the same feature referred to by local names in other sources", "current exact site boundary"],
-      "humanReview": {"required": true, "questions": ["Keep POI-0015 as a separate Huwei High Ground record?", "Which archival map or official survey can establish its relationship to Huwei and Guanyin Hill?"]}
+      "knownUnknowns": [
+        "whether this is the same feature referred to by local names in other sources",
+        "current exact site boundary"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Keep POI-0015 as a separate Huwei High Ground record?",
+          "Which archival map or official survey can establish its relationship to Huwei and Guanyin Hill?"
+        ]
+      }
     },
     {
       "siteId": "TN-HUNAN-HIGH",
-      "officialName": {"zh-tw": "湖南高地", "zh-cn": "湖南高地", "en": "Hunan High Ground"},
-      "aliases": ["湖南前進指揮所", "第十八軍前進指揮所", "Hunan Forward Command Post"],
+      "officialName": {
+        "zh-tw": "湖南高地",
+        "zh-cn": "湖南高地",
+        "en": "Hunan High Ground"
+      },
+      "aliases": [
+        "湖南前進指揮所",
+        "第十八軍前進指揮所",
+        "Hunan Forward Command Post"
+      ],
       "code": null,
       "region": "安岐與頂堡之間",
-      "siteType": ["battlefield", "high-ground", "memorial"],
-      "battleRelation": {"status": "SUPPORTED", "summary": "金門國家公園官方據點資料明確記錄其為 1949 古寧頭戰役第18軍前進指揮所。", "sourceIds": ["SRC-0046", "SRC-0052"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "現況包含入口題字、紀念碑誌、兵棋沙盤與戰役紀念設施；現代設施與 1949 指揮所歷史層分開呈現。"},
-      "restorationReuse": {"reconstruction": "present memorial/interpretive structures are not labelled as the original 1949 command post", "transfer": "not established", "restoration": "official recreation-site record available", "currentUse": "heritage interpretation and visitor site", "status": "SUPPORTED", "sourceIds": ["SRC-0046"]},
-      "access": {"status": "official recreation-site entry", "sourceIds": ["SRC-0046"]},
-      "location": {"canonicalPoiId": "POI-0010", "relatedPoiIds": [], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0046"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": ["Commons Hunan Highland 2015 Panoramio file; individual license check pending"], "needed": ["rights-verified current site image", "official memorial inscription image if reusable"], "rightsStatus": "candidate only; not yet integrated"},
-      "sourceIds": ["SRC-0046", "SRC-0052"],
+      "siteType": [
+        "battlefield",
+        "high-ground",
+        "memorial"
+      ],
+      "battleRelation": {
+        "status": "SUPPORTED",
+        "summary": "金門國家公園官方據點資料明確記錄其為 1949 古寧頭戰役第18軍前進指揮所。",
+        "sourceIds": [
+          "SRC-0046",
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "現況包含入口題字、紀念碑誌、兵棋沙盤與戰役紀念設施；現代設施與 1949 指揮所歷史層分開呈現。"
+      },
+      "restorationReuse": {
+        "reconstruction": "present memorial/interpretive structures are not labelled as the original 1949 command post",
+        "transfer": "not established",
+        "restoration": "official recreation-site record available",
+        "currentUse": "heritage interpretation and visitor site",
+        "status": "SUPPORTED",
+        "sourceIds": [
+          "SRC-0046"
+        ]
+      },
+      "access": {
+        "status": "official recreation-site entry",
+        "sourceIds": [
+          "SRC-0046"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0010",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0046",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [
+          "Commons Hunan Highland 2015 Panoramio file; individual license check pending"
+        ],
+        "needed": [
+          "rights-verified current site image",
+          "official memorial inscription image if reusable"
+        ],
+        "rightsStatus": "candidate only; not yet integrated"
+      },
+      "sourceIds": [
+        "SRC-0046",
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["exact relationship between present memorial structures and 1949 command-post footprint"],
-      "humanReview": {"required": true, "questions": ["Approve the official-site wording as the primary description?", "Should the present memorial be shown in the battle map or only in the then-and-now layer?"]}
+      "knownUnknowns": [
+        "exact relationship between present memorial structures and 1949 command-post footprint"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Approve the official-site wording as the primary description?",
+          "Should the present memorial be shown in the battle map or only in the then-and-now layer?"
+        ]
+      }
     },
     {
       "siteId": "TN-BEISHAN-SETTLEMENT",
-      "officialName": {"zh-tw": "北山聚落", "zh-cn": "北山聚落", "en": "Beishan Settlement"},
-      "aliases": ["北山村", "古龍頭", "Beishan Village"],
+      "officialName": {
+        "zh-tw": "北山聚落",
+        "zh-cn": "北山聚落",
+        "en": "Beishan Settlement"
+      },
+      "aliases": [
+        "北山村",
+        "古龍頭",
+        "Beishan Village"
+      ],
       "code": null,
       "region": "古寧頭西北",
-      "siteType": ["settlement", "battlefield", "heritage-building"],
-      "battleRelation": {"status": "SUPPORTED", "summary": "官方國家公園專題將北山、南山、林厝視為古寧頭李姓聚落，並記錄戰火造成的聚落與建築創傷。", "sourceIds": ["SRC-0045", "SRC-0047"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "傳統聚落與戰地文化景觀重疊；不可把整個聚落簡化為單一軍事據點。"},
-      "restorationReuse": {"reconstruction": "individual buildings and public facilities require separate records", "transfer": "not a single-site transfer", "restoration": "traditional settlement conservation context", "currentUse": "living settlement and visitor heritage route", "status": "PARTIAL", "sourceIds": ["SRC-0045", "SRC-0047"]},
-      "access": {"status": "official tourism route", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0006", "relatedPoiIds": [], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0045"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-BEISHAN-HOUSE-2018"], "candidate": [], "needed": ["settlement street and current living-context photographs"], "rightsStatus": "partial; one licensed heritage image integrated"},
-      "sourceIds": ["SRC-0045", "SRC-0047"],
+      "siteType": [
+        "settlement",
+        "battlefield",
+        "heritage-building"
+      ],
+      "battleRelation": {
+        "status": "SUPPORTED",
+        "summary": "官方國家公園專題將北山、南山、林厝視為古寧頭李姓聚落，並記錄戰火造成的聚落與建築創傷。",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0047"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "傳統聚落與戰地文化景觀重疊；不可把整個聚落簡化為單一軍事據點。"
+      },
+      "restorationReuse": {
+        "reconstruction": "individual buildings and public facilities require separate records",
+        "transfer": "not a single-site transfer",
+        "restoration": "traditional settlement conservation context",
+        "currentUse": "living settlement and visitor heritage route",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0047"
+        ]
+      },
+      "access": {
+        "status": "official tourism route",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0006",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-BEISHAN-HOUSE-2018"
+        ],
+        "candidate": [],
+        "needed": [
+          "settlement street and current living-context photographs"
+        ],
+        "rightsStatus": "partial; one licensed heritage image integrated"
+      },
+      "sourceIds": [
+        "SRC-0045",
+        "SRC-0047",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["which surviving buildings have a confirmed 1949 event relationship"],
-      "humanReview": {"required": true, "questions": ["Which settlement buildings may be linked to a specific claim without overgeneralizing the village?"]}
+      "knownUnknowns": [
+        "which surviving buildings have a confirmed 1949 event relationship"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which settlement buildings may be linked to a specific claim without overgeneralizing the village?"
+        ]
+      }
     },
     {
       "siteId": "TN-NANSHAN-SETTLEMENT",
-      "officialName": {"zh-tw": "南山聚落", "zh-cn": "南山聚落", "en": "Nanshan Settlement"},
-      "aliases": ["南山村", "Nanshan Village"],
+      "officialName": {
+        "zh-tw": "南山聚落",
+        "zh-cn": "南山聚落",
+        "en": "Nanshan Settlement"
+      },
+      "aliases": [
+        "南山村",
+        "Nanshan Village"
+      ],
       "code": null,
       "region": "古寧頭南側",
-      "siteType": ["settlement", "battlefield"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方計畫將南山列為戰役紀念史蹟與傳統聚落；具體事件與建築需回到個別來源。", "sourceIds": ["SRC-0045", "SRC-0051"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "以聚落保存與戰地文化景觀的交集呈現。"},
-      "restorationReuse": {"reconstruction": "individual buildings require separate records", "transfer": "not applicable", "restoration": "traditional settlement conservation context", "currentUse": "living settlement and cultural landscape", "status": "PARTIAL", "sourceIds": ["SRC-0045", "SRC-0051"]},
-      "access": {"status": "official plan/tourism context; detailed visitor route pending", "sourceIds": ["SRC-0047", "SRC-0051"]},
-      "location": {"canonicalPoiId": "POI-0008", "relatedPoiIds": [], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0051"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["rights-cleared current settlement view"], "rightsStatus": "missing site-specific published asset"},
-      "sourceIds": ["SRC-0045", "SRC-0051"],
+      "siteType": [
+        "settlement",
+        "battlefield"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方計畫將南山列為戰役紀念史蹟與傳統聚落；具體事件與建築需回到個別來源。",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0051"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "以聚落保存與戰地文化景觀的交集呈現。"
+      },
+      "restorationReuse": {
+        "reconstruction": "individual buildings require separate records",
+        "transfer": "not applicable",
+        "restoration": "traditional settlement conservation context",
+        "currentUse": "living settlement and cultural landscape",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0051"
+        ]
+      },
+      "access": {
+        "status": "official plan/tourism context; detailed visitor route pending",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0051"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0008",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0051",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "rights-cleared current settlement view"
+        ],
+        "rightsStatus": "missing site-specific published asset"
+      },
+      "sourceIds": [
+        "SRC-0045",
+        "SRC-0051",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["specific battle traces and current conservation projects"],
-      "humanReview": {"required": true, "questions": ["Which South Mountain settlement records should be promoted to the public route?", "Are 湖南 and 南山 references being kept distinct in all translations?"]}
+      "knownUnknowns": [
+        "specific battle traces and current conservation projects"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which South Mountain settlement records should be promoted to the public route?",
+          "Are 湖南 and 南山 references being kept distinct in all translations?"
+        ]
+      }
     },
     {
       "siteId": "TN-LINCUO-SETTLEMENT",
-      "officialName": {"zh-tw": "林厝聚落", "zh-cn": "林厝聚落", "en": "Lincuo Settlement"},
-      "aliases": ["林厝", "林厝浴血殲敵紀念碑", "Lincuo"],
+      "officialName": {
+        "zh-tw": "林厝聚落",
+        "zh-cn": "林厝聚落",
+        "en": "Lincuo Settlement"
+      },
+      "aliases": [
+        "林厝",
+        "林厝浴血殲敵紀念碑",
+        "Lincuo"
+      ],
       "code": null,
       "region": "古寧頭核心聚落",
-      "siteType": ["settlement", "battlefield", "memorial"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方計畫列林厝為戰役紀念史蹟與傳統聚落；現況紀念碑影像可獨立核對。", "sourceIds": ["SRC-0051", "SRC-0050"]},
-      "constructionUse": {"status": "PARTIAL", "summary": "聚落、戰場與後來紀念空間需分層記述。"},
-      "restorationReuse": {"reconstruction": "memorial facilities are later commemorative layers", "transfer": "not established", "restoration": "current memorial/park management requires official record", "currentUse": "settlement, memorial and visitor context", "status": "PARTIAL", "sourceIds": ["SRC-0050", "SRC-0051"]},
-      "access": {"status": "official tourism and plan references; current access details pending", "sourceIds": ["SRC-0047", "SRC-0051"]},
-      "location": {"canonicalPoiId": "POI-0007", "relatedPoiIds": ["POI-0018"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0051"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-LINCUO-MEMORIAL-2019"], "candidate": [], "needed": ["current settlement and artillery-position context"], "rightsStatus": "one licensed memorial image integrated"},
-      "sourceIds": ["SRC-0050", "SRC-0051"],
+      "siteType": [
+        "settlement",
+        "battlefield",
+        "memorial"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方計畫列林厝為戰役紀念史蹟與傳統聚落；現況紀念碑影像可獨立核對。",
+        "sourceIds": [
+          "SRC-0051",
+          "SRC-0050"
+        ]
+      },
+      "constructionUse": {
+        "status": "PARTIAL",
+        "summary": "聚落、戰場與後來紀念空間需分層記述。"
+      },
+      "restorationReuse": {
+        "reconstruction": "memorial facilities are later commemorative layers",
+        "transfer": "not established",
+        "restoration": "current memorial/park management requires official record",
+        "currentUse": "settlement, memorial and visitor context",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0050",
+          "SRC-0051"
+        ]
+      },
+      "access": {
+        "status": "official tourism and plan references; current access details pending",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0051"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0007",
+        "relatedPoiIds": [
+          "POI-0018"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0051",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-LINCUO-MEMORIAL-2019"
+        ],
+        "candidate": [],
+        "needed": [
+          "current settlement and artillery-position context"
+        ],
+        "rightsStatus": "one licensed memorial image integrated"
+      },
+      "sourceIds": [
+        "SRC-0050",
+        "SRC-0051",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["exact scope of the Peace Memorial Park versus the separate Lincuo artillery-position record", "current conservation status of surrounding settlement"],
-      "humanReview": {"required": true, "questions": ["Should the monument and settlement be separate public cards while retaining a shared area reference?"]}
+      "knownUnknowns": [
+        "exact scope of the Peace Memorial Park versus the separate Lincuo artillery-position record",
+        "current conservation status of surrounding settlement"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Should the monument and settlement be separate public cards while retaining a shared area reference?"
+        ]
+      }
     },
     {
       "siteId": "TN-LINCUO-ARTILLERY",
-      "officialName": {"zh-tw": "林厝砲陣地", "zh-cn": "林厝炮阵地", "en": "Lincuo Artillery Position"},
-      "aliases": ["林厝砲陣地", "Lincuo artillery position"],
+      "officialName": {
+        "zh-tw": "林厝砲陣地",
+        "zh-cn": "林厝炮阵地",
+        "en": "Lincuo Artillery Position"
+      },
+      "aliases": [
+        "林厝砲陣地",
+        "Lincuo artillery position"
+      ],
       "code": "ARTILLERY",
       "region": "林厝／和平紀念園區周邊",
-      "siteType": ["battlefield", "memorial", "research-candidate"],
-      "battleRelation": {"status": "PARTIAL", "summary": "本表將林厝砲陣地作為獨立研究項目；不得與和平紀念園區或林厝聚落合併。", "sourceIds": ["SRC-0050", "SRC-0051"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "砲陣地的個別遺構、年代與現況展示需分開記錄。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "current park context requires separate review", "currentUse": "research and memorial-landscape reference", "status": "PARTIAL", "sourceIds": ["SRC-0047", "SRC-0050"]},
-      "access": {"status": "park-area access; exact artillery-position access requires confirmation", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0038", "relatedPoiIds": ["POI-0007", "POI-0018"], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0050", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["site-specific artillery-position image with exact identity"], "rightsStatus": "no separate site-specific published asset"},
-      "sourceIds": ["SRC-0050", "SRC-0051", "SRC-0056"],
+      "siteType": [
+        "battlefield",
+        "memorial",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "本表將林厝砲陣地作為獨立研究項目；不得與和平紀念園區或林厝聚落合併。",
+        "sourceIds": [
+          "SRC-0050",
+          "SRC-0051"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "砲陣地的個別遺構、年代與現況展示需分開記錄。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "current park context requires separate review",
+        "currentUse": "research and memorial-landscape reference",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0050"
+        ]
+      },
+      "access": {
+        "status": "park-area access; exact artillery-position access requires confirmation",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0038",
+        "relatedPoiIds": [
+          "POI-0007",
+          "POI-0018"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0050",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "site-specific artillery-position image with exact identity"
+        ],
+        "rightsStatus": "no separate site-specific published asset"
+      },
+      "sourceIds": [
+        "SRC-0050",
+        "SRC-0051",
+        "SRC-0056",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["relationship between the artillery position and the later peace-park display", "current exact structure and access"],
-      "humanReview": {"required": true, "questions": ["Keep the artillery position distinct from the park and settlement in future public interpretation?"]}
+      "knownUnknowns": [
+        "relationship between the artillery position and the later peace-park display",
+        "current exact structure and access"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Keep the artillery position distinct from the park and settlement in future public interpretation?"
+        ]
+      }
     },
     {
       "siteId": "TN-W013",
-      "officialName": {"zh-tw": "安東一營區", "zh-cn": "安东一营区", "en": "Andong 1 Camp"},
-      "aliases": ["W013", "安東一", "安東一營"],
+      "officialName": {
+        "zh-tw": "安東一營區",
+        "zh-cn": "安东一营区",
+        "en": "Andong 1 Camp"
+      },
+      "aliases": [
+        "W013",
+        "安東一",
+        "安東一營"
+      ],
       "code": "W013",
       "region": "古寧頭東方／沙崗海岸",
-      "siteType": ["postwar-military", "adaptive-reuse"],
-      "battleRelation": {"status": "SUPPORTED", "summary": "官方專題將 W013 定位為古寧頭沿岸海防據點，並說明其鄰近 1949 登陸地點；不把現況建築直接稱為 1949 原始碉堡。", "sourceIds": ["SRC-0041", "SRC-0042"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "官方記錄民國70年代重新整建，後以熊震球與戰車故事展示。"},
-      "restorationReuse": {"reconstruction": "民國70年代整建", "transfer": "military release/park management context not individually documented here", "restoration": "國家公園整理與 2016 開幕", "currentUse": "battlefield heritage interpretation and visitor site", "status": "SUPPORTED", "sourceIds": ["SRC-0041", "SRC-0042", "SRC-0053"]},
-      "access": {"status": "official opening and activity records; current hours require recheck", "sourceIds": ["SRC-0041", "SRC-0053"]},
-      "location": {"canonicalPoiId": "POI-0019", "relatedPoiIds": [], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0041"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["licensed exterior and interior photographs", "restoration/opening documentation image"], "rightsStatus": "site-specific image still missing"},
-      "sourceIds": ["SRC-0041", "SRC-0042", "SRC-0053"],
+      "siteType": [
+        "postwar-military",
+        "adaptive-reuse"
+      ],
+      "battleRelation": {
+        "status": "SUPPORTED",
+        "summary": "官方專題將 W013 定位為古寧頭沿岸海防據點，並說明其鄰近 1949 登陸地點；不把現況建築直接稱為 1949 原始碉堡。",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0042"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "官方記錄民國70年代重新整建，後以熊震球與戰車故事展示。"
+      },
+      "restorationReuse": {
+        "reconstruction": "民國70年代整建",
+        "transfer": "military release/park management context not individually documented here",
+        "restoration": "國家公園整理與 2016 開幕",
+        "currentUse": "battlefield heritage interpretation and visitor site",
+        "status": "SUPPORTED",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0042",
+          "SRC-0053"
+        ]
+      },
+      "access": {
+        "status": "official opening and activity records; current hours require recheck",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0053"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0019",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "licensed exterior and interior photographs",
+          "restoration/opening documentation image"
+        ],
+        "rightsStatus": "site-specific image still missing"
+      },
+      "sourceIds": [
+        "SRC-0041",
+        "SRC-0042",
+        "SRC-0053",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["current opening/access conditions", "which interior displays remain in place"],
-      "humanReview": {"required": true, "questions": ["Confirm present-day access and photo permission with the park authority."]}
+      "knownUnknowns": [
+        "current opening/access conditions",
+        "which interior displays remain in place"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Confirm present-day access and photo permission with the park authority."
+        ]
+      }
     },
     {
       "siteId": "TN-W012",
-      "officialName": {"zh-tw": "W012 安東二營區（熾白安東）", "zh-cn": "W012 安东二营区（炽白安东）", "en": "W012 Andong 2 Camp (Chibai Andong)"},
-      "aliases": ["W012", "安東二", "安東二營", "熾白安東"],
+      "officialName": {
+        "zh-tw": "W012 安東二營區（熾白安東）",
+        "zh-cn": "W012 安东二营区（炽白安东）",
+        "en": "W012 Andong 2 Camp (Chibai Andong)"
+      },
+      "aliases": [
+        "W012",
+        "安東二",
+        "安東二營",
+        "熾白安東"
+      ],
       "code": "W012",
       "region": "古寧頭／沙崗海岸帶",
-      "siteType": ["postwar-military", "adaptive-reuse"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方 W012 據點入口與 W013 系列資料支持其為安東系列海岸據點；既有 POI-0023 僅是道路紀錄。", "sourceIds": ["SRC-0041", "SRC-0042", "SRC-0055"]},
-      "constructionUse": {"status": "PARTIAL", "summary": "軍方／海巡使用與現況營運需分別引用，不把民間營運敘述當唯一歷史證據。"},
-      "restorationReuse": {"reconstruction": "not established in reviewed official source", "transfer": "later military/coast-guard and private-use context requires document review", "restoration": "current operator material and official site entry kept separate", "currentUse": "community/private adaptive reuse reported; current status requires recheck", "status": "PARTIAL", "sourceIds": ["SRC-0055", "SRC-0042"]},
-      "access": {"status": "official site record and operator information are separate; access must be checked before publication", "sourceIds": ["SRC-0055"]},
-      "location": {"canonicalPoiId": "POI-0026", "relatedPoiIds": ["POI-0023"], "coordinates": null, "precision": "canonical user-specified modern-site reference; inventory keeps coordinates null and delegates the public point to POI-0026", "sourceIds": ["SRC-0055", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-W012-ENTRANCE-2026", "TN-MEDIA-W012-EXTERIOR-2026"], "candidate": [], "needed": ["licensed interior/restoration detail if available"], "rightsStatus": "two official current images published under the National Park open-data declaration"},
-      "sourceIds": ["SRC-0041", "SRC-0042", "SRC-0055"],
+      "siteType": [
+        "postwar-military",
+        "adaptive-reuse"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方 W012 據點入口與 W013 系列資料支持其為安東系列海岸據點；既有 POI-0023 僅是道路紀錄。",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0042",
+          "SRC-0055"
+        ]
+      },
+      "constructionUse": {
+        "status": "PARTIAL",
+        "summary": "軍方／海巡使用與現況營運需分別引用，不把民間營運敘述當唯一歷史證據。"
+      },
+      "restorationReuse": {
+        "reconstruction": "not established in reviewed official source",
+        "transfer": "later military/coast-guard and private-use context requires document review",
+        "restoration": "current operator material and official site entry kept separate",
+        "currentUse": "community/private adaptive reuse reported; current status requires recheck",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0055",
+          "SRC-0042"
+        ]
+      },
+      "access": {
+        "status": "official site record and operator information are separate; access must be checked before publication",
+        "sourceIds": [
+          "SRC-0055"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0026",
+        "relatedPoiIds": [
+          "POI-0023"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified modern-site reference; inventory keeps coordinates null and delegates the public point to POI-0026",
+        "sourceIds": [
+          "SRC-0055",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-W012-ENTRANCE-2026",
+          "TN-MEDIA-W012-EXTERIOR-2026"
+        ],
+        "candidate": [],
+        "needed": [
+          "licensed interior/restoration detail if available"
+        ],
+        "rightsStatus": "two official current images published under the National Park open-data declaration"
+      },
+      "sourceIds": [
+        "SRC-0041",
+        "SRC-0042",
+        "SRC-0055",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["exact camp boundary", "transfer/management chronology", "current access and permitted photography"],
-      "humanReview": {"required": true, "questions": ["Which official register identifies the W012 compound boundary?", "Can the existing road POI remain only as a related reference?", "Which current-use claims can be published?"], "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]}
+      "knownUnknowns": [
+        "exact camp boundary",
+        "transfer/management chronology",
+        "current access and permitted photography"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which official register identifies the W012 compound boundary?",
+          "Can the existing road POI remain only as a related reference?",
+          "Which current-use claims can be published?"
+        ],
+        "possibleActions": [
+          "APPROVE",
+          "REJECT",
+          "REQUEST_MORE_EVIDENCE",
+          "KEEP_BLOCKED"
+        ]
+      }
     },
     {
       "siteId": "TN-W011",
-      "officialName": {"zh-tw": "安東三營區", "zh-cn": "安东三营区", "en": "Andong 3 Camp"},
-      "aliases": ["W011", "安東三", "安東三營"],
+      "officialName": {
+        "zh-tw": "安東三營區",
+        "zh-cn": "安东三营区",
+        "en": "Andong 3 Camp"
+      },
+      "aliases": [
+        "W011",
+        "安東三",
+        "安東三營"
+      ],
       "code": "W011",
       "region": "古寧頭東方海岸帶",
-      "siteType": ["postwar-military"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方資料支持 W011/W012/W013 的系列關係，但尚未提供本 inventory 所需的個別清冊、現況位置與影像閉環。", "sourceIds": ["SRC-0041", "SRC-0042"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "不得由 W013 的資料推導 W011 個別建造、戰役功能或現況。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "unknown", "currentUse": "research entry only", "status": "RESEARCH", "sourceIds": ["SRC-0041", "SRC-0042"]},
-      "access": {"status": "not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0027", "relatedPoiIds": [], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0041", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["official register, current exterior/interior, restoration record"], "rightsStatus": "no site-specific published asset"},
-      "sourceIds": ["SRC-0041", "SRC-0042"],
+      "siteType": [
+        "postwar-military"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方資料支持 W011/W012/W013 的系列關係，但尚未提供本 inventory 所需的個別清冊、現況位置與影像閉環。",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0042"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "不得由 W013 的資料推導 W011 個別建造、戰役功能或現況。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "unknown",
+        "currentUse": "research entry only",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0042"
+        ]
+      },
+      "access": {
+        "status": "not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0027",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0041",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "official register, current exterior/interior, restoration record"
+        ],
+        "rightsStatus": "no site-specific published asset"
+      },
+      "sourceIds": [
+        "SRC-0041",
+        "SRC-0042",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["official name spelling", "compound boundary", "current management and open status", "photo permissions"],
-      "humanReview": {"required": true, "questions": ["What official record independently identifies W011?", "Can a field visit or park-provided image be authorized?"]}
+      "knownUnknowns": [
+        "official name spelling",
+        "compound boundary",
+        "current management and open status",
+        "photo permissions"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "What official record independently identifies W011?",
+          "Can a field visit or park-provided image be authorized?"
+        ]
+      }
     },
     {
       "siteId": "TN-W016",
-      "officialName": {"zh-tw": "古寧頭三營區", "zh-cn": "古宁头三营区", "en": "Guningtou Three Camp"},
-      "aliases": ["W16據點", "W016", "古寧頭三營區"],
+      "officialName": {
+        "zh-tw": "古寧頭三營區",
+        "zh-cn": "古宁头三营区",
+        "en": "Guningtou Three Camp"
+      },
+      "aliases": [
+        "W16據點",
+        "W016",
+        "古寧頭三營區"
+      ],
       "code": "W016",
       "region": "古寧頭戰史館後方",
-      "siteType": ["postwar-military", "adaptive-reuse"],
-      "battleRelation": {"status": "SUPPORTED", "summary": "官方啟用公告明確將 W16 對應為古寧頭三營區，並說明其為釋出營區的保存活化場域；不把啟用公告當作 1949 原始工事證明。", "sourceIds": ["SRC-0039", "SRC-0053"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "軍方釋出後由金門國家公園以保留原有風貌方式整修並開放參訪。"},
-      "restorationReuse": {"reconstruction": "not stated as a new reconstruction", "transfer": "military release to National Park reuse context", "restoration": "official 2014 opening record", "currentUse": "military heritage visitor site and activity venue", "status": "SUPPORTED", "sourceIds": ["SRC-0039", "SRC-0053"]},
-      "access": {"status": "official opening and later activity records; current opening condition requires recheck", "sourceIds": ["SRC-0039", "SRC-0053"]},
-      "location": {"canonicalPoiId": "POI-0028", "relatedPoiIds": ["POI-0016"], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0039", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": ["Commons W16 Stronghold 2014 Panoramio file; individual license verification pending"], "needed": ["rights-verified W16 exterior/interior and current access image"], "rightsStatus": "candidate found; not integrated until individual file license is verified"},
-      "sourceIds": ["SRC-0039", "SRC-0053"],
+      "siteType": [
+        "postwar-military",
+        "adaptive-reuse"
+      ],
+      "battleRelation": {
+        "status": "SUPPORTED",
+        "summary": "官方啟用公告明確將 W16 對應為古寧頭三營區，並說明其為釋出營區的保存活化場域；不把啟用公告當作 1949 原始工事證明。",
+        "sourceIds": [
+          "SRC-0039",
+          "SRC-0053"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "軍方釋出後由金門國家公園以保留原有風貌方式整修並開放參訪。"
+      },
+      "restorationReuse": {
+        "reconstruction": "not stated as a new reconstruction",
+        "transfer": "military release to National Park reuse context",
+        "restoration": "official 2014 opening record",
+        "currentUse": "military heritage visitor site and activity venue",
+        "status": "SUPPORTED",
+        "sourceIds": [
+          "SRC-0039",
+          "SRC-0053"
+        ]
+      },
+      "access": {
+        "status": "official opening and later activity records; current opening condition requires recheck",
+        "sourceIds": [
+          "SRC-0039",
+          "SRC-0053"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0028",
+        "relatedPoiIds": [
+          "POI-0016"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0039",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [
+          "Commons W16 Stronghold 2014 Panoramio file; individual license verification pending"
+        ],
+        "needed": [
+          "rights-verified W16 exterior/interior and current access image"
+        ],
+        "rightsStatus": "candidate found; not integrated until individual file license is verified"
+      },
+      "sourceIds": [
+        "SRC-0039",
+        "SRC-0053",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["current open status", "interior condition", "whether public photos may be captured inside"],
-      "humanReview": {"required": true, "questions": ["Confirm W16/W016 naming convention for public UI.", "Confirm current operating entity and opening status."]}
+      "knownUnknowns": [
+        "current open status",
+        "interior condition",
+        "whether public photos may be captured inside"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Confirm W16/W016 naming convention for public UI.",
+          "Confirm current operating entity and opening status."
+        ]
+      }
     },
     {
       "siteId": "TN-W027",
-      "officialName": {"zh-tw": "湖下一營區", "zh-cn": "湖下一营区", "en": "Huxia Camp 1"},
-      "aliases": ["W027", "湖下一營", "烏沙頭湖下一營區"],
+      "officialName": {
+        "zh-tw": "湖下一營區",
+        "zh-cn": "湖下一营区",
+        "en": "Huxia Camp 1"
+      },
+      "aliases": [
+        "W027",
+        "湖下一營",
+        "烏沙頭湖下一營區"
+      ],
       "code": "W027",
       "region": "古寧頭烏沙頭／金烈水道口",
-      "siteType": ["postwar-military", "adaptive-reuse", "coastal-landscape"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方專題將其定位為戰後海防據點與重要戰地區域；1986–1988 建造資料不能回推成 1949 原始工事。", "sourceIds": ["SRC-0040"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "包含房舍、崗哨、碉堡、營舍與地下坑道；官方記錄 1986–1988 以花崗岩與鋼筋水泥施工。"},
-      "restorationReuse": {"reconstruction": "1986–1988 military construction documented", "transfer": "later public opening context documented", "restoration": "official public-opening and tourism material", "currentUse": "heritage visitor site, environmental education and military-experience activity", "status": "SUPPORTED", "sourceIds": ["SRC-0040", "SRC-0053"]},
-      "access": {"status": "official public-opening record; current hours and seasonal access require recheck", "sourceIds": ["SRC-0040", "SRC-0053"]},
-      "location": {"canonicalPoiId": "POI-0029", "relatedPoiIds": [], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0040", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["licensed exterior, tunnel, lookout and current visitor images"], "rightsStatus": "official image provenance exists but reuse permission not closed"},
-      "sourceIds": ["SRC-0040", "SRC-0053"],
+      "siteType": [
+        "postwar-military",
+        "adaptive-reuse",
+        "coastal-landscape"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方專題將其定位為戰後海防據點與重要戰地區域；1986–1988 建造資料不能回推成 1949 原始工事。",
+        "sourceIds": [
+          "SRC-0040"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "包含房舍、崗哨、碉堡、營舍與地下坑道；官方記錄 1986–1988 以花崗岩與鋼筋水泥施工。"
+      },
+      "restorationReuse": {
+        "reconstruction": "1986–1988 military construction documented",
+        "transfer": "later public opening context documented",
+        "restoration": "official public-opening and tourism material",
+        "currentUse": "heritage visitor site, environmental education and military-experience activity",
+        "status": "SUPPORTED",
+        "sourceIds": [
+          "SRC-0040",
+          "SRC-0053"
+        ]
+      },
+      "access": {
+        "status": "official public-opening record; current hours and seasonal access require recheck",
+        "sourceIds": [
+          "SRC-0040",
+          "SRC-0053"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0029",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0040",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "licensed exterior, tunnel, lookout and current visitor images"
+        ],
+        "rightsStatus": "official image provenance exists but reuse permission not closed"
+      },
+      "sourceIds": [
+        "SRC-0040",
+        "SRC-0053",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["present opening hours", "full current route through the camp", "image reuse permission"],
-      "humanReview": {"required": true, "questions": ["Confirm which official current photos may be republished.", "Keep 1986–1988 construction visibly separate from 1949 battlefield content."]}
+      "knownUnknowns": [
+        "present opening hours",
+        "full current route through the camp",
+        "image reuse permission"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Confirm which official current photos may be republished.",
+          "Keep 1986–1988 construction visibly separate from 1949 battlefield content."
+        ]
+      }
     },
     {
       "siteId": "TN-LONGKOU-2-CAMP",
-      "officialName": {"zh-tw": "嚨口二營區", "zh-cn": "垄口二营区", "en": "Longkou Second Camp"},
-      "aliases": ["嚨口二營", "嚨口二營區保存案"],
+      "officialName": {
+        "zh-tw": "嚨口二營區",
+        "zh-cn": "垄口二营区",
+        "en": "Longkou Second Camp"
+      },
+      "aliases": [
+        "嚨口二營",
+        "嚨口二營區保存案"
+      ],
       "code": null,
       "region": "嚨口至古寧頭海岸帶",
-      "siteType": ["postwar-military", "battlefield", "research-candidate"],
-      "battleRelation": {"status": "PARTIAL", "summary": "縣府官方會勘將其放在古寧頭第一戰場與沿岸防禦遺跡保存脈絡；尚未完成本 inventory 所需的正式邊界與價值認定。", "sourceIds": ["SRC-0043", "SRC-0044"]},
-      "constructionUse": {"status": "PARTIAL", "summary": "官方記錄現地地下坑道與防禦遺跡；建造年代與各設施名稱待調查。"},
-      "restorationReuse": {"reconstruction": "not established", "transfer": "land/management negotiation in progress", "restoration": "proposed preservation and activation", "currentUse": "research and policy-planning site", "status": "PARTIAL", "sourceIds": ["SRC-0043", "SRC-0044"]},
-      "access": {"status": "not published as a general visitor site in the reviewed sources; field access requires permission", "sourceIds": ["SRC-0043"]},
-      "location": {"canonicalPoiId": "POI-0030", "relatedPoiIds": ["POI-0001"], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0043", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["official survey photographs and authorized field documentation"], "rightsStatus": "no cleared public image"},
-      "sourceIds": ["SRC-0043", "SRC-0044"],
+      "siteType": [
+        "postwar-military",
+        "battlefield",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "縣府官方會勘將其放在古寧頭第一戰場與沿岸防禦遺跡保存脈絡；尚未完成本 inventory 所需的正式邊界與價值認定。",
+        "sourceIds": [
+          "SRC-0043",
+          "SRC-0044"
+        ]
+      },
+      "constructionUse": {
+        "status": "PARTIAL",
+        "summary": "官方記錄現地地下坑道與防禦遺跡；建造年代與各設施名稱待調查。"
+      },
+      "restorationReuse": {
+        "reconstruction": "not established",
+        "transfer": "land/management negotiation in progress",
+        "restoration": "proposed preservation and activation",
+        "currentUse": "research and policy-planning site",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0043",
+          "SRC-0044"
+        ]
+      },
+      "access": {
+        "status": "not published as a general visitor site in the reviewed sources; field access requires permission",
+        "sourceIds": [
+          "SRC-0043"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0030",
+        "relatedPoiIds": [
+          "POI-0001"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0043",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "official survey photographs and authorized field documentation"
+        ],
+        "rightsStatus": "no cleared public image"
+      },
+      "sourceIds": [
+        "SRC-0043",
+        "SRC-0044",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["official boundary", "ownership and access", "which remains are Longkou Fort, Dongyidianhong or Zhenzhong Fort", "current conservation plan"],
-      "humanReview": {"required": true, "questions": ["Do not publish a visitor route until land/access conditions are confirmed.", "Which official survey will establish the component-site boundaries?"], "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]}
+      "knownUnknowns": [
+        "official boundary",
+        "ownership and access",
+        "which remains are Longkou Fort, Dongyidianhong or Zhenzhong Fort",
+        "current conservation plan"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Do not publish a visitor route until land/access conditions are confirmed.",
+          "Which official survey will establish the component-site boundaries?"
+        ],
+        "possibleActions": [
+          "APPROVE",
+          "REJECT",
+          "REQUEST_MORE_EVIDENCE",
+          "KEEP_BLOCKED"
+        ]
+      }
     },
     {
       "siteId": "TN-LONGKOU-FORT",
-      "officialName": {"zh-tw": "嚨口堡", "zh-cn": "垄口堡", "en": "Longkou Fort"},
-      "aliases": ["嚨口堡碉堡", "Longkou bunker/fort"],
+      "officialName": {
+        "zh-tw": "嚨口堡",
+        "zh-cn": "垄口堡",
+        "en": "Longkou Fort"
+      },
+      "aliases": [
+        "嚨口堡碉堡",
+        "Longkou bunker/fort"
+      ],
       "code": null,
       "region": "嚨口海岸防禦鏈",
-      "siteType": ["postwar-military", "battlefield", "research-candidate"],
-      "battleRelation": {"status": "PARTIAL", "summary": "縣府政策資料把嚨口堡視為 1949 第一線防禦據點與保存活化案例；仍需文化資產調查閉合。", "sourceIds": ["SRC-0043", "SRC-0044"]},
-      "constructionUse": {"status": "PARTIAL", "summary": "地下坑道與碉堡現況由會勘資料提及，未取得完整測繪與年代清冊。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "under land/management negotiation", "restoration": "proposed cultural-landscape recognition and activation", "currentUse": "research candidate", "status": "PARTIAL", "sourceIds": ["SRC-0043", "SRC-0044"]},
-      "access": {"status": "permission and safety review required", "sourceIds": ["SRC-0043"]},
-      "location": {"canonicalPoiId": "POI-0031", "relatedPoiIds": ["POI-0001", "POI-0024"], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0044", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["authorized exterior and tunnel survey images"], "rightsStatus": "no cleared public image"},
-      "sourceIds": ["SRC-0043", "SRC-0044"],
+      "siteType": [
+        "postwar-military",
+        "battlefield",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "縣府政策資料把嚨口堡視為 1949 第一線防禦據點與保存活化案例；仍需文化資產調查閉合。",
+        "sourceIds": [
+          "SRC-0043",
+          "SRC-0044"
+        ]
+      },
+      "constructionUse": {
+        "status": "PARTIAL",
+        "summary": "地下坑道與碉堡現況由會勘資料提及，未取得完整測繪與年代清冊。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "under land/management negotiation",
+        "restoration": "proposed cultural-landscape recognition and activation",
+        "currentUse": "research candidate",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0043",
+          "SRC-0044"
+        ]
+      },
+      "access": {
+        "status": "permission and safety review required",
+        "sourceIds": [
+          "SRC-0043"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0031",
+        "relatedPoiIds": [
+          "POI-0001",
+          "POI-0024"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0044",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "authorized exterior and tunnel survey images"
+        ],
+        "rightsStatus": "no cleared public image"
+      },
+      "sourceIds": [
+        "SRC-0043",
+        "SRC-0044",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["exact relationship to Longkou Second Camp", "current ownership, safety and access"],
-      "humanReview": {"required": true, "questions": ["Do not map as a confirmed point until the official survey identifies it."]}
+      "knownUnknowns": [
+        "exact relationship to Longkou Second Camp",
+        "current ownership, safety and access"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Do not map as a confirmed point until the official survey identifies it."
+        ]
+      }
     },
     {
       "siteId": "TN-DONGYIDIANHONG",
-      "officialName": {"zh-tw": "東一點紅", "zh-cn": "东一点红", "en": "Dongyidianhong"},
-      "aliases": ["東一點紅據點", "Dongyidianhong Beach/position"],
+      "officialName": {
+        "zh-tw": "東一點紅",
+        "zh-cn": "东一点红",
+        "en": "Dongyidianhong"
+      },
+      "aliases": [
+        "東一點紅據點",
+        "Dongyidianhong Beach/position"
+      ],
       "code": null,
       "region": "嚨口至古寧頭海岸帶",
-      "siteType": ["postwar-military", "battlefield", "coastal-landscape", "research-candidate"],
-      "battleRelation": {"status": "PARTIAL", "summary": "縣府活化資料將其與嚨口堡、鎮中堡並列為防禦鏈；戰役功能仍需回到官方戰史與調查。", "sourceIds": ["SRC-0044", "SRC-0052"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "尚無個別建造與使用清冊。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "policy discussion only", "currentUse": "research candidate", "status": "RESEARCH", "sourceIds": ["SRC-0044"]},
-      "access": {"status": "current access not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0032", "relatedPoiIds": [], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0044", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": ["Commons Dongyidianhong Beach 2014 file; site-specific use and license record pending"], "needed": ["authorized exact-site image"], "rightsStatus": "candidate only"},
-      "sourceIds": ["SRC-0044", "SRC-0052"],
+      "siteType": [
+        "postwar-military",
+        "battlefield",
+        "coastal-landscape",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "縣府活化資料將其與嚨口堡、鎮中堡並列為防禦鏈；戰役功能仍需回到官方戰史與調查。",
+        "sourceIds": [
+          "SRC-0044",
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "尚無個別建造與使用清冊。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "policy discussion only",
+        "currentUse": "research candidate",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0044"
+        ]
+      },
+      "access": {
+        "status": "current access not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0032",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0044",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [
+          "Commons Dongyidianhong Beach 2014 file; site-specific use and license record pending"
+        ],
+        "needed": [
+          "authorized exact-site image"
+        ],
+        "rightsStatus": "candidate only"
+      },
+      "sourceIds": [
+        "SRC-0044",
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "RESEARCH",
       "priority": "core",
-      "knownUnknowns": ["site boundary", "relationship to Longkou Fort and Zhenzhong Fort", "current remains"],
-      "humanReview": {"required": true, "questions": ["Which official survey or map identifies Dongyidianhong independently?", "Can it be shown only as a research label until then?"]}
+      "knownUnknowns": [
+        "site boundary",
+        "relationship to Longkou Fort and Zhenzhong Fort",
+        "current remains"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which official survey or map identifies Dongyidianhong independently?",
+          "Can it be shown only as a research label until then?"
+        ]
+      }
     },
     {
       "siteId": "TN-ZHENZHONG-FORT",
-      "officialName": {"zh-tw": "鎮中堡", "zh-cn": "镇中堡", "en": "Zhenzhong Fort"},
-      "aliases": ["鎮中堡據點", "Zhenzhong bunker/fort"],
+      "officialName": {
+        "zh-tw": "鎮中堡",
+        "zh-cn": "镇中堡",
+        "en": "Zhenzhong Fort"
+      },
+      "aliases": [
+        "鎮中堡據點",
+        "Zhenzhong bunker/fort"
+      ],
       "code": null,
       "region": "嚨口至古寧頭海岸帶",
-      "siteType": ["postwar-military", "battlefield", "research-candidate"],
-      "battleRelation": {"status": "PARTIAL", "summary": "縣府政策資料將其與嚨口堡、東一點紅並列為防禦鏈；缺少個別位置與遺構清冊。", "sourceIds": ["SRC-0044", "SRC-0052"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "不得用鄰近營區或道路 POI 代替。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "policy discussion only", "currentUse": "research candidate", "status": "RESEARCH", "sourceIds": ["SRC-0044"]},
-      "access": {"status": "current access not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0033", "relatedPoiIds": [], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0044", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["authorized exact-site image and official survey record"], "rightsStatus": "no cleared public image"},
-      "sourceIds": ["SRC-0044", "SRC-0052"],
+      "siteType": [
+        "postwar-military",
+        "battlefield",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "縣府政策資料將其與嚨口堡、東一點紅並列為防禦鏈；缺少個別位置與遺構清冊。",
+        "sourceIds": [
+          "SRC-0044",
+          "SRC-0052"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "不得用鄰近營區或道路 POI 代替。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "policy discussion only",
+        "currentUse": "research candidate",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0044"
+        ]
+      },
+      "access": {
+        "status": "current access not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0033",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0044",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "authorized exact-site image and official survey record"
+        ],
+        "rightsStatus": "no cleared public image"
+      },
+      "sourceIds": [
+        "SRC-0044",
+        "SRC-0052",
+        "SRC-0057"
+      ],
       "evidenceStatus": "RESEARCH",
       "priority": "core",
-      "knownUnknowns": ["site boundary", "official naming and code", "current remains and management"],
-      "humanReview": {"required": true, "questions": ["Keep as a research candidate until the official survey supplies a stable identifier."]}
+      "knownUnknowns": [
+        "site boundary",
+        "official naming and code",
+        "current remains and management"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Keep as a research candidate until the official survey supplies a stable identifier."
+        ]
+      }
     },
     {
       "siteId": "TN-MUSEUM",
-      "officialName": {"zh-tw": "古寧頭戰史館", "zh-cn": "古宁头战史馆", "en": "Guningtou Battle Museum"},
-      "aliases": ["古寧頭戰役史館", "Guningtou Battle History Museum"],
+      "officialName": {
+        "zh-tw": "古寧頭戰史館",
+        "zh-cn": "古宁头战史馆",
+        "en": "Guningtou Battle Museum"
+      },
+      "aliases": [
+        "古寧頭戰役史館",
+        "Guningtou Battle History Museum"
+      ],
       "code": "MUSEUM",
       "region": "古寧頭北山聚落／海岸閱讀帶",
-      "siteType": ["memorial", "adaptive-reuse"],
-      "battleRelation": {"status": "SUPPORTED", "summary": "官方館史、展示與整修資料支持其作為 1949 戰役公共展示入口；展示內容與原始戰場 geometry 分開。", "sourceIds": ["SRC-0002", "SRC-0004", "SRC-0001"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "官方資料記錄館史、移交、整修與沉浸式展示。"},
-      "restorationReuse": {"reconstruction": "museum building and later exhibition layers", "transfer": "official museum history/management records", "restoration": "recent renovation and immersive theatre", "currentUse": "public museum and battle interpretation", "status": "SUPPORTED", "sourceIds": ["SRC-0004", "SRC-0001"]},
-      "access": {"status": "official visitor entry available; opening details can change", "sourceIds": ["SRC-0002", "SRC-0001"]},
-      "location": {"canonicalPoiId": "POI-0016", "relatedPoiIds": ["POI-0019", "POI-0020"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0002"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-MUSEUM-2013"], "candidate": ["Guningtou Battle Museum DSC 3248; individual rights record pending"], "needed": ["inside exhibition/restoration imagery with permission"], "rightsStatus": "licensed exterior image integrated; new interior media pending"},
-      "sourceIds": ["SRC-0001", "SRC-0002", "SRC-0004"],
+      "siteType": [
+        "memorial",
+        "adaptive-reuse"
+      ],
+      "battleRelation": {
+        "status": "SUPPORTED",
+        "summary": "官方館史、展示與整修資料支持其作為 1949 戰役公共展示入口；展示內容與原始戰場 geometry 分開。",
+        "sourceIds": [
+          "SRC-0002",
+          "SRC-0004",
+          "SRC-0001"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "官方資料記錄館史、移交、整修與沉浸式展示。"
+      },
+      "restorationReuse": {
+        "reconstruction": "museum building and later exhibition layers",
+        "transfer": "official museum history/management records",
+        "restoration": "recent renovation and immersive theatre",
+        "currentUse": "public museum and battle interpretation",
+        "status": "SUPPORTED",
+        "sourceIds": [
+          "SRC-0004",
+          "SRC-0001"
+        ]
+      },
+      "access": {
+        "status": "official visitor entry available; opening details can change",
+        "sourceIds": [
+          "SRC-0002",
+          "SRC-0001"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0016",
+        "relatedPoiIds": [
+          "POI-0019",
+          "POI-0020"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0002",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-MUSEUM-2013"
+        ],
+        "candidate": [
+          "Guningtou Battle Museum DSC 3248; individual rights record pending"
+        ],
+        "needed": [
+          "inside exhibition/restoration imagery with permission"
+        ],
+        "rightsStatus": "licensed exterior image integrated; new interior media pending"
+      },
+      "sourceIds": [
+        "SRC-0001",
+        "SRC-0002",
+        "SRC-0004",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["current exhibition inventory and image permission for interior displays"],
-      "humanReview": {"required": true, "questions": ["Confirm current opening and interior photo permissions before adding new media."]}
+      "knownUnknowns": [
+        "current exhibition inventory and image permission for interior displays"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Confirm current opening and interior photo permissions before adding new media."
+        ]
+      }
     },
     {
       "siteId": "TN-PEACE-PARK",
-      "officialName": {"zh-tw": "金門和平紀念園區", "zh-cn": "金门和平纪念园区", "en": "Kinmen Peace Memorial Park"},
-      "aliases": ["和平園區", "金門和平紀念園區"],
+      "officialName": {
+        "zh-tw": "金門和平紀念園區",
+        "zh-cn": "金门和平纪念园区",
+        "en": "Kinmen Peace Memorial Park"
+      },
+      "aliases": [
+        "和平園區",
+        "金門和平紀念園區"
+      ],
       "code": "PEACE",
       "region": "林厝／古寧頭戰史館周邊",
-      "siteType": ["memorial", "battlefield", "adaptive-reuse"],
-      "battleRelation": {"status": "PARTIAL", "summary": "既有 POI 與官方觀光／祭祀資料支持其為戰役記憶與和平紀念公共空間；園區各設施的戰役對應需分開標註。", "sourceIds": ["SRC-0047", "SRC-0049", "SRC-0050"]},
-      "constructionUse": {"status": "PARTIAL", "summary": "和平紀念、林厝砲陣地、宗祠與後續展示層不能合併為單一 1949 建物。"},
-      "restorationReuse": {"reconstruction": "later memorial/park layers", "transfer": "not established as one transfer event", "restoration": "current park management record pending", "currentUse": "peace memorial and visitor space", "status": "PARTIAL", "sourceIds": ["SRC-0047", "SRC-0049", "SRC-0050"]},
-      "access": {"status": "official tourism route lists the area; current facilities require check", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0018", "relatedPoiIds": ["POI-0007", "POI-0038"], "coordinates": null, "precision": "canonical user-specified park reference; the separate artillery-position record is POI-0038", "sourceIds": ["SRC-0047", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-PEACE-ANCESTRAL-HALL-2019", "TN-MEDIA-LINCUO-MEMORIAL-2019"], "candidate": [], "needed": ["park-wide current view and artillery-position context"], "rightsStatus": "two licensed contextual images integrated; park-wide image pending"},
-      "sourceIds": ["SRC-0047", "SRC-0049", "SRC-0050"],
+      "siteType": [
+        "memorial",
+        "battlefield",
+        "adaptive-reuse"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "既有 POI 與官方觀光／祭祀資料支持其為戰役記憶與和平紀念公共空間；園區各設施的戰役對應需分開標註。",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0049",
+          "SRC-0050"
+        ]
+      },
+      "constructionUse": {
+        "status": "PARTIAL",
+        "summary": "和平紀念、林厝砲陣地、宗祠與後續展示層不能合併為單一 1949 建物。"
+      },
+      "restorationReuse": {
+        "reconstruction": "later memorial/park layers",
+        "transfer": "not established as one transfer event",
+        "restoration": "current park management record pending",
+        "currentUse": "peace memorial and visitor space",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0049",
+          "SRC-0050"
+        ]
+      },
+      "access": {
+        "status": "official tourism route lists the area; current facilities require check",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0018",
+        "relatedPoiIds": [
+          "POI-0007",
+          "POI-0038"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified park reference; the separate artillery-position record is POI-0038",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-PEACE-ANCESTRAL-HALL-2019",
+          "TN-MEDIA-LINCUO-MEMORIAL-2019"
+        ],
+        "candidate": [],
+        "needed": [
+          "park-wide current view and artillery-position context"
+        ],
+        "rightsStatus": "two licensed contextual images integrated; park-wide image pending"
+      },
+      "sourceIds": [
+        "SRC-0047",
+        "SRC-0049",
+        "SRC-0050",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["present park boundaries and facility management", "relationship between park, monument and artillery position"],
-      "humanReview": {"required": true, "questions": ["Approve separate cards for memorial park, Lincuo monument and ritual site?", "Which current park photo can be published with explicit permission?"]}
+      "knownUnknowns": [
+        "present park boundaries and facility management",
+        "relationship between park, monument and artillery position"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Approve separate cards for memorial park, Lincuo monument and ritual site?",
+          "Which current park photo can be published with explicit permission?"
+        ]
+      }
     },
     {
       "siteId": "TN-LI-GUANGQIAN-SHRINE",
-      "officialName": {"zh-tw": "李光前將軍廟", "zh-cn": "李光前将军庙", "en": "General Li Guangqian Shrine"},
-      "aliases": ["李光前廟", "General Li Guang-cian Temple"],
+      "officialName": {
+        "zh-tw": "李光前將軍廟",
+        "zh-cn": "李光前将军庙",
+        "en": "General Li Guangqian Shrine"
+      },
+      "aliases": [
+        "李光前廟",
+        "General Li Guang-cian Temple"
+      ],
       "code": "RITUAL",
       "region": "古寧頭／林厝記憶地景",
-      "siteType": ["memorial", "ritual", "battlefield"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方觀光路線與既有 POI 支持其為戰役紀念與地方記憶節點；祭祀沿革需由地方文化資料補充。", "sourceIds": ["SRC-0047", "SRC-0049"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "廟宇沿革、祭祀對象與戰役記憶層需避免互相代替。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "not established", "restoration": "unknown", "currentUse": "ritual and visitor heritage site", "status": "PARTIAL", "sourceIds": ["SRC-0047", "SRC-0049"]},
-      "access": {"status": "official tourism route lists the shrine; current access details require check", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0017", "relatedPoiIds": [], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0047"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-LI-SHRINE-2014"], "candidate": ["Li Guangqian Shrine entrance 2018; individual source selected for later review"], "needed": ["interior/ritual image only with permission"], "rightsStatus": "one CC BY 3.0 current exterior integrated"},
-      "sourceIds": ["SRC-0047", "SRC-0049"],
+      "siteType": [
+        "memorial",
+        "ritual",
+        "battlefield"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方觀光路線與既有 POI 支持其為戰役紀念與地方記憶節點；祭祀沿革需由地方文化資料補充。",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0049"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "廟宇沿革、祭祀對象與戰役記憶層需避免互相代替。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "not established",
+        "restoration": "unknown",
+        "currentUse": "ritual and visitor heritage site",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0049"
+        ]
+      },
+      "access": {
+        "status": "official tourism route lists the shrine; current access details require check",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0017",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-LI-SHRINE-2014"
+        ],
+        "candidate": [
+          "Li Guangqian Shrine entrance 2018; individual source selected for later review"
+        ],
+        "needed": [
+          "interior/ritual image only with permission"
+        ],
+        "rightsStatus": "one CC BY 3.0 current exterior integrated"
+      },
+      "sourceIds": [
+        "SRC-0047",
+        "SRC-0049",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["temple history and relationship to the 1949 casualty record", "current ritual calendar"],
-      "humanReview": {"required": true, "questions": ["Which local/official source should describe the shrine history?", "Do not equate shrine ritual memory with a new battle event without a claim source."]}
+      "knownUnknowns": [
+        "temple history and relationship to the 1949 casualty record",
+        "current ritual calendar"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which local/official source should describe the shrine history?",
+          "Do not equate shrine ritual memory with a new battle event without a claim source."
+        ]
+      }
     },
     {
       "siteId": "TN-BEISHAN-BROADCAST",
-      "officialName": {"zh-tw": "北山播音牆／播音站", "zh-cn": "北山播音墙／播音站", "en": "Beishan Broadcasting Wall / Station"},
-      "aliases": ["古寧頭播音站", "北山播音牆", "Beishan Broadcasting Wall"],
+      "officialName": {
+        "zh-tw": "北山播音牆／播音站",
+        "zh-cn": "北山播音墙／播音站",
+        "en": "Beishan Broadcasting Wall / Station"
+      },
+      "aliases": [
+        "古寧頭播音站",
+        "北山播音牆",
+        "Beishan Broadcasting Wall"
+      ],
       "code": "MEMORY",
       "region": "北山斷崖與北山聚落之間",
-      "siteType": ["psychological-warfare", "postwar-military", "memorial"],
-      "battleRelation": {"status": "SUPPORTED", "summary": "官方觀光資料將其定位為戰後心戰喊話記憶地景，不倒推為 1949 登陸工事。", "sourceIds": ["SRC-0047", "SRC-0045"]},
-      "constructionUse": {"status": "PARTIAL", "summary": "設施年代與戰後心理戰脈絡需與 1949 戰場層分開。"},
-      "restorationReuse": {"reconstruction": "facility date and later maintenance require source review", "transfer": "unknown", "restoration": "current heritage/visitor context", "currentUse": "memory landscape and visitor route", "status": "PARTIAL", "sourceIds": ["SRC-0047", "SRC-0045"]},
-      "access": {"status": "official tourism route lists it", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0020", "relatedPoiIds": ["POI-0021"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0047"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-BROADCAST-WALL-2013"], "candidate": ["Commons 2015 Panoramio wall image; individual license record available for later alternate view"], "needed": ["current facility/access image if site condition changed"], "rightsStatus": "one CC BY-SA 4.0 current image integrated"},
-      "sourceIds": ["SRC-0045", "SRC-0047"],
+      "siteType": [
+        "psychological-warfare",
+        "postwar-military",
+        "memorial"
+      ],
+      "battleRelation": {
+        "status": "SUPPORTED",
+        "summary": "官方觀光資料將其定位為戰後心戰喊話記憶地景，不倒推為 1949 登陸工事。",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0045"
+        ]
+      },
+      "constructionUse": {
+        "status": "PARTIAL",
+        "summary": "設施年代與戰後心理戰脈絡需與 1949 戰場層分開。"
+      },
+      "restorationReuse": {
+        "reconstruction": "facility date and later maintenance require source review",
+        "transfer": "unknown",
+        "restoration": "current heritage/visitor context",
+        "currentUse": "memory landscape and visitor route",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0045"
+        ]
+      },
+      "access": {
+        "status": "official tourism route lists it",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0020",
+        "relatedPoiIds": [
+          "POI-0021"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-BROADCAST-WALL-2013"
+        ],
+        "candidate": [
+          "Commons 2015 Panoramio wall image; individual license record available for later alternate view"
+        ],
+        "needed": [
+          "current facility/access image if site condition changed"
+        ],
+        "rightsStatus": "one CC BY-SA 4.0 current image integrated"
+      },
+      "sourceIds": [
+        "SRC-0045",
+        "SRC-0047",
+        "SRC-0057"
+      ],
       "evidenceStatus": "SUPPORTED",
       "priority": "core",
-      "knownUnknowns": ["exact construction/operation chronology", "current public access and facility status"],
-      "humanReview": {"required": true, "questions": ["Keep broadcast wall in post-war psychological-warfare layer, not 1949 landing layer."]}
+      "knownUnknowns": [
+        "exact construction/operation chronology",
+        "current public access and facility status"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Keep broadcast wall in post-war psychological-warfare layer, not 1949 landing layer."
+        ]
+      }
     },
     {
       "siteId": "TN-BEISHAN-CLIFF",
-      "officialName": {"zh-tw": "北山斷崖", "zh-cn": "北山断崖", "en": "Beishan Cliff"},
-      "aliases": ["嚨口斷崖", "北山海岸斷崖", "Beishan coastal cliff"],
+      "officialName": {
+        "zh-tw": "北山斷崖",
+        "zh-cn": "北山断崖",
+        "en": "Beishan Cliff"
+      },
+      "aliases": [
+        "嚨口斷崖",
+        "北山海岸斷崖",
+        "Beishan coastal cliff"
+      ],
       "code": "COAST",
       "region": "古寧頭北岸",
-      "siteType": ["coastal-landscape", "battlefield", "memorial"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方資料將北山斷崖列入古寧頭戰地文化景觀與戰役紀念路線；自然地形不等同營區。", "sourceIds": ["SRC-0045", "SRC-0047"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "自然海岸地景；不得改稱戰後營區。"},
-      "restorationReuse": {"reconstruction": "not applicable", "transfer": "not applicable", "restoration": "landscape conservation/visitor interpretation context", "currentUse": "coastal landscape and battlefield reading site", "status": "PARTIAL", "sourceIds": ["SRC-0045", "SRC-0047"]},
-      "access": {"status": "official tourism route lists it; safety and shoreline access require current check", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0021", "relatedPoiIds": ["POI-0002"], "coordinates": null, "precision": "existing canonical POI reference only", "sourceIds": ["SRC-0045"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-BEISHAN-CLIFF-2022"], "candidate": [], "needed": ["current coast/settlement relationship view"], "rightsStatus": "one CC BY-SA 4.0 current image integrated"},
-      "sourceIds": ["SRC-0045", "SRC-0047"],
+      "siteType": [
+        "coastal-landscape",
+        "battlefield",
+        "memorial"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方資料將北山斷崖列入古寧頭戰地文化景觀與戰役紀念路線；自然地形不等同營區。",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0047"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "自然海岸地景；不得改稱戰後營區。"
+      },
+      "restorationReuse": {
+        "reconstruction": "not applicable",
+        "transfer": "not applicable",
+        "restoration": "landscape conservation/visitor interpretation context",
+        "currentUse": "coastal landscape and battlefield reading site",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0047"
+        ]
+      },
+      "access": {
+        "status": "official tourism route lists it; safety and shoreline access require current check",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0021",
+        "relatedPoiIds": [
+          "POI-0002"
+        ],
+        "coordinates": null,
+        "precision": "existing canonical POI reference only",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-BEISHAN-CLIFF-2022"
+        ],
+        "candidate": [],
+        "needed": [
+          "current coast/settlement relationship view"
+        ],
+        "rightsStatus": "one CC BY-SA 4.0 current image integrated"
+      },
+      "sourceIds": [
+        "SRC-0045",
+        "SRC-0047",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["which historical landing descriptions refer to the cliff versus adjacent beach segments"],
-      "humanReview": {"required": true, "questions": ["Keep cliff, beach and military facilities as separate inventory records?"]}
+      "knownUnknowns": [
+        "which historical landing descriptions refer to the cliff versus adjacent beach segments"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Keep cliff, beach and military facilities as separate inventory records?"
+        ]
+      }
     },
     {
       "siteId": "TN-BEISHAN-OLD-HOUSE",
-      "officialName": {"zh-tw": "北山古洋樓", "zh-cn": "北山古洋楼", "en": "Beishan Old Western-style House"},
-      "aliases": ["北山洋樓", "北山古厝／古洋樓"],
+      "officialName": {
+        "zh-tw": "北山古洋樓",
+        "zh-cn": "北山古洋楼",
+        "en": "Beishan Old Western-style House"
+      },
+      "aliases": [
+        "北山洋樓",
+        "北山古厝／古洋樓"
+      ],
       "code": "SETTLEMENT",
       "region": "北山聚落",
-      "siteType": ["settlement", "heritage-building", "battlefield"],
-      "battleRelation": {"status": "PARTIAL", "summary": "官方聚落資料與既有來源支持其為北山聚落文化景觀；其戰役使用敘述需保持來源標籤。", "sourceIds": ["SRC-0045", "SRC-0047"]},
-      "constructionUse": {"status": "SUPPORTED", "summary": "以傳統建築／聚落文化景觀呈現，不稱為戰鬥碉堡。"},
-      "restorationReuse": {"reconstruction": "building conservation context", "transfer": "unknown", "restoration": "heritage conservation context", "currentUse": "settlement heritage visitor reference", "status": "PARTIAL", "sourceIds": ["SRC-0045", "SRC-0047"]},
-      "access": {"status": "official tourism route lists the house as a viewing point", "sourceIds": ["SRC-0047"]},
-      "location": {"canonicalPoiId": "POI-0034", "relatedPoiIds": ["POI-0006"], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0047", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": ["TN-MEDIA-BEISHAN-HOUSE-2018"], "candidate": [], "needed": ["interior/current conservation image with permission"], "rightsStatus": "one CC BY-SA 4.0 current image integrated"},
-      "sourceIds": ["SRC-0045", "SRC-0047"],
+      "siteType": [
+        "settlement",
+        "heritage-building",
+        "battlefield"
+      ],
+      "battleRelation": {
+        "status": "PARTIAL",
+        "summary": "官方聚落資料與既有來源支持其為北山聚落文化景觀；其戰役使用敘述需保持來源標籤。",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0047"
+        ]
+      },
+      "constructionUse": {
+        "status": "SUPPORTED",
+        "summary": "以傳統建築／聚落文化景觀呈現，不稱為戰鬥碉堡。"
+      },
+      "restorationReuse": {
+        "reconstruction": "building conservation context",
+        "transfer": "unknown",
+        "restoration": "heritage conservation context",
+        "currentUse": "settlement heritage visitor reference",
+        "status": "PARTIAL",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0047"
+        ]
+      },
+      "access": {
+        "status": "official tourism route lists the house as a viewing point",
+        "sourceIds": [
+          "SRC-0047"
+        ]
+      },
+      "location": {
+        "canonicalPoiId": "POI-0034",
+        "relatedPoiIds": [
+          "POI-0006"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0047",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [
+          "TN-MEDIA-BEISHAN-HOUSE-2018"
+        ],
+        "candidate": [],
+        "needed": [
+          "interior/current conservation image with permission"
+        ],
+        "rightsStatus": "one CC BY-SA 4.0 current image integrated"
+      },
+      "sourceIds": [
+        "SRC-0045",
+        "SRC-0047",
+        "SRC-0057"
+      ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
-      "knownUnknowns": ["current access and interior condition", "which battle-use claims are directly sourced"],
-      "humanReview": {"required": true, "questions": ["Retain building as a settlement-heritage record separate from the research-only command post?", "Confirm any claim that it served as a command post with primary evidence."]}
+      "knownUnknowns": [
+        "current access and interior condition",
+        "which battle-use claims are directly sourced"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Retain building as a settlement-heritage record separate from the research-only command post?",
+          "Confirm any claim that it served as a command post with primary evidence."
+        ]
+      }
     },
     {
       "siteId": "TN-BEISHAN-PLA-COMMAND",
-      "officialName": {"zh-tw": "北山共軍指揮所（待核）", "zh-cn": "北山共军指挥所（待核）", "en": "Beishan PLA command post (pending verification)"},
-      "aliases": ["北山指揮所", "北山共軍指揮所"],
+      "officialName": {
+        "zh-tw": "北山共軍指揮所（待核）",
+        "zh-cn": "北山共军指挥所（待核）",
+        "en": "Beishan PLA command post (pending verification)"
+      },
+      "aliases": [
+        "北山指揮所",
+        "北山共軍指揮所"
+      ],
       "code": "RESEARCH",
       "region": "北山聚落／古寧頭核心戰場",
-      "siteType": ["battlefield", "research-candidate"],
-      "battleRelation": {"status": "RESEARCH", "summary": "官方計畫列北山指揮所為戰役紀念史蹟，其他來源提及北山洋樓／指揮使用，但尚未完成可追溯的建物與地點閉合。", "sourceIds": ["SRC-0045", "SRC-0051"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "不能以古洋樓影像或附近 POI 代替正式指揮所證據。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "unknown", "currentUse": "research queue only", "status": "RESEARCH", "sourceIds": ["SRC-0045", "SRC-0051"]},
-      "access": {"status": "not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0035", "relatedPoiIds": ["POI-0006"], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0051", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["primary source excerpt, site register, exact-site current image"], "rightsStatus": "no cleared site-specific image"},
-      "sourceIds": ["SRC-0045", "SRC-0051"],
+      "siteType": [
+        "battlefield",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "RESEARCH",
+        "summary": "官方計畫列北山指揮所為戰役紀念史蹟，其他來源提及北山洋樓／指揮使用，但尚未完成可追溯的建物與地點閉合。",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0051"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "不能以古洋樓影像或附近 POI 代替正式指揮所證據。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "unknown",
+        "currentUse": "research queue only",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0045",
+          "SRC-0051"
+        ]
+      },
+      "access": {
+        "status": "not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0035",
+        "relatedPoiIds": [
+          "POI-0006"
+        ],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0051",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "primary source excerpt, site register, exact-site current image"
+        ],
+        "rightsStatus": "no cleared site-specific image"
+      },
+      "sourceIds": [
+        "SRC-0045",
+        "SRC-0051",
+        "SRC-0057"
+      ],
       "evidenceStatus": "RESEARCH",
       "priority": "research",
-      "knownUnknowns": ["official name, building identity, exact location, period of use and surviving structure"],
-      "humanReview": {"required": true, "questions": ["Which source identifies the exact building as the command post?", "Should the record remain research-only until a human historian confirms the relationship?"], "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]}
+      "knownUnknowns": [
+        "official name, building identity, exact location, period of use and surviving structure"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Which source identifies the exact building as the command post?",
+          "Should the record remain research-only until a human historian confirms the relationship?"
+        ],
+        "possibleActions": [
+          "APPROVE",
+          "REJECT",
+          "REQUEST_MORE_EVIDENCE",
+          "KEEP_BLOCKED"
+        ]
+      }
     },
     {
       "siteId": "TN-GUNINGTOU-WATER-TAIL-TOWER",
-      "officialName": {"zh-tw": "古寧頭水尾塔（待分層）", "zh-cn": "古宁头水尾塔（待分层）", "en": "Gulongtou Shuiwei Pagoda (layering pending)"},
-      "aliases": ["古龍頭水尾塔", "水尾塔"],
+      "officialName": {
+        "zh-tw": "古寧頭水尾塔（待分層）",
+        "zh-cn": "古宁头水尾塔（待分层）",
+        "en": "Gulongtou Shuiwei Pagoda (layering pending)"
+      },
+      "aliases": [
+        "古龍頭水尾塔",
+        "水尾塔"
+      ],
       "code": null,
       "region": "古寧頭／北山文化景觀範圍",
-      "siteType": ["heritage-building", "research-candidate"],
-      "battleRelation": {"status": "RESEARCH", "summary": "官方計畫將其列為歷史古蹟／人文歷史資源；與 1949 戰役的直接關係未在本輪證實。", "sourceIds": ["SRC-0051"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "需以文化資產資料分辨歷史建築、聚落與戰役層。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "not established", "restoration": "unknown", "currentUse": "research candidate", "status": "RESEARCH", "sourceIds": ["SRC-0051"]},
-      "access": {"status": "not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0036", "relatedPoiIds": [], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0051", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["cultural-heritage register and rights-cleared current image"], "rightsStatus": "no cleared public image"},
-      "sourceIds": ["SRC-0051"],
+      "siteType": [
+        "heritage-building",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "RESEARCH",
+        "summary": "官方計畫將其列為歷史古蹟／人文歷史資源；與 1949 戰役的直接關係未在本輪證實。",
+        "sourceIds": [
+          "SRC-0051"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "需以文化資產資料分辨歷史建築、聚落與戰役層。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "not established",
+        "restoration": "unknown",
+        "currentUse": "research candidate",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0051"
+        ]
+      },
+      "access": {
+        "status": "not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0036",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0051",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "cultural-heritage register and rights-cleared current image"
+        ],
+        "rightsStatus": "no cleared public image"
+      },
+      "sourceIds": [
+        "SRC-0051",
+        "SRC-0057"
+      ],
       "evidenceStatus": "RESEARCH",
       "priority": "general",
-      "knownUnknowns": ["exact site identity and relationship to the battle"],
-      "humanReview": {"required": true, "questions": ["Keep out of battle map until cultural-heritage and battle relation are independently sourced."]}
+      "knownUnknowns": [
+        "exact site identity and relationship to the battle"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Keep out of battle map until cultural-heritage and battle relation are independently sourced."
+        ]
+      }
     },
     {
       "siteId": "TN-GUANDI-TEMPLE",
-      "officialName": {"zh-tw": "關帝廟（古寧頭區資料列項）", "zh-cn": "关帝庙（古宁头区资料列项）", "en": "Guandi Temple (listed in Guningtou area plan)"},
-      "aliases": ["關帝廟"],
+      "officialName": {
+        "zh-tw": "關帝廟（古寧頭區資料列項）",
+        "zh-cn": "关帝庙（古宁头区资料列项）",
+        "en": "Guandi Temple (listed in Guningtou area plan)"
+      },
+      "aliases": [
+        "關帝廟"
+      ],
       "code": null,
       "region": "古寧頭區周邊",
-      "siteType": ["ritual", "research-candidate"],
-      "battleRelation": {"status": "RESEARCH", "summary": "金門縣政府計畫將其列為戰役紀念史蹟，但本輪尚未建立個別沿革、位置與影像證據。", "sourceIds": ["SRC-0051"]},
-      "constructionUse": {"status": "RESEARCH", "summary": "僅保留官方計畫列項，不自行補寫戰役或祭祀內容。"},
-      "restorationReuse": {"reconstruction": "unknown", "transfer": "unknown", "restoration": "unknown", "currentUse": "research candidate", "status": "RESEARCH", "sourceIds": ["SRC-0051"]},
-      "access": {"status": "not established", "sourceIds": []},
-      "location": {"canonicalPoiId": "POI-0037", "relatedPoiIds": [], "coordinates": null, "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null", "sourceIds": ["SRC-0051", "SRC-0056"]},
-      "media": {"historical": [], "restoration": [], "current": [], "candidate": [], "needed": ["official/local cultural record and authorized current image"], "rightsStatus": "no cleared public image"},
-      "sourceIds": ["SRC-0051"],
+      "siteType": [
+        "ritual",
+        "research-candidate"
+      ],
+      "battleRelation": {
+        "status": "RESEARCH",
+        "summary": "金門縣政府計畫將其列為戰役紀念史蹟，但本輪尚未建立個別沿革、位置與影像證據。",
+        "sourceIds": [
+          "SRC-0051"
+        ]
+      },
+      "constructionUse": {
+        "status": "RESEARCH",
+        "summary": "僅保留官方計畫列項，不自行補寫戰役或祭祀內容。"
+      },
+      "restorationReuse": {
+        "reconstruction": "unknown",
+        "transfer": "unknown",
+        "restoration": "unknown",
+        "currentUse": "research candidate",
+        "status": "RESEARCH",
+        "sourceIds": [
+          "SRC-0051"
+        ]
+      },
+      "access": {
+        "status": "not established",
+        "sourceIds": []
+      },
+      "location": {
+        "canonicalPoiId": "POI-0037",
+        "relatedPoiIds": [],
+        "coordinates": null,
+        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
+        "sourceIds": [
+          "SRC-0051",
+          "SRC-0056",
+          "SRC-0057"
+        ]
+      },
+      "media": {
+        "historical": [],
+        "restoration": [],
+        "current": [],
+        "candidate": [],
+        "needed": [
+          "official/local cultural record and authorized current image"
+        ],
+        "rightsStatus": "no cleared public image"
+      },
+      "sourceIds": [
+        "SRC-0051",
+        "SRC-0057"
+      ],
       "evidenceStatus": "RESEARCH",
       "priority": "research",
-      "knownUnknowns": ["exact identity, current status, cultural relation and battle relation"],
-      "humanReview": {"required": true, "questions": ["Request local cultural records before presenting as a public core site."]}
+      "knownUnknowns": [
+        "exact identity, current status, cultural relation and battle relation"
+      ],
+      "humanReview": {
+        "required": true,
+        "questions": [
+          "Request local cultural records before presenting as a public core site."
+        ]
+      }
     }
   ]
 }

@@ -99,7 +99,7 @@ export const thenNowSites: ThenNowSite[] = [
     status: { 'zh-tw': '官方據點資料與現況營運資料分開標示', 'zh-cn': '官方据点资料与现况运营资料分开标示', en: 'Official site record and current operator material kept separate' },
     role: { 'zh-tw': '海岸防禦據點；曾經歷軍方與海巡使用，後由民間團隊進駐。', 'zh-cn': '海岸防御据点；曾经历军方与海巡使用，后由民间团队进驻。', en: 'A coastal defence site with later military and coast-guard use, followed by private adaptive reuse.' },
     present: { 'zh-tw': '現況可見碉堡、海景與體驗活動；營運內容不等同官方歷史證據。', 'zh-cn': '现况可见碉堡、海景与体验活动；运营内容不等同官方历史证据。', en: 'The site presents bunkers, sea views, and activities; operator descriptions are not by themselves official historical evidence.' },
-    evidenceNote: { 'zh-tw': '本站已將 W-012 現代營區與 POI-0023 道路研究紀錄分開；本輪座標依使用者提供的 38 處地點表採用 24.47376, 118.33245。', 'zh-cn': '本站已将 W-012 现代营区与 POI-0023 道路研究记录分开；本轮坐标依用户提供的 38 处地点表采用 24.47376, 118.33245。', en: 'The present-day W-012 camp is separated from the POI-0023 road research record; this release adopts 24.47376, 118.33245 from the user-provided 38-place table.' },
+    evidenceNote: { 'zh-tw': '本站已將 W-012 現代營區與 POI-0023 道路研究紀錄分開；本輪座標依使用者上傳 chat.md 最後 XLS 表採用 24.4738, 118.3325。', 'zh-cn': '本站已将 W-012 现代营区与 POI-0023 道路研究记录分开；本轮坐标依用户上传 chat.md 最后 XLS 表采用 24.4738, 118.3325。', en: 'The present-day W-012 camp is separated from the POI-0023 road research record; this release adopts 24.4738, 118.3325 from the uploaded chat.md XLS table.' },
     sourceLinks: [
       { label: { 'zh-tw': '金門國家公園據點資料', 'zh-cn': '金门国家公园据点资料', en: 'Kinmen National Park site record' }, href: 'https://www.kmnp.gov.tw/ch/touristInfo/recreation-sites/49' },
       { label: { 'zh-tw': '現況營運網站（非唯一史料）', 'zh-cn': '现况运营网站（非唯一史料）', en: 'Current operator site (not sole historical evidence)' }, href: 'https://w-012.com/' },
