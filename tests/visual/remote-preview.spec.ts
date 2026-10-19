@@ -163,10 +163,10 @@ test.describe('remote preview visual acceptance', () => {
     const issues = await openPage(page, `${BASE_PATH}/zh-tw/map/`);
     const renderer = page.locator('[aria-label="Three.js stylized historical terrain scene"], canvas').first();
     await expect(renderer, 'Interactive map renderer did not initialize').toBeVisible({ timeout: 45_000 });
-    const mobileDeckToggle = page.locator('.historical-map__mobile-deck-toggle');
-    if (await mobileDeckToggle.isVisible()) {
-      await mobileDeckToggle.click();
-    }
+    const deckToggle = page.locator('.historical-map__deck-toggle');
+    await expect(deckToggle).toHaveAttribute('aria-expanded', 'false');
+    await deckToggle.click();
+    await expect(deckToggle).toHaveAttribute('aria-expanded', 'true');
     await expect(page.locator('.historical-map__controls')).toBeVisible();
 
     const timelineButton = page.locator('.historical-map__controls button').filter({ hasText: '時間' }).first();

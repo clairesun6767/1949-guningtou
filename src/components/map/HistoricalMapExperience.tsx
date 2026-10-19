@@ -272,7 +272,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
   const [interactionHintVisible, setInteractionHintVisible] = useState(true);
   const [enabledLayers, setEnabledLayers] = useState<Set<MapLayerId>>(() => new Set(DEFAULT_VISITOR_LAYERS));
   const [openPanel, setOpenPanel] = useState<'layers' | 'locations' | null>(null);
-  const [mobileDeckExpanded, setMobileDeckExpanded] = useState(false);
+  const [controlDeckExpanded, setControlDeckExpanded] = useState(false);
   const [rendererRequested, setRendererRequested] = useState(rendererMode === 'v2');
   const [preferredRenderer] = useState<HistoricalRendererMode | 'v2'>(() => {
     if (rendererMode === 'v2') return 'v2';
@@ -419,6 +419,7 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
     setCameraId('strategic');
     setPlaybackModeActive(false);
     setOpenPanel(null);
+    setControlDeckExpanded(false);
   }
 
   function focusLocation(location: CanonicalLocation, index = canonicalLocations.findIndex(item => item.id === location.id)) {
@@ -830,16 +831,17 @@ export default function HistoricalMapExperience({ lang = 'zh-tw', base = '/1949-
         )}
 
         {!selectedLocation && cameraId !== 'strategic' && <aside className="historical-map__integrity-note"><strong>{dictionary.mapMeaning}</strong><span>{dictionary.mapMeaningBody}</span></aside>}
-        <div className="historical-map__control-deck" data-mobile-expanded={mobileDeckExpanded ? 'true' : 'false'}>
+        <div className="historical-map__control-deck" data-expanded={controlDeckExpanded ? 'true' : 'false'}>
         <button
           type="button"
-          className="historical-map__mobile-deck-toggle"
-          onClick={() => setMobileDeckExpanded(current => !current)}
-          aria-expanded={mobileDeckExpanded}
+          className="historical-map__deck-toggle"
+          onClick={() => setControlDeckExpanded(current => !current)}
+          aria-label={controlDeckExpanded ? dictionary.closeMapControls : dictionary.openMapControls}
+          aria-expanded={controlDeckExpanded}
           aria-controls="battle-map-control-content"
         >
-          <span>{mobileDeckExpanded ? dictionary.closeMapControls : dictionary.openMapControls}</span>
-          <span aria-hidden="true">{mobileDeckExpanded ? '⌄' : '⌃'}</span>
+          <span className="historical-map__deck-toggle-title"><small>{activeStep.date}</small><strong>{localized(activeStep.label, lang)}</strong></span>
+          <span className="historical-map__deck-toggle-action"><span>{controlDeckExpanded ? dictionary.closeMapControls : dictionary.openMapControls}</span><i aria-hidden="true">{controlDeckExpanded ? '⌄' : '⌃'}</i></span>
         </button>
         <div id="battle-map-control-content" className="historical-map__control-deck-content">
         <nav className="historical-map__controls" aria-label="Historical map controls">
