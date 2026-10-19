@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "commitSha": "9dbf285a3c956b52e03f7f601966d11e3020203e",
+  "branch": "feature/guningtou-then-now-v2",
+  "previewUrl": "not configured",
+  "capturedAt": "2026-10-19T01:42:06.846Z",
+  "source": "Playwright visual acceptance artifact; selected PNGs only",
+  "screenshots": [
+    "desktop-1440x900-homepage.png",
+    "desktop-1440x900-then-now-overview.png",
+    "desktop-1440x900-then-now-images.png",
+    "desktop-1440x900-map.png",
+    "mobile-390x844-homepage.png",
+    "mobile-390x844-map.png",
+    "desktop-1440x900-location-detail.png"
+  ]
+}

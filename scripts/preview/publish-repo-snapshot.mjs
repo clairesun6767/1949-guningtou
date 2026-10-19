@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -13,6 +14,10 @@ const selectedNames = [
   'mobile-390x844-map.png',
   'desktop-1440x900-location-detail.png',
 ];
+
+function gitValue(args) {
+  try { return execFileSync('git', args, { encoding: 'utf8' }).trim(); } catch { return 'unknown'; }
+}
 
 async function walk(directory) {
   const entries = await fs.readdir(directory, { withFileTypes: true });
@@ -36,14 +41,20 @@ for (const name of selectedNames) await fs.copyFile(byName.get(name), path.join(
 
 const metadata = {
   schemaVersion: 1,
-  commitSha: process.env.PREVIEW_COMMIT_SHA || process.env.GITHUB_SHA || 'unknown',
-  branch: process.env.PREVIEW_BRANCH || process.env.GITHUB_REF_NAME || 'unknown',
+  commitSha: process.env.PREVIEW_COMMIT_SHA || process.env.GITHUB_SHA || gitValue(['rev-parse', 'HEAD']),
+  branch: process.env.PREVIEW_BRANCH || process.env.GITHUB_REF_NAME || gitValue(['branch', '--show-current']),
   previewUrl: process.env.PREVIEW_BASE_URL || 'not configured',
   capturedAt: new Date().toISOString(),
   source: 'Playwright visual acceptance artifact; selected PNGs only',
   screenshots: selectedNames,
 };
 await fs.writeFile(path.join(destination, 'manifest.json'), `${JSON.stringify(metadata, null, 2)}\n`, 'utf8');
+let acceptance = {};
+try {
+  acceptance = JSON.parse(await fs.readFile(path.join(artifacts, 'acceptance-manifest.json'), 'utf8'));
+} catch {
+  // A local snapshot can still be published when report generation was skipped.
+}
 const lines = [
   '# Current visual snapshot',
   '',
@@ -54,8 +65,31 @@ const lines = [
   '',
   ...selectedNames.map((name) => `![${name}](${name})`),
   '',
+  '[Commit-bound acceptance report](./ACCEPTANCE_REPORT.md)',
+  '',
   'These are selected review images only. The complete per-run set remains in the GitHub Actions artifact.',
   '',
 ];
 await fs.writeFile(path.join(destination, 'README.md'), lines.join('\n'), 'utf8');
+const reportLines = [
+  '# Commit-bound visual acceptance',
+  '',
+  '| Field | Value |',
+  '| --- | --- |',
+  `| Status | **${acceptance.status ?? 'NOT RUN'}** |`,
+  `| Commit | \`${acceptance.commitSha ?? metadata.commitSha}\` |`,
+  `| Branch | \`${acceptance.branch ?? metadata.branch}\` |`,
+  `| Preview URL | ${acceptance.previewUrl ?? metadata.previewUrl} |`,
+  `| Generated | ${acceptance.generatedAt ?? metadata.capturedAt} |`,
+  '| Viewports | 1440×900 · 768×1024 · 390×844 |',
+  `| Tests | ${acceptance.testCount ?? '—'} total · ${acceptance.failedCount ?? '—'} failed |`,
+  '',
+  '## Selected screenshots',
+  '',
+  ...selectedNames.map((name) => `- [${name}](./${name})`),
+  '',
+  'The full Playwright HTML/JSON report and all viewport screenshots are retained in the matching GitHub Actions artifact. A remote PASS additionally requires an HTTPS preview URL and commit-matching `preview-metadata.json`.',
+  '',
+];
+await fs.writeFile(path.join(destination, 'ACCEPTANCE_REPORT.md'), reportLines.join('\n'), 'utf8');
 console.log(`Published ${selectedNames.length} selected screenshots to ${path.relative(root, destination)}`);
