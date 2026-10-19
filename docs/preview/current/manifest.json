@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "commitSha": "4c3ffe9",
-  "branch": "fix/site-content-quality-v4",
-  "previewUrl": "not configured",
-  "capturedAt": "2026-10-19T05:12:08.390Z",
+  "commitSha": "ce8f07b63eeb6628a53296dc745ac5f8f4efec40",
+  "branch": "main",
+  "previewUrl": "https://clairesun6767.github.io/1949-guningtou",
+  "capturedAt": "2026-10-19T05:39:30.708Z",
   "source": "Playwright visual acceptance artifact; selected PNGs only",
   "screenshots": [
     "desktop-1440x900-homepage.png",

@@ -3,10 +3,10 @@
 | Field | Value |
 | --- | --- |
 | Status | **PASS** |
-| Commit | `4c3ffe9` |
-| Branch | `fix/site-content-quality-v4` |
-| Preview URL | not configured |
-| Generated | 2026-10-19T05:12:08.079Z |
+| Commit | `ce8f07b63eeb6628a53296dc745ac5f8f4efec40` |
+| Branch | `main` |
+| Preview URL | https://clairesun6767.github.io/1949-guningtou |
+| Generated | 2026-10-19T05:39:30.159Z |
 | Viewports | 1440×900 · 768×1024 · 390×844 |
 | Tests | 15 total · 0 failed |
 

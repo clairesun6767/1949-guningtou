@@ -20,9 +20,9 @@
 | V2 tests | PASS | `npm run test:v2` | 59/59 |
 | Typecheck | PASS | `npm run typecheck` | 0 errors、0 warnings、0 hints |
 | Astro static build | PASS | `npm run build` | 286 pages；static output |
-| Playwright visual acceptance | PASS | `npm run visual:acceptance:local` | 15/15，1440×900、768×1024、390×844；圖片／溢出／JS／console／HTTP checks 通過 |
+| Playwright visual acceptance | PASS | Local + production `npm run visual:acceptance` | Local 15/15 and GitHub Pages 15/15，涵蓋 1440×900、768×1024、390×844；圖片／溢出／JS／console／HTTP checks 通過 |
 | Historical Evidence Gate | BLOCKED | validator output | qualified candidate=none；不以推測資料升格 |
-| GitHub Pages | PENDING | 待 feature push、main fast-forward merge 與 workflow | 只有線上 URL 驗收後才標記完成 |
+| GitHub Pages | PASS | [workflow run 39205400175](https://github.com/clairesun6767/1949-guningtou/actions/runs/39205400175) | main `ce8f07b63eeb6628a53296dc745ac5f8f4efec40` 已部署；公開端點外部 HTTP 200 |
 
 ## Historical boundary
 
@@ -30,9 +30,11 @@ V5 可以安全發布現代訪客地點、代表性地名與有授權的現況�
 
 ## Release record
 
-正式發布後，應在本節補登：
+正式發布紀錄：
 
-- feature commit SHA、main commit SHA
-- GitHub Pages workflow run URL 與完成時間
-- 正式站首頁、`/zh-tw/`、`/zh-cn/`、`/en/`、地圖、今昔頁與據點頁的外部 HTTP／內容驗收
-- 線上版本是否與 main SHA 一致
+- feature branch `fix/site-content-quality-v4`：`ce8f07b63eeb6628a53296dc745ac5f8f4efec40`
+- main：`ce8f07b63eeb6628a53296dc745ac5f8f4efec40`
+- GitHub Pages workflow：[39205400175](https://github.com/clairesun6767/1949-guningtou/actions/runs/39205400175)，`success`，2026-10-19 05:36 UTC 完成
+- 正式站：[首頁](https://clairesun6767.github.io/1949-guningtou/zh-tw/)、三語入口、地圖、戰場今昔與 POI-0016 均由外部 HTTPS 回傳 200
+- 正式站 Playwright：15/15；三種 viewport、圖片、水平溢出、JavaScript、console、HTTP 與主要互動均通過
+- `preview-publication-manifest.json`：779 個公開輸出檔案，排除 `research/kinmen-kml`、`research/xiamen-1943`，forbidden files=0
