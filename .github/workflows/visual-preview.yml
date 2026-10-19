@@ -1,0 +1,116 @@
+name: Remote preview visual acceptance
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'codex/**'
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: 'HTTPS origin of the independent preview (optional; defaults to repository variable)'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  visual-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      PREVIEW_BASE_URL: ${{ inputs.preview_url || vars.CLOUDFLARE_PAGES_PREVIEW_BASE_URL }}
+      PREVIEW_COMMIT_SHA: ${{ github.sha }}
+      PREVIEW_BRANCH: ${{ github.ref_name }}
+      VISUAL_ARTIFACT_DIR: artifacts/visual-acceptance
+      CI: true
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build and sanitize preview output
+        run: npm run build:preview
+
+      - name: Install Chromium for visual acceptance
+        run: npx playwright install --with-deps chromium
+
+      - name: Wait for the same commit on remote preview
+        id: preview
+        run: node scripts/preview/wait-for-preview.mjs "$PREVIEW_BASE_URL" "$PREVIEW_COMMIT_SHA"
+
+      - name: Run Playwright visual acceptance
+        run: npm run visual:acceptance:remote
+
+      - name: Generate commit-to-preview report
+        if: always()
+        run: npm run visual:report
+
+      - name: Upload visual acceptance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-acceptance-${{ github.sha }}
+          path: |
+            artifacts/visual-acceptance
+            dist/preview-metadata.json
+          if-no-files-found: warn
+          retention-days: 30
+
+  remote-reachability:
+    name: Remote reachability (${{ matrix.runner }})
+    needs: visual-acceptance
+    if: ${{ always() && needs.visual-acceptance.result != 'cancelled' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            runner-label: ubuntu-latest
+          - runner: windows-latest
+            runner-label: windows-latest
+    runs-on: ${{ matrix.runner-label }}
+    timeout-minutes: 15
+    env:
+      PREVIEW_BASE_URL: ${{ inputs.preview_url || vars.CLOUDFLARE_PAGES_PREVIEW_BASE_URL }}
+      PREVIEW_COMMIT_SHA: ${{ github.sha }}
+      PREVIEW_BRANCH: ${{ github.ref_name }}
+      REMOTE_REACHABILITY_OUTPUT: artifacts/remote-reachability.json
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Wait for the same commit on remote preview
+        run: node scripts/preview/wait-for-preview.mjs "$PREVIEW_BASE_URL" "$PREVIEW_COMMIT_SHA"
+        shell: bash
+
+      - name: Verify preview routes and metadata
+        run: node scripts/preview/verify-remote-reachability.mjs "$PREVIEW_BASE_URL" "$PREVIEW_COMMIT_SHA"
+        shell: bash
+
+      - name: Upload reachability result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: remote-reachability-${{ matrix.runner }}-${{ github.sha }}
+          path: artifacts/remote-reachability.json
+          if-no-files-found: warn
+          retention-days: 30

@@ -3561,6 +3561,7 @@ a:hover {
 .then-now-map-compare__image-wrap,
 .then-now-map-compare__map-wrap {
   min-height: 390px;
+  height: 390px;
   position: relative;
   overflow: hidden;
   background: #d9d0bc;
