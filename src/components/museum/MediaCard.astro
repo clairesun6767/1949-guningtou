@@ -1,6 +1,7 @@
 ---
 import type { ArchiveMediaAsset } from '../../data/mediaCatalog';
 import { sitePath } from '../../data/paths';
+import { toSimplified } from '../../i18n/historicalContent';
 
 interface Props {
   asset: ArchiveMediaAsset;
@@ -10,15 +11,16 @@ interface Props {
 
 const { asset, lang = 'zh-tw', compact = false } = Astro.props;
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
 const imageSrc = asset.src.startsWith('http') ? asset.src : sitePath(asset.src);
 const sourceHref = asset.sourceUrl.startsWith('http') ? asset.sourceUrl : sitePath(asset.sourceUrl);
-const title = isEnglish ? asset.titleEn : asset.titleZh;
-const caption = isEnglish ? asset.captionEn : asset.captionZh;
-const source = isEnglish ? asset.sourceEn : asset.sourceZh;
+const title = isEnglish ? asset.titleEn : isSimplified ? toSimplified(asset.titleZh) : asset.titleZh;
+const caption = isEnglish ? asset.captionEn : isSimplified ? toSimplified(asset.captionZh) : asset.captionZh;
+const source = isEnglish ? asset.sourceEn : isSimplified ? toSimplified(asset.sourceZh) : asset.sourceZh;
 ---
 
 <article class:list={['museum-media-card', compact && 'museum-media-card--compact']}>
-  <a class="museum-media-card__image" href={imageSrc} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? `Open image: ${title}` : `開啟影像：${title}`}>
+  <a class="museum-media-card__image" href={imageSrc} target="_blank" rel="noopener noreferrer" aria-label={isEnglish ? `Open image: ${title}` : isSimplified ? `打开影像：${title}` : `開啟影像：${title}`}>
     <img src={imageSrc} alt={title} loading="lazy" decoding="async" />
   </a>
   <div class="museum-media-card__body">

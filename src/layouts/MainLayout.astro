@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { sitePath, LANGS } from '../data/paths';
 import { UI } from '../i18n/ui';
+import { TRADITIONAL_TO_SIMPLIFIED } from '../i18n/historicalContent';
 import type { Lang } from '../i18n/ui';
 import SearchBar from '../components/shared/SearchBar';
 
@@ -213,5 +214,26 @@ function isGroupCurrent(group: { href?: string; activeHrefs?: string[]; items: {
         });
       });
     </script>
+    {lang === 'zh-cn' && <script is:inline define:vars={{ charMap: TRADITIONAL_TO_SIMPLIFIED }}>
+      const simplifyText = (value) => [...value].map((character) => charMap[character] ?? character).join('');
+      const simplifyNode = (node) => {
+        if (node.nodeType === Node.TEXT_NODE && node.parentElement && !['SCRIPT', 'STYLE', 'TEXTAREA', 'CODE', 'PRE'].includes(node.parentElement.tagName)) {
+          node.nodeValue = simplifyText(node.nodeValue ?? '');
+        }
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          for (const attribute of ['alt', 'aria-label', 'placeholder', 'title']) {
+            if (node.hasAttribute(attribute)) node.setAttribute(attribute, simplifyText(node.getAttribute(attribute) ?? ''));
+          }
+          for (const child of node.childNodes) simplifyNode(child);
+        }
+      };
+      const applySimplifiedDisplay = () => {
+        simplifyNode(document.body);
+        new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach(simplifyNode))).observe(document.body, { childList: true, subtree: true });
+      };
+      // Wait until Astro client islands have hydrated. Mutating their server HTML
+      // before React hydration causes a production mismatch (React error #418).
+      window.setTimeout(applySimplifiedDisplay, 300);
+    </script>}
   </body>
 </html>

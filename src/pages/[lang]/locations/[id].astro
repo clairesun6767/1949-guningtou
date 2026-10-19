@@ -67,9 +67,17 @@ const poiCopy = poi ? getPoiCopy(poi, lang) : null;
             <div class="museum-meta-grid museum-location-detail__meta">
               <MetadataRow label={isEnglish ? 'GPS coordinates' : isSimplified ? 'GPS 坐标' : 'GPS 座標'} value={`${poi.latitude}, ${poi.longitude}`} />
               <MetadataRow label={isEnglish ? 'Coordinate accuracy' : isSimplified ? '坐标精度' : '座標精度'} value={poiCopy?.coordinateAccuracy} />
+              <MetadataRow label={isEnglish ? 'Coordinate basis' : isSimplified ? '坐标依据' : '座標依據'} value={poiCopy?.coordinateBasis} />
               <MetadataRow label={isEnglish ? 'Category' : isSimplified ? '类别' : '類別'} value={poiCopy?.category} />
               <MetadataRow label={isEnglish ? 'Access status' : isSimplified ? '开放状态' : '開放狀態'} value={poiCopy?.openStatus} />
             </div>
+            {poiCopy?.coordinateNote && <p class="museum-citation museum-location-detail__coordinate-note">{poiCopy.coordinateNote}</p>}
+            {poi.coordinate_source_url && (
+              <p class="museum-citation">
+                {isEnglish ? 'Coordinate source: ' : isSimplified ? '坐标来源：' : '座標來源：'}
+                <a href={poi.coordinate_source_url} target="_blank" rel="noopener noreferrer">{poi.coordinate_source ?? poi.coordinate_source_url}</a>
+              </p>
+            )}
           </div>
           <aside class="museum-location-detail__map">
             <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poiCopy?.name ?? poi.name_chinese} />

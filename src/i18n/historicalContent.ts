@@ -1,4 +1,6 @@
 import type { Event, HistoricalPerson, POI, TimelineEntry } from '../data/types';
+import { TIMELINE_ENGLISH } from './timelineEnglish';
+import { translateTimelineField } from './timelineFieldTranslation';
 
 export type SiteLang = 'zh-tw' | 'zh-cn' | 'en';
 
@@ -20,6 +22,8 @@ export interface PoiCopy {
   historicalContext: string;
   importance: string;
   coordinateAccuracy: string;
+  coordinateBasis: string;
+  coordinateNote: string;
   openStatus: string;
 }
 
@@ -49,7 +53,7 @@ export interface TimelineCopy {
  * editorial translation. English fields below are authored presentation
  * copy, while unresolved records visibly remain under review.
  */
-const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
+export const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
   戰: '战',
   役: '役',
   國: '国',
@@ -67,6 +71,8 @@ const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
   頭: '头',
   古: '古',
   寧: '宁',
+  葉: '叶',
+  飛: '飞',
   金: '金',
   廈: '厦',
   閩: '闽',
@@ -96,6 +102,7 @@ const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
   史: '史',
   資: '资',
   料: '料',
+  數: '数',
   來: '来',
   源: '源',
   研: '研',
@@ -117,8 +124,11 @@ const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
   續: '续',
   影: '影',
   響: '响',
+  記: '记',
+  憶: '忆',
   時: '时',
   間: '间',
+  內: '内',
   軸: '轴',
   第: '第',
   一: '一',
@@ -177,6 +187,8 @@ const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
   圖: '图',
   像: '像',
   照: '照',
+  閱: '阅',
+  覽: '览',
   人: '人',
   物: '物',
   單: '单',
@@ -216,6 +228,21 @@ const TRADITIONAL_TO_SIMPLIFIED: Record<string, string> = {
   逝: '逝',
   戶: '户',
   牆: '墙',
+  張: '张',
+  組: '组',
+  約: '约',
+  攝: '摄',
+  獨: '独',
+  當: '当',
+  僅: '仅',
+  選: '选',
+  裝: '装',
+  飾: '饰',
+  項: '项',
+  敘: '叙',
+  製: '制',
+  狀: '状',
+  態: '态',
   電: '电',
   視: '视',
   頁: '页',
@@ -348,6 +375,12 @@ const POI_CATEGORY_EN: Record<string, string> = {
   Tunnel: 'Tunnel / hideout',
 };
 
+const POI_OPEN_STATUS_EN: Record<string, string> = {
+  '開放（戶外海岸）': 'Open (outdoor coast)',
+  '開放（戶外）': 'Open (outdoor site)',
+  '需確認': 'Access status requires confirmation',
+};
+
 const POI_EN: Record<string, Partial<PoiCopy>> = {
   'POI-0001': { description: 'One of the PLA first-wave landing points. The 244th Regiment came ashore here and was hit by ROC armour and the 601st Regiment. The record places tank No. 66 and the first shot nearby.', shortDescription: 'First-shot and landing-area record; the exact point remains estimated.', historicalBackground: 'Longkou was a coastal strip of beach and farmland before the battle. The ROC built simple field positions here, with the 601st Regiment and a tank platoon nearby.', battleRole: 'A planned eastern landing point for the PLA 244th Regiment. Strong wind and current shifted part of the flotilla here; tank No. 66 fired the opening shot at an ammunition boat.', historicalContext: 'The tank platoon was stranded after an exercise on 24 October. The first shot is recorded at 00:30 on 25 October, followed by the 244th Regiment’s landing.', importance: 'A first-wave landing area and the recorded setting of Hsiung Chen-Chiu’s first shot.' },
   'POI-0002': { description: 'The main landing beach on the northern coast. More than three hundred PLA wooden boats came ashore in this area; the falling tide left many boats stranded offshore.', shortDescription: 'Main landing beach of the first wave; exact shoreline segment remains estimated.', historicalBackground: 'The northern beach is a broad, relatively flat coast suitable for a large landing. The ROC prepared mines, beach obstacles, and earth-built field positions.', battleRole: 'The principal landing area. Boats were stranded by the falling tide, leaving troops exposed to armour, coastal artillery, and infantry fire.', historicalContext: 'The first wave began landing in this area from around 01:30 on 25 October 1949.', importance: 'Main landing area of the PLA first wave.' },
@@ -402,6 +435,13 @@ export function getPersonCopy(person: HistoricalPerson, langValue?: string): Per
 export function getPoiCopy(poi: POI, langValue?: string): PoiCopy {
   const lang = normalizeLang(langValue);
   const rawFallback = '此據點的逐筆說明尚待來源與現地資料核對。';
+  const coordinateBasis = poi.coordinate_status === 'modern_verified'
+    ? '現代地點已查證'
+    : poi.coordinate_status === 'representative'
+      ? '現代代表點／範圍位置'
+      : poi.coordinate_status === 'historical_review'
+        ? '歷史位置審查中'
+        : '位置尚未獨立查證';
   const raw: PoiCopy = {
     name: poi.name_chinese,
     category: poi.category ?? '戰場地點',
@@ -412,10 +452,20 @@ export function getPoiCopy(poi: POI, langValue?: string): PoiCopy {
     historicalContext: cleanResearchField(poi.historical_context, '此據點的歷史脈絡尚待逐筆核對，請參閱關聯時間軸與來源。'),
     importance: poi.historical_importance ?? '此據點的重要性尚待逐筆核對。',
     coordinateAccuracy: poi.coordinate_accuracy ?? '未標示',
+    coordinateBasis,
+    coordinateNote: poi.coordinate_note ?? '',
     openStatus: poi.open_status ?? '未標示',
   };
   if (lang === 'en') {
     const copy = POI_EN[poi.poi_id] ?? {};
+    const coordinateNote = poi.coordinate_note_en
+      ?? (poi.coordinate_status === 'modern_verified'
+        ? 'The published coordinate identifies the present-day site; it is not automatically a 1949 battlefield coordinate.'
+        : poi.coordinate_status === 'representative'
+          ? 'The published coordinate is a present-day representative point for an area or named landscape, not a surveyed battle point.'
+          : poi.coordinate_status === 'historical_review'
+            ? 'The published coordinate is a research index while the historical place relationship remains under source review.'
+            : 'The location remains unresolved and must not be read as a precise site coordinate.');
     return {
       name: poi.name_english ?? poi.name_chinese,
       category: POI_CATEGORY_EN[poi.category ?? ''] ?? 'Historical place',
@@ -426,11 +476,13 @@ export function getPoiCopy(poi: POI, langValue?: string): PoiCopy {
       historicalContext: copy.historicalContext ?? 'Historical context pending source review; see linked timeline records.',
       importance: copy.importance ?? 'Historical importance pending source review.',
       coordinateAccuracy: poi.coordinate_accuracy ?? 'Not yet independently verified',
-      openStatus: poi.open_status ?? 'Not recorded',
+      coordinateBasis: poi.coordinate_status === 'modern_verified' ? 'Modern site verified' : poi.coordinate_status === 'representative' ? 'Modern representative / area point' : poi.coordinate_status === 'historical_review' ? 'Historical location under review' : 'Location not independently verified',
+      coordinateNote,
+      openStatus: POI_OPEN_STATUS_EN[poi.open_status ?? ''] ?? 'Access status not recorded',
     };
   }
   if (lang === 'zh-cn') {
-    return { ...raw, name: toSimplified(raw.name), category: toSimplified(raw.category), description: toSimplified(raw.description), shortDescription: toSimplified(raw.shortDescription), historicalBackground: toSimplified(raw.historicalBackground), battleRole: toSimplified(raw.battleRole), historicalContext: toSimplified(raw.historicalContext), importance: toSimplified(raw.importance), coordinateAccuracy: toSimplified(raw.coordinateAccuracy), openStatus: toSimplified(raw.openStatus) };
+    return { ...raw, name: toSimplified(raw.name), category: toSimplified(raw.category), description: toSimplified(raw.description), shortDescription: toSimplified(raw.shortDescription), historicalBackground: toSimplified(raw.historicalBackground), battleRole: toSimplified(raw.battleRole), historicalContext: toSimplified(raw.historicalContext), importance: toSimplified(raw.importance), coordinateAccuracy: toSimplified(raw.coordinateAccuracy), coordinateBasis: toSimplified(raw.coordinateBasis), coordinateNote: toSimplified(raw.coordinateNote), openStatus: toSimplified(raw.openStatus) };
   }
   return raw;
 }
@@ -485,7 +537,7 @@ function localizedMilitaryText(value: string | undefined, lang: SiteLang): strin
   if (!value) return '';
   if (lang === 'zh-cn') return toSimplified(value);
   if (lang === 'zh-tw') return value;
-  return 'See the canonical unit and source fields in the original record.';
+  return translateTimelineField(value);
 }
 
 export function getEventCopy(event: Event, langValue?: string): EventCopy {
@@ -515,13 +567,14 @@ export function getEventCopy(event: Event, langValue?: string): EventCopy {
 export function getTimelineCopy(entry: TimelineEntry, langValue?: string): TimelineCopy {
   const lang = normalizeLang(langValue);
   if (lang === 'en') {
+    const editorial = TIMELINE_ENGLISH[entry.timeline_id];
     return {
-      title: 'Timeline record — English editorial translation pending',
-      description: 'The canonical timeline record remains available through its source IDs. An English editorial translation is pending review.',
-      location: entry.location ? 'Canonical location field retained; English place wording pending review.' : '',
-      rocUnits: entry.roc_units ? 'Canonical ROC unit field retained; English wording pending review.' : '',
-      plaUnits: entry.pla_units ? 'Canonical PLA unit field retained; English wording pending review.' : '',
-      keyFigures: entry.key_figures ? 'Canonical key-figure field retained; English wording pending review.' : '',
+      title: editorial?.title ?? 'Historical timeline record',
+      description: editorial?.description ?? 'Canonical timeline description retained with source references.',
+      location: translateTimelineField(entry.location),
+      rocUnits: translateTimelineField(entry.roc_units),
+      plaUnits: translateTimelineField(entry.pla_units),
+      keyFigures: translateTimelineField(entry.key_figures),
     };
   }
   const simplify = (value?: string) => lang === 'zh-cn' ? toSimplified(value) : value ?? '';

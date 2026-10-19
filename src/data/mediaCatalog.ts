@@ -197,6 +197,42 @@ export const archiveMedia: ArchiveMediaAsset[] = [
     status: 'published',
   },
   {
+    id: 'PER-0024-YE-FEI-1978',
+    kind: 'portrait',
+    src: 'media/guningtou/archive/commons-ye-fei-1978.jpg',
+    titleZh: '葉飛（1978）',
+    titleEn: 'Ye Fei (1978)',
+    captionZh: '葉飛人物影像；拍攝於 1978 年，作為人物生平脈絡，不是 1949 古寧頭戰場照片。',
+    captionEn: 'A 1978 image of Ye Fei for biographical context, not a photograph of the 1949 Guningtou battlefield.',
+    sourceZh: 'Wikimedia Commons · Hans van Dijk／Nationaal Archief',
+    sourceEn: 'Wikimedia Commons · Hans van Dijk / Nationaal Archief',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Ye_Fei_(1978).jpg',
+    rights: 'CC BY-SA 3.0 NL · attribution and share-alike retained',
+    personIds: ['PER-0024'],
+    author: 'Hans van Dijk for Anefo',
+    capturedAt: '1978-11-17',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/nl/',
+    status: 'published',
+  },
+  {
+    id: 'PER-0031-MAO-1949',
+    kind: 'portrait',
+    src: 'media/guningtou/archive/commons-mao-zedong-1949.png',
+    titleZh: '毛澤東（1949）',
+    titleEn: 'Mao Zedong (1949)',
+    captionZh: '1949 年人物影像；用於最高層政治脈絡，不等同於古寧頭戰場現場照片。',
+    captionEn: 'A 1949 contextual image for the senior political setting, not a photograph of the Guningtou battlefield.',
+    sourceZh: 'Wikimedia Commons · public-domain record',
+    sourceEn: 'Wikimedia Commons · public-domain record',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Mao_Zedong_in_1949.png',
+    rights: 'Public domain as marked by Wikimedia Commons',
+    personIds: ['PER-0031'],
+    author: 'Unknown author',
+    capturedAt: '1949-10-01',
+    licenseUrl: 'https://commons.wikimedia.org/wiki/Commons:Copyright_tags',
+    status: 'published',
+  },
+  {
     id: 'TN-MEDIA-MUSEUM-2013',
     kind: 'photograph',
     src: 'media/guningtou/then-now/g-battle-museum-2013.jpg',
@@ -376,10 +412,16 @@ export const archiveMedia: ArchiveMediaAsset[] = [
 ];
 
 export function getPersonMedia(personId: string): ArchiveMediaAsset[] {
-  return archiveMedia.filter((asset) => asset.personIds?.includes(personId));
+  return publicArchiveMedia.filter((asset) => asset.personIds?.includes(personId));
 }
 
-export const mapMedia = archiveMedia.filter((asset) => asset.kind === 'map');
-export const aerialMedia = archiveMedia.filter((asset) => asset.kind === 'aerial');
-export const historicalPhotographs = archiveMedia.filter((asset) => asset.kind === 'photograph');
-export const researchMedia = archiveMedia.filter((asset) => asset.kind === 'research');
+/**
+ * The catalog may retain local research references for provenance and tests,
+ * but those paths are never reachable from a public static build. The page
+ * collections below deliberately consume this publishable view only.
+ */
+export const publicArchiveMedia = archiveMedia.filter((asset) => !asset.src.startsWith('.local/'));
+export const mapMedia = publicArchiveMedia.filter((asset) => asset.kind === 'map');
+export const aerialMedia = publicArchiveMedia.filter((asset) => asset.kind === 'aerial');
+export const historicalPhotographs = publicArchiveMedia.filter((asset) => asset.kind === 'photograph');
+export const researchMedia = publicArchiveMedia.filter((asset) => asset.kind === 'research');

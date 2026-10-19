@@ -38,6 +38,9 @@ jobs:
       - name: Build Astro static site
         run: npm run build
 
+      - name: Sanitize public output
+        run: npm run preview:guard
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

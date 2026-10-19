@@ -29,6 +29,7 @@
     "validate:then-now": "node scripts/validate-then-now-inventory.mjs",
     "audit:v4": "node scripts/quality/v4-content-audit.mjs",
     "audit:v4:static": "node scripts/quality/v4-static-output-audit.mjs",
+    "audit:v5": "node scripts/quality/v5-content-audit.mjs",
     "test:v4:quality": "node --test tests/quality/*.test.mjs",
     "visual:acceptance": "playwright test",
     "visual:acceptance:local": "npm run build:preview && playwright test",

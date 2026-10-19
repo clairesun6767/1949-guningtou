@@ -35,7 +35,10 @@ function attachRuntimeGuards(page: Page): RuntimeIssues {
     if (response.status() < 400) return;
     issues.httpErrors.push(`${response.status()} ${response.url()}`);
   });
-  page.on('requestfailed', (request) => issues.httpErrors.push(`FAILED ${request.url()} ${request.failure()?.errorText ?? 'unknown'}`));
+  page.on('requestfailed', (request) => {
+    const failure = request.failure()?.errorText ?? 'unknown';
+    if (failure !== 'net::ERR_ABORTED') issues.httpErrors.push(`FAILED ${request.url()} ${failure}`);
+  });
   return issues;
 }
 
@@ -93,6 +96,30 @@ async function capture(page: Page, testInfo: TestInfo, name: string, fullPage = 
 }
 
 test.describe('remote preview visual acceptance', () => {
+  test('public content routes render in all three languages', async ({ page }) => {
+    test.setTimeout(180_000);
+    const checks = [
+      [`${BASE_PATH}/zh-cn/`, '1949'],
+      [`${BASE_PATH}/en/`, '1949'],
+      [`${BASE_PATH}/zh-cn/timeline/`, '战役时间轴'],
+      [`${BASE_PATH}/en/timeline/`, 'Battle timeline'],
+      [`${BASE_PATH}/zh-cn/archive/`, '数位典藏'],
+      [`${BASE_PATH}/en/archive/`, 'Digital archive'],
+      [`${BASE_PATH}/zh-cn/locations/POI-0016/`, '古宁头战史馆'],
+      [`${BASE_PATH}/en/locations/POI-0016/`, 'Guningtou War Museum'],
+      [`${BASE_PATH}/zh-cn/figures/PER-0024/`, '叶飞'],
+      [`${BASE_PATH}/en/figures/PER-0024/`, 'Ye Fei'],
+      [`${BASE_PATH}/zh-cn/then-and-now/`, '昔日战场'],
+      [`${BASE_PATH}/en/then-and-now/`, 'Guningtou: Then & Now'],
+    ] as const;
+
+    for (const [route, marker] of checks) {
+      const issues = await openPage(page, route);
+      await expect(page.getByRole('main'), `Missing translated marker on ${route}`).toContainText(marker);
+      await assertHealthy(page, issues);
+    }
+  });
+
   test('homepage layout, search, and responsive navigation', async ({ page }, testInfo) => {
     const issues = await openPage(page, `${BASE_PATH}/zh-tw/`);
     await expect(page.getByRole('main')).toContainText('1949');

@@ -6,6 +6,7 @@
 import { useMemo, useState } from 'react';
 import type { TimelineEntry } from '../../data/types';
 import { getTimelineCopy } from '../../i18n/historicalContent';
+import { translateTimelineTime } from '../../i18n/timelineFieldTranslation';
 
 interface Props {
   entries: TimelineEntry[];
@@ -51,7 +52,7 @@ export default function BattleTimeline({ entries, lang = 'zh-tw' }: Props) {
 
   return (
     <div>
-      <div className="museum-timeline-tabs" role="tablist" aria-label="戰役日期">
+      <div className="museum-timeline-tabs" role="tablist" aria-label={isEnglish ? 'Battle dates' : isSimplified ? '战役日期' : '戰役日期'}>
         {DAY_TABS.map((tab) => {
           const count = entries.filter((entry) => entry.date >= tab.start && entry.date <= tab.end).length;
           const active = activeTab === tab.key;
@@ -84,7 +85,7 @@ export default function BattleTimeline({ entries, lang = 'zh-tw' }: Props) {
                 onClick={() => setExpandedId(isExpanded ? null : entry.timeline_id)}
               >
                 <span className="museum-timeline-entry__time">
-                  {entry.time || labels.unknownTime} · {entry.timeline_id}
+                  {(isEnglish ? translateTimelineTime(entry.time) : entry.time) || labels.unknownTime} · {entry.timeline_id}
                 </span>
                 <span className="museum-timeline-entry__title">{copy.title}</span>
                 {copy.location && <span className="museum-citation">{labels.location}: {copy.location}</span>}

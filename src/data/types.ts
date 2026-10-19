@@ -76,6 +76,12 @@ export interface POI {
   latitude: number;
   longitude: number;
   coordinate_accuracy?: string;
+  location_class?: 'modern_site' | 'historical_area' | 'historical_point' | 'uncertain_area';
+  coordinate_status?: 'modern_verified' | 'representative' | 'historical_review' | 'unresolved';
+  coordinate_source?: string;
+  coordinate_source_url?: string;
+  coordinate_note?: string;
+  coordinate_note_en?: string;
   related_events?: string;
   related_timeline?: string;
   related_persons?: string;

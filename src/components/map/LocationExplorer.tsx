@@ -21,6 +21,11 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
     : isSimplified
       ? { categories: '地点分类', all: '全部', place: '地点', detail: '查看档案 →', locate: '点击地点以定位', notSelected: '尚未选择地点' }
       : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點' };
+  const coordinateStatusLabel = (status?: string) => isEnglish
+    ? ({ modern_verified: 'Modern site verified', representative: 'Modern representative / area point', historical_review: 'Historical location under review', unresolved: 'Location not independently verified' }[status ?? ''] ?? 'Location basis not recorded')
+    : isSimplified
+      ? ({ modern_verified: '现代地点已查证', representative: '现代代表点／范围位置', historical_review: '历史位置审查中', unresolved: '位置尚未独立查证' }[status ?? ''] ?? '位置依据未记录')
+      : ({ modern_verified: '現代地點已查證', representative: '現代代表點／範圍位置', historical_review: '歷史位置審查中', unresolved: '位置尚未獨立查證' }[status ?? ''] ?? '位置依據未記錄');
   const [selectedPoi, setSelectedPoi] = useState<typeof allPois[0] | null>(null);
   const [filter, setFilter] = useState('');
   const mapRef = useRef<L.Map | null>(null);
@@ -46,17 +51,18 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
     if (!map || !selectedPoi) return;
     if (markerRef.current) markerRef.current.remove();
 
+    const isExactModern = selectedPoi.coordinate_status === 'modern_verified';
     const icon = L.divIcon({
       className: '',
-      html: '<div style="width:14px;height:14px;border-radius:50%;background:#a78a5b;border:3px solid #f6f2e9;box-shadow:0 0 0 4px rgba(23,23,19,.18)"></div>',
+      html: `<div style="width:14px;height:14px;border-radius:50%;background:${isExactModern ? '#a78a5b' : '#59635f'};border:3px ${isExactModern ? 'solid' : 'dashed'} #f6f2e9;box-shadow:0 0 0 4px rgba(23,23,19,.18)"></div>`,
       iconSize: [14, 14], iconAnchor: [7, 7],
     });
     const marker = L.marker([selectedPoi.latitude, selectedPoi.longitude], { icon }).addTo(map);
     const selectedName = getPoiCopy(selectedPoi, lang).name;
-    marker.bindPopup(`<strong>${selectedName}</strong><br><small>${selectedPoi.latitude}, ${selectedPoi.longitude}</small>`).openPopup();
+    marker.bindPopup(`<strong>${selectedName}</strong><br><small>${coordinateStatusLabel(selectedPoi.coordinate_status)}<br>${selectedPoi.latitude}, ${selectedPoi.longitude}</small>`).openPopup();
     markerRef.current = marker;
     map.flyTo([selectedPoi.latitude, selectedPoi.longitude], 16, { duration: 0.8 });
-  }, [selectedPoi]);
+  }, [selectedPoi, lang]);
 
   const categories = [...new Set(allPois.map((poi) => getPoiCopy(poi, lang).category).filter(Boolean))] as string[];
   const filtered = filter ? allPois.filter((poi) => getPoiCopy(poi, lang).category === filter) : allPois;
@@ -82,7 +88,7 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
                 <h3>{copy.name}</h3>
                 {poi.name_english && lang !== 'en' && <span className="museum-citation">{poi.name_english}</span>}
                 <p>{copy.shortDescription}</p>
-                <span className="museum-meta">{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</span>
+                <span className="museum-meta">{coordinateStatusLabel(poi.coordinate_status)} · {poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</span>
               </button>
               <a className="museum-link museum-location-result__detail" href={`${BASE}/${lang}/locations/${poi.poi_id}/`}>{labels.detail}</a>
             </article>

@@ -7,9 +7,12 @@ import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sitePath } from '../../data/paths';
 import { sources } from '../../data/loader';
 import { aerialMedia, historicalPhotographs, mapMedia, researchMedia } from '../../data/mediaCatalog';
+import { toSimplified } from '../../i18n/historicalContent';
 
 const lang = Astro.params.lang ?? 'zh-tw';
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
+const display = (zh: string, en: string) => isEnglish ? en : isSimplified ? toSimplified(zh) : zh;
 
 const categories = [
   { id: 'ARC-01', title: '歷史照片', titleEn: 'Historical photographs', description: '戰場留影、戰後記憶與人物影像，均保留拍攝年代與來源狀態。', descriptionEn: 'Battlefield photographs, post-war memories, and contextual portraits with their dates and provenance status retained.', status: '可瀏覽', statusEn: 'Available', note: '已有照片與人物影像', noteEn: 'Photographs and portraits available' },
@@ -45,17 +48,17 @@ export function getStaticPaths() {
       </div>
 
       <div class="museum-section--compact museum-archive-section">
-        <SectionHeading index="02" eyebrow="COLLECTIONS" title={isEnglish ? 'Collection categories' : '典藏分類'} description={isEnglish ? 'Available material is separated from collections still in progress; decorative cards do not stand in for missing primary sources.' : '目前可用與建置中的內容分開標示；尚未有原始資料的項目，不以裝飾性卡片取代史料。'} />
+        <SectionHeading index="02" eyebrow="COLLECTIONS" title={isEnglish ? 'Collection categories' : display('典藏分類', 'Collection categories')} description={isEnglish ? 'Available material is separated from collections still in progress; decorative cards do not stand in for missing primary sources.' : display('目前可用與建置中的內容分開標示；尚未有原始資料的項目，不以裝飾性卡片取代史料。', '')} />
         <div class="museum-grid museum-grid--3">
           {categories.map((category) => (
             <article class="museum-card museum-archive-card">
               <div class="museum-archive-card__head">
                 <span class="museum-label">{category.id}</span>
-                <span class={`museum-status ${category.status === '部分可用' ? 'museum-status--available' : ''}`}>{isEnglish ? category.statusEn : category.status}</span>
+                <span class={`museum-status ${category.status === '部分可用' ? 'museum-status--available' : ''}`}>{isEnglish ? category.statusEn : display(category.status, category.statusEn)}</span>
               </div>
-              <h3>{isEnglish ? category.titleEn : category.title}</h3>
-              <p>{isEnglish ? category.descriptionEn : category.description}</p>
-              <div class="museum-citation">{isEnglish ? category.noteEn : category.note}</div>
+              <h3>{isEnglish ? category.titleEn : display(category.title, category.titleEn)}</h3>
+              <p>{isEnglish ? category.descriptionEn : display(category.description, category.descriptionEn)}</p>
+              <div class="museum-citation">{isEnglish ? category.noteEn : display(category.note, category.noteEn)}</div>
             </article>
           ))}
         </div>

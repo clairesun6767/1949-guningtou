@@ -7,6 +7,7 @@ import LocationExplorer from '../map/LocationExplorer';
 import ThenNowMapCompare from '../map/ThenNowMapCompare';
 import { sitePath } from '../../data/paths';
 import type { Lang } from '../../i18n/ui';
+import { toSimplified } from '../../i18n/historicalContent';
 import siteInventoryDocument from '../../../data/then-now/site-inventory.json';
 import {
   getThenNowGallery,
@@ -32,6 +33,35 @@ interface InventorySite {
   sourceIds: string[];
   humanReview: { required: boolean };
 }
+
+const inventoryRegionsEn: Record<string, string> = {
+  'TN-LONGKOU': 'south-eastern Guningtou coast',
+  'TN-GUNINGTOU-BEACH': 'Beishan north coast',
+  'TN-HUWEI': 'eastern Guningtou battlefield area',
+  'TN-HUWEI-HIGH': 'Huwei–Kuanyin Pavilion Hill area',
+  'TN-HUNAN-HIGH': 'Anqi–Dingpu area',
+  'TN-BEISHAN-SETTLEMENT': 'north-western Guningtou',
+  'TN-NANSHAN-SETTLEMENT': 'southern Guningtou',
+  'TN-LINCUO-SETTLEMENT': 'central Guningtou settlement',
+  'TN-W013': 'eastern Guningtou / Shagang coast',
+  'TN-W012': 'Guningtou / Shagang coastal belt',
+  'TN-W011': 'eastern Guningtou coastal belt',
+  'TN-W016': 'behind Guningtou Battle Museum',
+  'TN-W027': 'Wushatou / Jinlie waterway',
+  'TN-LONGKOU-2-CAMP': 'Longkou–Guningtou coastal belt',
+  'TN-LONGKOU-FORT': 'Longkou coastal-defence line',
+  'TN-DONGYIDIANHONG': 'Longkou–Guningtou coastal belt',
+  'TN-ZHENZHONG-FORT': 'Longkou–Guningtou coastal belt',
+  'TN-MUSEUM': 'Beishan settlement / coastal reading area',
+  'TN-PEACE-PARK': 'Lincuo / area around the Guningtou Battle Museum',
+  'TN-LI-GUANGQIAN-SHRINE': 'Guningtou / Lincuo memory landscape',
+  'TN-BEISHAN-BROADCAST': 'between Beishan Cliff and Beishan settlement',
+  'TN-BEISHAN-CLIFF': 'Guningtou north coast',
+  'TN-BEISHAN-OLD-HOUSE': 'Beishan settlement',
+  'TN-BEISHAN-PLA-COMMAND': 'Beishan settlement / Guningtou core battlefield',
+  'TN-GUNINGTOU-WATER-TAIL-TOWER': 'Guningtou / Beishan cultural landscape',
+  'TN-GUANDI-TEMPLE': 'Guningtou area',
+};
 
 const { lang: rawLang } = Astro.props;
 const lang = rawLang as Lang;
@@ -75,6 +105,11 @@ function sourceHref(href: string) {
 
 function sourceLabel(source: { label: Localized }) {
   return text(source.label);
+}
+
+function inventoryRegion(site: InventorySite) {
+  if (lang === 'en') return inventoryRegionsEn[site.siteId] ?? 'Guningtou area';
+  return lang === 'zh-cn' ? toSimplified(site.region) : site.region;
 }
 
 const labels = {
@@ -250,7 +285,7 @@ const labels = {
                 <span class={`then-now-inventory-item__status then-now-inventory-item__status--${site.evidenceStatus.toLowerCase()}`}>{site.evidenceStatus}</span>
               </div>
               <h4>{site.officialName[lang] ?? site.officialName['zh-tw']}</h4>
-              <p>{site.region}</p>
+              <p>{inventoryRegion(site)}</p>
               <div class="then-now-inventory-item__meta">
                 <span>{site.priority}</span>
                 <span>{site.sourceIds.length} {text(labels.inventorySources)}</span>
