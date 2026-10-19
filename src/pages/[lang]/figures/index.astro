@@ -10,6 +10,7 @@ const plaPersons = persons.filter((person) => person.primary_category?.includes(
 const others = persons.filter((person) => !person.primary_category?.includes('Nationalist') && !person.primary_category?.includes('PLA'));
 const lang = Astro.params.lang;
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
 
 export function getStaticPaths() {
   return [
@@ -23,17 +24,17 @@ export function getStaticPaths() {
 <MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="PEOPLE & ROLES" title={isEnglish ? 'People and roles' : '人物檔案'} description={isEnglish ? `${persons.length} historical people. Grouped by the categories in the dataset, with each person’s role, unit, and evidence status retained.` : `${persons.length} 位歷史人物。依資料中的類別分組，保留每個人的角色、單位與證據狀態。`} />
+      <SectionHeading level={1} index="01" eyebrow="PEOPLE & ROLES" title={isEnglish ? 'People and roles' : isSimplified ? '人物档案' : '人物檔案'} description={isEnglish ? `${persons.length} historical people. Grouped by the categories in the dataset, with each person’s role, unit, and evidence status retained.` : isSimplified ? `共 ${persons.length} 位历史人物。按资料中的类别分组，保留每个人的角色、单位与证据状态。` : `${persons.length} 位歷史人物。依資料中的類別分組，保留每個人的角色、單位與證據狀態。`} />
 
       <section class="museum-person-group">
-        <div class="museum-person-group__head"><div class="museum-kicker">ROC · NATIONALIST</div><span class="museum-meta">{rocPersons.length} RECORDS</span></div>
+        <div class="museum-person-group__head"><div class="museum-kicker">ROC · NATIONALIST</div><span class="museum-meta">{rocPersons.length} {isEnglish ? 'RECORDS' : isSimplified ? '条记录' : '筆記錄'}</span></div>
         <div class="museum-grid museum-grid--3">
           {rocPersons.map((person) => <PersonCard person={person} lang={lang} href={sitePath(`figures/${person.person_id}`, lang)} />)}
         </div>
       </section>
 
       <section class="museum-person-group">
-        <div class="museum-person-group__head"><div class="museum-kicker">PLA · COMMUNIST</div><span class="museum-meta">{plaPersons.length} RECORDS</span></div>
+        <div class="museum-person-group__head"><div class="museum-kicker">PLA · COMMUNIST</div><span class="museum-meta">{plaPersons.length} {isEnglish ? 'RECORDS' : isSimplified ? '条记录' : '筆記錄'}</span></div>
         <div class="museum-grid museum-grid--3">
           {plaPersons.map((person) => <PersonCard person={person} lang={lang} href={sitePath(`figures/${person.person_id}`, lang)} />)}
         </div>
@@ -41,7 +42,7 @@ export function getStaticPaths() {
 
       {others.length > 0 && (
         <section class="museum-person-group">
-          <div class="museum-person-group__head"><div class="museum-kicker">OTHER / CIVILIAN</div><span class="museum-meta">{others.length} RECORDS</span></div>
+          <div class="museum-person-group__head"><div class="museum-kicker">OTHER / CIVILIAN</div><span class="museum-meta">{others.length} {isEnglish ? 'RECORDS' : isSimplified ? '条记录' : '筆記錄'}</span></div>
           <div class="museum-grid museum-grid--3">
             {others.map((person) => <PersonCard person={person} lang={lang} href={sitePath(`figures/${person.person_id}`, lang)} />)}
           </div>

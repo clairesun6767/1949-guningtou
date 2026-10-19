@@ -1,3 +1,5 @@
+import { toSimplified } from './historicalContent';
+
 const RANK_TRANSLATIONS: Record<string, string> = {
   '陸軍一級上將': 'Army General',
   '陸軍二級上將': 'Army General',
@@ -22,11 +24,11 @@ const RANK_TRANSLATIONS: Record<string, string> = {
 
 export function displayRank(value: string | undefined, lang = 'zh-tw'): string | undefined {
   if (!value) return value;
-  return lang === 'en' ? RANK_TRANSLATIONS[value] ?? value : value;
+  if (lang === 'en') return RANK_TRANSLATIONS[value] ?? value;
+  return lang === 'zh-cn' ? toSimplified(value) : value;
 }
-
 export function displayVerificationStatus(value: string | undefined, lang = 'zh-tw'): string | undefined {
-  if (!value || lang !== 'en') return value;
+  if (!value) return value;
   const labels: Record<string, string> = {
     verified: 'Verified',
     partially_verified: 'Partially verified',
@@ -34,7 +36,15 @@ export function displayVerificationStatus(value: string | undefined, lang = 'zh-
     needs_human_review: 'Needs human review',
     reviewed_v2: 'Reviewed',
   };
-  return labels[value] ?? value.replaceAll('_', ' ');
+  if (lang === 'en') return labels[value] ?? value.replaceAll('_', ' ');
+  const zhCn: Record<string, string> = {
+    verified: '已多方证实',
+    partially_verified: '部分证实',
+    conflicting_sources: '来源存在冲突',
+    needs_human_review: '需要人工审查',
+    reviewed_v2: '已审阅',
+  };
+  return lang === 'zh-cn' ? zhCn[value] ?? toSimplified(value.replaceAll('_', ' ')) : value;
 }
 
 function ordinal(value: string): string {
@@ -47,7 +57,9 @@ function ordinal(value: string): string {
 }
 
 export function displayUnit(value: string | undefined, lang = 'zh-tw'): string | undefined {
-  if (!value || lang !== 'en') return value;
+  if (!value) return value;
+  if (lang === 'zh-cn') return toSimplified(value);
+  if (lang !== 'en') return value;
   return value
     .replace(/第(\d+)兵團/g, (_, number: string) => `${ordinal(number)} Army Group`)
     .replace(/第(\d+)軍/g, (_, number: string) => `${ordinal(number)} Army`)

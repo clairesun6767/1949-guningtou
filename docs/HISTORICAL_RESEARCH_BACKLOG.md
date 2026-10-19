@@ -41,3 +41,7 @@ V1.3 只完成 repository 內材料的交叉核對與人工審查佇列建立，
 - P1 gaps reviewed: 3; closed: 0.
 - P2 gaps reviewed: 1; closed: 0.
 - Remaining decision: human review must supply or reject the missing page-level, unit-level, location, and route evidence before the Gate can be re-evaluated.
+
+## V4.0 content-quality review
+
+The V4 review does not close any historical Evidence Gate gap. It adds a separate quality package for language, POI identity/coordinates, person-media rights, map assets, and site-media provenance under [`quality/V4_BASELINE_AUDIT.md`](quality/V4_BASELINE_AUDIT.md). All V1.3 P0 gaps remain subject to the existing claim/matrix workflow and human review.

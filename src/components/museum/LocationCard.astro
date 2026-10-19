@@ -1,24 +1,28 @@
 ---
 import type { POI } from '../../data/types';
+import { getPoiCopy } from '../../i18n/historicalContent';
 
 interface Props {
   poi: POI;
   href: string;
+  lang?: string;
 }
 
-const { poi, href } = Astro.props;
+const { poi, href, lang = 'zh-tw' } = Astro.props;
+const copy = getPoiCopy(poi, lang);
+const isEnglish = lang === 'en';
 ---
 
 <a href={href} class="museum-card museum-card-link museum-location-card">
   <div class="museum-location-card__head">
-    <div class="museum-kicker">{poi.category || '戰場地點'}</div>
-    {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>證據 {poi.evidence_level}</span>}
+    <div class="museum-kicker">{copy.category}</div>
+    {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>{isEnglish ? 'Evidence' : lang === 'zh-cn' ? '证据' : '證據'} {poi.evidence_level}</span>}
   </div>
-  <h3>{poi.name_chinese}</h3>
-  {poi.name_english && <p class="museum-location-card__english">{poi.name_english}</p>}
-  <p class="museum-location-card__summary">{poi.short_description || poi.description || '尚無摘要'}</p>
+  <h3>{copy.name}</h3>
+  {poi.name_english && lang !== 'en' && <p class="museum-location-card__english">{poi.name_english}</p>}
+  <p class="museum-location-card__summary">{copy.shortDescription}</p>
   <div class="museum-meta-grid">
-    <dl class="museum-meta"><dt>座標</dt><dd>{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</dd></dl>
-    <dl class="museum-meta"><dt>編號</dt><dd>{poi.poi_id}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Coordinates' : lang === 'zh-cn' ? '坐标' : '座標'}</dt><dd>{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Record' : lang === 'zh-cn' ? '编号' : '編號'}</dt><dd>{poi.poi_id}</dd></dl>
   </div>
 </a>

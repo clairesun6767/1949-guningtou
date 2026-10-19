@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import { pois as allPois } from '../../data/loader';
+import { getPoiCopy } from '../../i18n/historicalContent';
 
 interface Props {
   lang?: string;
@@ -14,9 +15,12 @@ const BASE = '/1949-guningtou';
 
 export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
   const isEnglish = lang === 'en';
+  const isSimplified = lang === 'zh-cn';
   const labels = isEnglish
-    ? { categories: 'Location categories', all: 'All', place: 'Location', detail: 'Open record →', locate: 'Select a location to locate it', notSelected: 'No location selected', sourceNote: 'Canonical location record; English editorial description pending review.' }
-    : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點', sourceNote: '' };
+    ? { categories: 'Location categories', all: 'All', place: 'Location', detail: 'Open record →', locate: 'Select a location to locate it', notSelected: 'No location selected' }
+    : isSimplified
+      ? { categories: '地点分类', all: '全部', place: '地点', detail: '查看档案 →', locate: '点击地点以定位', notSelected: '尚未选择地点' }
+      : { categories: '地點分類', all: '全部', place: '地點', detail: '查看檔案 →', locate: '點選地點以定位', notSelected: '尚未選取地點' };
   const [selectedPoi, setSelectedPoi] = useState<typeof allPois[0] | null>(null);
   const [filter, setFilter] = useState('');
   const mapRef = useRef<L.Map | null>(null);
@@ -48,14 +52,14 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
       iconSize: [14, 14], iconAnchor: [7, 7],
     });
     const marker = L.marker([selectedPoi.latitude, selectedPoi.longitude], { icon }).addTo(map);
-    const selectedName = isEnglish ? selectedPoi.name_english ?? selectedPoi.name_chinese : selectedPoi.name_chinese;
+    const selectedName = getPoiCopy(selectedPoi, lang).name;
     marker.bindPopup(`<strong>${selectedName}</strong><br><small>${selectedPoi.latitude}, ${selectedPoi.longitude}</small>`).openPopup();
     markerRef.current = marker;
     map.flyTo([selectedPoi.latitude, selectedPoi.longitude], 16, { duration: 0.8 });
   }, [selectedPoi]);
 
-  const categories = [...new Set(allPois.map((poi) => poi.category).filter(Boolean))] as string[];
-  const filtered = filter ? allPois.filter((poi) => poi.category === filter) : allPois;
+  const categories = [...new Set(allPois.map((poi) => getPoiCopy(poi, lang).category).filter(Boolean))] as string[];
+  const filtered = filter ? allPois.filter((poi) => getPoiCopy(poi, lang).category === filter) : allPois;
 
   return (
     <div className="museum-location-explorer">
@@ -69,16 +73,21 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
 
         <div className="museum-grid museum-grid--2">
           {filtered.map((poi) => (
+            (() => {
+              const copy = getPoiCopy(poi, lang);
+              return (
             <article key={poi.poi_id} className={`museum-card museum-location-result ${selectedPoi?.poi_id === poi.poi_id ? 'museum-location-result--active' : ''}`}>
               <button type="button" className="museum-location-result__select" onClick={() => setSelectedPoi(poi)} aria-pressed={selectedPoi?.poi_id === poi.poi_id}>
-                <span className="museum-kicker">{poi.category || labels.place} · {poi.poi_id}</span>
-                <h3>{isEnglish ? poi.name_english ?? poi.name_chinese : poi.name_chinese}</h3>
-                {poi.name_english && <span className="museum-citation">{poi.name_english}</span>}
-                <p>{isEnglish ? labels.sourceNote : poi.short_description ?? poi.description}</p>
+                <span className="museum-kicker">{copy.category || labels.place} · {poi.poi_id}</span>
+                <h3>{copy.name}</h3>
+                {poi.name_english && lang !== 'en' && <span className="museum-citation">{poi.name_english}</span>}
+                <p>{copy.shortDescription}</p>
                 <span className="museum-meta">{poi.latitude.toFixed(4)}, {poi.longitude.toFixed(4)}</span>
               </button>
               <a className="museum-link museum-location-result__detail" href={`${BASE}/${lang}/locations/${poi.poi_id}/`}>{labels.detail}</a>
             </article>
+              );
+            })()
           ))}
         </div>
       </div>
@@ -86,7 +95,7 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
       <aside className="museum-location-explorer__map">
         <div className="museum-map-header-inline"><span className="museum-kicker">LOCATION INDEX</span><span>{labels.locate}</span></div>
         <div ref={containerRef} />
-        <div className="museum-citation museum-location-explorer__coordinates">{selectedPoi ? `${isEnglish ? selectedPoi.name_english ?? selectedPoi.name_chinese : selectedPoi.name_chinese} · ${selectedPoi.latitude.toFixed(4)}, ${selectedPoi.longitude.toFixed(4)}` : labels.notSelected}</div>
+        <div className="museum-citation museum-location-explorer__coordinates">{selectedPoi ? `${getPoiCopy(selectedPoi, lang).name} · ${selectedPoi.latitude.toFixed(4)}, ${selectedPoi.longitude.toFixed(4)}` : labels.notSelected}</div>
       </aside>
     </div>
   );

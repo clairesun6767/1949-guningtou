@@ -63,6 +63,6 @@ test('responsive layout covers small screens and does not rely on fixed-width pa
   assert.match(styles, /\.then-now-index__grid/);
   assert.match(styles, /\.then-now-site-grid--traces/);
   assert.match(styles, /@media \(max-width: 720px\)/);
-  assert.match(styles, /\.then-now-index__grid,\n  \.then-now-overview-grid,\n  \.then-now-site-grid/);
+  assert.match(styles, /\.then-now-index__grid,\r?\n  \.then-now-overview-grid,\r?\n  \.then-now-site-grid/);
   assert.match(page, /loading="lazy"/);
 });

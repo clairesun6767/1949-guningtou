@@ -1,0 +1,30 @@
+{
+  "generatedAt": "2026-10-19T03:53:22.666Z",
+  "routes": [
+    {
+      "url": "/1949-guningtou/zh-tw/",
+      "output": "zh-tw/index.html"
+    },
+    {
+      "url": "/1949-guningtou/zh-cn/",
+      "output": "zh-cn/index.html"
+    },
+    {
+      "url": "/1949-guningtou/en/",
+      "output": "en/index.html"
+    },
+    {
+      "url": "/1949-guningtou/zh-tw/map/",
+      "output": "zh-tw/map/index.html"
+    },
+    {
+      "url": "/1949-guningtou/zh-tw/then-and-now/",
+      "output": "zh-tw/then-and-now/index.html"
+    }
+  ],
+  "routeCount": 5,
+  "basePath": "/1949-guningtou/",
+  "absoluteWindowsPath": false,
+  "localhostReference": false,
+  "basePathErrors": []
+}

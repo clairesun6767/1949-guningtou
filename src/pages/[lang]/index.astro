@@ -8,6 +8,7 @@ import EvidenceCard from '../../components/museum/EvidenceCard.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { sitePath } from '../../data/paths';
 import { STATS, events, persons, sources, pois } from '../../data/loader';
+import { getEventCopy, getPoiCopy } from '../../i18n/historicalContent';
 
 const lang = Astro.params.lang ?? 'zh-tw';
 const isEnglish = lang === 'en';
@@ -71,12 +72,6 @@ const battleDays = [
 const featuredPeople = persons.slice(0, 3);
 const featuredSources = sources.slice(0, 3);
 const featuredEvents = events.slice(0, 3);
-const featuredEventEnglish: Record<string, { title: string; description: string; location: string }> = {
-  'EVT-0001': { title: 'PLA amphibious landing operation — first wave', description: 'The first wave crossed from Xiamen under strong winds and landed along the Guningtou coast. All three regiments reached shore but could not consolidate a stable beachhead.', location: 'Northern Kinmen waters → Longkou–Guningtou–Huwei' },
-  'EVT-0002': { title: 'ROC full counterattack — day one', description: 'The ROC launched a three-pronged counterattack before dawn, followed by coordinated naval and air operations that cut off further reinforcement.', location: 'Western Kinmen' },
-  'EVT-0003': { title: 'Regimental commander Li Guangqian killed in action', description: 'Colonel Li Guangqian was killed while leading the 14th Division, 42nd Regiment, in an attack at Lincuo.', location: 'Lincuo' },
-};
-
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -93,13 +88,13 @@ export function getStaticPaths() {
     <div class="museum-container">
       <div class="museum-home-context__intro">
         <div class="museum-kicker">01 · CONTEXT</div>
-        <h2>{isEnglish ? <>Not a battle diagram,<br />but a<span class="museum-title__nowrap"> living reading room.</span></> : <>不是一張戰況圖，<br />而是一個仍在發生的<span class="museum-title__nowrap">閱讀現場。</span></>}</h2>
-        <p>{isEnglish ? 'This digital museum returns the 1949 Battle of Guningtou to time, place, people, and sources, allowing memories from different positions to be placed side by side, checked, and understood.' : '這座數位博物館將 1949 年古寧頭戰役拆回時間、地點、人物與來源，讓不同位置留下的記憶可以被並置、被查證，也被理解。'}</p>
+        <h2>{isEnglish ? <>Not a battle diagram,<br />but a<span class="museum-title__nowrap"> living reading room.</span></> : isSimplified ? <>不是一张战况图，<br />而是一个仍在发生的<span class="museum-title__nowrap">阅读现场。</span></> : <>不是一張戰況圖，<br />而是一個仍在發生的<span class="museum-title__nowrap">閱讀現場。</span></>}</h2>
+        <p>{isEnglish ? 'This digital museum returns the 1949 Battle of Guningtou to time, place, people, and sources, allowing memories from different positions to be placed side by side, checked, and understood.' : isSimplified ? '这座数字博物馆将 1949 年古宁头战役拆回时间、地点、人物与来源，让不同位置留下的记忆可以并置、查证，也被理解。' : '這座數位博物館將 1949 年古寧頭戰役拆回時間、地點、人物與來源，讓不同位置留下的記憶可以被並置、被查證，也被理解。'}</p>
       </div>
       <div class="museum-home-context__facts">
-        <div class="museum-home-fact"><strong>1949</strong><span>{isEnglish ? 'A turning point in the Taiwan Strait' : '台海局勢急遽轉折的年代'}</span></div>
-        <div class="museum-home-fact"><strong>4 DAYS</strong><span>{isEnglish ? '24–27 October 1949' : '1949.10.24—10.27 的戰役時間'}</span></div>
-        <div class="museum-home-fact"><strong>1 PLACE</strong><span>{isEnglish ? 'Guningtou, Kinmen — a shared geographic ground' : '金門古寧頭，作為共同的地理現場'}</span></div>
+         <div class="museum-home-fact"><strong>1949</strong><span>{isEnglish ? 'A turning point in the Taiwan Strait' : isSimplified ? '台海局势急剧转折的年代' : '台海局勢急遽轉折的年代'}</span></div>
+         <div class="museum-home-fact"><strong>4 DAYS</strong><span>{isEnglish ? '24–27 October 1949' : isSimplified ? '1949.10.24—10.27 的战役时间' : '1949.10.24—10.27 的戰役時間'}</span></div>
+         <div class="museum-home-fact"><strong>1 PLACE</strong><span>{isEnglish ? 'Guningtou, Kinmen — a shared geographic ground' : isSimplified ? '金门古宁头，作为共同的地理现场' : '金門古寧頭，作為共同的地理現場'}</span></div>
       </div>
     </div>
   </section>
@@ -127,13 +122,13 @@ export function getStaticPaths() {
       <SectionHeading index="02" eyebrow="ORIENTATION" title={isEnglish ? 'See the battlefield before entering the narrative' : '先看見戰場，再進入敘事'} description={isEnglish ? 'The 1944 aerial photograph preserves the scale of terrain and settlements. The map is not a backdrop; it is the first evidence for understanding landing, advance, and defense.' : '1944 年航照保留了地形與聚落的尺度。地圖不是背景，而是理解登陸、推進與防守的第一份證據。'} />
       <div class="museum-home-map-grid">
         <HistoricImage src="/1949-guningtou/aerial-1944a.png" alt={isEnglish ? '1944 aerial photograph of the Guningtou area' : '1944 年古寧頭地區航照圖'} caption={isEnglish ? 'Guningtou aerial photograph · open the original for detail' : '古寧頭地區航照 · 可開啟原始影像查看細節'} source={isEnglish ? 'Academia Sinica GIS Center' : '中央研究院 GIS 中心'} priority lang={lang} />
-        <div class="museum-paper museum-home-map-note">
+         <div class="museum-paper museum-home-map-note">
           <div class="museum-kicker">FIELD NOTE</div>
-          <h3>Where did this happen?</h3>
-          <p>{isEnglish ? 'Longkou, Beishan, Lincuo, Nanshan, and Huwei are more than place names. They are spaces where troop movements, civilian life, and battle memories overlap.' : '嚨口、北山、林厝、南山與湖尾，不只是地名。它們是部隊移動、居民生活與戰鬥記憶交疊的空間。'}</p>
+           <h3>{isEnglish ? 'Where did this happen?' : isSimplified ? '这里发生了什么？' : '這裡發生了什麼？'}</h3>
+           <p>{isEnglish ? 'Longkou, Beishan, Lincuo, Nanshan, and Huwei are more than place names. They are spaces where troop movements, civilian life, and battle memories overlap.' : isSimplified ? '龙口、北山、林厝、南山与湖尾不只是地名，也是部队移动、居民生活与战斗记忆交叠的空间。' : '嚨口、北山、林厝、南山與湖尾，不只是地名。它們是部隊移動、居民生活與戰鬥記憶交疊的空間。'}</p>
           <div class="museum-meta-grid">
             <dl class="museum-meta"><dt>{isEnglish ? 'Location records' : '地點資料'}</dt><dd>{STATS.totalPOIs} POIs</dd></dl>
-            <dl class="museum-meta"><dt>{isEnglish ? 'Core location' : '核心位置'}</dt><dd>{pois.slice(0, 1).map((poi) => isEnglish ? poi.name_english ?? poi.name_chinese : poi.name_chinese).join('、') || (isEnglish ? 'Guningtou' : '古寧頭')}</dd></dl>
+             <dl class="museum-meta"><dt>{isEnglish ? 'Core location' : isSimplified ? '核心位置' : '核心位置'}</dt><dd>{pois.slice(0, 1).map((poi) => getPoiCopy(poi, lang).name).join('、') || (isEnglish ? 'Guningtou' : isSimplified ? '古宁头' : '古寧頭')}</dd></dl>
           </div>
           <a class="museum-button museum-button--outline" href={sitePath('map', lang)}>{isEnglish ? 'Enter battle map →' : '進入戰役地圖 →'}</a>
         </div>
@@ -192,14 +187,17 @@ export function getStaticPaths() {
     <div class="museum-container">
       <SectionHeading index="06" eyebrow="EVENTS" title={isEnglish ? 'Begin with one event' : '從一個事件開始追問'} description={isEnglish ? 'Read one specific moment, then follow its sources, people, and places outward.' : '先讀一個具體片刻，再沿著來源、人物與地點向外展開。'} />
       <div class="museum-grid museum-grid--3">
-        {featuredEvents.map((event) => (
+         {featuredEvents.map((event) => {
+           const eventCopy = getEventCopy(event, lang);
+           return (
           <article class="museum-card museum-home-event">
             <div class="museum-meta">{event.date}{event.time_start ? ` · ${event.time_start}` : ''}</div>
-            <h3>{isEnglish ? featuredEventEnglish[event.event_id]?.title ?? event.title : event.title}</h3>
-            <p>{isEnglish ? featuredEventEnglish[event.event_id]?.description ?? 'Canonical event record.' : event.description}</p>
-            <div class="museum-citation">{isEnglish ? featuredEventEnglish[event.event_id]?.location ?? 'Location unknown' : event.location || '位置未詳'} · {event.event_id}</div>
+             <h3>{eventCopy.title}</h3>
+             <p>{eventCopy.description}</p>
+             <div class="museum-citation">{eventCopy.location} · {event.event_id}</div>
           </article>
-        ))}
+           );
+         })}
       </div>
       <div class="museum-home-timeline__footer">
         <a class="museum-link" href={sitePath('analysis', lang)}>{isEnglish ? 'Read by event type →' : '依事件類型閱讀 →'}</a>

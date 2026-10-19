@@ -7,6 +7,7 @@ import { timeline } from '../../data/loader';
 
 const lang = Astro.params.lang ?? 'zh-tw';
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
 
 export function getStaticPaths() {
   return [
@@ -23,7 +24,7 @@ export function getStaticPaths() {
 <MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-reading">
-      <SectionHeading level={1} index="01" eyebrow="TIME RAIL" title={isEnglish ? 'Battle timeline' : '戰役時間軸'} description={isEnglish ? `24–27 October 1949 · a four-day record organized by time · ${timeline.length} timeline entries. Choose a date and expand a node to view units, people, and evidence status.` : `1949 年 10 月 24—27 日 · 四日戰役逐時記錄 · ${timeline.length} 條時間點。選擇日期後展開節點，查看部隊、人物與證據狀態。`} />
+      <SectionHeading level={1} index="01" eyebrow="TIME RAIL" title={isEnglish ? 'Battle timeline' : isSimplified ? '战役时间轴' : '戰役時間軸'} description={isEnglish ? `24–27 October 1949 · a four-day record organized by time · ${timeline.length} timeline entries. Choose a date and expand a node to view units, people, and evidence status.` : isSimplified ? `1949 年 10 月 24—27 日 · 四日战役逐时记录 · ${timeline.length} 条时间点。选择日期后展开节点，查看部队、人物与证据状态。` : `1949 年 10 月 24—27 日 · 四日戰役逐時記錄 · ${timeline.length} 條時間點。選擇日期後展開節點，查看部隊、人物與證據狀態。`} />
       <BattleTimeline client:load entries={timeline} lang={lang} />
     </div>
   </div>

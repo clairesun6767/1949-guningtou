@@ -1,6 +1,7 @@
 ---
 import type { HistoricalPerson } from '../../data/types';
 import { displayRank, displayUnit } from '../../i18n/labels';
+import { getPersonCopy } from '../../i18n/historicalContent';
 import { getPersonMedia } from '../../data/mediaCatalog';
 import { sitePath } from '../../data/paths';
 
@@ -12,29 +13,29 @@ interface Props {
 
 const { person, href, lang = 'zh-tw' } = Astro.props;
 const isEnglish = lang === 'en';
+const copy = getPersonCopy(person, lang);
 const portrait = getPersonMedia(person.person_id).find((asset) => asset.kind === 'portrait');
-const displayBio = isEnglish
-  ? 'Canonical person record; English editorial biography pending review.'
-  : person.short_bio || person.biographical_summary || '尚無摘要';
+const portraitSrc = portrait ? sitePath(portrait.src) : sitePath('media/guningtou/portrait-placeholder.svg');
+const portraitAlt = portrait
+  ? (isEnglish ? portrait.titleEn : portrait.titleZh)
+  : (isEnglish ? 'Neutral placeholder: no legally publishable portrait available' : lang === 'zh-cn' ? '中性占位图：暂无可合法公开的肖像' : '中性佔位圖：尚無可合法公開的肖像');
 ---
 
 <a href={href} class="museum-card museum-card-link museum-person-card">
-  {portrait && (
-    <div class="museum-person-card__image">
-      <img src={sitePath(portrait.src)} alt={isEnglish ? portrait.titleEn : portrait.titleZh} loading="lazy" decoding="async" />
-    </div>
-  )}
+  <div class="museum-person-card__image">
+    <img src={portraitSrc} alt={portraitAlt} loading="lazy" decoding="async" />
+  </div>
   <div class="museum-person-card__top">
     <div>
-      <div class="museum-kicker">{isEnglish ? 'Person record' : '人物檔案'}</div>
-      <h3>{isEnglish ? person.name_en ?? person.name_zh : person.name_zh}</h3>
+      <div class="museum-kicker">{isEnglish ? 'Person record' : lang === 'zh-cn' ? '人物档案' : '人物檔案'}</div>
+      <h3>{copy.name}</h3>
     </div>
-    {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>{isEnglish ? 'Evidence' : '證據'} {person.evidence_level}</span>}
+    {person.evidence_level && <span class={`evidence-badge evidence-${person.evidence_level}`}>{isEnglish ? 'Evidence' : lang === 'zh-cn' ? '证据' : '證據'} {person.evidence_level}</span>}
   </div>
-  <p class="museum-person-card__role">{isEnglish ? person.primary_category || 'Role pending' : person.role_in_battle || person.primary_category || '角色待補'}</p>
+  <p class="museum-person-card__role">{copy.role || copy.category}</p>
   <div class="museum-meta-grid">
-    <dl class="museum-meta"><dt>{isEnglish ? 'Unit' : '單位'}</dt><dd>{displayUnit(person.unit, lang) || '—'}</dd></dl>
-    <dl class="museum-meta"><dt>{isEnglish ? 'Rank' : '軍階'}</dt><dd>{displayRank(person.rank_at_event, lang) || '—'}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Unit' : lang === 'zh-cn' ? '单位' : '單位'}</dt><dd>{displayUnit(person.unit, lang) || '—'}</dd></dl>
+    <dl class="museum-meta"><dt>{isEnglish ? 'Rank' : lang === 'zh-cn' ? '军阶' : '軍階'}</dt><dd>{displayRank(person.rank_at_event, lang) || '—'}</dd></dl>
   </div>
-  <p class="museum-person-card__summary">{displayBio}</p>
+  <p class="museum-person-card__summary">{copy.bio}</p>
 </a>

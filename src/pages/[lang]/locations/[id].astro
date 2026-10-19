@@ -6,6 +6,7 @@ import SourceCitation from '../../../components/museum/SourceCitation.astro';
 import { sitePath } from '../../../data/paths';
 import { pois } from '../../../data/loader';
 import { displayVerificationStatus } from '../../../i18n/labels';
+import { getPoiCopy } from '../../../i18n/historicalContent';
 
 export function getStaticPaths() {
   const langs = ['zh-tw', 'zh-cn', 'en'];
@@ -18,22 +19,24 @@ export function getStaticPaths() {
 
 const { id, lang } = Astro.params;
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
 const poi = pois.find((item) => item.poi_id === id);
+const poiCopy = poi ? getPoiCopy(poi, lang) : null;
 ---
 
 <MainLayout lang={lang}>
   {poi ? (
     <div class="museum-page">
       <div class="museum-container">
-        <a href={sitePath('locations', lang)} class="museum-link">{isEnglish ? '← Back to location explorer' : '← 回到地點探索'}</a>
+        <a href={sitePath('locations', lang)} class="museum-link">{isEnglish ? '← Back to location explorer' : isSimplified ? '← 返回地点探索' : '← 回到地點探索'}</a>
         <div class="museum-location-detail">
           <div class="museum-location-detail__copy">
             <div class="museum-kicker museum-space-before">PLACE RECORD · {poi.poi_id}</div>
-            <h1 class="museum-title">{isEnglish ? poi.name_english ?? poi.name_chinese : poi.name_chinese}</h1>
-            {poi.name_english && <p class="museum-deck">{poi.name_english}</p>}
+            <h1 class="museum-title">{poiCopy?.name}</h1>
+            {poi.name_english && lang !== 'en' && <p class="museum-deck">{poi.name_english}</p>}
 
             <div class="museum-person-detail__status">
-              {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>{isEnglish ? 'Evidence' : '證據'} {poi.evidence_level}</span>}
+              {poi.evidence_level && <span class={`evidence-badge evidence-${poi.evidence_level}`}>{isEnglish ? 'Evidence' : isSimplified ? '证据' : '證據'} {poi.evidence_level}</span>}
               {poi.verification_status && <SourceCitation text={displayVerificationStatus(poi.verification_status, lang) ?? poi.verification_status} />}
             </div>
 
@@ -41,7 +44,7 @@ const poi = pois.find((item) => item.poi_id === id);
               <section class="museum-reading__section">
                 <div class="museum-kicker">HISTORICAL BACKGROUND</div>
                 <h2>{isEnglish ? 'Historical background' : '歷史背景'}</h2>
-                <p class="museum-prose">{poi.historical_background}</p>
+                <p class="museum-prose">{poiCopy?.historicalBackground}</p>
               </section>
             )}
 
@@ -49,7 +52,7 @@ const poi = pois.find((item) => item.poi_id === id);
               <section class="museum-reading__section">
                 <div class="museum-kicker">BATTLE ROLE</div>
                 <h2>{isEnglish ? 'Role in the battle' : '戰役角色'}</h2>
-                <p class="museum-prose">{poi.battle_role}</p>
+                <p class="museum-prose">{poiCopy?.battleRole}</p>
               </section>
             )}
 
@@ -57,19 +60,19 @@ const poi = pois.find((item) => item.poi_id === id);
               <section class="museum-reading__section">
                 <div class="museum-kicker">CONTEXT</div>
                 <h2>{isEnglish ? 'Historical context' : '歷史脈絡'}</h2>
-                <p class="museum-prose">{poi.historical_context}</p>
+                <p class="museum-prose">{poiCopy?.historicalContext}</p>
               </section>
             )}
 
             <div class="museum-meta-grid museum-location-detail__meta">
-              <MetadataRow label={isEnglish ? 'GPS coordinates' : 'GPS 座標'} value={`${poi.latitude}, ${poi.longitude}`} />
-              <MetadataRow label={isEnglish ? 'Coordinate accuracy' : '座標精度'} value={poi.coordinate_accuracy} />
-              <MetadataRow label={isEnglish ? 'Category' : '類別'} value={poi.category} />
-              <MetadataRow label={isEnglish ? 'Access status' : '開放狀態'} value={poi.open_status} />
+              <MetadataRow label={isEnglish ? 'GPS coordinates' : isSimplified ? 'GPS 坐标' : 'GPS 座標'} value={`${poi.latitude}, ${poi.longitude}`} />
+              <MetadataRow label={isEnglish ? 'Coordinate accuracy' : isSimplified ? '坐标精度' : '座標精度'} value={poiCopy?.coordinateAccuracy} />
+              <MetadataRow label={isEnglish ? 'Category' : isSimplified ? '类别' : '類別'} value={poiCopy?.category} />
+              <MetadataRow label={isEnglish ? 'Access status' : isSimplified ? '开放状态' : '開放狀態'} value={poiCopy?.openStatus} />
             </div>
           </div>
           <aside class="museum-location-detail__map">
-            <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={isEnglish ? poi.name_english ?? poi.name_chinese : poi.name_chinese} />
+            <MiniMap client:only="react" lat={poi.latitude} lng={poi.longitude} name={poiCopy?.name ?? poi.name_chinese} />
           </aside>
         </div>
       </div>
@@ -78,8 +81,8 @@ const poi = pois.find((item) => item.poi_id === id);
     <div class="museum-page">
       <div class="museum-reading museum-centered">
         <div class="museum-kicker">RECORD NOT FOUND</div>
-        <h1 class="museum-title">{isEnglish ? 'Location not found' : '地點不存在'}</h1>
-        <a class="museum-button" href={sitePath('locations', lang)}>{isEnglish ? 'Back to location explorer' : '回到地點探索'}</a>
+        <h1 class="museum-title">{isEnglish ? 'Location not found' : isSimplified ? '地点不存在' : '地點不存在'}</h1>
+        <a class="museum-button" href={sitePath('locations', lang)}>{isEnglish ? 'Back to location explorer' : isSimplified ? '返回地点探索' : '回到地點探索'}</a>
       </div>
     </div>
   )}

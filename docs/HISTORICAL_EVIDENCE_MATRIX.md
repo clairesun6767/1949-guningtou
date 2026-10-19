@@ -54,3 +54,7 @@ V1.3 does not change the Route Audit or enable any route. An event reaching the 
 ## Allowed presentation while blocked
 
 Existing visitor presentation may continue to show source-traced schematic graphics, approximate battle movement context, and uncertainty labels under their existing data policies. It must not use the matrix to animate an exact historical route or expose a synthetic unit as a historical unit. The V1.1 synthetic vertical slice remains test-only.
+
+## V4.0 content-quality boundary
+
+V4 adds presentation-layer translations and audits only. It does not change any Event/Time/Location/Unit evidence level, canonical coordinate, route geometry, or production enablement. The current Evidence Gate result therefore remains `BLOCKED`; see [`quality/V4_BLOCKED_REPORT.md`](quality/V4_BLOCKED_REPORT.md).

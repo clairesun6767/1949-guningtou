@@ -3,9 +3,11 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import SectionHeading from '../../components/museum/SectionHeading.astro';
 import { events } from '../../data/loader';
+import { getEventCopy, toSimplified } from '../../i18n/historicalContent';
 
 const lang = Astro.params.lang ?? 'zh-tw';
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
 
 // Group events by type
 const eventGroups: Record<string, typeof events> = {};
@@ -37,52 +39,6 @@ const TYPE_LABELS_ZH: Record<string, string> = {
   command_change: '指揮變更', killed_in_action: '陣亡', naval_operation: '海上作戰', air_operation: '空中作戰',
 };
 
-const EVENT_TITLES_EN: Record<string, string> = {
-  'EVT-0001': 'PLA amphibious landing operation — first wave', 'EVT-0002': 'ROC full counterattack — day one', 'EVT-0003': 'Regimental commander Li Guangqian killed in action',
-  'EVT-0004': 'PLA reinforcement and ROC encirclement — day two', 'EVT-0005': 'The Battle of Guningtou ends — day three', 'EVT-0006': 'Post-battle handling and conflicting accounts',
-  'EVT-0007': 'Joint ROC air and naval blockade operation', 'EVT-0008': 'Hu Lien arrives in Kinmen and assumes command', 'EVT-0009': 'The contest for Huwei',
-  'EVT-0010': 'Longkou landing and destruction', 'EVT-0011': 'Fighting at the Guningtou landing beach', 'EVT-0012': 'The first large-scale ROC air bombardment',
-  'EVT-0013': 'ROC naval blockade operation', 'EVT-0014': 'Regimental commander Li Guangqian killed in action', 'EVT-0015': 'Day-one fighting ends; the front begins to form',
-  'EVT-0016': 'The PLA second wave fails to reinforce the landing', 'EVT-0017': 'Street fighting in Guningtou — day two', 'EVT-0018': 'Hu Lien arrives in Kinmen and takes command',
-  'EVT-0019': 'ROC forces retake Lincuo and Nanshan', 'EVT-0020': 'ROC forces complete the Guningtou encirclement', 'EVT-0021': 'Destruction at the northern cliff base',
-  'EVT-0022': 'The final PLA reinforcement wave lands and is captured', 'EVT-0023': 'Li Shulan reports the end of fighting', 'EVT-0024': 'Shuangru Hill battle — the final large engagement',
-  'EVT-0025': 'Ye Fei submits a self-criticism to Mao Zedong', 'EVT-0026': 'Battle results and disputed casualty figures', 'EVT-0027': 'The last PLA combatant is captured',
-  'EVT-0028': 'The PLA sea crossing', 'EVT-0029': 'Landing units fight independently', 'EVT-0030': 'Chen Cheng flies to Kinmen for inspection',
-};
-
-const EVENT_DESCRIPTIONS_EN: Record<string, string> = {
-  'EVT-0001': 'Decision → movement → contact → combat → command response → front-line change → outcome: the first wave departed at 20:00 on 24 October; strong winds pushed it off course; Hsiung Chen-Chiu fired the first shot at 00:30 on 25 October; large-scale landings began at 01:30 along a ten-kilometre beach. All three PLA regiments reached shore but suffered heavy losses and could not establish a stable beachhead without unified command.',
-  'EVT-0002': 'At 04:30 the 118th Division began a three-pronged counterattack; at 05:00 the 45th Division activated its FAC; at 06:00 the navy intercepted; at 07:00 P-51s destroyed more than 100 boats; and at 08:00 full bombardment began. By evening, the PLA 244th Regiment was nearly destroyed and the 251st had suffered roughly 1,000 casualties. The ROC completed an initial encirclement.',
-  'EVT-0003': 'Colonel Li Guangqian, commander of the ROC 14th Division, 42nd Regiment, was killed while leading a charge at Lincuo. He was the highest-ranking ROC officer killed at Guningtou. After the battle, Kinmen residents built the General Li Guangqian Temple in his memory.',
-  'EVT-0004': 'At 03:00, roughly 1,000 men in four companies attempted to reinforce the landing, but only ten platoons succeeded. The 118th Division counterattacked at 06:30; P-47 and B-24 close support began at 07:00; street fighting broke out in Guningtou at 08:00; Hu Lien assumed command at 10:00; Lincuo was retaken at 12:00; Nanshan at 15:00; and the encirclement was completed at night.',
-  'EVT-0005': 'At midnight, more than 1,300 men were trapped at the northern cliff with ammunition and supplies exhausted. After four hours of concentrated attacks, more than 400 were killed. At 03:00, the final reinforcement of 30 men was captured; stragglers surrendered at 06:00; Li Shulan reported the end of fighting at 09:30; about 900 surrendered at 10:00; Chen Cheng arrived to inspect the front; and remaining forces at Shuangru Hill surrendered at 16:00.',
-  'EVT-0006': 'The Ministry of National Defense reported 1,267 ROC dead and 1,982 wounded, alongside 3,873 PLA dead and 5,175 captured. The original PLA report described “more than ten thousand destroyed” and did not acknowledge mass captures. Mainland non-official media acknowledged at least 5,175 captures after the twenty-first century. Ye Fei submitted a self-criticism but was not punished. Captured PLA personnel were sent to the Neihu concentration camp, while 253rd Regiment commander Xu Bo hid in Mount Taiwu for more than 100 days before his capture in February 1950.',
-  'EVT-0007': 'A 45th Division FAC directed P-51s to destroy more than 100 PLA boats. The Navy’s 2nd Fleet used naval guns against the remaining flotilla, while the Air Force’s 1st Bombardment Group used B-25s against the beachhead. The joint blockade cut off further PLA reinforcement and became a rare successful example of three-service cooperation in the Chinese Civil War.',
-  'EVT-0008': 'Hu Lien arrived at Shuitou Pier aboard a tank landing ship. After meeting Tang Enbo and Luo Zhuoying, he went to Hunan Heights to assess the battle. Learning of the severe situation from Kao Kuei-yuan, he immediately assumed command of the 118th Division and 25th Army, coordinating the commanders of the 352nd, 353rd, and 354th Regiments to restore morale. This was a critical moment in the command chain.',
-  'EVT-0009': 'After landing at Huwei, the PLA 251st Regiment repeatedly fought the ROC 14th Division for the area. Huwei Heights changed hands several times and the 251st suffered roughly 1,000 casualties. It was one of the fiercest engagements of the first day.',
-  'EVT-0010': 'The PLA 244th Regiment landed at Longkou and was caught in crossfire from ROC armour and the 601st Regiment. Its commander Xing Yongsheng was seriously wounded and nearly the entire regiment was destroyed by noon.',
-  'EVT-0011': 'The PLA 253rd Regiment landed at Guningtou, where the 602nd Regiment held a strong defensive position. The landing force suffered heavy casualties, but commander Xu Bo led part of the regiment through into the village.',
-  'EVT-0012': 'The 45th Division FAC successfully directed 18 sorties of P-51 fighters against the PLA landing fleet and destroyed more than 100 boats. It was a rare example of three-service cooperation in the Chinese Civil War.',
-  'EVT-0013': 'Vessels of the Navy’s 2nd Fleet, including Chung Jung, Nan An, Huai Yin, and submarine chaser 202, used 40 mm and 20 mm machine guns against PLA wooden boats. Chung Jung had originally been sailing to Zhoushan to carry sugar but joined the operation after weather delays.',
-  'EVT-0014': 'Colonel Li Guangqian, commander of the ROC 14th Division, 42nd Regiment, was killed while leading a charge at Lincuo. He was the highest-ranking ROC officer killed in the battle, and the General Li Guangqian Temple was later built in Kinmen to commemorate him.',
-  'EVT-0015': 'The remaining PLA troops withdrew to the Guningtou–Lincuo–Huwei line. The ROC established an initial encirclement, while the headquarters of the 12th Army Group reached Kinmen’s southern shore.',
-  'EVT-0016': 'About 1,000 men from the 246th Regiment and part of the 85th Division attempted to land at Huwei and Guningtou in four companies. Strong winds scattered the boats; only ten platoons reached shore and were immediately hit by ROC fire.',
-  'EVT-0017': 'The 118th Division launched a full counterattack from Putou toward Lincuo and Guningtou. Fierce street fighting broke out in the village, with close support from P-47 fighter-bombers and B-24 heavy bombers. ROC troops fought for each building.',
-  'EVT-0018': 'Hu Lien reached Shuitou Pier aboard a tank landing ship. After meeting Tang Enbo, he went to Hunan Heights, took command of the 118th Division and 25th Army, and personally coordinated the regimental commanders to restore morale.',
-  'EVT-0019': 'The 353rd Regiment retook Lincuo with tank support. The 118th Division then recovered Nanshan, forcing the remaining PLA troops back to the coast north of Guningtou village.',
-  'EVT-0020': 'Hu Lien ordered a pause in large-scale night operations. The ROC completed a full encirclement of Guningtou village, compressing the remaining PLA troops onto a narrow northern beach with ammunition nearly exhausted.',
-  'EVT-0021': 'More than 1,300 men were trapped below the northern cliff with food and ammunition exhausted. The ROC discovered them around midnight; after four hours of concentrated attack, more than 400 were killed. About 900 surrendered at daybreak.',
-  'EVT-0022': 'About 30 men from the 3rd Company of the PLA 259th Regiment landed on Kinmen’s northern shore in a motorboat and were immediately surrounded and captured. They were the final PLA reinforcement group of the battle.',
-  'EVT-0023': 'Major General Li Shulan, commander of the 118th Division, reported to Hu Lien that all fighting at Guningtou had ended.',
-  'EVT-0024': 'The remaining PLA troops near Shuangru Hill surrendered after being surrounded. This was the final large engagement of the Battle of Guningtou.',
-  'EVT-0025': 'Ye Fei submitted a written self-criticism to Mao Zedong, accepting responsibility for the defeat and requesting punishment. He identified three main causes: too few boats, failure to consolidate the beachhead, and a lack of unified command after the three regiments landed. Mao did not punish Ye Fei.',
-  'EVT-0026': 'The Ministry of National Defense reported 1,267 ROC dead and 1,982 wounded, and 3,873 PLA dead and 5,175 captured, including roughly 1,000 boat workers and civilian labourers. The original PLA report described more than ten thousand destroyed; mainland media later acknowledged at least 5,175 captures. The highest-ranking ROC officer killed was Colonel Li Guangqian.',
-  'EVT-0027': 'After the battle, 253rd Regiment commander Xu Bo hid in the Mount Taiwu area for more than 100 days, surviving on wild fruit. He was eventually found and captured in a cave near the mountain, becoming the last PLA combatant captured in the battle.',
-  'EVT-0028': 'The PLA first wave departed from Lianhe, Dadan Island, and Houcun. Strong winds pushed it off course, sending many units intended for Longkou toward Guningtou. Boat crews unfamiliar with the channels caused several vessels to run aground.',
-  'EVT-0029': 'After all three regiments landed, communications broke down and each fought independently. Without unified command, the PLA could not establish a stable beachhead and was defeated piecemeal by ROC forces.',
-  'EVT-0030': 'Chen Cheng, director of the Southeast Military and Political Headquarters, flew to Kinmen to inspect the front. On the return journey, his convoy encountered more than 100 PLA soldiers emerging from trenches to surrender in formation.',
-};
-
 export function getStaticPaths() {
   return [
     { params: { lang: 'zh-tw' } },
@@ -98,57 +54,62 @@ export function getStaticPaths() {
 <MainLayout lang={lang}>
   <div class="museum-page">
     <div class="museum-container">
-      <SectionHeading level={1} index="01" eyebrow="BATTLE ANALYSIS" title={isEnglish ? 'Battle analysis' : '戰役解析'} description={isEnglish ? `${events.length} historical events · grouped by type. Expand an event to view participating units, commanders, time, and evidence level.` : `${events.length} 個歷史事件 · 依類型拆解。展開事件後可查看參與單位、指揮官、時間與證據等級。`} />
+      <SectionHeading level={1} index="01" eyebrow="BATTLE ANALYSIS" title={isEnglish ? 'Battle analysis' : isSimplified ? '战役解析' : '戰役解析'} description={isEnglish ? `${events.length} historical events · grouped by type. Expand an event to view participating units, commanders, time, and evidence level.` : isSimplified ? `${events.length} 个历史事件 · 按类型拆解。展开事件后可查看参与单位、指挥官、时间与证据等级。` : `${events.length} 個歷史事件 · 依類型拆解。展開事件後可查看參與單位、指揮官、時間與證據等級。`} />
 
     <div class="museum-analysis-list">
       {Object.entries(eventGroups).map(([type, evts]) => {
-        const meta = isEnglish ? (TYPE_LABELS[type] ?? { icon: '•', label: type }) : { icon: TYPE_LABELS[type]?.icon ?? '•', label: TYPE_LABELS_ZH[type] ?? type };
+        const meta = isEnglish
+          ? (TYPE_LABELS[type] ?? { icon: '•', label: type })
+          : { icon: TYPE_LABELS[type]?.icon ?? '•', label: isSimplified ? toSimplified(TYPE_LABELS_ZH[type] ?? type) : TYPE_LABELS_ZH[type] ?? type };
         return (
           <section class="museum-analysis-group">
             <div class="museum-analysis-group__header">
               <span class="museum-analysis-group__icon">{meta.icon}</span>
               <h2 class="museum-analysis-group__title">{meta.label}</h2>
-              <span class="museum-analysis-group__count">{evts.length} {isEnglish ? 'events' : '事件'}</span>
+              <span class="museum-analysis-group__count">{evts.length} {isEnglish ? 'events' : isSimplified ? '个事件' : '事件'}</span>
             </div>
             <div class="museum-analysis-group__events">
               {evts.map(e => (
+                (() => {
+                  const copy = getEventCopy(e, lang);
+                  return (
                 <details class="museum-analysis-event group">
                   <summary class="museum-analysis-event__summary">
                     <span class="text-amber-400 mt-0.5 group-open:rotate-90 transition-transform">▶</span>
                     <div>
-                        <h3 class="text-sm font-medium text-stone-800">{isEnglish ? (EVENT_TITLES_EN[e.event_id] ?? e.title) : e.title}</h3>
+                        <h3 class="text-sm font-medium text-stone-800">{copy.title}</h3>
                       <p class="text-xs text-stone-400 mt-0.5">
-                        {e.date} · {e.location ?? '位置未詳'} · {e.time_precision ?? ''}
+                        {e.date} · {copy.location} · {e.time_precision ?? ''}
                       </p>
                     </div>
                   </summary>
                   <div class="museum-analysis-event__body">
                     {e.description && (
-                      <p class="text-sm text-stone-600 leading-relaxed mb-3">{isEnglish ? EVENT_DESCRIPTIONS_EN[e.event_id] ?? e.description : e.description}</p>
+                        <p class="text-sm text-stone-600 leading-relaxed mb-3">{copy.description}</p>
                     )}
                     <div class="museum-analysis-meta-grid">
                       {e.roc_units && (
                         <div class="museum-analysis-meta museum-analysis-meta--roc">
                         <span class="font-medium text-blue-700">{isEnglish ? 'ROC: ' : '國軍：'}</span>
-                          <span class="text-stone-600">{e.roc_units}</span>
+                          <span class="text-stone-600">{copy.rocUnits}</span>
                         </div>
                       )}
                       {e.pla_units && (
                         <div class="museum-analysis-meta museum-analysis-meta--pla">
                         <span class="font-medium text-red-700">{isEnglish ? 'PLA: ' : '共軍：'}</span>
-                          <span class="text-stone-600">{e.pla_units}</span>
+                          <span class="text-stone-600">{copy.plaUnits}</span>
                         </div>
                       )}
                       {e.commanders && (
                         <div class="museum-analysis-meta museum-analysis-meta--archive">
                         <span class="font-medium text-stone-600">{isEnglish ? 'Commanders: ' : '指揮官：'}</span>
-                          <span class="text-stone-500">{e.commanders}</span>
+                          <span class="text-stone-500">{copy.commanders}</span>
                         </div>
                       )}
                       {e.participants && (
                         <div class="museum-analysis-meta museum-analysis-meta--archive">
                         <span class="font-medium text-stone-600">{isEnglish ? 'Participants: ' : '參與者：'}</span>
-                          <span class="text-stone-500">{e.participants}</span>
+                          <span class="text-stone-500">{copy.participants}</span>
                         </div>
                       )}
                     </div>
@@ -159,6 +120,8 @@ export function getStaticPaths() {
                     )}
                   </div>
                 </details>
+                  );
+                })()
               ))}
             </div>
           </section>

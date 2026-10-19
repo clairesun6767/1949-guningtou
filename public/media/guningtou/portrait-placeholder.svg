@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" role="img" aria-labelledby="title desc">
+  <title id="title">Portrait unavailable</title>
+  <desc id="desc">A neutral archival placeholder used when a legally publishable portrait is not available.</desc>
+  <rect width="800" height="560" fill="#20231f"/>
+  <path d="M0 420h800" stroke="#9c8454" stroke-opacity=".42" stroke-width="2"/>
+  <circle cx="400" cy="205" r="78" fill="none" stroke="#d6c7a3" stroke-opacity=".72" stroke-width="9"/>
+  <path d="M242 470c18-92 82-139 158-139s140 47 158 139" fill="none" stroke="#d6c7a3" stroke-opacity=".72" stroke-width="12"/>
+  <path d="M270 92h260M300 62h200" stroke="#9c8454" stroke-width="6" stroke-opacity=".7"/>
+  <text x="400" y="515" text-anchor="middle" fill="#d6c7a3" font-family="Arial, sans-serif" font-size="22" letter-spacing="3">NO LEGALLY PUBLISHABLE PORTRAIT</text>
+</svg>

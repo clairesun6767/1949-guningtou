@@ -1,0 +1,90 @@
+{
+  "generatedAt": "2026-10-19T03:52:50.536Z",
+  "canonicalCounts": {
+    "persons": 36,
+    "pois": 25,
+    "events": 30,
+    "timelineEntries": 123,
+    "sources": 55
+  },
+  "idIntegrity": {
+    "personsUnique": true,
+    "poisUnique": true,
+    "eventsUnique": true,
+    "timelineUnique": true,
+    "sourcesUnique": true
+  },
+  "translationCoverage": {
+    "peopleEnglish": {
+      "covered": 36,
+      "total": 36
+    },
+    "poisEnglish": {
+      "covered": 25,
+      "total": 25
+    },
+    "eventsEnglish": {
+      "covered": 30,
+      "total": 30
+    },
+    "timelineEnglish": {
+      "covered": 0,
+      "total": 123,
+      "note": "English UI is intentionally marked pending instead of exposing Traditional Chinese as English."
+    },
+    "zhCnDisplay": {
+      "mode": "explicit UI labels plus display-layer Traditional-to-Simplified conversion",
+      "independentEditorialReviewRemaining": true
+    }
+  },
+  "coordinateAudit": {
+    "statusCounts": {
+      "partially_verified": 25
+    },
+    "publicVerifiedCount": 0,
+    "candidateCountRequiringHumanReview": 25
+  },
+  "mediaAudit": {
+    "catalogEntries": 29,
+    "missingPublicAssets": [],
+    "researchAssets": [
+      ".local/aerial-poc/1944/mosaic-z12.png",
+      ".local/aerial-poc/1945/mosaic-z12.png",
+      ".local/aerial-poc/1958/mosaic-z12.png",
+      "generated xiamen aerial candidates (8)"
+    ],
+    "personLinkedPortraitAssets": 2
+  },
+  "sourceIntegrity": {
+    "orphanSourceRefs": [],
+    "sourceCatalogAuthoritative": true
+  },
+  "contentSafety": {
+    "stalePoiNarratives": [],
+    "incompletePoiNarratives": [
+      "POI-0004",
+      "POI-0005",
+      "POI-0006",
+      "POI-0007",
+      "POI-0008",
+      "POI-0009",
+      "POI-0010",
+      "POI-0011",
+      "POI-0012",
+      "POI-0013",
+      "POI-0014",
+      "POI-0015",
+      "POI-0016",
+      "POI-0017",
+      "POI-0018",
+      "POI-0019",
+      "POI-0020",
+      "POI-0021",
+      "POI-0022",
+      "POI-0023",
+      "POI-0024",
+      "POI-0025"
+    ],
+    "noHistoricalDataCoordinateMutation": true
+  }
+}

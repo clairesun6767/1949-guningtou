@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "version": "4.0",
+    "generated": "2026-10-19",
+    "authority": "human reviewer",
+    "allowed_actions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+  },
+  "items": [
+    {
+      "id": "V4-HRQ-001",
+      "candidateId": "POI-0010",
+      "dimension": "location_identity",
+      "claimIds": [],
+      "sourceIds": ["SRC-0046", "SRC-0051", "SRC-0052"],
+      "currentEvidenceLevel": "PARTIAL",
+      "requiredEvidenceLevel": "SUPPORTED",
+      "conflict": "Modern map candidate does not by itself establish the 1949 command-post coordinate.",
+      "question": "Is the canonical Hunan Heights record correctly mapped, and what source excerpt supports the public coordinate?",
+      "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+    },
+    {
+      "id": "V4-HRQ-002",
+      "candidateId": "POI-0015",
+      "dimension": "location_identity",
+      "claimIds": [],
+      "sourceIds": ["SRC-0046", "SRC-0052"],
+      "currentEvidenceLevel": "PARTIAL",
+      "requiredEvidenceLevel": "SUPPORTED",
+      "conflict": "Huwei Heights and Hunan Heights are both present in the legacy dataset; the official park source describes Hunan Heights as a distinct site.",
+      "question": "Should the two names remain separate, and what reviewed mapping identifies Huwei Heights?",
+      "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+    },
+    {
+      "id": "V4-HRQ-003",
+      "candidateId": "POI-0016,POI-0017,POI-0021,POI-0007",
+      "dimension": "coordinate",
+      "claimIds": [],
+      "sourceIds": ["SRC-0047", "SRC-0051"],
+      "currentEvidenceLevel": "PARTIAL",
+      "requiredEvidenceLevel": "SUPPORTED",
+      "conflict": "OSM candidate points and official area references do not establish exact historical points or extents.",
+      "question": "Which modern point, if any, may be published, and under what coordinate-accuracy label?",
+      "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+    },
+    {
+      "id": "V4-HRQ-004",
+      "candidateId": "TIM-0001..TIM-0123",
+      "dimension": "translation",
+      "claimIds": [],
+      "sourceIds": [],
+      "currentEvidenceLevel": "NO_EVIDENCE",
+      "requiredEvidenceLevel": "EDITORIALLY_REVIEWED",
+      "conflict": "Canonical timeline text is Traditional Chinese; a display conversion is not an English translation.",
+      "question": "Approve the English editorial translation for each timeline entry without changing the underlying historical claim.",
+      "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+    },
+    {
+      "id": "V4-HRQ-005",
+      "candidateId": "PER-0001..PER-0036",
+      "dimension": "person_media_rights",
+      "claimIds": [],
+      "sourceIds": [],
+      "currentEvidenceLevel": "NO_EVIDENCE",
+      "requiredEvidenceLevel": "LICENSE_CLEARED",
+      "conflict": "Only PER-0003 has person-linked licensed contextual media in the current catalog.",
+      "question": "For each person, provide a licence/permission record or approve the neutral placeholder.",
+      "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+    },
+    {
+      "id": "V4-HRQ-006",
+      "candidateId": "V1.3-P0",
+      "dimension": "historical_evidence",
+      "claimIds": ["CLM-GUN-0003", "CLM-GUN-0006", "CLM-GUN-0010"],
+      "sourceIds": ["SRC-0006", "SRC-0008", "SRC-0010", "SRC-0011", "SRC-0018", "SRC-0027", "SRC-0029", "SRC-0032"],
+      "currentEvidenceLevel": "PARTIAL",
+      "requiredEvidenceLevel": "SUPPORTED",
+      "conflict": "The existing records do not provide all required page-level location, direct unit, and route bindings.",
+      "question": "Which exact source excerpts close the V1.3 P0 gaps without promoting a route from an animation requirement?",
+      "possibleActions": ["APPROVE", "REJECT", "REQUEST_MORE_EVIDENCE", "KEEP_BLOCKED"]
+    }
+  ]
+}

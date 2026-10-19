@@ -7,6 +7,7 @@ import { persons } from '../../../data/loader';
 import { displayRank, displayUnit, displayVerificationStatus } from '../../../i18n/labels';
 import MediaCard from '../../../components/museum/MediaCard.astro';
 import { getPersonMedia } from '../../../data/mediaCatalog';
+import { getPersonCopy } from '../../../i18n/historicalContent';
 
 export function getStaticPaths() {
   const langs = ['zh-tw', 'zh-cn', 'en'];
@@ -21,6 +22,12 @@ const { id, lang } = Astro.params;
 const isEnglish = lang === 'en';
 const person = persons.find((item) => item.person_id === id);
 const personMedia = person ? getPersonMedia(person.person_id) : [];
+const personCopy = person ? getPersonCopy(person, lang) : null;
+const noPortraitLabel = isEnglish
+  ? 'No legally publishable portrait is currently available.'
+  : lang === 'zh-cn'
+    ? '目前没有可合法公开的肖像。'
+    : '目前沒有可合法公開的肖像。';
 ---
 
 <MainLayout lang={lang}>
@@ -29,7 +36,7 @@ const personMedia = person ? getPersonMedia(person.person_id) : [];
       <div class="museum-reading">
         <a href={sitePath('figures', lang)} class="museum-link">{isEnglish ? '← Back to people records' : '← 回到人物檔案'}</a>
         <div class="museum-kicker museum-space-before">PERSON RECORD · {person.person_id}</div>
-        <h1 class="museum-title">{isEnglish ? person.name_en ?? person.name_zh : person.name_zh}</h1>
+        <h1 class="museum-title">{personCopy?.name}</h1>
         {person.name_en && <p class="museum-deck">{person.name_en}</p>}
 
         <div class="museum-person-detail__status">
@@ -37,40 +44,43 @@ const personMedia = person ? getPersonMedia(person.person_id) : [];
           {person.verification_status && <SourceCitation text={displayVerificationStatus(person.verification_status, lang) ?? person.verification_status} />}
         </div>
 
-        {personMedia.length > 0 && (
-          <section class="museum-reading__section museum-person-detail__media">
-            <div class="museum-kicker">{isEnglish ? 'VISUAL RECORDS' : '影像記錄'}</div>
-            <div class="museum-grid museum-grid--2">
-              {personMedia.map((asset) => <MediaCard asset={asset} lang={lang} />)}
-            </div>
-          </section>
-        )}
+        <section class="museum-reading__section museum-person-detail__media">
+          <div class="museum-kicker">{isEnglish ? 'VISUAL RECORDS' : lang === 'zh-cn' ? '影像记录' : '影像記錄'}</div>
+          <div class="museum-grid museum-grid--2">
+            {personMedia.length > 0
+              ? personMedia.map((asset) => <MediaCard asset={asset} lang={lang} />)
+              : <div class="museum-card museum-person-placeholder">
+                  <img src={sitePath('media/guningtou/portrait-placeholder.svg')} alt={noPortraitLabel} loading="lazy" decoding="async" />
+                  <p class="museum-citation">{noPortraitLabel}</p>
+                </div>}
+          </div>
+        </section>
 
         <section class="museum-paper museum-reading__section">
-          <div class="museum-kicker">{isEnglish ? 'BIOGRAPHICAL NOTE' : 'BIOGRAPHICAL NOTE'}</div>
-          <p class="museum-prose">{person.biographical_summary ?? person.standard_bio ?? '尚無詳細資料'}</p>
+          <div class="museum-kicker">{isEnglish ? 'BIOGRAPHICAL NOTE' : lang === 'zh-cn' ? '人物简介' : '人物簡介'}</div>
+          <p class="museum-prose">{personCopy?.bio}</p>
         </section>
 
         <div class="museum-meta-grid museum-person-detail__meta">
-          <MetadataRow label={isEnglish ? 'Affiliation / category' : '陣營 / 類別'} value={person.primary_category} />
-          <MetadataRow label={isEnglish ? 'Rank' : '軍階'} value={displayRank(person.rank_at_event, lang)} />
-          <MetadataRow label={isEnglish ? 'Unit' : '單位'} value={displayUnit(person.unit, lang)} />
-          <MetadataRow label={isEnglish ? 'Life dates' : '生卒'} value={`${person.birth_date ?? '?'} – ${person.death_date ?? '?'}`} />
+          <MetadataRow label={isEnglish ? 'Affiliation / category' : lang === 'zh-cn' ? '阵营 / 类别' : '陣營 / 類別'} value={personCopy?.category} />
+          <MetadataRow label={isEnglish ? 'Rank' : lang === 'zh-cn' ? '军阶' : '軍階'} value={displayRank(person.rank_at_event, lang)} />
+          <MetadataRow label={isEnglish ? 'Unit' : lang === 'zh-cn' ? '单位' : '單位'} value={displayUnit(person.unit, lang)} />
+          <MetadataRow label={isEnglish ? 'Life dates' : lang === 'zh-cn' ? '生卒' : '生卒'} value={`${person.birth_date ?? '?'} – ${person.death_date ?? '?'}`} />
         </div>
 
         {person.role_in_battle && (
           <section class="museum-reading__section">
             <div class="museum-kicker">ROLE IN BATTLE</div>
-            <h2>{isEnglish ? 'Role in the battle' : '戰役角色'}</h2>
-            <p class="museum-prose">{person.role_in_battle}</p>
+            <h2>{isEnglish ? 'Role in the battle' : lang === 'zh-cn' ? '战役角色' : '戰役角色'}</h2>
+            <p class="museum-prose">{personCopy?.role}</p>
           </section>
         )}
 
         {person.battle_actions && (
           <section class="museum-reading__section">
             <div class="museum-kicker">ACTIONS & ACCOUNTS</div>
-            <h2>{isEnglish ? 'Actions and accounts' : '相關行動'}</h2>
-            <p class="museum-prose">{person.battle_actions}</p>
+            <h2>{isEnglish ? 'Actions and accounts' : lang === 'zh-cn' ? '相关行动' : '相關行動'}</h2>
+            <p class="museum-prose">{personCopy?.actions}</p>
           </section>
         )}
 
