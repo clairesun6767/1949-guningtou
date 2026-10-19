@@ -1,8 +1,10 @@
 import { defineConfig } from '@playwright/test';
+import path from 'node:path';
 
 const previewUrl = process.env.PREVIEW_BASE_URL?.replace(/\/+$/, '');
 const localUrl = 'http://127.0.0.1:4321';
 const browserChannel = process.env.PLAYWRIGHT_BROWSER_CHANNEL;
+const artifactRoot = path.resolve(process.env.VISUAL_ARTIFACT_DIR ?? 'artifacts/visual-acceptance');
 
 if (process.env.CI && !previewUrl) {
   throw new Error(
@@ -12,7 +14,7 @@ if (process.env.CI && !previewUrl) {
 
 export default defineConfig({
   testDir: './tests/visual',
-  outputDir: process.env.PLAYWRIGHT_OUTPUT_DIR ?? 'artifacts/visual-acceptance/test-results',
+  outputDir: process.env.PLAYWRIGHT_OUTPUT_DIR ?? path.join(artifactRoot, 'test-results'),
   timeout: 60_000,
   expect: { timeout: 20_000 },
   fullyParallel: false,
@@ -20,8 +22,8 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: [
     ['list'],
-    ['html', { outputFolder: 'artifacts/visual-acceptance/playwright-report', open: 'never' }],
-    ['json', { outputFile: 'artifacts/visual-acceptance/results.json' }],
+    ['html', { outputFolder: path.join(artifactRoot, 'playwright-report'), open: 'never' }],
+    ['json', { outputFile: path.join(artifactRoot, 'results.json') }],
   ],
   use: {
     baseURL: previewUrl ?? localUrl,
