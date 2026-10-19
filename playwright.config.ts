@@ -2,7 +2,8 @@ import { defineConfig } from '@playwright/test';
 import path from 'node:path';
 
 const previewUrl = process.env.PREVIEW_BASE_URL?.replace(/\/+$/, '');
-const localUrl = 'http://127.0.0.1:4321';
+const localPort = process.env.PREVIEW_LOCAL_PORT ?? '4321';
+const localUrl = `http://127.0.0.1:${localPort}`;
 const browserChannel = process.env.PLAYWRIGHT_BROWSER_CHANNEL;
 const artifactRoot = path.resolve(process.env.VISUAL_ARTIFACT_DIR ?? 'artifacts/visual-acceptance');
 
@@ -53,7 +54,7 @@ export default defineConfig({
   webServer: previewUrl
     ? undefined
     : {
-        command: 'npm run preview -- --host 127.0.0.1 --port 4321',
+        command: `npm run preview -- --host 127.0.0.1 --port ${localPort}`,
         url: `${localUrl}/1949-guningtou/`,
         reuseExistingServer: true,
         timeout: 120_000,

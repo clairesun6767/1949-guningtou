@@ -217,10 +217,13 @@ function isGroupCurrent(group: { href?: string; activeHrefs?: string[]; items: {
     {lang === 'zh-cn' && <script is:inline define:vars={{ charMap: TRADITIONAL_TO_SIMPLIFIED }}>
       const simplifyText = (value) => [...value].map((character) => charMap[character] ?? character).join('');
       const simplifyNode = (node) => {
+        if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'ASTRO-ISLAND') return;
         if (node.nodeType === Node.TEXT_NODE && node.parentElement && !['SCRIPT', 'STYLE', 'TEXTAREA', 'CODE', 'PRE'].includes(node.parentElement.tagName)) {
+          if (node.parentElement.closest('astro-island')) return;
           node.nodeValue = simplifyText(node.nodeValue ?? '');
         }
         if (node.nodeType === Node.ELEMENT_NODE) {
+          if (node.closest('astro-island')) return;
           for (const attribute of ['alt', 'aria-label', 'placeholder', 'title']) {
             if (node.hasAttribute(attribute)) node.setAttribute(attribute, simplifyText(node.getAttribute(attribute) ?? ''));
           }
@@ -231,9 +234,9 @@ function isGroupCurrent(group: { href?: string; activeHrefs?: string[]; items: {
         simplifyNode(document.body);
         new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach(simplifyNode))).observe(document.body, { childList: true, subtree: true });
       };
-      // Wait until Astro client islands have hydrated. Mutating their server HTML
-      // before React hydration causes a production mismatch (React error #418).
-      window.setTimeout(applySimplifiedDisplay, 300);
+      // Do not mutate Astro client islands: React owns their DOM during hydration.
+      // All static page copy is safe to simplify synchronously here.
+      applySimplifiedDisplay();
     </script>}
   </body>
 </html>

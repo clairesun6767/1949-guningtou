@@ -56,7 +56,11 @@ async function assertImages(page: Page) {
   const images = page.locator('img');
   const count = await images.count();
   for (let index = 0; index < count; index += 1) await images.nth(index).scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
+  await page.waitForFunction(
+    () => Array.from(document.images).every((image) => image.complete),
+    undefined,
+    { timeout: 15_000 },
+  );
   const broken = await images.evaluateAll((elements) => elements
     .map((element) => {
       const image = element as HTMLImageElement;
