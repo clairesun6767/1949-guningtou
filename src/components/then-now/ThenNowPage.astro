@@ -1,0 +1,265 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import HistoricImage from '../museum/HistoricImage.astro';
+import MediaCard from '../museum/MediaCard.astro';
+import SectionHeading from '../museum/SectionHeading.astro';
+import LocationExplorer from '../map/LocationExplorer';
+import { sitePath } from '../../data/paths';
+import type { Lang } from '../../i18n/ui';
+import {
+  getThenNowGallery,
+  getThenNowMedia,
+  thenNowHero,
+  thenNowSections,
+  thenNowSites,
+  type Localized,
+  type ThenNowSite,
+} from '../../data/thenNowCatalog';
+
+interface Props {
+  lang: string;
+}
+
+const { lang: rawLang } = Astro.props;
+const lang = rawLang as Lang;
+const text = (value: Localized) => value[lang] ?? value['zh-tw'];
+const isEnglish = lang === 'en';
+const gallery = getThenNowGallery();
+const museumMedia = getThenNowMedia('TN-MEDIA-MUSEUM-2013');
+
+const sectionImages: Record<string, string> = {
+  overview: 'aerial-1944a.png',
+  images: 'media/guningtou/then-now/g-battle-museum-2013.jpg',
+  explore: 'map-data/historical-battle-map.jpg',
+  activation: 'media/guningtou/then-now/beishan-broadcast-wall-2013.jpg',
+  traces: 'media/guningtou/then-now/beishan-old-house-2018.jpg',
+};
+
+const activationIds = new Set(['W013', 'W012', 'W011', 'W016', 'W027', 'MUSEUM']);
+const traceSites = thenNowSites.filter((site) => !activationIds.has(site.id));
+
+function siteMedia(site: ThenNowSite) {
+  return site.mediaIds?.map(getThenNowMedia).find((asset) => Boolean(asset));
+}
+
+function sourceHref(href: string) {
+  if (href.startsWith('http')) return href;
+  return sitePath(href.replace(/^\/+/, ''), lang);
+}
+
+function sourceLabel(source: { label: Localized }) {
+  return text(source.label);
+}
+
+const labels = {
+  openMap: { 'zh-tw': '進入 1949 戰役地圖 →', 'zh-cn': '进入 1949 战役地图 →', en: 'Enter the 1949 battle map →' } satisfies Localized,
+  openArchive: { 'zh-tw': '進入數位典藏 →', 'zh-cn': '进入数字典藏 →', en: 'Open the digital archive →' } satisfies Localized,
+  openLocation: { 'zh-tw': '查看既有地點檔案 →', 'zh-cn': '查看既有地点档案 →', en: 'Open existing location record →' } satisfies Localized,
+  researchOnly: { 'zh-tw': '研究中，未建立地圖座標', 'zh-cn': '研究中，未建立地图坐标', en: 'Research only; no map coordinate created' } satisfies Localized,
+  source: { 'zh-tw': '來源', 'zh-cn': '来源', en: 'Source' } satisfies Localized,
+  pendingImage: { 'zh-tw': '現況照片待補；不以無關影像替代', 'zh-cn': '现况照片待补；不以无关影像替代', en: 'Current photograph pending; no unrelated image substituted' } satisfies Localized,
+  compareNote: { 'zh-tw': '此為不同素材的閱讀對照，不宣稱同一攝影角度或完成地理套準。', 'zh-cn': '这是不同素材的阅读对照，不宣称同一摄影角度或完成地理套准。', en: 'A reading comparison of different sources—not a same-angle or georeferenced overlay.' } satisfies Localized,
+  compareA11y: { 'zh-tw': '拖曳滑桿調整兩張不同時代素材的視覺比例', 'zh-cn': '拖动滑杆调整两张不同时代素材的视觉比例', en: 'Drag to adjust the visual balance between two different-era sources' } satisfies Localized,
+  rightsNote: { 'zh-tw': '本頁新增照片均保留作者、日期、授權與原始來源連結；官方頁面僅作為研究入口，未將未確認授權的官方照片下載重製。', 'zh-cn': '本页新增照片均保留作者、日期、授权与原始来源链接；官方页面仅作为研究入口，未将未确认授权的官方照片下载重制。', en: 'New photographs retain author, date, licence, and source links. Official pages are research entry points; official images without confirmed reuse terms were not copied.' } satisfies Localized,
+  thenLabel: { 'zh-tw': '昔日 · 1944', 'zh-cn': '昔日 · 1944', en: 'THEN · 1944' } satisfies Localized,
+  nowLabel: { 'zh-tw': '今日現況', 'zh-cn': '今日现况', en: 'NOW · PRESENT-DAY RECORD' } satisfies Localized,
+  currentView: { 'zh-tw': '現況影像 · 2013', 'zh-cn': '现况影像 · 2013', en: 'CURRENT VIEW · 2013' } satisfies Localized,
+  landscapeReference: { 'zh-tw': '地景參考 · 1944', 'zh-cn': '地景参考 · 1944', en: 'LANDSCAPE REFERENCE · 1944' } satisfies Localized,
+  canonicalLocations: { 'zh-tw': '既有地點資料', 'zh-cn': '既有地点资料', en: 'CANONICAL LOCATIONS' } satisfies Localized,
+  core: { 'zh-tw': '1949 核心', 'zh-cn': '1949 核心', en: '1949 CORE' } satisfies Localized,
+  imagePending: { 'zh-tw': '影像待補', 'zh-cn': '影像待补', en: 'IMAGE PENDING' } satisfies Localized,
+  researchEntry: { 'zh-tw': '研究入口', 'zh-cn': '研究入口', en: 'RESEARCH ENTRY' } satisfies Localized,
+};
+---
+
+<MainLayout lang={lang} title={`${text(thenNowHero.title)} · 1949 古寧頭`}>
+  <div class="then-now-page">
+    <section class="then-now-hero" aria-labelledby="then-now-title">
+      <div class="then-now-hero__image">
+        <img src={sitePath('media/guningtou/then-now/g-battle-museum-2013.jpg')} alt={isEnglish ? 'Guningtou Battle Museum in 2013' : '2013 年古寧頭戰史館'} loading="eager" decoding="async" />
+      </div>
+      <div class="then-now-hero__veil"></div>
+      <div class="museum-container then-now-hero__content">
+        <div class="museum-kicker">{text(thenNowHero.subtitle)}</div>
+        <h1 id="then-now-title">{text(thenNowHero.title)}</h1>
+        <p class="then-now-hero__description">{text(thenNowHero.description)}</p>
+        <p class="then-now-hero__note">{text(thenNowHero.note)}</p>
+        <a class="museum-button" href={sitePath('map', lang)}>{text(labels.openMap)}</a>
+      </div>
+    </section>
+
+    <nav class="then-now-index" aria-label={isEnglish ? 'Then and now sections' : '今昔頁面區段'}>
+      <div class="museum-container then-now-index__grid">
+        {thenNowSections.map((section) => (
+          <a class="then-now-index__item" href={`#${section.id}`}>
+            <span class="then-now-index__number">{section.number}</span>
+            <span class="then-now-index__copy">
+              <span class="museum-kicker">{text(section.eyebrow)}</span>
+              <strong>{text(section.title)}</strong>
+            </span>
+            <img src={sitePath(sectionImages[section.id])} alt="" loading="lazy" decoding="async" />
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <div class="museum-container then-now-content">
+      <section id="overview" class="then-now-section" aria-labelledby="then-now-overview-title">
+        <SectionHeading index="01" eyebrow={text(thenNowSections[0].eyebrow)} title={text(thenNowSections[0].title)} description={text(thenNowSections[0].description)} />
+        <div class="then-now-overview-grid">
+          <div class="then-now-view-card">
+            <HistoricImage
+              src={sitePath('aerial-1944a.png')}
+              alt={isEnglish ? '1944 aerial photograph of the Guningtou area' : '1944 年古寧頭地區航照圖'}
+              caption={isEnglish ? '1944 pre-battle aerial reference · not a 1949 battlefield photograph' : '1944 戰前航照參考 · 不是 1949 戰場照片'}
+              source={isEnglish ? 'Academia Sinica GIS Center · existing project asset' : '中央研究院 GIS 中心 · 專案既有素材'}
+              priority
+              lang={lang}
+            />
+            <div class="then-now-view-card__copy">
+              <span class="museum-label">{text(labels.thenLabel)}</span>
+              <h3>{isEnglish ? 'Terrain before the battle' : '戰役前的地景參考'}</h3>
+              <p>{isEnglish ? 'Read the coast, settlements, and terrain scale without turning a pre-war aerial into a precise 1949 troop map.' : '先讀海岸、聚落與地形尺度，不把戰前航照誤寫成精確的 1949 部隊位置圖。'}</p>
+            </div>
+          </div>
+          <div class="then-now-view-card">
+            {museumMedia && <HistoricImage
+              src={sitePath(museumMedia.src)}
+              alt={lang === 'en' ? museumMedia.titleEn : museumMedia.titleZh}
+              caption={lang === 'en' ? museumMedia.captionEn : museumMedia.captionZh}
+              source={lang === 'en' ? museumMedia.sourceEn : museumMedia.sourceZh}
+              lang={lang}
+            />}
+            <div class="then-now-view-card__copy">
+              <span class="museum-label">{text(labels.nowLabel)}</span>
+              <h3>{isEnglish ? 'A place that can still be visited' : '仍可走讀的現場'}</h3>
+              <p>{isEnglish ? 'The museum and the existing location records reconnect the battle narrative to a present-day place without rewriting the historical geometry.' : '戰史館與既有地點檔案，讓戰役敘事回到今日仍可抵達的地方，同時不改寫既有歷史幾何。'}</p>
+              <a class="museum-link" href={sitePath('locations/POI-0016', lang)}>{text(labels.openLocation)}</a>
+            </div>
+          </div>
+        </div>
+        <div class="then-now-callout">
+          <div>
+            <span class="museum-kicker">{text(labels.core)}</span>
+            <h3>{isEnglish ? 'The then-and-now view remains anchored in the battle site.' : '今昔閱讀仍以 1949 戰場為錨點。'}</h3>
+          </div>
+          <p>{isEnglish ? 'Use the canonical map, timeline, and location records for the battle itself; this page adds the post-war layers around them.' : '戰役本身仍請回到 canonical 地圖、時間軸與地點檔案；本頁只在其周圍補上戰後地景層。'}</p>
+        </div>
+      </section>
+
+      <section id="images" class="then-now-section" aria-labelledby="then-now-images-title">
+        <SectionHeading index="02" eyebrow={text(thenNowSections[1].eyebrow)} title={text(thenNowSections[1].title)} description={text(thenNowSections[1].description)} />
+        <div class="then-now-compare" data-then-now-compare>
+          <div class="then-now-compare__frame">
+            <div class="then-now-compare__base">
+              <img src={sitePath('media/guningtou/then-now/g-battle-museum-2013.jpg')} alt={isEnglish ? '2013 Guningtou Battle Museum photograph' : '2013 年古寧頭戰史館照片'} loading="lazy" decoding="async" />
+              <span>{text(labels.currentView)}</span>
+            </div>
+            <div class="then-now-compare__overlay" data-then-now-overlay>
+              <img src={sitePath('aerial-1944a.png')} alt={isEnglish ? '1944 aerial reference' : '1944 年航照參考'} loading="lazy" decoding="async" />
+              <span>{text(labels.landscapeReference)}</span>
+            </div>
+          </div>
+          <label class="then-now-compare__control">
+            <span>{text(labels.compareA11y)}</span>
+            <input data-then-now-range type="range" min="0" max="100" value="50" />
+          </label>
+          <p class="museum-citation">{text(labels.compareNote)}</p>
+        </div>
+        <div class="then-now-gallery">
+          {gallery.map((asset) => <MediaCard asset={asset} lang={lang} />)}
+        </div>
+        <div class="then-now-rights-note"><strong>{text(labels.source)}</strong> {text(labels.rightsNote)} <a href={sitePath('archive', lang)}>{text(labels.openArchive)}</a></div>
+      </section>
+
+      <section id="explore" class="then-now-section" aria-labelledby="then-now-explore-title">
+        <SectionHeading index="03" eyebrow={text(thenNowSections[2].eyebrow)} title={text(thenNowSections[2].title)} description={text(thenNowSections[2].description)} />
+        <div class="then-now-explore-intro">
+          <div>
+            <span class="museum-label">{text(labels.canonicalLocations)}</span>
+            <h3>{isEnglish ? 'Find the place before reading the claim.' : '先找到地點，再閱讀敘述。'}</h3>
+          </div>
+          <a class="museum-button museum-button--outline" href={sitePath('map', lang)}>{text(labels.openMap)}</a>
+        </div>
+        <div class="then-now-location-shell">
+          <LocationExplorer client:only="react" lang={lang} />
+        </div>
+      </section>
+
+      <section id="activation" class="then-now-section" aria-labelledby="then-now-activation-title">
+        <SectionHeading index="04" eyebrow={text(thenNowSections[3].eyebrow)} title={text(thenNowSections[3].title)} description={text(thenNowSections[3].description)} />
+        <div class="then-now-site-grid">
+          {thenNowSites.filter((site) => activationIds.has(site.id)).map((site) => {
+            const asset = siteMedia(site);
+            return (
+              <article class="then-now-site-card">
+                {asset ? (
+                  <img class="then-now-site-card__image" src={sitePath(asset.src)} alt={lang === 'en' ? asset.titleEn : asset.titleZh} loading="lazy" decoding="async" />
+                ) : (
+                  <div class="then-now-site-card__pending"><span>{text(labels.imagePending)}</span><small>{text(labels.pendingImage)}</small></div>
+                )}
+                <div class="then-now-site-card__body">
+                  <div class="then-now-site-card__head"><span class="museum-label">{site.code}</span><span class="museum-status">{text(site.status)}</span></div>
+                  <h3>{text(site.title)}</h3>
+                  <p class="then-now-site-card__category">{text(site.category)}</p>
+                  <p>{text(site.role)}</p>
+                  <p>{text(site.present)}</p>
+                  <div class="then-now-site-card__note">{text(site.evidenceNote)}</div>
+                  <div class="then-now-site-card__links">
+                    {site.poiId && <a class="museum-link" href={sitePath(`locations/${site.poiId}`, lang)}>{text(labels.openLocation)}</a>}
+                    {!site.poiId && <span class="museum-postwar-pending">{text(labels.researchOnly)}</span>}
+                    {site.sourceLinks.map((source) => <a class="museum-link" href={sourceHref(source.href)} target="_blank" rel="noopener noreferrer">{sourceLabel(source)} ↗</a>)}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <section id="traces" class="then-now-section" aria-labelledby="then-now-traces-title">
+        <SectionHeading index="05" eyebrow={text(thenNowSections[4].eyebrow)} title={text(thenNowSections[4].title)} description={text(thenNowSections[4].description)} />
+        <div class="then-now-site-grid then-now-site-grid--traces">
+          {traceSites.map((site) => {
+            const asset = siteMedia(site);
+            return (
+              <article class="then-now-site-card then-now-site-card--trace">
+                {asset ? <img class="then-now-site-card__image" src={sitePath(asset.src)} alt={lang === 'en' ? asset.titleEn : asset.titleZh} loading="lazy" decoding="async" /> : <div class="then-now-site-card__pending"><span>{text(labels.researchEntry)}</span><small>{text(labels.pendingImage)}</small></div>}
+                <div class="then-now-site-card__body">
+                  <div class="then-now-site-card__head"><span class="museum-label">{site.code}</span><span class="museum-status">{text(site.status)}</span></div>
+                  <h3>{text(site.title)}</h3>
+                  <p class="then-now-site-card__category">{text(site.category)}</p>
+                  <p>{text(site.present)}</p>
+                  <div class="then-now-site-card__note">{text(site.evidenceNote)}</div>
+                  <div class="then-now-site-card__links">
+                    {site.poiId && <a class="museum-link" href={sitePath(`locations/${site.poiId}`, lang)}>{text(labels.openLocation)}</a>}
+                    {!site.poiId && <span class="museum-postwar-pending">{text(labels.researchOnly)}</span>}
+                    {site.sourceLinks.map((source) => <a class="museum-link" href={sourceHref(source.href)} target="_blank" rel="noopener noreferrer">{sourceLabel(source)} ↗</a>)}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+        <div class="then-now-traces-footer">
+          <a class="museum-button" href={sitePath('', lang)}>{isEnglish ? 'Return to the 1949 museum home →' : '回到 1949 古寧頭主頁 →'}</a>
+          <a class="museum-button museum-button--outline" href={sitePath('timeline', lang)}>{isEnglish ? 'Read the battle timeline →' : '閱讀戰役時間軸 →'}</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</MainLayout>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-then-now-compare]').forEach((comparison) => {
+    const input = comparison.querySelector<HTMLInputElement>('[data-then-now-range]');
+    const overlay = comparison.querySelector<HTMLElement>('[data-then-now-overlay]');
+    if (!input || !overlay) return;
+    const update = () => {
+      const value = Number(input.value);
+      overlay.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
+    };
+    input.addEventListener('input', update);
+    update();
+  });
+</script>

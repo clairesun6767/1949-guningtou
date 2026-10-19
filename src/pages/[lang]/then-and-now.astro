@@ -1,0 +1,15 @@
+---
+import ThenNowPage from '../../components/then-now/ThenNowPage.astro';
+
+const lang = Astro.params.lang ?? 'zh-tw';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'zh-tw' } },
+    { params: { lang: 'zh-cn' } },
+    { params: { lang: 'en' } },
+  ];
+}
+---
+
+<ThenNowPage lang={lang} />

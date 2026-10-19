@@ -11,6 +11,31 @@ import { STATS, events, persons, sources, pois } from '../../data/loader';
 
 const lang = Astro.params.lang ?? 'zh-tw';
 const isEnglish = lang === 'en';
+const isSimplified = lang === 'zh-cn';
+
+const thenNowCopy = isEnglish
+  ? {
+      eyebrow: 'THEN & NOW · 1949 → TODAY',
+      title: 'The battlefield continues into the present.',
+      body: 'A 1944 aerial reference, today’s museum, coastal sites, and existing location records place the post-war layers around the 1949 battle—without replacing the battle evidence itself.',
+      button: 'Read Guningtou: Then & Now →',
+      alt: 'Guningtou Battle Museum in 2013',
+    }
+  : isSimplified
+    ? {
+        eyebrow: '今昔阅读 · 1949 → 今日',
+        title: '战场延伸到今天的地景。',
+        body: '从 1944 航照参考、今日战史馆、海岸据点与既有地点记录出发，阅读 1949 战役周围的战后层次，同时不取代战役本身的史料证据。',
+        button: '阅读《昔日战场・今日古宁头》→',
+        alt: '2013 年古宁头战史馆',
+      }
+    : {
+        eyebrow: '今昔閱讀 · 1949 → 今日',
+        title: '戰場延伸到今天的地景。',
+        body: '從 1944 航照參考、今日戰史館、海岸據點與既有地點記錄出發，閱讀 1949 戰役周圍的戰後層次，同時不取代戰役本身的史料證據。',
+        button: '閱讀〈昔日戰場・今日古寧頭〉→',
+        alt: '2013 年古寧頭戰史館',
+      };
 
 const battleDays = [
   {
@@ -75,6 +100,24 @@ export function getStaticPaths() {
         <div class="museum-home-fact"><strong>1949</strong><span>{isEnglish ? 'A turning point in the Taiwan Strait' : '台海局勢急遽轉折的年代'}</span></div>
         <div class="museum-home-fact"><strong>4 DAYS</strong><span>{isEnglish ? '24–27 October 1949' : '1949.10.24—10.27 的戰役時間'}</span></div>
         <div class="museum-home-fact"><strong>1 PLACE</strong><span>{isEnglish ? 'Guningtou, Kinmen — a shared geographic ground' : '金門古寧頭，作為共同的地理現場'}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="museum-section museum-home-then-now">
+    <div class="museum-container museum-home-then-now__grid">
+      <HistoricImage
+        src={sitePath('media/guningtou/then-now/g-battle-museum-2013.jpg')}
+        alt={thenNowCopy.alt}
+        caption={isEnglish ? 'Guningtou Battle Museum · 2013 · CC BY-SA 4.0' : '古寧頭戰史館 · 2013 · CC BY-SA 4.0'}
+        source={isEnglish ? 'Wikimedia Commons · Mnb' : 'Wikimedia Commons · Mnb'}
+        lang={lang}
+      />
+      <div class="museum-home-then-now__copy">
+        <div class="museum-kicker">{thenNowCopy.eyebrow}</div>
+        <h2>{thenNowCopy.title}</h2>
+        <p>{thenNowCopy.body}</p>
+        <a class="museum-button museum-button--outline" href={sitePath('then-and-now', lang)}>{thenNowCopy.button}</a>
       </div>
     </div>
   </section>
@@ -176,6 +219,7 @@ export function getStaticPaths() {
         <a href={sitePath('map', lang)}>{isEnglish ? 'Battle map' : '戰場地圖'} <span>02</span></a>
         <a href={sitePath('figures', lang)}>{isEnglish ? 'People records' : '人物檔案'} <span>03</span></a>
         <a href={sitePath('archive', lang)}>{isEnglish ? 'Digital archive' : '數位典藏'} <span>04</span></a>
+        <a href={sitePath('then-and-now', lang)}>{isEnglish ? 'Then & now' : isSimplified ? '今昔阅读' : '今昔閱讀'} <span>05</span></a>
       </div>
     </div>
   </section>
