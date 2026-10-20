@@ -5,7 +5,7 @@
     "total": 38,
     "phase": "2.5",
     "status": "enriched",
-    "updated": "2026-10-19"
+    "updated": "2026-10-20"
   },
   "pois": [
     {
@@ -20,13 +20,13 @@
       "battle_role": "解放軍第244團預定登陸點（東路）。因強風海流，大量船團偏離至此。國軍戰車66號在此發射第一砲擊中彈藥船，為戰役揭開序幕。",
       "historical_context": "1949年10月24日下午國軍戰車排演習後在此拋錨。25日00:30熊震球在此發射第一砲。25日凌晨第244團在此登陸遭殲滅戰。",
       "historical_importance": "解放軍第一梯隊登陸點之一。熊震球第一砲發生地。國軍戰車66號在此接戰。",
-      "latitude": 24.4598,
-      "longitude": 118.3512,
+      "latitude": 24.4642167735716,
+      "longitude": 118.350750231865,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：金寧鄉嚨口沿海一帶；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 金寧鄉嚨口沿海一帶. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：金寧鄉嚨口沿海一帶；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 金寧鄉嚨口沿海一帶. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "TIM-0029; TIM-0030; TIM-0031",
       "related_persons": "",
@@ -34,7 +34,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -82,9 +83,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0002",
@@ -98,13 +99,13 @@
       "battle_role": "戰役主要登陸場。超過300艘解放軍木船在此區域搶灘。退潮使船隻大量擱淺，解放軍被迫涉水前進暴露於國軍火力下。",
       "historical_context": "1949年10月25日凌晨1時30分起，解放軍第一梯隊在此區域全面搶灘。國軍戰車、岸防砲兵、步兵陣地火力全開。",
       "historical_importance": "戰役主要登陸場。解放軍第一梯隊主力在此登陸。",
-      "latitude": 24.485,
-      "longitude": 118.313,
+      "latitude": 24.4891361461517,
+      "longitude": 118.314738930084,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：北山海濱防線；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 北山海濱防線. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：北山海濱防線；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 北山海濱防線. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001",
       "related_timeline": "TIM-0034; TIM-0035",
       "related_persons": "",
@@ -113,7 +114,8 @@
         "SRC-0004",
         "SRC-0025",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1); SRC-0027(L4)",
@@ -165,9 +167,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0003",
@@ -181,13 +183,13 @@
       "battle_role": "解放軍第251團預定登陸點。該團在湖尾登陸後遭國軍砲擊損失約三分之一。湖尾高地數度易手，第一日戰鬥激烈。",
       "historical_context": "10月25日02:10第251團先遣在湖尾登陸，後續遭砲擊損失三分之一。第251團至15:00傷亡約1,000人，團長劉天祥持續指揮。",
       "historical_importance": "第251團登陸地。湖尾高地為第一日激烈爭奪戰地點。",
-      "latitude": 24.45,
-      "longitude": 118.39,
+      "latitude": 24.4560147859263,
+      "longitude": 118.331834183436,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：金寧鄉湖尾聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 金寧鄉湖尾聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：金寧鄉湖尾聚落；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 金寧鄉湖尾聚落. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "TIM-0038; TIM-0044; TIM-0047",
       "related_persons": "",
@@ -195,7 +197,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -242,9 +245,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0004",
@@ -258,13 +261,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "第244團輔助登陸點。",
-      "latitude": 24.452,
-      "longitude": 118.381,
+      "latitude": 24.4594856697046,
+      "longitude": 118.364334076243,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：沿海聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 沿海聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：沿海聚落；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 沿海聚落. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0003",
       "related_timeline": "TIM-0030",
       "related_persons": "",
@@ -272,7 +275,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -310,9 +314,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0005",
@@ -326,13 +330,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "第244團登陸範圍西端。",
-      "latitude": 24.435,
-      "longitude": 118.375,
+      "latitude": 24.4633611043351,
+      "longitude": 118.385738895098,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：金沙鎮中蘭／蘭湖一帶；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 金沙鎮中蘭／蘭湖一帶. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：金沙鎮中蘭／蘭湖一帶；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 金沙鎮中蘭／蘭湖一帶. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0003",
       "related_timeline": "TIM-0037",
       "related_persons": "",
@@ -340,7 +344,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -378,9 +383,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0006",
@@ -394,13 +399,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰役核心村落戰場。逐屋巷戰、包圍與殲滅戰之地。",
-      "latitude": 24.478,
-      "longitude": 118.321,
+      "latitude": 24.4828908866608,
+      "longitude": 118.317392733562,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：戰役核心交戰村落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：戰役核心交戰村落；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0004; EVT-0005; EVT-0006",
       "related_timeline": "TIM-0039; TIM-0052; TIM-0060; TIM-0072",
       "related_persons": "",
@@ -409,7 +414,8 @@
         "SRC-0004",
         "SRC-0025",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1); SRC-0027(L4)",
@@ -447,9 +453,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 戰役核心交戰村落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 戰役核心交戰村落. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0007",
@@ -463,13 +469,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "李光前團長陣亡地點。林厝爭奪戰為戰役關鍵戰鬥之一。",
-      "latitude": 24.471,
-      "longitude": 118.326,
+      "latitude": 24.4798843803021,
+      "longitude": 118.320313226715,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：國共激戰據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：國共激戰據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0045; TIM-0053; TIM-0064",
       "related_persons": "",
@@ -477,7 +483,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -515,9 +522,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 國共激戰據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 國共激戰據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0008",
@@ -531,13 +538,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "第二日戰線變化關鍵點。國軍奪回南山後完成對古寧頭的包圍。",
-      "latitude": 24.475,
-      "longitude": 118.324,
+      "latitude": 24.4812599829349,
+      "longitude": 118.311858565357,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：雙鯉湖畔聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：雙鯉湖畔聚落；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0066",
       "related_persons": "",
@@ -545,7 +552,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -583,9 +591,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 雙鯉湖畔聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 雙鯉湖畔聚落. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0009",
@@ -599,13 +607,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "國軍第二日總攻擊之發起位置。",
-      "latitude": 24.483,
-      "longitude": 118.411,
+      "latitude": 24.4684957702655,
+      "longitude": 118.323280533474,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：金沙鎮聚落；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 金沙鎮聚落. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：西浦頭；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 西浦頭. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0059; TIM-0060",
       "related_persons": "",
@@ -613,7 +621,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -651,9 +660,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0010",
@@ -667,13 +676,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "胡璉接掌金門指揮權之地點。戰役指揮鏈關鍵節點。",
-      "latitude": 24.448,
-      "longitude": 118.352,
+      "latitude": 24.4560147859263,
+      "longitude": 118.331834183436,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：重要戰術高地（頂林路287號）；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：重要戰術高地（頂林路287號）；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0063",
       "related_persons": "",
@@ -681,7 +690,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -717,9 +727,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 重要戰術高地（頂林路287號）. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 重要戰術高地（頂林路287號）. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0011",
@@ -733,13 +743,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "胡璉登陸金門之地點。第12兵團司令部設立處。",
-      "latitude": 24.3866,
-      "longitude": 118.2866,
+      "latitude": 24.4138521550446,
+      "longitude": 118.287720701072,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：小三通及對外港口；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：小三通及對外港口；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0004",
       "related_timeline": "TIM-0063",
       "related_persons": "",
@@ -748,7 +758,8 @@
         "SRC-0025",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1); SRC-0027(L4)",
@@ -784,9 +795,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 小三通及對外港口. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 小三通及對外港口. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0012",
@@ -800,13 +811,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "國軍戰車預備隊集結地。",
-      "latitude": 24.444,
-      "longitude": 118.414,
+      "latitude": 24.4586125567234,
+      "longitude": 118.377369940237,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：戰地坑道與聚落代表；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：戰地坑道與聚落代表；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "TIM-0041",
       "related_persons": "",
@@ -814,7 +825,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -850,9 +862,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 戰地坑道與聚落代表. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 戰地坑道與聚落代表. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0013",
@@ -866,13 +878,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "第一日戰鬥之高地爭奪點。",
-      "latitude": 24.46,
-      "longitude": 118.38,
+      "latitude": 24.4657532865733,
+      "longitude": 118.344939917552,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：視野遼闊之戰術要地；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 視野遼闊之戰術要地. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：視野遼闊之戰術要地；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 視野遼闊之戰術要地. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "TIM-0047",
       "related_persons": "",
@@ -880,7 +892,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -918,9 +931,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0014",
@@ -934,13 +947,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰役最後大規模戰鬥地點。",
-      "latitude": 24.456,
-      "longitude": 118.3567,
+      "latitude": 24.4496476246942,
+      "longitude": 118.364852599226,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：島中樞紐高地；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：島中樞紐高地；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0005",
       "related_timeline": "TIM-0079",
       "related_persons": "",
@@ -948,7 +961,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -986,9 +1000,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 島中樞紐高地. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 島中樞紐高地. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0015",
@@ -1002,13 +1016,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "第一日激烈爭奪戰之地點。第251團傷亡約1,000人。",
-      "latitude": 24.455,
-      "longitude": 118.395,
+      "latitude": 24.4560147859263,
+      "longitude": 118.331834183436,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：北海岸防衛高地；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 北海岸防衛高地. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：北海岸防衛高地；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 北海岸防衛高地. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "TIM-0047; TIM-0048",
       "related_persons": "",
@@ -1016,7 +1030,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1054,9 +1069,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0016",
@@ -1070,13 +1085,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭戰役核心紀念館。戰役史料保存與展示中心。",
-      "latitude": 24.4802,
-      "longitude": 118.3257,
+      "latitude": 24.4852716220748,
+      "longitude": 118.332923585217,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：紀念戰役歷史館舍；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：紀念戰役歷史館舍；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0001; EVT-0003",
       "related_timeline": "",
       "related_persons": "",
@@ -1085,7 +1100,8 @@
         "SRC-0025",
         "SRC-0002",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0002(L1); SRC-0004(L1); SRC-0025(L1)",
@@ -1122,9 +1138,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 紀念戰役歷史館舍. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 紀念戰役歷史館舍. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0017",
@@ -1138,13 +1154,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "李光前紀念地。古寧頭戰役文化地標。",
-      "latitude": 24.4685,
-      "longitude": 118.3168,
+      "latitude": 24.4692504329878,
+      "longitude": 118.319762071724,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：悼念殉國將領之廟宇；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：悼念殉國將領之廟宇；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0003",
       "related_timeline": "TIM-0045",
       "related_persons": "",
@@ -1152,7 +1168,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1189,9 +1206,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 悼念殉國將領之廟宇. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 悼念殉國將領之廟宇. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0018",
@@ -1205,13 +1222,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭戰役相關紀念設施。含戰地遺址展示。",
-      "latitude": 24.483,
-      "longitude": 118.3215,
+      "latitude": 24.4768423570593,
+      "longitude": 118.315048141562,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：林厝砲陣地周邊；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：林厝砲陣地周邊；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1219,7 +1236,8 @@
         "SRC-0025",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1)",
@@ -1256,9 +1274,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 林厝砲陣地周邊. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 林厝砲陣地周邊. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0019",
@@ -1272,13 +1290,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭戰役時期國軍營區。戰後成為戰地文化景觀。",
-      "latitude": 24.472,
-      "longitude": 118.33,
+      "latitude": 24.4794493505724,
+      "longitude": 118.329231033655,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：安東防線系列據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 安東防線系列據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：安東防線系列據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 安東防線系列據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1286,7 +1304,8 @@
         "SRC-0025",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1)",
@@ -1323,9 +1342,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0020",
@@ -1339,13 +1358,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰後冷戰時期心戰設施。古寧頭戰地文化景觀之一。",
-      "latitude": 24.4835,
-      "longitude": 118.318,
+      "latitude": 24.4893245538403,
+      "longitude": 118.313180025102,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：歷史心戰喊話站；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：歷史心戰喊話站；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1353,7 +1372,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1390,9 +1410,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 歷史心戰喊話站. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 歷史心戰喊話站. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0021",
@@ -1406,13 +1426,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰役最終戰場。解放軍最後集體投降處。",
-      "latitude": 24.485,
-      "longitude": 118.313,
+      "latitude": 24.4897150993906,
+      "longitude": 118.314167077954,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：北山海濱陡峭斷崖地形；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：北山海濱陡峭斷崖地形；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
       "related_events": "EVT-0005",
       "related_timeline": "TIM-0070; TIM-0071",
       "related_persons": "",
@@ -1420,7 +1440,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1456,9 +1477,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 北山海濱陡峭斷崖地形. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "coordinate_note_en": "Uploaded XLSX note: 北山海濱陡峭斷崖地形. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate."
     },
     {
       "poi_id": "POI-0022",
@@ -1472,13 +1493,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭地區入口地標。",
-      "latitude": 24.468,
-      "longitude": 118.34,
+      "latitude": 24.4773816385022,
+      "longitude": 118.318767640483,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：進入古寧頭區之標誌；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：進入古寧頭區之標誌；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。；依使用者指示取消此筆獨立公開地點，僅保留研究紀錄。",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1486,7 +1507,8 @@
         "SRC-0025",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "A",
       "evidence_summary": "SRC-0004(L1); SRC-0025(L1)",
@@ -1522,9 +1544,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
-      "map_visibility": "public",
-      "coordinate_note_en": "Uploaded XLS note: 進入古寧頭區之標誌. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate."
+      "updated_date": "2026-10-20",
+      "map_visibility": "research",
+      "coordinate_note_en": "Uploaded XLSX note: 進入古寧頭區之標誌. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate. This independent public location entry was cancelled per the user instruction; the research record is retained."
     },
     {
       "poi_id": "POI-0023",
@@ -1538,13 +1560,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "戰役期間部隊移動與補給路線。",
-      "latitude": 24.4738,
-      "longitude": 118.3325,
+      "latitude": 24.4701063689993,
+      "longitude": 118.333054458719,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：連接 W-012 安東二營區之道路；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 連接 W-012 安東二營區之道路. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：連接 W-012 安東二營區之道路；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。；依使用者指示取消此筆獨立公開地點，僅保留研究紀錄。",
+      "coordinate_note_en": "Uploaded XLSX note: 連接 W-012 安東二營區之道路. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate. This independent public location entry was cancelled per the user instruction; the research record is retained.",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1552,7 +1574,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1588,9 +1611,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
-      "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "updated_date": "2026-10-20",
+      "map_visibility": "research",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0024",
@@ -1609,8 +1632,8 @@
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：散布於古寧頭周遭之多處碉堡；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 散布於古寧頭周遭之多處碉堡. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：散布於古寧頭周遭之多處碉堡；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 散布於古寧頭周遭之多處碉堡. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "TIM-0022",
       "related_persons": "",
@@ -1618,7 +1641,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1654,9 +1678,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0025",
@@ -1670,13 +1694,13 @@
       "battle_role": "參見關聯事件與時間軸記錄",
       "historical_context": "參見關聯時間軸記錄",
       "historical_importance": "古寧頭戰役尾聲之重要地點。最後被俘戰鬥人員徐博之躲藏處。",
-      "latitude": 24.446,
-      "longitude": 118.42,
+      "latitude": 24.4691047267287,
+      "longitude": 118.450896246731,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "historical_area",
       "coordinate_status": "user_specified",
-      "coordinate_note": "使用者上傳 XLS 備註：太武山核心山區；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 太武山核心山區. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_note": "使用者上傳 XLSX 備註：太武山核心山區；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 太武山核心山區. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "TIM-0084",
       "related_persons": "",
@@ -1684,7 +1708,8 @@
         "SRC-0027",
         "SRC-0004",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0004(L1); SRC-0027(L4)",
@@ -1720,9 +1745,9 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-07-21",
-      "updated_date": "2026-10-19",
+      "updated_date": "2026-10-20",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx"
     },
     {
       "poi_id": "POI-0026",
@@ -1736,15 +1761,15 @@
       "battle_role": "安東系列屬戰後海防據點；本筆不新增或推定 1949 部隊路線。",
       "historical_context": "現代據點座標與 1949 戰役地點分層保存；既有 POI-0023 仍是道路研究紀錄。",
       "historical_importance": "古寧頭北海岸戰後軍事遺產與活化展示節點。",
-      "latitude": 24.4738,
-      "longitude": 118.3325,
+      "latitude": 24.4745801543384,
+      "longitude": 118.332390528511,
       "coordinate_accuracy": "UserSpecified",
       "location_class": "modern_site",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：頂林路390號，現已活化為體驗空間；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 頂林路390號，現已活化為體驗空間. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：頂林路390號，現已活化為體驗空間；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 頂林路390號，現已活化為體驗空間. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
@@ -1753,7 +1778,8 @@
         "SRC-0042",
         "SRC-0055",
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "SRC-0057；上傳檔案指定座標，非官方實測或史料核實",
@@ -1800,7 +1826,7 @@
       "has_lidar": false,
       "future_scan_required": false,
       "created_date": "2026-10-19",
-      "updated_date": "2026-10-19"
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0027",
@@ -1819,7 +1845,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -1855,16 +1882,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.4715,
-      "longitude": 118.334,
+      "latitude": 24.4709219490831,
+      "longitude": 118.337082763553,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：安東防線據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 安東防線據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：安東防線據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 安東防線據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0028",
@@ -1883,7 +1910,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -1919,16 +1947,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.481,
-      "longitude": 118.318,
+      "latitude": 24.4834139963817,
+      "longitude": 118.321416889115,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：古寧頭海防據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 古寧頭海防據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：古寧頭海防據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 古寧頭海防據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0029",
@@ -1947,7 +1975,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -1983,16 +2012,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.4313,
-      "longitude": 118.3186,
+      "latitude": 24.4727791225498,
+      "longitude": 118.291396150113,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：西海防線據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 西海防線據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：西海防線據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 西海防線據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0030",
@@ -2011,7 +2040,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2047,35 +2077,36 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.44,
-      "longitude": 118.402,
+      "latitude": 24.4629414906669,
+      "longitude": 118.354837867964,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：嚨口防區延伸據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 嚨口防區延伸據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：嚨口防區延伸據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 嚨口防區延伸據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0031",
-      "name_chinese": "嚨口堡",
-      "name_english": "Longkou Fort",
+      "name_chinese": "嚨口一營區",
+      "name_english": "Longkou Camp 1",
       "category": "Historical / post-war site",
-      "description": "本筆座標採用使用者提供之 38 處地點座標表；不代表官方實測或史料核實座標。",
-      "short_description": "使用者指定座標；請與既有研究資料分層閱讀。",
+      "description": "本筆為嚨口一營區現代據點研究紀錄；座標依使用者上傳 XLSX 指定。",
+      "short_description": "嚨口一營區據點；使用者指定座標。",
       "long_description": "本筆座標採用使用者提供之 38 處地點座標表；不代表官方實測或史料核實座標。",
       "historical_background": "本筆為使用者指定之地點資料；詳細歷史脈絡沿用既有研究清冊與來源。",
       "battle_role": "本輪只更新地點座標，不新增或改寫戰役路線。",
       "historical_context": "本筆位置採使用者提供表格；不將其升格為官方測量或史料核實座標。",
-      "historical_importance": "嚨口海灘據點主堡",
+      "historical_importance": "嚨口一營區海岸防禦據點",
       "related_events": "",
       "related_timeline": "",
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2111,16 +2142,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.459,
-      "longitude": 118.351,
+      "latitude": 24.4643037036268,
+      "longitude": 118.351684557158,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：嚨口海灘據點主堡；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 嚨口海灘據點主堡. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：嚨口海灘據點主堡；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 嚨口海灘據點主堡. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0032",
@@ -2139,7 +2170,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2175,16 +2207,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.4425,
-      "longitude": 118.3699,
+      "latitude": 24.4640686691411,
+      "longitude": 118.347559298542,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：東半島重要海防據點；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 東半島重要海防據點. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：東半島重要海防據點；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 東半島重要海防據點. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0033",
@@ -2203,7 +2235,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2239,16 +2272,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.438,
-      "longitude": 118.32,
+      "latitude": 24.4597589761745,
+      "longitude": 118.365301714005,
       "location_class": "modern_site",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：戰地防禦工事；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 戰地防禦工事. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：戰地防禦工事；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 戰地防禦工事. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0034",
@@ -2267,7 +2300,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2303,16 +2337,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.4791,
-      "longitude": 118.3126,
+      "latitude": 24.4790887111286,
+      "longitude": 118.312706513391,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
-      "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：戰役彈痕古厝；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 戰役彈痕古厝. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "map_visibility": "research",
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：戰役彈痕古厝；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。；依使用者指示與 POI-0035 合併為「北山共軍指揮所」；本筆保留作為別名與來源追溯，不作獨立公開地圖點。",
+      "coordinate_note_en": "Uploaded XLSX note: 戰役彈痕古厝. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate. Per the user instruction, this record is merged into POI-0035, Beishan PLA Command Post; it remains as an alias/source-trace record and is not a separate public map point.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0035",
@@ -2331,7 +2365,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2367,16 +2402,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.479,
-      "longitude": 118.321,
+      "latitude": 24.4790887111286,
+      "longitude": 118.312706513391,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：位置及史實待查；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 位置及史實待查. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：位置及史實待查；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。；本筆為 POI-0034 合併後的公開主記錄。",
+      "coordinate_note_en": "Uploaded XLSX note: 位置及史實待查. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate. This is the public canonical record after POI-0034 was merged into it.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0036",
@@ -2395,7 +2430,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2431,16 +2467,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.475,
-      "longitude": 118.322,
+      "latitude": 24.4772222051315,
+      "longitude": 118.314105995582,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：聚落信仰與地景地標；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 聚落信仰與地景地標. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：聚落信仰與地景地標；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 聚落信仰與地景地標. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0037",
@@ -2459,7 +2495,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2495,16 +2532,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.477,
-      "longitude": 118.323,
+      "latitude": 24.4765575159763,
+      "longitude": 118.313591009084,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：聚落傳統廟宇；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 聚落傳統廟宇. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：聚落傳統廟宇；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 聚落傳統廟宇. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     },
     {
       "poi_id": "POI-0038",
@@ -2523,7 +2560,8 @@
       "related_persons": "",
       "related_sources": [
         "SRC-0056",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidence_level": "C",
       "evidence_summary": "坐標基準為使用者提供之 38 處地點座標表。",
@@ -2559,16 +2597,16 @@
       "has_lidar": false,
       "future_scan_required": true,
       "created_date": "2026-10-19",
-      "latitude": 24.483,
-      "longitude": 118.3215,
+      "latitude": 24.4768423570593,
+      "longitude": 118.315048141562,
       "location_class": "historical_area",
       "coordinate_accuracy": "UserSpecified",
       "coordinate_status": "user_specified",
       "map_visibility": "public",
-      "coordinate_source": "使用者上傳 chat.md 最後 XLS 座標表",
-      "coordinate_note": "使用者上傳 XLS 備註：現納入和平紀念園區範圍；本輪採用上傳檔案最後一段座標表，不代表官方實測或史料核實。",
-      "coordinate_note_en": "Uploaded XLS note: 現納入和平紀念園區範圍. This coordinate is adopted from the uploaded chat.md XLS table and is not presented as an official survey or independently verified historical coordinate.",
-      "updated_date": "2026-10-19"
+      "coordinate_source": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "coordinate_note": "使用者上傳 XLSX 備註：現納入和平紀念園區範圍；本輪依 Kinmen_Guningtou_Locations.xlsx 套用，不代表官方實測或史料核實。",
+      "coordinate_note_en": "Uploaded XLSX note: 現納入和平紀念園區範圍. This coordinate is adopted from Kinmen_Guningtou_Locations.xlsx and is not presented as an official survey or independently verified historical coordinate.",
+      "updated_date": "2026-10-20"
     }
   ]
 }

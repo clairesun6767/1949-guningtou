@@ -25,7 +25,7 @@ test('military-site reading band retains requested site codes and user-specified
     assert.match(catalog, new RegExp(`code: '${code}'`), `${code} should retain its code`);
   }
   assert.match(catalog, /user-specified coordinate/);
-  assert.match(catalog, /24\.4738, 118\.3325/);
+  assert.match(catalog, /24\.4745801543384, 118\.332390528511/);
   assert.match(catalog, /TN-MEDIA-W012-ENTRANCE-2026/);
   assert.match(page, /imagePending/);
 });

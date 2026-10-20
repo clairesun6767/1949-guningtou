@@ -26,13 +26,15 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
     : isSimplified
       ? ({ modern_verified: '现代地点已查证', representative: '现代代表点／范围位置', historical_review: '历史位置审查中', unresolved: '位置尚未独立查证', user_specified: '用户指定坐标' }[status ?? ''] ?? '位置依据未记录')
       : ({ modern_verified: '現代地點已查證', representative: '現代代表點／範圍位置', historical_review: '歷史位置審查中', unresolved: '位置尚未獨立查證', user_specified: '使用者指定座標' }[status ?? ''] ?? '位置依據未記錄');
-  const [selectedPoi, setSelectedPoi] = useState<typeof allPois[0] | null>(null);
+  type Poi = typeof allPois[0];
   const [filter, setFilter] = useState('');
   const mapRef = useRef<L.Map | null>(null);
   const markerRef = useRef<L.Marker | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const hasPublicCoordinate = (poi: typeof allPois[0]) =>
+  const hasPublicCoordinate = (poi: Poi) =>
     (poi.map_visibility ?? (poi.coordinate_status === 'modern_verified' || poi.coordinate_status === 'representative' ? 'public' : 'research')) === 'public';
+  const publicPois = allPois.filter(hasPublicCoordinate);
+  const [selectedPoi, setSelectedPoi] = useState<Poi | null>(null);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -71,14 +73,14 @@ export default function LocationExplorer({ lang = 'zh-tw' }: Props) {
     map.flyTo([selectedPoi.latitude, selectedPoi.longitude], 16, { duration: 0.8 });
   }, [selectedPoi, lang]);
 
-  const categories = [...new Set(allPois.map((poi) => getPoiCopy(poi, lang).category).filter(Boolean))] as string[];
-  const filtered = filter ? allPois.filter((poi) => getPoiCopy(poi, lang).category === filter) : allPois;
+  const categories = [...new Set(publicPois.map((poi) => getPoiCopy(poi, lang).category).filter(Boolean))] as string[];
+  const filtered = filter ? publicPois.filter((poi) => getPoiCopy(poi, lang).category === filter) : publicPois;
 
   return (
     <div className="museum-location-explorer">
       <div className="museum-location-explorer__list">
         <div className="museum-filter-row" role="group" aria-label={labels.categories}>
-          <button type="button" className={`museum-filter ${!filter ? 'museum-filter--active' : ''}`} onClick={() => setFilter('')}>{labels.all} ({allPois.length})</button>
+          <button type="button" className={`museum-filter ${!filter ? 'museum-filter--active' : ''}`} onClick={() => setFilter('')}>{labels.all} ({publicPois.length})</button>
           {categories.map((category) => (
             <button key={category} type="button" className={`museum-filter ${category === filter ? 'museum-filter--active' : ''}`} onClick={() => setFilter(category === filter ? '' : category)}>{category}</button>
           ))}

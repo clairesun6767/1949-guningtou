@@ -975,7 +975,8 @@
         "sourceIds": [
           "SRC-0055",
           "SRC-0056",
-          "SRC-0057"
+          "SRC-0057",
+          "SRC-0058"
         ]
       },
       "media": {
@@ -995,7 +996,8 @@
         "SRC-0041",
         "SRC-0042",
         "SRC-0055",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
@@ -1387,13 +1389,15 @@
     {
       "siteId": "TN-LONGKOU-FORT",
       "officialName": {
-        "zh-tw": "嚨口堡",
-        "zh-cn": "垄口堡",
-        "en": "Longkou Fort"
+        "zh-tw": "嚨口一營區",
+        "zh-cn": "垄口一营区",
+        "en": "Longkou Camp 1"
       },
       "aliases": [
         "嚨口堡碉堡",
-        "Longkou bunker/fort"
+        "Longkou bunker/fort",
+        "嚨口堡",
+        "Longkou Fort"
       ],
       "code": null,
       "region": "嚨口海岸防禦鏈",
@@ -1404,7 +1408,7 @@
       ],
       "battleRelation": {
         "status": "PARTIAL",
-        "summary": "縣府政策資料把嚨口堡視為 1949 第一線防禦據點與保存活化案例；仍需文化資產調查閉合。",
+        "summary": "縣府政策資料將嚨口一營區（原稱嚨口堡）視為 1949 第一線防禦據點與保存活化案例；仍需文化資產調查閉合。",
         "sourceIds": [
           "SRC-0043",
           "SRC-0044"
@@ -1442,7 +1446,8 @@
         "sourceIds": [
           "SRC-0044",
           "SRC-0056",
-          "SRC-0057"
+          "SRC-0057",
+          "SRC-0058"
         ]
       },
       "media": {
@@ -1458,7 +1463,8 @@
       "sourceIds": [
         "SRC-0043",
         "SRC-0044",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0058"
       ],
       "evidenceStatus": "PARTIAL",
       "priority": "core",
@@ -2106,97 +2112,6 @@
       }
     },
     {
-      "siteId": "TN-BEISHAN-OLD-HOUSE",
-      "officialName": {
-        "zh-tw": "北山古洋樓",
-        "zh-cn": "北山古洋楼",
-        "en": "Beishan Old Western-style House"
-      },
-      "aliases": [
-        "北山洋樓",
-        "北山古厝／古洋樓"
-      ],
-      "code": "SETTLEMENT",
-      "region": "北山聚落",
-      "siteType": [
-        "settlement",
-        "heritage-building",
-        "battlefield"
-      ],
-      "battleRelation": {
-        "status": "PARTIAL",
-        "summary": "官方聚落資料與既有來源支持其為北山聚落文化景觀；其戰役使用敘述需保持來源標籤。",
-        "sourceIds": [
-          "SRC-0045",
-          "SRC-0047"
-        ]
-      },
-      "constructionUse": {
-        "status": "SUPPORTED",
-        "summary": "以傳統建築／聚落文化景觀呈現，不稱為戰鬥碉堡。"
-      },
-      "restorationReuse": {
-        "reconstruction": "building conservation context",
-        "transfer": "unknown",
-        "restoration": "heritage conservation context",
-        "currentUse": "settlement heritage visitor reference",
-        "status": "PARTIAL",
-        "sourceIds": [
-          "SRC-0045",
-          "SRC-0047"
-        ]
-      },
-      "access": {
-        "status": "official tourism route lists the house as a viewing point",
-        "sourceIds": [
-          "SRC-0047"
-        ]
-      },
-      "location": {
-        "canonicalPoiId": "POI-0034",
-        "relatedPoiIds": [
-          "POI-0006"
-        ],
-        "coordinates": null,
-        "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
-        "sourceIds": [
-          "SRC-0047",
-          "SRC-0056",
-          "SRC-0057"
-        ]
-      },
-      "media": {
-        "historical": [],
-        "restoration": [],
-        "current": [
-          "TN-MEDIA-BEISHAN-HOUSE-2018"
-        ],
-        "candidate": [],
-        "needed": [
-          "interior/current conservation image with permission"
-        ],
-        "rightsStatus": "one CC BY-SA 4.0 current image integrated"
-      },
-      "sourceIds": [
-        "SRC-0045",
-        "SRC-0047",
-        "SRC-0057"
-      ],
-      "evidenceStatus": "PARTIAL",
-      "priority": "core",
-      "knownUnknowns": [
-        "current access and interior condition",
-        "which battle-use claims are directly sourced"
-      ],
-      "humanReview": {
-        "required": true,
-        "questions": [
-          "Retain building as a settlement-heritage record separate from the research-only command post?",
-          "Confirm any claim that it served as a command post with primary evidence."
-        ]
-      }
-    },
-    {
       "siteId": "TN-BEISHAN-PLA-COMMAND",
       "officialName": {
         "zh-tw": "北山共軍指揮所（待核）",
@@ -2205,7 +2120,9 @@
       },
       "aliases": [
         "北山指揮所",
-        "北山共軍指揮所"
+        "北山共軍指揮所",
+        "北山古洋樓",
+        "北山古厝／古洋樓"
       ],
       "code": "RESEARCH",
       "region": "北山聚落／古寧頭核心戰場",
@@ -2243,20 +2160,25 @@
       "location": {
         "canonicalPoiId": "POI-0035",
         "relatedPoiIds": [
-          "POI-0006"
+          "POI-0006",
+          "POI-0034"
         ],
         "coordinates": null,
         "precision": "canonical user-specified coordinate reference; inventory keeps coordinates null",
         "sourceIds": [
           "SRC-0051",
           "SRC-0056",
-          "SRC-0057"
+          "SRC-0057",
+          "SRC-0047",
+          "SRC-0058"
         ]
       },
       "media": {
         "historical": [],
         "restoration": [],
-        "current": [],
+        "current": [
+          "TN-MEDIA-BEISHAN-HOUSE-2018"
+        ],
         "candidate": [],
         "needed": [
           "primary source excerpt, site register, exact-site current image"
@@ -2266,18 +2188,23 @@
       "sourceIds": [
         "SRC-0045",
         "SRC-0051",
-        "SRC-0057"
+        "SRC-0057",
+        "SRC-0047",
+        "SRC-0058"
       ],
       "evidenceStatus": "RESEARCH",
       "priority": "research",
       "knownUnknowns": [
-        "official name, building identity, exact location, period of use and surviving structure"
+        "official name, building identity, exact location, period of use and surviving structure",
+        "current access and interior condition",
+        "which battle-use claims are directly sourced"
       ],
       "humanReview": {
         "required": true,
         "questions": [
           "Which source identifies the exact building as the command post?",
-          "Should the record remain research-only until a human historian confirms the relationship?"
+          "Should the record remain research-only until a human historian confirms the relationship?",
+          "北山古洋樓與本研究主記錄的合併關係仍需人工核對。"
         ],
         "possibleActions": [
           "APPROVE",

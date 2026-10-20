@@ -46,7 +46,8 @@ test('coordinate uncertainty remains visible instead of being promoted', () => {
   const pois = arrayFrom(readJson('data/poi.json'), 'pois');
   assert.deepEqual(pois.filter((poi) => poi.verification_status === 'verified').map((poi) => poi.poi_id), []);
   assert.equal(pois.every((poi) => poi.coordinate_status === 'user_specified'), true);
-  assert.equal(pois.every((poi) => poi.map_visibility === 'public'), true);
+  assert.equal(pois.filter((poi) => poi.map_visibility === 'public').length, 35);
+  assert.deepEqual(pois.filter((poi) => poi.map_visibility === 'research').map((poi) => poi.poi_id), ['POI-0022', 'POI-0023', 'POI-0034']);
   assert.equal(pois.every((poi) => poi.coordinate_accuracy), true);
 });
 

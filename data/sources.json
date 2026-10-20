@@ -860,6 +860,21 @@
       "usage_rights": "專案使用者提供資料；限本專案使用",
       "verification_status": "user_specified",
       "notes": "檔案前段另有一套較早的 38 筆座標；本輪採用檔案最後 XLS 區塊，不代表官方實測、網路查證或歷史證據核實。"
+    },
+    {
+      "source_id": "SRC-0058",
+      "title": "使用者上傳 Kinmen_Guningtou_Locations.xlsx",
+      "author_or_institution": "專案使用者",
+      "publication_date": "2026-10-20",
+      "source_type": "使用者上傳地點座標表",
+      "source_level": 4,
+      "url_or_identifier": "uploaded attachment: Kinmen_Guningtou_Locations.xlsx (user-provided)",
+      "access_date": "2026-10-20",
+      "relevant_pages_or_sections": "工作表：古寧頭戰役地點座標；38 筆資料列",
+      "relevance_summary": "本輪網站地點資料採用的 WGS84 經緯度、名稱與備註基準；第 23、24 筆取消獨立公開展示，第 32 行改名，第 35、36 行合併。",
+      "usage_rights": "專案使用者提供資料；限本專案使用",
+      "verification_status": "user_specified",
+      "notes": "直接依上傳 XLSX 套用，不宣稱官方實測或史料核實；取消與合併的原始 POI 紀錄保留於資料檔，僅停止獨立公開地圖展示。"
     }
   ]
 }
