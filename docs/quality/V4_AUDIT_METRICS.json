@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-19T03:52:50.536Z",
+  "generatedAt": "2026-10-20T01:10:42.470Z",
   "canonicalCounts": {
     "persons": 36,
-    "pois": 25,
+    "pois": 38,
     "events": 30,
     "timelineEntries": 123,
-    "sources": 55
+    "sources": 59
   },
   "idIntegrity": {
     "personsUnique": true,
@@ -20,8 +20,8 @@
       "total": 36
     },
     "poisEnglish": {
-      "covered": 25,
-      "total": 25
+      "covered": 38,
+      "total": 38
     },
     "eventsEnglish": {
       "covered": 30,
@@ -39,13 +39,14 @@
   },
   "coordinateAudit": {
     "statusCounts": {
-      "partially_verified": 25
+      "partially_verified": 25,
+      "needs_human_review": 13
     },
     "publicVerifiedCount": 0,
-    "candidateCountRequiringHumanReview": 25
+    "candidateCountRequiringHumanReview": 38
   },
   "mediaAudit": {
-    "catalogEntries": 29,
+    "catalogEntries": 33,
     "missingPublicAssets": [],
     "researchAssets": [
       ".local/aerial-poc/1944/mosaic-z12.png",

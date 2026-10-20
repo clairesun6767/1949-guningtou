@@ -875,6 +875,21 @@
       "usage_rights": "專案使用者提供資料；限本專案使用",
       "verification_status": "user_specified",
       "notes": "直接依上傳 XLSX 套用，不宣稱官方實測或史料核實；取消與合併的原始 POI 紀錄保留於資料檔，僅停止獨立公開地圖展示。"
+    },
+    {
+      "source_id": "SRC-0059",
+      "title": "使用者上傳 POI 人工定位工作台提交檔（2026-10-20）",
+      "author_or_institution": "專案使用者",
+      "publication_date": "2026-10-20",
+      "source_type": "使用者上傳人工定位修正檔",
+      "source_level": 4,
+      "url_or_identifier": "uploaded attachment: poi-coordinate-submission-2026-10-20T01-07-28-397Z.json (user-provided)",
+      "access_date": "2026-10-20",
+      "relevant_pages_or_sections": "changes: 19; applied: 18; POI-0023 excluded by the user removal instruction",
+      "relevance_summary": "提供 18 筆人工拖移或輸入後的 WGS84 候選座標；本次僅套用未被移除的地點。",
+      "usage_rights": "專案使用者提供資料；限本專案使用",
+      "verification_status": "user_specified",
+      "notes": "來源為內部人工定位工作台送出檔；不代表官方實測、獨立地圖查證或歷史證據核實。"
     }
   ]
 }

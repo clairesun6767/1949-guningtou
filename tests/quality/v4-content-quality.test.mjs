@@ -46,9 +46,22 @@ test('coordinate uncertainty remains visible instead of being promoted', () => {
   const pois = arrayFrom(readJson('data/poi.json'), 'pois');
   assert.deepEqual(pois.filter((poi) => poi.verification_status === 'verified').map((poi) => poi.poi_id), []);
   assert.equal(pois.every((poi) => poi.coordinate_status === 'user_specified'), true);
-  assert.equal(pois.filter((poi) => poi.map_visibility === 'public').length, 35);
-  assert.deepEqual(pois.filter((poi) => poi.map_visibility === 'research').map((poi) => poi.poi_id), ['POI-0022', 'POI-0023', 'POI-0034']);
+  assert.equal(pois.filter((poi) => poi.map_visibility === 'public').length, 34);
+  assert.deepEqual(pois.filter((poi) => poi.map_visibility === 'research').map((poi) => poi.poi_id), ['POI-0022', 'POI-0023', 'POI-0024', 'POI-0034']);
   assert.equal(pois.every((poi) => poi.coordinate_accuracy), true);
+});
+
+test('manual coordinate submission and requested POI display changes are applied', () => {
+  const pois = arrayFrom(readJson('data/poi.json'), 'pois');
+  const byId = new Map(pois.map((poi) => [poi.poi_id, poi]));
+  assert.deepEqual(
+    [byId.get('POI-0016')?.latitude, byId.get('POI-0016')?.longitude],
+    [24.482930520927326, 118.32081967397947],
+  );
+  assert.equal(byId.get('POI-0023')?.map_visibility, 'research');
+  assert.equal(byId.get('POI-0024')?.map_visibility, 'research');
+  assert.equal(byId.get('POI-0025')?.name_chinese, '太武山');
+  assert.equal(byId.get('POI-0025')?.name_english, 'Mount Taiwu');
 });
 
 test('catalogued static media files exist', () => {
