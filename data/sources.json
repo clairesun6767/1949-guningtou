@@ -885,8 +885,8 @@
       "source_level": 4,
       "url_or_identifier": "uploaded attachment: poi-coordinate-submission-2026-10-20T01-07-28-397Z.json (user-provided)",
       "access_date": "2026-10-20",
-      "relevant_pages_or_sections": "changes: 19; applied: 18; POI-0023 excluded by the user removal instruction",
-      "relevance_summary": "提供 18 筆人工拖移或輸入後的 WGS84 候選座標；本次僅套用未被移除的地點。",
+      "relevant_pages_or_sections": "changes: 20; applied: 19; POI-0023 excluded by the user removal instruction",
+      "relevance_summary": "提供 20 筆人工拖移或輸入後的 WGS84 候選座標；本次套用其中 19 筆未被移除的地點。",
       "usage_rights": "專案使用者提供資料；限本專案使用",
       "verification_status": "user_specified",
       "notes": "來源為內部人工定位工作台送出檔；不代表官方實測、獨立地圖查證或歷史證據核實。"
