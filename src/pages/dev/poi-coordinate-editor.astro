@@ -1,0 +1,26 @@
+---
+import PoiCoordinateEditor from '../../components/dev/PoiCoordinateEditor';
+import type { POI } from '../../data/types';
+import poiData from '../../../data/poi.json';
+import '../../styles/global.css';
+
+const data = poiData as { metadata?: { version?: string }; pois?: POI[] };
+const pois = data.pois ?? [];
+const dataVersion = data.metadata?.version ?? 'unknown';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="theme-color" content="#151613" />
+    <link rel="icon" type="image/svg+xml" href="/1949-guningtou/favicon.svg" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet" />
+    <title>古寧頭地點人工定位工作台 · Internal</title>
+  </head>
+  <body>
+    <PoiCoordinateEditor client:only="react" pois={pois} dataVersion={dataVersion} />
+  </body>
+</html>

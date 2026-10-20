@@ -1,0 +1,110 @@
+.poi-coordinate-editor {
+  --editor-bg: #151613;
+  --editor-panel: #1e201b;
+  --editor-panel-2: #272822;
+  --editor-ink: #f1ecdf;
+  --editor-muted: #aaa496;
+  --editor-gold: #b79762;
+  --editor-line: rgba(205, 191, 160, 0.22);
+  min-height: 100vh;
+  color: var(--editor-ink);
+  background: var(--editor-bg);
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+.poi-coordinate-editor button,
+.poi-coordinate-editor input,
+.poi-coordinate-editor textarea { font: inherit; }
+
+.poi-coordinate-editor__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  align-items: flex-end;
+  padding: 32px clamp(20px, 4vw, 64px);
+  border-bottom: 1px solid var(--editor-line);
+  background: linear-gradient(112deg, #161713 0%, #25251f 100%);
+}
+
+.poi-coordinate-editor__header h1 { margin: 8px 0; font: 600 clamp(28px, 4vw, 48px)/1.08 'Noto Serif TC', serif; }
+.poi-coordinate-editor__header p { max-width: 800px; margin: 0; color: var(--editor-muted); line-height: 1.7; }
+.poi-coordinate-editor__kicker,
+.poi-coordinate-editor__section-heading span,
+.poi-coordinate-editor__map-heading span { color: var(--editor-gold); font: 600 11px/1.4 'IBM Plex Mono', monospace; letter-spacing: .12em; }
+.poi-coordinate-editor__warning { display: grid; gap: 6px; max-width: 360px; padding: 14px 16px; border-left: 3px solid #c78263; background: rgba(111, 53, 42, .22); }
+.poi-coordinate-editor__warning strong { color: #e6bd94; }
+.poi-coordinate-editor__warning span { color: #cfc5b2; font-size: 12px; line-height: 1.6; }
+
+.poi-coordinate-editor__status { display: grid; grid-template-columns: repeat(4, minmax(120px, 1fr)); border-bottom: 1px solid var(--editor-line); background: #191a16; }
+.poi-coordinate-editor__status div { padding: 16px clamp(16px, 3vw, 32px); border-right: 1px solid var(--editor-line); }
+.poi-coordinate-editor__status strong { display: block; color: #e1c591; font: 500 25px/1 'IBM Plex Mono', monospace; }
+.poi-coordinate-editor__status span { display: block; margin-top: 7px; color: var(--editor-muted); font: 500 11px/1.3 'IBM Plex Mono', monospace; }
+
+.poi-coordinate-editor__workspace { display: grid; grid-template-columns: minmax(420px, .82fr) minmax(520px, 1.18fr); min-height: 780px; }
+.poi-coordinate-editor__panel { padding: 28px clamp(20px, 3vw, 50px) 64px; border-right: 1px solid var(--editor-line); }
+.poi-coordinate-editor__map-panel { position: sticky; top: 0; align-self: start; padding: 28px; }
+.poi-coordinate-editor__section-heading,
+.poi-coordinate-editor__map-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; margin-bottom: 18px; }
+.poi-coordinate-editor__section-heading h2,
+.poi-coordinate-editor__map-heading h2 { margin: 5px 0 0; font: 600 26px/1.2 'Noto Serif TC', serif; }
+.poi-coordinate-editor__draft-state { color: var(--editor-muted) !important; font-size: 11px !important; letter-spacing: 0 !important; text-align: right; }
+.poi-coordinate-editor__map-heading > span { color: var(--editor-muted); letter-spacing: 0; }
+
+.poi-coordinate-editor__search { width: 100%; min-height: 43px; margin-bottom: 12px; padding: 10px 12px; border: 1px solid var(--editor-line); border-radius: 3px; color: var(--editor-ink); background: #11120f; }
+.poi-coordinate-editor__search:focus,
+.poi-coordinate-editor input:focus,
+.poi-coordinate-editor textarea:focus { outline: 2px solid rgba(183, 151, 98, .55); outline-offset: 1px; }
+.poi-coordinate-editor__poi-list { max-height: 310px; overflow: auto; border: 1px solid var(--editor-line); background: #11120f; }
+.poi-coordinate-editor__poi-list button { display: grid; gap: 4px; width: 100%; padding: 10px 12px; color: var(--editor-ink); border: 0; border-bottom: 1px solid var(--editor-line); background: transparent; text-align: left; cursor: pointer; }
+.poi-coordinate-editor__poi-list button:hover,
+.poi-coordinate-editor__poi-list button.is-selected { background: rgba(183, 151, 98, .17); }
+.poi-coordinate-editor__poi-list button.is-selected { box-shadow: inset 3px 0 var(--editor-gold); }
+.poi-coordinate-editor__poi-list strong { margin-right: 5px; color: #e0c087; font: 500 11px 'IBM Plex Mono', monospace; }
+.poi-coordinate-editor__poi-list small { color: var(--editor-muted); font-size: 11px; }
+
+.poi-coordinate-editor__form,
+.poi-coordinate-editor__submission { margin-top: 28px; padding-top: 25px; border-top: 1px solid var(--editor-line); }
+.poi-coordinate-editor__muted,
+.poi-coordinate-editor__hint,
+.poi-coordinate-editor__message,
+.poi-coordinate-editor__map-note { color: var(--editor-muted); font-size: 12px; line-height: 1.65; }
+.poi-coordinate-editor__coordinate-readout { display: grid; gap: 5px; margin: 15px 0; padding: 13px; border-left: 3px solid var(--editor-gold); background: var(--editor-panel); }
+.poi-coordinate-editor__coordinate-readout span { color: var(--editor-gold); font: 500 10px 'IBM Plex Mono', monospace; text-transform: uppercase; }
+.poi-coordinate-editor__coordinate-readout strong { font: 500 17px 'IBM Plex Mono', monospace; }
+.poi-coordinate-editor__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 15px; }
+.poi-coordinate-editor label { display: grid; gap: 7px; margin: 13px 0; color: #c9c1af; font-size: 13px; }
+.poi-coordinate-editor input,
+.poi-coordinate-editor textarea { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid var(--editor-line); border-radius: 3px; color: var(--editor-ink); background: #11120f; }
+.poi-coordinate-editor textarea { min-height: 88px; resize: vertical; }
+.poi-coordinate-editor__actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin: 15px 0; }
+.poi-coordinate-editor__button { min-height: 39px; padding: 8px 13px; border: 1px solid rgba(204, 185, 148, .38); border-radius: 3px; color: #e9e2d3; background: #292922; cursor: pointer; text-decoration: none; }
+.poi-coordinate-editor__button:hover { border-color: var(--editor-gold); background: #35352c; }
+.poi-coordinate-editor__button--primary { color: #171713; background: #b79762; border-color: #c9aa72; font-weight: 700; }
+.poi-coordinate-editor__button--primary:hover { background: #c4a66f; }
+.poi-coordinate-editor__button--quiet { color: var(--editor-muted); background: transparent; }
+
+.poi-coordinate-map { width: 100%; min-height: 620px; border: 1px solid var(--editor-line); background: #27332f; }
+.poi-coordinate-map .leaflet-control-zoom a { color: #2b2a23; }
+.poi-coordinate-map .leaflet-tooltip { color: #f1ecdf; border-color: #766649; background: #25251f; }
+.poi-coordinate-editor__map-legend { display: flex; flex-wrap: wrap; gap: 12px; padding: 12px 2px; color: var(--editor-muted); font-size: 11px; }
+.poi-coordinate-editor__map-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.poi-coordinate-editor__map-legend i { display: inline-block; width: 9px; height: 9px; border: 2px solid #e7e0d1; border-radius: 50%; background: #68756c; }
+.poi-coordinate-editor__map-legend i.is-edited { background: #d27d5f; }
+.poi-coordinate-editor__map-legend i.is-selected { width: 12px; height: 12px; background: #f2d08a; }
+.poi-coordinate-editor__map-note { margin: 0; padding: 14px; border: 1px solid var(--editor-line); background: var(--editor-panel); }
+
+@media (max-width: 1080px) {
+  .poi-coordinate-editor__header { align-items: flex-start; flex-direction: column; }
+  .poi-coordinate-editor__workspace { grid-template-columns: 1fr; }
+  .poi-coordinate-editor__panel { border-right: 0; }
+  .poi-coordinate-editor__map-panel { position: static; padding-top: 0; }
+}
+
+@media (max-width: 640px) {
+  .poi-coordinate-editor__status { grid-template-columns: repeat(2, 1fr); }
+  .poi-coordinate-editor__status div { padding: 13px 15px; }
+  .poi-coordinate-editor__grid { grid-template-columns: 1fr; }
+  .poi-coordinate-map { min-height: 480px; }
+  .poi-coordinate-editor__panel,
+  .poi-coordinate-editor__map-panel { padding-left: 16px; padding-right: 16px; }
+}
