@@ -32,6 +32,11 @@
 .historical-registration__pending-point { position: absolute; width: 12px; height: 12px; border: 2px solid #f7e9bc; border-radius: 50%; background: #a75746; transform: translate(-50%, -50%); pointer-events: none; }
 .historical-registration__reference { display: block; width: 100%; min-height: 350px; border: 1px solid rgba(210,198,169,.22); cursor: crosshair; touch-action: none; }
 .historical-registration__reference.is-dragging { cursor: grabbing; }
+.battle-trace-reference-map { width: 100%; min-height: 430px; border: 1px solid rgba(210,198,169,.22); background: #27332f; overflow: hidden; }
+.battle-trace-reference-map .leaflet-control-zoom a { color: #2b2a23; }
+.battle-trace-reference-map .leaflet-control-attribution { background: rgba(250,248,239,.84); color: #3d3b32; }
+.battle-trace-reference-map .leaflet-tooltip { color: #f1ecdf; border-color: #766649; background: #25251f; }
+.battle-trace-reference-map__vertex-icon { background: transparent; border: 0; }
 .historical-registration__visitor-trace { fill: none; stroke-width: 1.2; opacity: .55; vector-effect: non-scaling-stroke; pointer-events: none; }
 .historical-registration__visitor-trace--pla { stroke: #d36c58; }
 .historical-registration__visitor-trace--roc { stroke: #6e9aaf; }
@@ -87,6 +92,7 @@
   .historical-registration__status { grid-template-columns: repeat(5, 1fr); }
   .historical-registration__comparison, .historical-registration__workspace { grid-template-columns: 1fr; }
   .historical-registration__reference { min-height: 300px; }
+  .battle-trace-reference-map { min-height: 360px; }
   .historical-registration__checklist ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 520px) {

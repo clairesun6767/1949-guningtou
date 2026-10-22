@@ -1,10 +1,13 @@
-import { useEffect, useMemo, useRef, useState, type ChangeEvent, type MouseEvent, type PointerEvent as ReactPointerEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type ChangeEvent, type MouseEvent } from 'react';
 import registrationRaw from '../../../data/battles/guningtou-1949/historical-battle-map-registration.json';
 import historicalPhasesRaw from '../../../data/battles/guningtou-1949/historical-battle-phases.json?raw';
 import tracesRaw from '../../../data/battles/guningtou-1949/historical-battle-map-traces.geojson?raw';
 import locationsRaw from '../../../data/battles/guningtou-1949/locations.geojson?raw';
+import poiData from '../../../data/poi.json';
 import { historicalTraceSourceLabel, historicalTraceVisitorLabel, parseHistoricalTraceCollection, parseHistoricalTracePhases, type HistoricalTraceCollection, type HistoricalTraceFeature } from '../../battle-replay/visualization/historicalTraces.js';
 import type { GeoJsonGeometry, Position } from '../../battle-replay/types/index.js';
+import type { POI } from '../../data/types';
+import BattleTraceReferenceMap from './BattleTraceReferenceMap';
 import './historical-map-registration.css';
 
 interface AnchorDraft {
@@ -59,7 +62,12 @@ const sourceMapHeight = 641;
 const traceCollection = JSON.parse(tracesRaw) as HistoricalTraceCollection;
 const phaseCollection = parseHistoricalTracePhases(historicalPhasesRaw);
 const locationCollection = JSON.parse(locationsRaw) as { features: Array<{ id: string; geometry: { coordinates: [number, number] }; properties: { historicalName?: Record<string, string> } }> };
-const geographicBounds = { west: 118.28, east: 118.37, south: 24.44, north: 24.5 };
+const currentPoiRecords = ((poiData as { pois?: POI[] }).pois ?? []);
+const canonicalLocationReferences = locationCollection.features.map(location => ({
+  id: location.id,
+  name: location.properties.historicalName?.['zh-Hant'] ?? location.id,
+  coordinate: location.geometry.coordinates as Position,
+}));
 const BASE_COMMIT = '77ebf146bddcf8b4d98bd332a9f512fecbf39252';
 const DRAFT_STORAGE_KEY = 'battlefield-os:guningtou:historical-trace-workbench:v0.8.3';
 
@@ -139,13 +147,6 @@ function serializeEditState(anchors: AnchorDraft[], traceDrafts: Record<string, 
 
 const canonicalEditSignature = serializeEditState(canonicalAnchors, {});
 
-function geographicPoint([longitude, latitude]: Position) {
-  return {
-    x: ((longitude - geographicBounds.west) / (geographicBounds.east - geographicBounds.west)) * 100,
-    y: ((geographicBounds.north - latitude) / (geographicBounds.north - geographicBounds.south)) * 100,
-  };
-}
-
 function geometryPaths(geometry: GeoJsonGeometry): Position[][] {
   switch (geometry.type) {
     case 'LineString': return [geometry.coordinates];
@@ -200,27 +201,12 @@ function replaceEditablePath(geometry: GeoJsonGeometry, pathIndex: number, path:
   return replaceGeometryPath(geometry, pathIndex, nextPath);
 }
 
-function referencePosition(event: ReactPointerEvent<SVGSVGElement>): Position {
-  const rect = event.currentTarget.getBoundingClientRect();
-  const x = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
-  const y = Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100));
-  return [
-    geographicBounds.west + (x / 100) * (geographicBounds.east - geographicBounds.west),
-    geographicBounds.north - (y / 100) * (geographicBounds.north - geographicBounds.south),
-  ];
-}
-
 function traceMatchesFilter(feature: HistoricalTraceFeature, filter: TraceFilter) {
   if (filter === 'all') return true;
   if (filter === 'pla') return feature.properties.side === 'pla';
   if (filter === 'roc') return feature.properties.side === 'roc';
   if (filter === 'defense') return feature.properties.featureType === 'defensive_line' || feature.properties.featureType === 'battle_front';
   return feature.properties.featureType === 'battle_area' || feature.properties.featureType === 'historical_movement_corridor';
-}
-
-function traceClass(feature: HistoricalTraceFeature) {
-  if (feature.properties.featureType === 'battle_area' || feature.properties.featureType === 'historical_movement_corridor') return 'area';
-  return feature.properties.side;
 }
 
 export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-guningtou' }: Props) {
@@ -236,7 +222,6 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
   const [sourceControlPointIndex, setSourceControlPointIndex] = useState(0);
   const [geometryPathIndex, setGeometryPathIndex] = useState(0);
   const [vertexIndex, setVertexIndex] = useState(0);
-  const [draggingVertex, setDraggingVertex] = useState<{ pathIndex: number; vertexIndex: number } | null>(null);
   const [editControlPoint, setEditControlPoint] = useState(false);
   const [traceFilter, setTraceFilter] = useState<TraceFilter>(restoredDraft?.traceFilter ?? 'all');
   const [showSource, setShowSource] = useState(restoredDraft?.showSource ?? true);
@@ -320,7 +305,6 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
     setTraceDrafts({ ...snapshot.traceDrafts });
     setSelectedTraceId(snapshot.selectedTraceId);
     setPendingSource(null);
-    setDraggingVertex(null);
   }
 
   function undo() {
@@ -465,21 +449,14 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
     setMessage('已選來源像素 ' + source.join(', ') + '；請在右側點選對應的現代參考位置。');
   }
 
-  function handleReferenceClick(event: MouseEvent<SVGSVGElement>) {
+  function handleReferenceCoordinateClick(geographic: Position) {
     if (!pendingSource) return;
     pushHistory();
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100));
-    const y = Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100));
-    const geographic: [number, number] = [
-      geographicBounds.west + (x / 100) * (geographicBounds.east - geographicBounds.west),
-      geographicBounds.north - (y / 100) * (geographicBounds.north - geographicBounds.south),
-    ];
     const id = 'ANCHOR-MANUAL-' + String(anchors.length + 1).padStart(2, '0');
     setAnchors(current => [...current, {
       id,
       sourcePixel: pendingSource,
-      geographicReference: geographic,
+      geographicReference: [geographic[0], geographic[1]],
       enabled: false,
       status: 'needs_human_confirmation',
       confidence: 'unknown',
@@ -505,7 +482,6 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
     setGeometryPathIndex(0);
     setVertexIndex(0);
     setEditControlPoint(false);
-    setDraggingVertex(null);
   }
 
   function setTraceReviewStatus(status: HistoricalTraceFeature['properties']['reviewStatus']) {
@@ -525,25 +501,12 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
     updateSelectedTraceDraft(feature => ({ ...feature, geometry: replaceEditablePath(feature.geometry, pathIndex, nextPath) }), false);
   }
 
-  function handleReferencePointerDown(event: ReactPointerEvent<SVGCircleElement>, pathIndex: number, nextVertexIndex: number) {
-    event.stopPropagation();
-    event.currentTarget.setPointerCapture(event.pointerId);
+  function moveVertexFromReference(pathIndex: number, nextVertexIndex: number, position: Position) {
     pushHistory();
     setGeometryPathIndex(pathIndex);
     setVertexIndex(nextVertexIndex);
-    setDraggingVertex({ pathIndex, vertexIndex: nextVertexIndex });
-    setMessage('拖曳目前 visitor map vertex 修正路徑；欄位 provenance、confidence 與 canonical Locations 不會被改動。');
-  }
-
-  function handleReferencePointerMove(event: ReactPointerEvent<SVGSVGElement>) {
-    if (!draggingVertex) return;
-    updateGeometryVertex(draggingVertex.pathIndex, draggingVertex.vertexIndex, referencePosition(event));
-  }
-
-  function handleReferencePointerUp() {
-    if (!draggingVertex) return;
-    setDraggingVertex(null);
-    setMessage('visitor map vertex 已移動；請按「下載正式 trace dataset」保存人工修正結果。');
+    updateGeometryVertex(pathIndex, nextVertexIndex, position);
+    setMessage('拖曳目前 visitor map vertex 修正路徑；欄位 provenance、confidence 與 canonical Locations 不會被改動。完成後請按「下載正式 trace dataset」保存人工修正結果。');
   }
 
   function addGeometryVertex() {
@@ -633,35 +596,21 @@ export default function HistoricalBattleMapRegistrationEditor({ base = '/1949-gu
           <header><span>VISITOR MAP · WGS84</span><strong>Visitor map / source trace overlay</strong></header>
           <div className="historical-registration__view-toggle">
             <button type="button" className={showVisitor ? 'is-selected' : ''} onClick={() => setShowVisitor(value => !value)}>{showVisitor ? '隱藏 visitor traces' : '顯示 visitor traces'}</button>
-            <small>拖曳選取的節點；點擊空白處仍可建立停用 anchor candidate</small>
+            <small>{currentPoiRecords.length} 處目前 POI · {currentPoiRecords.filter(poi => poi.map_visibility !== 'research').length} 處公開 · 點擊空白處仍可建立停用 anchor candidate</small>
           </div>
-          <svg className={`historical-registration__reference ${draggingVertex ? 'is-dragging' : ''}`} viewBox="0 0 100 100" onClick={handleReferenceClick} onPointerMove={handleReferencePointerMove} onPointerUp={handleReferencePointerUp} role="img" aria-label="現代地理參考圖">
-            <rect width="100" height="100" fill="#20251f" />
-            <path d="M0 14 C18 10 27 22 41 18 S70 5 100 14 M0 80 C20 70 36 78 54 68 S82 64 100 70" fill="none" stroke="#647467" strokeWidth=".8" strokeDasharray="2 2" />
-            {locationCollection.features.map(location => {
-              const point = geographicPoint(location.geometry.coordinates);
-              return <g key={location.id}><circle cx={point.x} cy={point.y} r="1.5" fill="#cfad6a" /><text x={point.x + 2} y={point.y - 2} fill="#e2dac6" fontSize="2.5">{location.properties.historicalName?.['zh-Hant'] ?? location.id}</text></g>;
-            })}
-            {anchors.map(anchor => {
-              const point = geographicPoint(anchor.geographicReference);
-              return <circle key={anchor.id} cx={point.x} cy={point.y} r={anchor.enabled ? 2.6 : 2} fill={anchor.enabled ? '#dd6c54' : '#6d8587'} stroke="#f3e8d4" strokeWidth=".5" />;
-            })}
-            {showVisitor && traceList.map(trace => {
-              const draft = traceDrafts[trace.id] ?? trace;
-              return geometryPaths(draft.geometry).map((path, pathIndex) => {
-                const points = path.map(point => { const projected = geographicPoint(point); return `${projected.x},${projected.y}`; }).join(' ');
-                const area = isAreaGeometry(draft.geometry);
-                return area
-                  ? <polygon key={`${trace.id}-${pathIndex}`} className={`historical-registration__visitor-trace historical-registration__visitor-trace--${traceClass(draft)} ${trace.id === selectedTraceId ? 'is-selected' : ''}`} points={points} />
-                  : <polyline key={`${trace.id}-${pathIndex}`} className={`historical-registration__visitor-trace historical-registration__visitor-trace--${traceClass(draft)} ${trace.id === selectedTraceId ? 'is-selected' : ''}`} points={points} />;
-              });
-            })}
-            {selectedTraceDraft && selectedGeometryPaths.map((_, pathIndex) => editablePath(selectedTraceDraft.geometry, pathIndex).map((position, nextVertexIndex) => {
-              const point = geographicPoint(position);
-              return <circle key={`vertex-${pathIndex}-${nextVertexIndex}`} className={`historical-registration__vertex ${pathIndex === geometryPathIndex && nextVertexIndex === vertexIndex ? 'is-selected' : ''}`} cx={point.x} cy={point.y} r={pathIndex === geometryPathIndex && nextVertexIndex === vertexIndex ? 2.7 : 1.8} onPointerDown={event => handleReferencePointerDown(event, pathIndex, nextVertexIndex)} />;
-            }))}
-          </svg>
-          <p className="historical-registration__notice">Visitor map 直接顯示目前 trace dataset 的 geometry；選取 trace 後可拖曳、增加或刪除 vertex。它仍是 schematic / approximate，不會自動 snap 到 OSM。</p>
+          <BattleTraceReferenceMap
+            pois={currentPoiRecords}
+            canonicalLocations={canonicalLocationReferences}
+            anchors={anchors.map(anchor => ({ id: anchor.id, coordinate: anchor.geographicReference, enabled: anchor.enabled }))}
+            traces={showVisitor ? traceList.map(trace => traceDrafts[trace.id] ?? trace) : []}
+            selectedTraceId={selectedTraceId}
+            geometryPathIndex={geometryPathIndex}
+            vertexIndex={vertexIndex}
+            onSelectTrace={selectTrace}
+            onMoveVertex={moveVertexFromReference}
+            onMapClick={handleReferenceCoordinateClick}
+          />
+          <p className="historical-registration__notice">右側為目前 `data/poi.json` 的 WGS84 POI 與 OpenStreetMap 現代地圖，另以青綠標記顯示 canonical Location。選取 trace 後可直接拖曳地理節點；它仍是 schematic / approximate，不會自動 snap 到 OSM，也不會把現代 POI 反推成 1949 路線。</p>
         </section>
       </div>
 
